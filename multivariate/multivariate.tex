@@ -1,0 +1,688 @@
+
+\chapter{Multivariate statistics background}
+
+In the proof that follows, we will draw heavily on results about matrices of \iid $\Normal(0,1)$ entries. We use this section and to gather the relevant results. This section is concerned with classical results, which correspond to $p$ and either $n$ fixed or $n\to\infty$.
+
+\subsection{The multivariate normal and Wishart distributions}
+
+We start the definition of the multivariate normal distribution and some basic properties, which can be found, for example, in FIXME: ref.
+
+\begin{definition}[Multivariate Normal Distribution]
+    \label{D:multivariate-normal}
+For mean vector 
+\(
+    \vmu \in \reals^p
+\)
+and positive-definite covariance matrix
+\(
+    \mSigma \in \reals^{p\times p},
+\)
+a random vector 
+\(
+    \vX \in \reals^p
+\)
+is distributed from the multivariate normal distribution, denoted 
+\(
+    \vX 
+    \sim 
+    \Normal \left(
+        \vmu, \,
+        \mSigma
+    \right)
+\)
+if its components have density
+\begin{equation}\label{E:normal-density}
+    f( \vx )
+    =
+    (2 \pi )^{-p/2}
+    |\mSigma|^{-1/2}
+    \exp\left(
+        -
+        \frac{1}{2}
+        (\vx - \vmu)^T
+        \mSigma^{-1}
+        (\vx - \mu)
+    \right).
+\end{equation}
+\end{definition}
+
+\noindent
+A basic fact about the multivariate normal is the following:
+
+\begin{proposition}\label{P:scale-shift-normal}
+Let 
+\(
+    \va \in \reals^p,
+\)
+\(
+    \mC \in \reals^{q \times p},
+\)
+and say
+\(
+    \vX 
+    \sim
+    \Normal \left( 
+        \vmu, \,
+        \mSigma
+    \right).
+\)
+Define $\vY = \mC \vX + \va$.  Then 
+\(
+    \vY
+    \sim
+    \Normal \left( 
+        \mC \vmu + \va, \,
+        \mC \mSigma \mC^T
+    \right).
+\)
+\end{proposition}
+
+\noindent
+An immediate corollary is
+
+\begin{corollary}\label{C:normal-orthog-invariant}
+Say that
+\(
+    \vX 
+    \sim 
+    \Normal \left( 
+        \vzero, \,
+        \sigma^2 \mI_p
+    \right)
+\)
+and that
+\(
+    \mO \in \reals^{p \times p}
+\)
+is an orthogonal matrix.  Then
+\(
+    \mO \vX \eqd \vX.
+\)
+\end{corollary}
+
+\noindent
+In proving that a random vector has a multivariate normal distribution,
+the following theorem is often useful.
+
+\begin{theorem}[Cram\'er-Wold Device]\label{T:cramer-wold}
+A random vector
+\(
+    \vX \in \reals^p
+\)
+is distributed as 
+\(
+    \Normal \left(
+        \vmu, \,
+        \mSigma
+    \right)
+\)
+iff for any fixed vector
+\(
+    \va \in \reals^p
+\)
+we have that
+\(
+    \va^T \vX
+    \sim
+    \Normal \left(
+        \va^T \vmu, \,
+        \va^T \mSigma \va
+    \right).
+\)
+\end{theorem}
+
+We are often interested in estimating the underlying parameters from
+multivariate normal data.  The sufficient statistics are the standard
+estimates.
+
+\begin{proposition}\label{P:normal-sufficient-stats}
+Say that
+\(
+    \vX_1, \vX_2, \ldots, \vX_n
+\) 
+are independent draws from a
+\(
+    \Normal \left(
+        \vmu, \,
+        \mSigma
+    \right)
+\)
+distribution.  Then the sample mean
+\begin{equation}\label{E:sample-mean}
+    \vbX_n
+    \define
+    \frac{1}{n}
+    \sum_{i=1}^n
+        \vX_i
+\end{equation}
+and the sample covariance
+\begin{equation}\label{E:sample-covariance}
+    \mS_n
+    \define
+    \frac{1}{n-1}
+    \sum_{i=1}^n
+        \left(
+            \vX_i - \vbX_n
+        \right)^2
+\end{equation}
+are sufficient statistics for $\vmu$ and $\mSigma$.
+\end{proposition}
+
+To descripte the distribution of $\mS_n$, we need to introduce the 
+Wishart distribution.
+
+\begin{definition}[Wishart Distribution]\label{D:wishart}
+Let 
+\(
+    \mSigma \in \reals^{p \times p}
+\)
+be a fixed positive-definite matrix and
+\(
+    n
+\)
+be a positive real number.  We say that a random matrix
+\(
+    \mA \in \reals^{p \times p}
+\)
+has is Wishart-distributed with 
+\(
+    n
+\)
+degrees of freedom and scale parameter
+\(
+    \mSigma
+\) 
+when the elements of
+\(
+    \mA
+\) 
+have density over positive-definite matrices defined by
+\begin{equation}\label{E:wishart-density}
+    \frac{ |\mA|^\frac{n-p-1}{2} }
+         { 2^\frac{np}{2} 
+           |\mSigma|^\frac{n}{2} 
+           \Gamma_p \left( \frac{n}{2} \right) }
+    \exp \left(
+        -
+        \tr \left(
+            \mSigma^{-1} \mA
+        \right)
+    \right),
+\end{equation}
+where
+\(
+    \Gamma_p \left( \cdot \right)
+\)
+is the multivariate gamma function, defined by
+\(
+    \Gamma_p \left( \frac{n}{2} \right)
+    =
+    \pi^{p(p-1)/4}
+    \prod_{i=1}^p
+        \Gamma \left(
+            \frac{n + 1 - i}{2}
+        \right).
+\)
+We denote this by 
+\(
+    \mA
+    \sim
+    \Wishart_p \left(
+        \mSigma, \,
+        n
+    \right).
+\)
+\end{definition}
+
+\noindent
+The distribution arrises from the sample covariance of a sequence of
+multivariate normal observations.
+
+\begin{proposition}
+Let
+\(
+    \vX_1, \vX_2, \ldots, \vX_n
+\)
+be a sequence of \iid random vectors in 
+\(
+    \reals^p
+\)
+with
+\(
+    \vX_1
+    \sim
+    \Normal \left(
+        \vzero, \,
+        \mSigma
+    \right).
+\)
+Then
+\[
+    \sum_{i=1}^n
+        \vX_i \vX_i^T
+    \sim
+    \Wishart_p \left(
+        \mSigma, \,
+        n
+    \right).
+\]
+\end{proposition}
+
+\begin{proposition}
+Let 
+\(
+    \vbX_n
+\) 
+and 
+\(
+    \mS_n
+\)
+be defined as in Proposition~\ref{P:normal-sufficient-stats}.  Then
+\(
+    \vbX_n
+\)
+and
+\(
+    \mS_n
+\)
+are independent with
+\(
+    \vbX_n
+    \sim
+    \Normal \left(
+        \mu, \,
+        \frac{1}{n}
+        \mSigma
+    \right)
+\)
+and
+\(
+    (n-1)
+    \mS_n
+    \sim
+    \Wishart_p \left(
+        \mSigma, \,
+        n-1
+    \right)
+\).
+\end{proposition}
+
+\noindent
+White Wishart matrices--those with scale parameter $\mSigma = \sigma^2 \mI_p$
+are of particular interest.  We can characterize their distribution in
+terms of eigenvalues and eigenvectors.
+
+\begin{proposition}
+Suppose that
+\(
+    \mA
+    \sim
+    \Wishart_p \left(
+        \sigma^2 \mI_p, \,
+        n
+    \right)
+\)
+with
+\(
+    n > p
+\)
+and let
+\(
+    \mA = n \mO \mL \mO^T
+\)
+be the spectral decomposition of
+\(
+    \mA,
+\)
+with
+\(
+    \mL
+    =
+    \diag \left(
+        \ell_1,
+        \ell_2,
+        \ldots,
+        \ell_p
+    \right)
+\)
+and
+\(
+    \ell_1
+    \geq
+    \ell_2
+    \geq
+    \cdots
+    \geq
+    \ell_p
+    \geq
+    0.
+\)
+Then $\mO$ and $\mL$ are independent with $\mO$ Haar-distributed over
+the group of $p \times p$ orthogonal matrices and the elements of $\mL$
+having density
+\begin{equation}\label{E:wishart-eig-density}
+\end{equation}    
+    FIXME
+\end{proposition}
+
+
+\subsection{Large $n$ asymptotics}
+
+In this section we present results about sample covariance matrices when the sample size, $n$, tends to infinity.  Our first observation follows directly from the multivariate central limit theorem.
+
+\begin{proposition}\label{P:sample-cov-limit}
+Suppose that 
+\(
+    \vX_1, \vX_2, \ldots, \vX_n
+\)
+is a sequence of \iid random vectors in $\reals^p$ with 
+\[
+    \E \left[
+        \vX_1 \vX_1^T
+    \right]
+    =
+    \mSigma,
+\]
+and for all $i,j,i',j' < p$ there exists 
+\(
+    \Gamma_{iji'j'} < \infty
+\)
+with
+\[
+    \E \left[
+        \left(
+            X_{1i} X_{1j}
+            -
+            \sigma_{ij}
+        \right)
+        \left(
+            X_{1i'} X_{1j'}
+            -
+            \sigma_{i'j'}
+        \right)
+    \right]
+    =
+    \Gamma_{iji'j'}.
+\]
+If
+\(
+    \mS_n
+    =
+    \frac{1}{n}
+    \sum_{i=1}^n
+        \vX_i \vX_i^T
+\)
+then
+\(
+    \sqrt{n}
+    \left(
+        \vecm \left( 
+            \mS_n - \mSigma 
+        \right)
+    \right)
+    \tod
+    \vecm \left( 
+        \mG
+    \right),
+\)
+where $\mG$ is a random $p \times p$ symmetric matrix with 
+\(
+    \vecm \left( \mG \right)
+\)
+a mean-zero multivariate normal having
+\(
+    \cov \left(
+        G_{ij}, \,
+        G_{i'j'}
+    \right)
+    =
+    \Gamma_{iji'j'}.
+\)
+\end{proposition}
+
+\noindent
+It is often inconvenient to work with the sample covariance matrix when
+\(
+    \mSigma
+\)
+is not diagonal.  By factorizing
+\(
+    \mSigma
+    =
+    \mPhi
+    \mLambda
+    \mPhi^T
+\)
+for orthogonal $\mPhi$ and diagonal $\mLambda$, we can transform the variables, replacing 
+\(
+    \vX_i
+\)
+with 
+\(
+    \vtX_i
+    \define
+    \mPhi^T \vX_i
+\)
+to get
+\(
+    \E \left[
+        \vtX_i
+        \vtX_i^T
+    \right]
+    =
+    \mLambda.
+\)
+Thus, there is often no loss in generality in assuming that $\mSigma$ is diagonal.
+
+The next result we present is motivated by Proposition~\ref{P:sample-cov-limit} and is originally due to Anderson~\cite{anderson1963atp}, though he does not state his result quite like we do.  
+
+\begin{theorem}
+    
+\end{theorem}
+
+\begin{lemma}\label{L:eigen-perturb}
+For 
+\(
+    n \to \infty
+\)
+and fixed
+\(
+    p
+\)
+let
+\(
+    \mS_n \in \reals^{p\times p}
+\) 
+be a sequence of symmetric matrices of the form
+\[
+    \mS_n 
+    = 
+    \mLambda
+    +
+    \frac{1}{\sqrt{n}}
+    \mH_n
+    +
+    \oh\left( \frac{1}{\sqrt{n}} \right),
+\]
+where
+\(
+    \mLambda
+    =
+    \diag \left(
+        \lambda_1,
+        \lambda_2,
+        \ldots,
+        \lambda_p
+    \right)
+\)
+with 
+\(
+    \lambda_1 > \lambda_2 > \cdots > \lambda_p
+\) 
+and
+\(
+    \mH_n = \Oh\left( 1 \right).
+\)
+Define $\mS_n = \mU_n \mL_n \mU_n^T$ to be the eigen-decomposition of $\mS_n$, with
+\(
+    \mL_n
+    =
+    \diag \left(
+        \ell_{n,1}, \ell_{n,2}, \ldots, \ell_{n,p}
+    \right).
+\)
+Further suppose that $U_{n,ii} \geq 0$ for $1 \leq i \leq p$ and
+\(
+    \ell_{n,1} > \ell_{n,2} > \cdots > \ell_{n,p}.
+\)
+Then for all $1 \leq i,j \leq p$ and $i \neq j$ we have
+\begin{subequations}
+\begin{align}
+    U_{n,ii} 
+        &= 1 
+           + 
+           \oh \left( 
+               \frac{ 1 }{ \sqrt{n} }
+           \right), \\
+    U_{n,ij}
+        &= -
+           \frac{ 1 }{ \sqrt{n} }
+           \frac{ H_{n,ij} }{ \lambda_i - \lambda_j }
+           +
+           \oh \left(
+               \frac{ 1 }{ \sqrt{n} }
+           \right), \quad \text{and} \\
+    \ell_{n,i}
+        &= \lambda_i
+           + 
+           \frac{ H_{n,ii} }{ \sqrt{n} }
+           +
+           \oh \left(
+               \frac{ 1 }{ \sqrt{n} }
+           \right).
+\end{align}
+\end{subequations}
+\end{lemma}
+\begin{proof}
+Define $p\times p$ matrices $\mE_n$, $\mF_n$, and $\mDelta_n$ so that
+\begin{align}
+    \mE_n
+        &=
+        \diag \left(
+            \mU_{n,11},
+            \mU_{n,22},
+            \ldots,
+            \mU_{n,pp}
+        \right), \\
+    \mF_n 
+        &= 
+        \sqrt{n} \left( \mU_n - \mE_n \right), \\
+    \mDelta_{n}
+        &=
+        \sqrt{n} \left( \mL_n - \mLambda \right), \\
+\intertext{giving}
+    \mU_n
+        &= \mE_n + \frac{1}{\sqrt{n}} \mF_n, \quad \text{and} \notag \\
+    \mL_n
+        &= \mLambda + \frac{1}{\sqrt{n}} \mDelta_{n}. \notag
+\end{align}
+We have that 
+\begin{align}
+    \mS_n 
+    &= \mLambda 
+       + \frac{1}{\sqrt{n}} \mH_n 
+       + \oh \left( \frac{1}{\sqrt{n}}\right) \notag \\
+    &= \mU_n \mL_n \mU_n^T \notag \\
+    &= \mE_n \mLambda \mE_n^T
+       + 
+       \frac{1}{\sqrt{n}} \left(
+           \mE_n \mDelta_n \mE_n^T
+           +
+           \mF_n \mLambda \mE_n^T
+           +
+           \mE_n \mLambda \mF_n^T
+       \right)
+       +
+       \frac{1}{n}
+       \mM_n \label{L:eigen-perturb:E:eigen-perturb}
+\end{align}
+where the elements of $\mM_n$ are sums and products of the elements of $\mE_n$, $\mF_n$, $\mLambda$, $\mDelta_n$, and $\frac{1}{\sqrt{n}}$.  Also,
+\begin{align}
+    \mI_p
+    &= \mU_n \mU_n^T \notag \\
+    &= \mE_n \mE_n^T
+       + 
+       \frac{1}{\sqrt{n}} \left(
+           \mF_n \mE_n^T
+           +
+           \mE_n \mF_n^T
+       \right)
+       + 
+       \frac{1}{n}
+       \mW_n, \label{L:eigen-perturb:E:orthog-perturb}
+\end{align}
+where $\mW_n = \mF_n \mF_n^T$.
+From \eqref{L:eigen-perturb:E:orthog-perturb} we see that for $1 \leq i,j \leq p$ and $i \neq j$ we must have
+\begin{subequations}
+\begin{align}
+    1 &= E_{n,ii}^2 
+         + 
+         \frac{1}{n} W_{n,ii}, 
+         \quad \text{and}
+         \label{L:eigen-perturb:E:orthog-perturb-1} \\
+    0 &= E_{n,ii} F_{n,ji} 
+         + 
+         F_{n,ij} E_{n,jj} 
+         + 
+         \frac{1}{\sqrt{n}} W_{n,ij}.
+         \label{L:eigen-perturb:E:orthog-perturb-2}
+\end{align}
+\end{subequations}
+Substituting
+\(
+    E_{n,ii}^2 = 1 - \frac{1}{n} W_{n,ii}
+\)
+into equation~\eqref{L:eigen-perturb:E:eigen-perturb}, we get
+\begin{subequations}
+\begin{align}
+    H_{n,ii} 
+        &= E_{n,ii} \Delta_{n,ii} E_{n,ii}
+           + 
+           \frac{1}{\sqrt{n}} \left(
+                M_{n,ii} - \lambda_i W_{n,ii}
+           \right)
+           +
+           \oh \left( 1 \right), \quad \text{and} 
+           \label{L:eigen-perturb:E:eigen-perturb-1} \\
+    H_{n,ij}
+        &= \lambda_j E_{n,jj} F_{n,ij}
+           +
+           \lambda_i F_{n,ji} E_{n,ii} 
+           +
+           \frac{1}{\sqrt{n}} M_{n,ij}
+           +
+           \oh \left( 1 \right).
+           \label{L:eigen-perturb:E:eigen-perturb-2} 
+\end{align}
+\end{subequations}
+Equations~\eqref{L:eigen-perturb:E:orthog-perturb-1}--\eqref{L:eigen-perturb:E:eigen-perturb-2} admit the solution
+\begin{subequations}
+\begin{align}
+    E_{n,ii} 
+        &= 1 + \oh\left(\frac{1}{\sqrt{n}}\right), \\
+    F_{n,ij}
+        &= -
+           \frac{ H_{n,ij} }
+                { \lambda_i - \lambda_j }
+           +
+           \oh \left( 1 \right), \quad \text{and} \\
+    \Delta_{n,ii}
+        &= H_{n,ii} + \oh\left( 1 \right).
+\end{align}
+\end{subequations}
+Furthermore, each element of $\mM_n$ and $\mW_n$ is of size
+\(
+    \Oh\left( p \right).
+\)
+\end{proof}
+

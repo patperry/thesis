@@ -1,0 +1,70 @@
+
+\documentclass[12pt]{report}
+% note that the documentclass can take other option such as
+% twoside - for double sided printing
+% openright - if double side  chapters always start on odd pages
+% openany - if double side chapters start on the next page even or odd
+% 12pt can be replaced by 11pt
+
+
+\usepackage{suthesis-2e}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{epsfig}
+\usepackage{perry-thesis-macros}
+
+\newcommand{\dirsep}{/}
+\newcommand{\dirprefix}{}
+\newcommand{\thesischapter}[1]{{\dirprefix #1\dirsep #1}}
+
+
+    \title{Cross-Validation for Supervised Learning}
+    \author{Patrick O. Perry}
+    \dept{Statistics}
+    \principaladviser{Art B. Owen}
+    \firstreader{Trevor Hastie}
+    \secondreader{Iain M. Johnstone}
+% \thirdreader{}
+
+\includeonly{
+    %\thesischapter{multivariate},
+}
+
+
+\begin{document}
+
+ 
+
+% first the preface sections.  
+
+% this includes the file preface.tex which should include the
+% following commands
+% \beforepreface
+% \prefacesection{preface}
+% body of the preface
+%\include{preface}
+
+% any other preface sections
+
+% the last preface section (e.g., acknowledgement.tex)
+% should look like
+% \prefacesection{Acknowledgement}
+% body 
+% \afterpreface
+%\include{acknowledgement}
+
+
+\include{\thesischapter{multivariate}}
+
+% and the end material
+
+\appendix
+
+%\include{appendix1}
+
+
+\include{bibliography}
+
+\end{document}
+
