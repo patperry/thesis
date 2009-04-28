@@ -13,7 +13,7 @@ For mean vector
 \(
     \vmu \in \reals^p
 \)
-and positive-definite covariance matrix
+and positive-semidefinite covariance matrix
 \(
     \mSigma \in \reals^{p\times p},
 \)
@@ -30,7 +30,22 @@ is distributed from the multivariate normal distribution, denoted
         \mSigma
     \right)
 \)
-if its components have density
+if for every fixed vector $\va \in \reals^p$, the vector
+$\va^T \vX$ has a univariate normal distribution with mean
+\(
+    \va^T \vmu
+\)
+and variance
+\(
+    \va^T \mSigma \va
+\).
+\end{definition}
+
+\noindent
+The multivariate normal distribution is defined for any positive-semidefinite covariance matrix $\mSigma$, but it only has a density when $\mSigma$ is strictly positive definite.
+
+\begin{proposition}
+If $\vX \in \reals^p$ follows a multivariate normal distribution with mean $\vmu$ and positive-definite covariance matrix $\mSigma$, then its components have density
 \begin{equation}\label{E:normal-density}
     f( \vx )
     =
@@ -44,9 +59,8 @@ if its components have density
         (\vx - \mu)
     \right).
 \end{equation}
-\end{definition}
+\end{proposition}
 
-\noindent
 A basic fact about the multivariate normal is the following:
 
 \begin{proposition}\label{P:scale-shift-normal}
@@ -55,9 +69,9 @@ Let
     \va \in \reals^p,
 \)
 \(
-    \mC \in \reals^{q \times p}
+    \mC \in \reals^{q \times p},
 \)
-for $q \leq p$, and say
+and say
 \(
     \vX 
     \sim
@@ -100,7 +114,6 @@ is an orthogonal matrix.  Then
 \)
 \end{corollary}
 
-\noindent
 In proving that a random vector has a multivariate normal distribution,
 the following theorem is often useful.
 
@@ -172,31 +185,42 @@ To descripte the distribution of $\mS_n$, we need to introduce the
 Wishart distribution.
 
 \begin{definition}[Wishart Distribution]\label{D:wishart}
-Let 
+Let $\vX_1, \vX_2, \ldots, \vX_n \in \reals^p$ be an \iid sequence of
+random vectors with each distributed as
 \(
-    \mSigma \in \reals^{p \times p}
+    \Normal \left(
+        \vzero, \,
+        \mSigma
+    \right).
 \)
-be a fixed positive-definite matrix and
-\(
-    n \geq p
-\)
-be a positive real number.  We say that a random matrix
-\(
-    \mA \in \reals^{p \times p}
-\)
-is Wishart-distributed with 
-\(
-    n
-\)
-degrees of freedom and scale
-\(
-    \mSigma
-\) 
-when the elements of
+Then the matrix
+\[
+    \mA = \sum_{i=1}^n \vX_i \vX_i^T
+\]
+is said to have the Wishart distribution with $n$ degrees of freedom and scale parameter $\mSigma$.  We denote this by
 \(
     \mA
-\) 
-have density over the space of positive-definite matrices equal to
+    \sim
+    \Wishart_p \left(
+        n, \,
+        \mSigma
+    \right).
+\)
+\end{definition}
+
+\noindent
+When $n \geq p$ and $\mSigma$ is positive-definite, the elements of a Wishart matrix have a density.
+\begin{proposition}
+Suppose that
+\(
+    \mA
+    \sim
+    \Wishart_p \left(
+        n, \,
+        \mSigma
+    \right)
+\).
+If $n \geq p$ and $\mSigma$ is positive-definite, then the elements of $\mA$ have a density over the space of positive-definite matrices, given by
 \begin{equation}\label{E:wishart-density}
     f( \mA )
     =
@@ -225,50 +249,9 @@ is the multivariate gamma function, computed as
             \frac{n + 1 - i}{2}
         \right).
 \end{equation}
-We denote this distribution by 
-\(
-    \mA
-    \sim
-    \Wishart_p \left(
-        n, \,
-        \mSigma
-    \right).
-\)
-\end{definition}
-
-\noindent
-The distribution arrises from the sample covariance of a sequence of
-multivariate normal observations.
-
-\begin{proposition}
-Let
-\(
-    \vX_1, \vX_2, \ldots, \vX_n
-\)
-be a sequence of \iid random vectors in 
-\(
-    \reals^p
-\)
-with $n \geq p$ and
-\(
-    \vX_1
-    \sim
-    \Normal \left(
-        \vzero, \,
-        \mSigma
-    \right).
-\)
-Then
-\[
-    \sum_{i=1}^n
-        \vX_i \vX_i^T
-    \sim
-    \Wishart_p \left(
-        n, \,
-        \mSigma
-    \right).
-\]
 \end{proposition}
+
+We can now characterize the distributions of the sufficient statistics of a sequence of \iid multivariate normal random vectors.
 
 \begin{proposition}
 Let 
@@ -279,7 +262,7 @@ and
 \(
     \mS_n
 \)
-be defined as in Proposition~\ref{P:normal-sufficient-stats}, with $n > p$.  Then
+be defined as in Proposition~\ref{P:normal-sufficient-stats}.  Then
 \(
     \vbX_n
 \)
@@ -309,8 +292,7 @@ and
 \).
 \end{proposition}
 
-\noindent
-White Wishart matrices--those with scale parameter $\mSigma = \sigma^2 \mI_p$
+White Wishart matrices---those with scale parameter $\mSigma = \sigma^2 \mI_p$
 are of particular interest.  We can characterize their distribution in
 terms of eigenvalues and eigenvectors.
 
