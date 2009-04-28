@@ -3,9 +3,9 @@
 
 In the proof that follows, we will draw heavily on results about matrices of \iid $\Normal(0,1)$ entries. We use this section and to gather the relevant results. This section is concerned with classical results, which correspond to $p$ and either $n$ fixed or $n\to\infty$.
 
-\subsection{The multivariate normal and Wishart distributions}
+\section{The multivariate normal and Wishart distributions}
 
-We start the definition of the multivariate normal distribution and some basic properties, which can be found, for example, in FIXME: ref.
+We start the definition of the multivariate normal distribution and some basic properties, which can be found, for example, in \cite{muirhead1982ams}[Chapters 1--3].
 
 \begin{definition}[Multivariate Normal Distribution]
     \label{D:multivariate-normal}
@@ -55,9 +55,9 @@ Let
     \va \in \reals^p,
 \)
 \(
-    \mC \in \reals^{q \times p},
+    \mC \in \reals^{q \times p}
 \)
-and say
+for $q \leq p$, and say
 \(
     \vX 
     \sim
@@ -116,7 +116,7 @@ is distributed as
         \mSigma
     \right)
 \)
-iff for any fixed vector
+iff for all fixed vectors
 \(
     \va \in \reals^p
 \)
@@ -178,17 +178,17 @@ Let
 \)
 be a fixed positive-definite matrix and
 \(
-    n
+    n \geq p
 \)
 be a positive real number.  We say that a random matrix
 \(
     \mA \in \reals^{p \times p}
 \)
-has is Wishart-distributed with 
+is Wishart-distributed with 
 \(
     n
 \)
-degrees of freedom and scale parameter
+degrees of freedom and scale
 \(
     \mSigma
 \) 
@@ -196,8 +196,10 @@ when the elements of
 \(
     \mA
 \) 
-have density over positive-definite matrices defined by
+have density over the space of positive-definite matrices equal to
 \begin{equation}\label{E:wishart-density}
+    f( \mA )
+    =
     \frac{ |\mA|^\frac{n-p-1}{2} }
          { 2^\frac{np}{2} 
            |\mSigma|^\frac{n}{2} 
@@ -213,8 +215,8 @@ where
 \(
     \Gamma_p \left( \cdot \right)
 \)
-is the multivariate gamma function, defined by
-\(
+is the multivariate gamma function, computed as
+\begin{equation}
     \Gamma_p \left( \frac{n}{2} \right)
     =
     \pi^{p(p-1)/4}
@@ -222,14 +224,14 @@ is the multivariate gamma function, defined by
         \Gamma \left(
             \frac{n + 1 - i}{2}
         \right).
-\)
-We denote this by 
+\end{equation}
+We denote this distribution by 
 \(
     \mA
     \sim
     \Wishart_p \left(
-        \mSigma, \,
-        n
+        n, \,
+        \mSigma
     \right).
 \)
 \end{definition}
@@ -247,7 +249,7 @@ be a sequence of \iid random vectors in
 \(
     \reals^p
 \)
-with
+with $n \geq p$ and
 \(
     \vX_1
     \sim
@@ -262,8 +264,8 @@ Then
         \vX_i \vX_i^T
     \sim
     \Wishart_p \left(
-        \mSigma, \,
-        n
+        n, \,
+        \mSigma
     \right).
 \]
 \end{proposition}
@@ -277,7 +279,7 @@ and
 \(
     \mS_n
 \)
-be defined as in Proposition~\ref{P:normal-sufficient-stats}.  Then
+be defined as in Proposition~\ref{P:normal-sufficient-stats}, with $n > p$.  Then
 \(
     \vbX_n
 \)
@@ -301,8 +303,8 @@ and
     \mS_n
     \sim
     \Wishart_p \left(
-        \mSigma, \,
-        n-1
+        n-1, \,
+        \mSigma
     \right)
 \).
 \end{proposition}
@@ -318,13 +320,13 @@ Suppose that
     \mA
     \sim
     \Wishart_p \left(
-        \sigma^2 \mI_p, \,
-        n
+        n, \,
+        \sigma^2 \mI_p
     \right)
 \)
 with
 \(
-    n > p
+    n \geq p
 \)
 and let
 \(
@@ -339,38 +341,185 @@ with
     \mL
     =
     \diag \left(
-        \ell_1,
-        \ell_2,
+        l_1,
+        l_2,
         \ldots,
-        \ell_p
+        l_p
     \right)
 \)
 and
 \(
-    \ell_1
-    \geq
-    \ell_2
-    \geq
+    l_1
+    >
+    l_2
+    >
     \cdots
-    \geq
-    \ell_p
-    \geq
+    >
+    l_p
+    >
     0.
 \)
 Then $\mO$ and $\mL$ are independent with $\mO$ Haar-distributed over
 the group of $p \times p$ orthogonal matrices and the elements of $\mL$
-having density
+have density
 \begin{equation}\label{E:wishart-eig-density}
+    \frac{ \pi^{p^2/2} }
+         { \left( 2 \sigma^2 \right)^{np/2}
+           \Gamma_p \left( \frac{n}{2} \right) 
+           \Gamma_p \left( \frac{p}{2} \right) }
+    \prod_{i < j}^p
+        \left| l_i - l_j \right|
+    \prod_{i=1}^p
+        l_i^{(n-p-1)/2}
+        e^{-l_i/(2 \sigma^2)}.
 \end{equation}    
-    FIXME
 \end{proposition}
+\noindent
+In the random matrix theory literature, with $\sigma^2 = 1$ the eigenvalue density above is sometimes referred to as the Laguerre Orthogonal Ensemble (LOE).
 
+\section{Classical asymptotics}
 
-\subsection{Large $n$ asymptotics}
+In this section we present results about sample covariance matrices when the sample size, $n$, tends to infinity, with the number of dimensions, $p$ a fixed constant.  A straightforward application of the strong law of large numbers gives us the limits of the sample mean and covariance.
 
-In this section we present results about sample covariance matrices when the sample size, $n$, tends to infinity.  Our first observation follows directly from the multivariate central limit theorem.
+\begin{lemma}\label{L:suff-stat-limits}
+Let $\vX_1, \vX_2, \ldots, \vX_n$ be a sequence of \iid random vectors in $\reals^p$ with
+\(
+    \E \left[
+        \vX_1
+    \right]
+    =
+    \vmu
+\)
+and
+\(
+    \E \left[
+        \left( \vX_1 - \vmu \right)
+        \left( \vX_1 - \vmu \right)^T
+    \right]
+    =
+    \mSigma.
+\)
+Then, as $n \to \infty$,
+\[
+    \vbX_n
+    \define
+    \frac{1}{n}
+    \sum_{i=1}^n
+        \vX_i
+    \toas
+    \vmu
+\]
+and
+\[
+    \mS_n
+    \equiv
+    \frac{1}{n-1}
+    \sum_{i=1}^{n}
+        \left( \vX_i - \vbX_n \right)
+        \left( \vX_i - \vbX_n \right)^T
+    \toas
+    \mSigma.
+\]
+\end{lemma}
 
-\begin{proposition}\label{P:sample-cov-limit}
+To simplify matters, for the rest of the section we will mostly work in a setting when the variables have been centered.  In this case, the sample covariance matrix takes the form
+\(
+    \mS_n = \frac{1}{n} \sum_{i=1}^n \vX_i \vX_i^T.
+\)
+To see that centering the variables does not change the theory in any essential way, we provide the following lemma.
+
+\begin{lemma}
+Let $\vX_1, \vX_2, \ldots, \vX_n$ be a sequence of random vectors in $\reals^p$ with mean $\vmu$ and covariance $\mSigma$.  Let
+\(
+    \vbX_n = \frac{1}{n} \sum_{i=1}^n \vX_i
+\)
+and
+\(
+    \mS_n
+    =
+    \frac{1}{n-1}
+    \sum_{i=1}^n
+        \left( \vX_i - \vbX_n \right)
+        \left( \vX_i - \vbX_n \right)^T
+\)
+be the sample mean and covariance, respectively.  Define the centered
+variables
+\(
+    \vtX_i = \vX_i - \vmu.
+\)
+Then
+\[
+    \mS_n
+    =
+    \frac{1}{n}
+    \sum_{i=1}^n
+        \vtX_i \vtX_i^T
+    +
+    \OhP\left( \frac{1}{n} \right).
+\]
+In particular, this implies that
+\[
+    \sqrt{n}
+    \left(
+        \mS_n - \mSigma
+    \right)
+    =
+    \sqrt{n}
+    \left(
+        \frac{1}{n}
+        \sum_{i=1}^n
+            \vtX_i \vtX_i^T
+        -
+        \mSigma
+    \right)
+    + 
+    \OhP \left( \frac{1}{\sqrt{n}} \right).
+\]
+\end{lemma}
+\begin{proof}
+We can write
+\begin{align*}
+    \mS_n &= \frac{1}{n-1}
+             \sum_{i=1}^n \vtX_i \vtX_i^T
+             +
+             \frac{n}{n-1}
+             \left(
+                \vbX_n - \vmu
+             \right)
+             \left(
+                \vbX_n - \vmu
+             \right)^T \\
+          &= \left(
+                \frac{1}{n}
+                +
+                \frac{1}{n (n-1) }
+             \right)
+             \sum_{i=1}^n \vtX_i \vtX_i^T
+             +
+             \frac{n}{n-1}
+             \left(
+                \vbX_n - \vmu
+             \right)
+             \left(
+                \vbX_n - \vmu
+             \right)^T
+\end{align*}
+The result follows since
+\(
+    \vtX_i \vtX_i^T = \OhP \left( 1 \right)
+\)
+and
+\(
+    \vbX_n - \vmu 
+    = 
+    \OhP \left( \frac{1}{ \sqrt{n} } \right).
+\)
+
+\end{proof}
+
+The next fact follows directly from the multivariate central limit theorem.
+
+\begin{lemma}\label{L:sample-cov-limit}
 Suppose that 
 \(
     \vX_1, \vX_2, \ldots, \vX_n
@@ -383,7 +532,7 @@ is a sequence of \iid random vectors in $\reals^p$ with
     =
     \mSigma,
 \]
-and for all $i,j,i',j' < p$ there exists 
+and for all $1 \leq i,j,i',j' \leq p$ there exists 
 \(
     \Gamma_{iji'j'} < \infty
 \)
@@ -393,12 +542,12 @@ with
         \left(
             X_{1i} X_{1j}
             -
-            \sigma_{ij}
+            \Sigma_{ij}
         \right)
         \left(
             X_{1i'} X_{1j'}
             -
-            \sigma_{i'j'}
+            \Sigma_{i'j'}
         \right)
     \right]
     =
@@ -410,15 +559,13 @@ If
     =
     \frac{1}{n}
     \sum_{i=1}^n
-        \vX_i \vX_i^T
+        \vX_i \vX_i^T,
 \)
 then
 \(
     \sqrt{n}
-    \left(
-        \vecm \left( 
-            \mS_n - \mSigma 
-        \right)
+    \vecm \left( 
+        \mS_n - \mSigma 
     \right)
     \tod
     \vecm \left( 
@@ -429,7 +576,7 @@ where $\mG$ is a random $p \times p$ symmetric matrix with
 \(
     \vecm \left( \mG \right)
 \)
-a mean-zero multivariate normal having
+a mean-zero multivariate normal having covariance
 \(
     \cov \left(
         G_{ij}, \,
@@ -438,10 +585,10 @@ a mean-zero multivariate normal having
     =
     \Gamma_{iji'j'}.
 \)
-\end{proposition}
+\end{lemma}
 
 \noindent
-It is often inconvenient to work with the sample covariance matrix when
+It is inconvenient to study the properties of the sample covariance matrix when the population covariance
 \(
     \mSigma
 \)
@@ -453,11 +600,7 @@ is not diagonal.  By factorizing
     \mLambda
     \mPhi^T
 \)
-for orthogonal $\mPhi$ and diagonal $\mLambda$, we can transform the variables, replacing 
-\(
-    \vX_i
-\)
-with 
+for orthogonal $\mPhi$ and diagonal $\mLambda$, we can introduce
 \(
     \vtX_i
     \define
@@ -470,15 +613,112 @@ to get
         \vtX_i^T
     \right]
     =
-    \mLambda.
+    \mLambda
 \)
-Thus, there is often no loss in generality in assuming that $\mSigma$ is diagonal.
+and
+\(
+    \mS_n
+    =
+    \mPhi
+    \left(
+        \frac{1}{n}
+        \sum_{i=1}^n
+            \vtX_i \vtX_i^T
+    \right)
+    \mPhi^T.
+\)
+With this transformation, we can characterize the distribution of $\mS_n$ completely in terms of
+\(
+    \frac{1}{n}
+    \sum_{i=1}^n
+        \vtX_i \vtX_i^T.
+\)
 
-The next result we present is motivated by Proposition~\ref{P:sample-cov-limit} and is originally due to Anderson~\cite{anderson1963atp}, though he does not state his result quite like we do.  
+If the elements of $\vX_1$ have vanishing first and third moments (for instance if
+\(
+    \vX_1 \eqd - \vX_1
+\)
+), and if
+\(
+    \E \left[
+        \vX_1 \vX_1^T
+    \right]
+    =
+    \diag \left(
+        \lambda_1,
+        \lambda_2,
+        \ldots,
+        \lambda_p
+    \right),
+\)
+then $\Gamma_{iji'j'}$ simplifies to
+\begin{subequations}
+\begin{align}
+    \Gamma_{iiii} &= \E \left[ X_{1i}^4 \right] - \lambda_i^2 \quad 
+                         &&\text{for $1 \leq i \leq p$}, \\
+    \Gamma_{ijij} = \Gamma_{ijji} &= \E \left[ X_{1i}^2 X_{1j}^2 \right]
+                         &&\text{for $ 1 \leq i,j \leq p$, $i \neq j$;}
+\end{align}
+\end{subequations}
+all other values of $\Gamma_{iji'j'}$ are $0$.  In particular, this
+implies that the elements of $\vecm \left( \mG \right)$ are independent.
+If we also have that $\vX_1$ is multivariate normal, then 
+\begin{subequations}
+\begin{align}
+    \Gamma_{iiii} &= 2 \lambda_i^2
+                         &&\text{for $1 \leq i \leq p$, and} \\    
+    \Gamma_{ijij} = \Gamma_{ijji} &= \lambda_i \lambda_j
+                         &&\text{for $ 1 \leq i,j \leq p$, $i \neq j$.}
+\end{align}
+\end{subequations}
 
-\begin{theorem}
-    
+The next result we present is about the sample principal compoents.  It is motivated by Proposition~\ref{L:sample-cov-limit} and is originally due to Anderson~\cite{anderson1963atp}, though he does not state result quite like this.  
+
+\begin{theorem}\label{T:eigen-random-perturb}
+For $n\to \infty$ and $p$ fixed, let $\mS_1, \mS_2, \ldots, \mS_n$ be a sequence of random symmetric $p \times p$ matrices with 
+\(
+    \sqrt{n} \vecm \left( \mS_n - \mLambda \right)
+    \tod
+    \vecm \left( \mG \right),
+\)
+for a deterministic
+\(
+    \mLambda = \diag\left( \lambda_1, \lambda_2, \ldots, \lambda_p \right)
+\)
+having $\lambda_1 > \lambda_2 > \cdots > \lambda_p$ and a random symmetric matrix $\mG$.
+Let
+\(
+    \mS_n = \mU_n \mL_n \mU_n^T
+\)
+be the eigendecomposition of $\mS_n$, with
+\(
+    \mL_n = \diag\left( l_{n,1}, l_{n,2}, \ldots, l_{n,p} \right)
+\)
+and
+\(
+    l_{n,1} \geq l_{n,2} \geq \cdots \geq l_{n,p}.
+\)
+If $\mG = \OhP\left( 1 \right)$, and the signs of $\mU_n$ are chosen so that $\mU_{n,ii} \geq 0$ for $1 \leq i \leq p$, then the elements of $\mU_n$ and $\mL_n$ converge jointly as
+\begin{subequations}
+\begin{alignat}{2}
+    \sqrt{n}
+    \left( U_{n, ii} - 1 \right)
+        &\toP 0
+                &&\quad \text{for $1 \leq i \leq p$,} \\
+    \sqrt{n}
+    U_{n, ij}
+        &\tod -
+              \frac{ G_{ij} }{ \lambda_i - \lambda_j }
+                &&\quad \text{for $1 \leq i,j \leq p$ with $i \neq j$, and} \\
+    \sqrt{n}
+    \left( l_{n,i} - \lambda_i \right)
+        &\tod G_{ii}
+                &&\quad \text{for $1 \leq i \leq p$.} \qedhere
+\end{alignat}
+\end{subequations}
 \end{theorem}
+\noindent
+More generally, Anderson treats the case when the $\lambda_i$ are not all unique.  The key ingredient to Anderson's proof is a perturbation lemma, which we will state and prove.
 
 \begin{lemma}\label{L:eigen-perturb}
 For 
@@ -491,7 +731,7 @@ and fixed
 \)
 let
 \(
-    \mS_n \in \reals^{p\times p}
+    \mS_1, \mS_2, \ldots, \mS_n \in \reals^{p\times p}
 \) 
 be a sequence of symmetric matrices of the form
 \[
@@ -523,17 +763,17 @@ and
 \(
     \mH_n = \Oh\left( 1 \right).
 \)
-Define $\mS_n = \mU_n \mL_n \mU_n^T$ to be the eigen-decomposition of $\mS_n$, with
+Let $\mS_n = \mU_n \mL_n \mU_n^T$ be the eigendecomposition of $\mS_n$, with
 \(
     \mL_n
     =
     \diag \left(
-        \ell_{n,1}, \ell_{n,2}, \ldots, \ell_{n,p}
+        l_{n,1}, l_{n,2}, \ldots, l_{n,p}
     \right).
 \)
 Further suppose that $U_{n,ii} \geq 0$ for $1 \leq i \leq p$ and
 \(
-    \ell_{n,1} > \ell_{n,2} > \cdots > \ell_{n,p}.
+    l_{n,1} > l_{n,2} > \cdots > l_{n,p}.
 \)
 Then for all $1 \leq i,j \leq p$ and $i \neq j$ we have
 \begin{subequations}
@@ -552,7 +792,7 @@ Then for all $1 \leq i,j \leq p$ and $i \neq j$ we have
            \oh \left(
                \frac{ 1 }{ \sqrt{n} }
            \right), \quad \text{and} \\
-    \ell_{n,i}
+    l_{n,i}
         &= \lambda_i
            + 
            \frac{ H_{n,ii} }{ \sqrt{n} }
@@ -606,7 +846,7 @@ We have that
        \frac{1}{n}
        \mM_n \label{L:eigen-perturb:E:eigen-perturb}
 \end{align}
-where the elements of $\mM_n$ are sums and products of the elements of $\mE_n$, $\mF_n$, $\mLambda$, $\mDelta_n$, and $\frac{1}{\sqrt{n}}$.  Also,
+where the elements of $\mM_n$ are sums of $\Oh\left( p \right)$ terms, with each term a product of elements taken from $\mE_n$, $\mF_n$, $\mLambda$, and $\mDelta_n$.  Also,
 \begin{align}
     \mI_p
     &= \mU_n \mU_n^T \notag \\
@@ -680,9 +920,86 @@ Equations~\eqref{L:eigen-perturb:E:orthog-perturb-1}--\eqref{L:eigen-perturb:E:e
         &= H_{n,ii} + \oh\left( 1 \right).
 \end{align}
 \end{subequations}
-Furthermore, each element of $\mM_n$ and $\mW_n$ is of size
-\(
-    \Oh\left( p \right).
-\)
 \end{proof}
 
+An application of the results of this section is the following theorem, which describes the behavior of principal components analysis for large $n$ and fixed $p$.
+
+\begin{theorem}
+Let $\vX_1, \vX_2, \ldots, \vX_n$ be a sequence of \iid 
+\(
+    \Normal \left(
+        \vmu, \,
+        \mSigma
+    \right)
+\)
+random vectors in $\reals^p$, with sample mean
+\(
+    \vbX_n
+\)
+and sample covariance
+\(
+    \mS_n.
+\)
+Let $\mSigma = \mPhi \mLambda \mPhi$ be the eigendecomposition
+of $\mSigma$, with
+\(
+    \mLambda = \diag \left(
+        \lambda_1,
+        \lambda_2,
+        \ldots,
+        \lambda_p
+    \right)
+\)
+and
+\(
+    \lambda_1 > \lambda_2 > \cdots > \lambda_p > 0
+\).
+Similarly, let $\mS_n = \mU_n \mL_n \mU_n^T$ be the eigendecomposition of $\mS_n$, likewise with
+\(
+    \mL_n = \diag \left(
+        l_{n,1},
+        l_{n,2},
+        \ldots,
+        l_{n,p}
+    \right)
+\),
+\(
+    l_1 > l_2 > \cdots > l_p
+\),
+and signs chosen so that
+\(
+    \left( \mPhi^T \mU_n \right)_{ii} \geq 0
+\)
+for $1 \leq i \leq p$.  Then
+\begin{enumerate}[(i)]
+    \item $\mU_n \toas \Phi$ and $l_{n,i} \toas \lambda_i$ for
+        $1 \leq i \leq p$.
+    \item Jointly for all $1 \leq i \leq p$,
+        \[
+            \sqrt{n} \left( l_{n,i} - \lambda_i \right) 
+            \tod 
+            \Normal\left( 0, \, 2 \lambda_i^2 \right)
+        \]
+        and
+        \[
+            \sqrt{n} \left( \mPhi^T \mU_n - \mI_p \right) \tod \mF,
+        \]
+        where $\mF$ is a skew-symmetric matrix independent of the
+        eigenvalue limits with elements above the diagonal independent of
+        each other and distributed as 
+        \[
+            F_{ij}
+            \sim
+            \Normal \left(
+                0, \,
+                \frac{\lambda_i \lambda_j}
+                     {\left( \lambda_i - \lambda_j \right)^2}
+            \right),
+            \quad
+            \text{for all $1 \leq i < j \leq p$.}
+        \]
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+Part (i) is a restatement of Lemma~\ref{L:suff-stat-limits}.  Part (ii) follows from Lemma~\ref{L:sample-cov-limit} and Theorem~\ref{L:eigen-perturb}.
+\end{proof}
