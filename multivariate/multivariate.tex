@@ -92,7 +92,7 @@ Define $\vY = \mC \vX + \va$.  Then
 \end{proposition}
 
 \noindent
-An immediate corollary is
+Two immediate corollaries are
 
 \begin{corollary}\label{C:normal-orthog-invariant}
 Say that
@@ -113,6 +113,34 @@ is an orthogonal matrix.  Then
     \mO \vX \eqd \vX.
 \)
 \end{corollary}
+
+\begin{corollary}
+Suppose that
+\(
+    \vX 
+    \sim 
+    \Normal \left( 
+        \vzero, \,
+        \mSigma
+    \right)
+\)
+and that $\mSigma = \mC \mC^T$ for a matrix $\mC \in \reals^{p \times p}$.
+Let 
+\(
+    \vZ
+    \sim
+    \Normal \left(
+        \vzero, \,
+        \mI_p
+    \right)
+\).
+Then
+\(
+    \mC \vZ
+    \eqd
+    \vX
+\).
+\end{corollary}    
 
 In proving that a random vector has a multivariate normal distribution,
 the following theorem is often useful.
@@ -791,10 +819,10 @@ Define $p\times p$ matrices $\mE_n$, $\mF_n$, and $\mDelta_n$ so that
     \mE_n
         &=
         \diag \left(
-            \mU_{n,11},
-            \mU_{n,22},
+            U_{n,11},
+            U_{n,22},
             \ldots,
-            \mU_{n,pp}
+            U_{n,pp}
         \right), \\
     \mF_n 
         &= 
@@ -922,7 +950,7 @@ and sample covariance
 \(
     \mS_n.
 \)
-Let $\mSigma = \mPhi \mLambda \mPhi$ be the eigendecomposition
+Let $\mSigma = \mPhi \mLambda \mPhi^T$ be the eigendecomposition
 of $\mSigma$, with
 \(
     \mLambda = \diag \left(
@@ -985,3 +1013,102 @@ for $1 \leq i \leq p$.  Then
 \begin{proof}
 Part (i) is a restatement of Lemma~\ref{L:suff-stat-limits}.  Part (ii) follows from Lemma~\ref{L:sample-cov-limit} and Theorem~\ref{L:eigen-perturb}.
 \end{proof}
+
+
+\section{Modern asymptotics}
+
+We now present some results about sample covariance matrices when both the sample size, $n$, and the dimensionality, $p$, go to infinity.  Specifically, most of these results suppose that $n \to \infty$, $p \to \infty$, and 
+\(
+    \frac{n}{p} \to \gamma
+\)
+for a fixed constant
+\(
+    \gamma \in \left( 0, \infty \right).
+\)
+These results are all concerned with the spectra (the set of eigenvalues) of random covariance matrices.  
+
+Given a sequence of sample covariance matrices $\mS_1, \mS_2, \ldots, \mS_n$,
+with $\mS_n \in \reals^{p\times p}$ and $p = p(n)$ results about the eigenvalues of $\mS_n$ generally come in one of two forms.  If we label
+the eigenvalues of $\mS_n$ as
+\(
+    l_{n,1}, l_{n,2}, \ldots, l_{n,p},
+\)
+with $l_{n,1} \geq l_{n,2} \geq \cdots \geq l_{n,p}$, then we can define
+a random meausre
+\[
+    F^{S_n} = \frac{1}{p} \sum_{i=1}^p \delta_{l_{n,i}}.
+\]
+This measure represents a random draw from the set of eigenvalues of $\mS_n$ that puts equal weight on each eigenvalue.  It is called the \emph{spectral measure} of $\mS_n$.  Results about $F^{S_n}$ are generally called results about the ``bulk'' of the spectrum.  Alternatively, we can look at the behavior of the extreme eigenvalues $l_{n,1}$ and $l_{n,p}$.  Results of this type are called ``edge'' results.    
+
+\subsection{The bulk of the spectrum}
+
+To work in a setting where the dimensionality $p$, grows with the sample size, $n$, we will work with a triangular array of sample vectors.  The sample covariance matrix $\mS_n$ is of dimension $p\times p$ and is formed from row $n$ of a triangular array of independent random vectors,  
+$\vX_{n,1}, \vX_{n,2}, \ldots, \vX_{n,n}$.  Specifically,
+\(
+    \mS_n
+    =
+    \frac{1}{n}
+    \sum_{i=1}^n \vX_{n,i} \vX_{n,i}^T.
+\)
+We let $\mX_n$ be the $n \times p$ matrix
+\(
+    \mX_n
+    =
+    \left(
+    \begin{matrix}
+        \vX_{n,1}^T \\
+        \vX_{n,2}^T \\
+        \vdots \\
+        \vX_{n,n}^T
+    \end{matrix}
+    \right),
+\)
+so that 
+\(
+    \mS_n
+    =
+    \frac{1}{n}
+    \mX_n^T \mX_n.
+\)
+Most asymptotic results about sample covariance matrices are expressed in terms of $\mX_n$ rather than $\mS_n$.  For example, the next theorem about the spectral measure of a large covariance matrix is stated this way.
+
+\begin{theorem}
+Let $\mX_1, \mX_2, \ldots, \mX_n$ be a sequence of random matrices of increasing dimension, so that $\mX_n \in \reals^{n\times p}$ and $p = p(n)$.
+Define $\mS_n = \frac{1}{n} \mX_n^T \mX_n$.  If the elements of $\mX_n$ are \iid with $\E| X_{n,11} - \E X_{n,11} |^2 = 1$ and $\frac{n}{p} \to \gamma > 0$, then the empirical spectral measure $F^{\mS_n}$ almost surely converges in distribution to a deterministic probability measure.  This measure, denoted
+$\FMP_\gamma$, is called the Mar\v{c}enko-Pastur Law.  For $\gamma \geq 1$ it
+has density
+\begin{equation}
+    \fMP_\gamma(x)
+    =
+    \frac{\gamma}{2 \pi x}
+    \sqrt{(x - a)(b - x)},
+    \quad
+    a \leq x \leq b,
+\end{equation}
+where
+\(
+    a = \left( 1 - \frac{1}{\sqrt{\gamma}} \right)^2
+\)
+and
+\(
+    b = \left( 1 + \frac{1}{\sqrt{\gamma}} \right)^2.
+\)
+When $\gamma < 1$, there is an additional point-mass of $(1 - \gamma)$ at the origin.
+\end{theorem}
+
+\noindent
+Figure~\ref{F:mp-law} shows the density $\fMP_\gamma(x)$ for different values
+of $\gamma$.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics{mp-law}
+    \caption{
+        \captiontitle{Mar\v{c}enko-Pastur Law}
+        Density, $\fMP_\gamma(x)$, plotted against quantile, $x$,
+        for concentration $\gamma = 0.25$, $1$, and $4$.  Concentration
+        is equal to the number of samples per dimension. For $\gamma < 1$,
+        there is an addition point-mass of size $(1 - \gamma)$ at $x = 0$.
+    }\label{F:mp-law}
+\end{figure}
+
