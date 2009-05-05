@@ -15,9 +15,15 @@
 \usepackage{epsfig}
 \usepackage{perry-thesis-macros}
 
+\DeclareGraphicsExtensions{.png,.pdf}
+
 \newcommand{\dirsep}{/}
 \newcommand{\dirprefix}{}
 \newcommand{\thesischapter}[1]{\dirprefix #1\dirsep #1}
+\newcommand{\includechapter}[1]{
+    \graphicspath{{\dirprefix #1\dirsep plots\dirsep}}
+    \include{\thesischapter{#1}}
+}
 
 
     \title{Cross-Validation for Supervised Learning}
@@ -26,7 +32,6 @@
     \principaladviser{Art B. Owen}
     \firstreader{Trevor Hastie}
     \secondreader{Iain M. Johnstone}
-% \thirdreader{}
 
 %\includeonly{
     %{\thesischapter{multivariate}},
@@ -56,7 +61,7 @@
 %\include{acknowledgement}
 
 
-\include{\thesischapter{multivariate}}
+\includechapter{multivariate}
 
 % and the end material
 
