@@ -1105,9 +1105,9 @@ of $\gamma$.  The reason for choosing the name ``concentration'' to refer to $\g
 The limiting behavior of the empirical spectral measure of a sample covariance matrix was originally studied by Mar\v{c}enko and Pastur~\cite{marcenko1967des} in 1967.  Since then, several papers have refined these results, including Grenander and Silverstein~\cite{grenander1977san}, Wachter~\cite{wachter1978slr},
  Jonsson~\cite{jonsson1982slt}, Yin and Krishnaiah~\cite{yin1983lte},
 Yin~\cite{yin1986lsd}, Silverstein and Bai~\cite{silverstein1995ede}, and
-Silverstein~\cite{silverstein1995sce}.  Theorem~\ref{T:mp-limit} is a simplified version of Silverstein and Bai's main result, which more generally considers complex-valued random variables and allows the columns of $\mX_n$ to have heterogeneous variances.
+Silverstein~\cite{silverstein1995sce}.  These papers either proceed via a combinatorial argument involving the moments of the matrix elements, or else they employ a tool called the Stieltjes transform.  Theorem~\ref{T:mp-limit} is a simplified version of Silverstein and Bai's main result, which more generally considers complex-valued random variables and allows the columns of $\mX_n$ to have heterogeneous variances.
 
-\begin{figure}[ht]
+\begin{figure}
     \centering
     \includegraphics{mp-law}
     \caption{
@@ -1119,3 +1119,30 @@ Silverstein~\cite{silverstein1995sce}.  Theorem~\ref{T:mp-limit} is a simplified
     }\label{F:mp-law}
 \end{figure}
 
+The meaning of the phrase ``$F^{\mS_n}$ converges almost-surely in distribution to $\FMP_\gamma$'' is that for all $x$ which are continuity points of $\FMP_\gamma$,
+\begin{equation}\label{E:spectral-measure-limit-point}
+    F^{\mS_n} \left(
+        (-\infty, x]
+    \right)
+    \toas
+    \FMP_\gamma \left(
+        (-\infty, x]
+    \right).
+\end{equation}
+Equivalently, Theorem~\ref{T:mp-limit} can be stated as a strong law of large numbers.
+
+\begin{corollary}
+    Let $\mX_n$ and $\{ l_{n,i} \}_{i=1}^{p}$ be as in 
+    Theorem~\ref{T:mp-limit}.  Let $g : \reals \to \reals$ be any
+    continuous bounded function.  Then
+    \begin{equation}
+        \frac{1}{p}
+        \sum_{i=1}^p
+            g \left( l_{n,i} \right)
+        \toas
+        \int
+            g(x)
+            \,
+            \FMP_\gamma ( dx ).
+    \end{equation}
+\end{corollary}
