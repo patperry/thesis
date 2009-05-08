@@ -18,11 +18,13 @@ m <- function( x, y, gamma ) {
 }
 
 support <- function( gamma ) {
-    a    <- ( 1 - 1/sqrt( gamma ) )^2
-    b    <- ( 1 + 1/sqrt( gamma ) )^2
-    n.0  <- 5000
+    a     <- ( 1 - 1/sqrt( gamma ) )^2
+    b     <- ( 1 + 1/sqrt( gamma ) )^2
+    n.0   <- 100
+    delta <- 0.05*( b - a )
 
-    x <- seq( from=a, to=b, len=n.0 )
+    x <- c( seq( from=a, to=a+delta, len=n.0/2 ),
+            seq( from=a+delta, to=b, len=n.0/2 ) )
     y <- rep( 0, n.0 )
 
     m.xy <- m( x, y, gamma )
@@ -38,10 +40,10 @@ contour <- function( gamma ) {
     ymin <- -0.1
     ymax <-  0.1
 
-    n.1  <-   50
-    n.2  <-  500
-    n.3  <- 1000
-    n.4  <-  n.2
+    n.1  <-  50
+    n.2  <- 200
+    n.3  <-  50
+    n.4  <- n.2
 
     x <- c( rep( xmax, n.1 ),
             seq( from=xmax, to=xmin, len=n.2 ),
