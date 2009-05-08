@@ -63,8 +63,8 @@ contour <- function( gamma ) {
     res
 }
 
-make.paths <- function( type, gamma=c( 0.2, 5 ) ) {
-    param <- data.frame( gamma=c( 0.2, 5 ) )
+make.paths <- function( type, gamma=c( 0.25, 4 ) ) {
+    param <- data.frame( gamma=gamma )
     within( ddply( param, .(gamma), splat( type ) ), {
                  gamma <- factor( gamma, levels=sort( gamma, dec=TRUE ) )
     } )
