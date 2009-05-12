@@ -1122,11 +1122,11 @@ Silverstein~\cite{silverstein1995sce}.  These papers either proceed via a combin
 The meaning of the phrase ``$F^{\mS_n}$ converges almost-surely in distribution to $\FMP_\gamma$'' is that for all $x$ which are continuity points of $\FMP_\gamma$,
 \begin{equation}\label{E:spectral-measure-limit-point}
     F^{\mS_n} \left(
-        (-\infty, x]
+        x
     \right)
     \toas
     \FMP_\gamma \left(
-        (-\infty, x]
+        x
     \right).
 \end{equation}
 Equivalently, Theorem~\ref{T:mp-limit} can be stated as a strong law of large numbers.
@@ -1143,6 +1143,39 @@ Equivalently, Theorem~\ref{T:mp-limit} can be stated as a strong law of large nu
         \int
             g(x)
             \,
-            \FMP_\gamma ( dx ).
+            d\FMP_\gamma ( x ).
     \end{equation}
 \end{corollary}
+
+Concerning converging rates for the quantities in Theorem~\ref{T:mp-limit},  Bai et al. \cite{bai2003crs} study the total variation distance between $F^{\mS_n}$ and $\FMP_\gamma$.  Under suitable conditions on $X_{11}$ and $\gamma$, they show that
+\(
+    \| F^{\mS_n} - \FMP_\gamma \|_\text{TV}
+    =
+    \OhP\left( n^{-2/5} \right)
+\)
+and
+\(
+    \| F^{\mS_n} - \FMP_\gamma \|_\text{TV}
+    =
+    \Ohas\left( n^{-2/5 + \varepsilon} \right)
+\)
+for any $\varepsilon > 0$.
+Guionnet and Zeitouni \cite{guionnet2000csm} give concentration of measure results.  If $X_{11}$ satisfies a Poincar\'e inequality and $g$ is Lipschitz, they show that for $\delta$ large enough,
+\begin{equation}\label{E:wishart-ldp}
+    -
+    \frac{1}{n^2}
+    \log \Prob\left\{ 
+        \left|
+            \int g(x) \, dF^{\mS_n}(x) - \int g(x) \, d\FMP_\gamma(x)
+        \right|
+        >
+        \delta
+    \right\}
+    =
+    \Oh\left(
+        \delta^2
+    \right),
+\end{equation}
+with an explicit bound on the error. If one is willing to assume that the elements of $\mX_n$ are Gaussian, then Hiai and Petz~\cite{hiai1998edw} give an exact value for the quantity in \eqref{E:wishart-ldp}.  Guionnet~\cite{guionnetlds} gives a survey of other large deviations results.  
+
+
