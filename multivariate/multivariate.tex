@@ -1181,7 +1181,13 @@ with an explicit bound on the error. If one is willing to assume that the elemen
 It is interesting to look at the scaled behavior in equation~\eqref{E:wishart-functional-limit} when the quantities are scaled by $p$.  Indeed one can prove a Central Limit Theorem (CLT) for functionals of eigenvalues.
 
 \begin{theorem}
-    Let $\mX_1, \mX_2, \ldots, \mX_n$ be a sequence of random $n\times p$ matrices with $p = p(n)$.  Assume that $\mX_n$ has \iid elements and that $\E\left[ X_{n,11} \right] = 0$ and $\E\left[ X_{n,11}^2 \right] = 1$.  Define $\mS_n = \frac{1}{n} \mX_n^T \mX_n$ and let $F^{\mS_n}$ be its spectral measure.  If $\frac{n}{p} \to \gamma$ and $g_1, g_2, \ldots, g_k$ are real-valued functions analytic on the support of $\FMP_\gamma$, then the sequence of random vectors
+    Let $\mX_1, \mX_2, \ldots, \mX_n$ be a sequence of random $n\times p$ 
+    matrices with $p = p(n)$.  Assume that $\mX_n$ has \iid elements and that 
+    $\E\left[ X_{n,11} \right] = 0$ and $\E\left[ X_{n,11}^2 \right] = 1$.  
+    Define $\mS_n = \frac{1}{n} \mX_n^T \mX_n$ and let $F^{\mS_n}$ be its 
+    spectral measure.  If $\frac{n}{p} \to \gamma$ and $g_1, g_2, \ldots, g_k$ 
+    are real-valued functions analytic on the support of $\FMP_\gamma$, then 
+    the sequence of random vectors
     \begin{multline*}
         p
         \cdot
@@ -1199,43 +1205,64 @@ It is interesting to look at the scaled behavior in equation~\eqref{E:wishart-fu
 	\Big)
     \end{multline*}
     is tight.
-    Moreover, if $\E \left[ X_{n,11}^4 \right] = 3$, then the sequence converges in distribution to a multivariate normal with mean $\vmu$ and covariance $\mSigma$, where 
+    Moreover, if $\E \left[ X_{n,11}^4 \right] = 3$, then the sequence 
+    converges in distribution to a multivariate normal with mean $\vmu$ and 
+    covariance $\mSigma$, where 
     \begin{equation}\label{E:wishart-clt-mean}
         \mu_i
-	=
-	\frac{ g_i(a) + g_i(b) }
-             { 4 }
-	-
-        \frac{1}{2 \pi}
-	\int_{a}^{b}
-	    \frac{ g_i(x) }
-	         { \sqrt{(x-a)(b-x)} }
-            \,
-            dx
+	    =
+	    \frac{ g_i(a) + g_i(b) }
+                 { 4 }
+	    -
+            \frac{1}{2 \pi}
+	    \int_{a}^{b}
+	        \frac{ g_i(x) }
+	             { \sqrt{(x-a)(b-x)} }
+                \,
+                dx
     \end{equation}
     and
     \begin{equation}\label{E:wishart-clt-cov}
-	\Sigma_{ij}
-	=
-	-
-	\frac{1}{2 \pi^2}
-	\iint
-	    \frac{g_i(z_1) g_j(z_2)}
-	         {\left( m(z_1) - m(z_2) \right)^2}
-	    \frac{d}{dz_1} m(z_1)
-	    \frac{d}{dz_2} m(z_2)
-	    dz_1 dz_2.
+    	\Sigma_{ij}
+    	=
+    	-
+    	\frac{1}{2 \pi^2}
+    	\iint
+    	    \frac{g_i(z_1) g_j(z_2)}
+    	         {\left( m(z_1) - m(z_2) \right)^2}
+    	    \frac{d}{dz_1} m(z_1)
+    	    \frac{d}{dz_2} m(z_2)
+    	    dz_1 dz_2.
     \end{equation}
     In equations~\eqref{E:wishart-clt-mean}~and~\eqref{E:wishart-clt-cov},
-    $a = (1 - \gamma^{-1/2})^2$ and $b = (1 + \gamma^{-1/2})^2$.  The integrals
-    in~\eqref{E:wishart-clt-cov} are contour integrals enclosing the support
-    of $\FMP_\gamma$, and
+    $a = (1 - \gamma^{-1/2})^2$ and $b = (1 + \gamma^{-1/2})^2$.  The 
+    integrals in~\eqref{E:wishart-clt-cov} are contour integrals enclosing the 
+    support of $\FMP_\gamma$, and
     \begin{equation}
         m(z)
         =
-	\frac{-(z + 1 - \gamma^{-1}) + \sqrt{(z-a)(z-b)}}{2 z},
+	    \frac{-(z + 1 - \gamma^{-1}) + \sqrt{(z-a)(z-b)}}{2 z},
     \end{equation}
-    with the square root defined to have positive imaginary part for
+    with the square root defined to have positive imaginary part when
     $\Im z > 0$.
 \end{theorem}
+
+\noindent
+The case when $\E\left[ X_{n,11}^4 \right] = 3$ is of particular interest
+because it arrises when $X_{n,11} \sim \Normal\left( 0, 1 \right)$.
+This theorem was proved by Bai and Silverstein~\cite{bai2004clt}, and can
+be considered a generalization of the work by Johnsson~\cite{jonsson1982slt}.
+In computing the variance integral, it is useful to know that $m$ satisfies
+the identities 
+\[
+    m(\bar z) = \overline{m (z) },
+\]
+and
+\[
+    z = - \frac{1}{m(z)} + \frac{\gamma^{-1}}{m(z) + 1}.
+\]
+Bai and Silverstein show how to computing the limiting means and variances
+for $g(x) = \log x$ and $g(x) = x^r$.  They also derive a similar CLT when
+the elements of $\mX_n$ are correlated.
+
 
