@@ -1,9 +1,9 @@
 
 \chapter{Multivariate statistics background}
 
-In the proof that follows, we will draw heavily on results about matrices of \iid $\Normal(0,1)$ entries. We use this section and to gather the relevant results. This section is concerned with classical results, which correspond to $p$ and either $n$ fixed or $n\to\infty$.
+Multivariate statistics will prove to be a central tool in our later analyses.  We use this chapter to gather the relevant definitions and results, concentrating mainly on the eigenvalues and eigenvectors from sample covariance matrices.  The literature in this area spans over fifty years.  We give the basic definitions and properties of the multivariate normal and Wishart distributions in Section~\ref{S:mulitivariate-definitions}.  Then, in Section~\ref{S:multivariate-classical}, we survey classical results about sample covariance matrices when the number of dimensions, $p$, is fixed and the sample size, $n$, grows to infinity.  This material is by now standard and can be found in any good multivariate statistics book.  Lastly,  in Section~\ref{S:multivariate-modern}, we survey modern asymptotics, where $n \to \infty$ and $p$ grows with $n$.  Modern multivariate asymptotics is still an active research topic, but today it is possible to give a reasonably-complete description of the objects of interest.
 
-\section{The multivariate normal and Wishart distributions}
+\section{The multivariate normal and Wishart distributions}\label{S:mulitivariate-definitions}
 
 We start the definition of the multivariate normal distribution and some basic properties, which can be found, for example, in \cite{muirhead1982ams}[Chapters 1--3].
 
@@ -387,7 +387,7 @@ have density
 \noindent
 In the random matrix theory literature, with $\sigma^2 = 1$ the eigenvalue density above is sometimes referred to as the Laguerre Orthogonal Ensemble (LOE).
 
-\section{Classical asymptotics}
+\section{Classical asymptotics}\label{S:multivariate-classical}
 
 In this section we present results about sample covariance matrices when the sample size, $n$, tends to infinity, with the number of dimensions, $p$ a fixed constant.  A straightforward application of the strong law of large numbers gives us the limits of the sample mean and covariance.
 
@@ -1015,7 +1015,7 @@ Part (i) is a restatement of Lemma~\ref{L:suff-stat-limits}.  Part (ii) follows 
 \end{proof}
 
 
-\section{Modern asymptotics}
+\section{Modern asymptotics}\label{S:multivariate-modern}
 
 We now present some results about sample covariance matrices when both the sample size, $n$, and the dimensionality, $p$, go to infinity.  Specifically, most of these results suppose that $n \to \infty$, $p \to \infty$, and 
 \(
