@@ -1266,3 +1266,225 @@ for $g(x) = \log x$ and $g(x) = x^r$.  They also derive a similar CLT when
 the elements of $\mX_n$ are correlated.
 
 
+\subsection{The edges of the spectrum}
+
+We now turn our attention to the extreme eigenvalues of a sample covariance
+matrix.  It seems plausible that if $F^{\mS_n} \tod \FMP_\gamma$, then the
+extreme eigenvalues of $\mS_n$ should converge to the edges of the support
+of $\FMP_\gamma$.  Indeed, under suitable assumptions, this is exactly what
+happens.  For the largest eigenvalue, work on this problem started with Geman~\cite{geman1980ltn}, with his assumptions further weekend by Jonsson~\cite{jonsson1983ole} and Silverstein~\cite{silverstein1984ole}.
+Yin et al.~\cite{yin1988lle} prove the result under the weakest possible
+conditions \cite{bai1988nle}.
+
+\begin{theorem}\label{T:max-wishart-eig-limit}
+    Let $\mX_1, \mX_2, \ldots, \mX_n$ be a sequence of random matrices of
+    increasing dimension, with $\mX_n$ of size $n \times p$, $p = p(n)$, and
+    $\frac{n}{p} \to \gamma$.  Let $\mS_n = \frac{1}{n} \mX_n^T \mX_n$ and 
+    denote its eigenvalues by 
+    $l_{n,1} \leq l_{n,2} \leq \cdots \leq l_{n,p}$.  If the 
+    elements of $\mX_n$ are 
+    \iid with $\E X_{n,11} = 0$, $\E X_{n,11}^2 = 1$, and
+    $\E X_{n,11}^4 < \infty$, then
+    \[
+        l_{n,p} \toas \left( 1 + \gamma^{-1/2} \right)^2.
+    \]
+\end{theorem}
+
+For the smallest eigenvalue, the first work was by Silverstein~\cite{silverstein1985sel}, who gives a result when 
+$X_{n,11} \sim \Normal\left( 0,\, 1 \right)$.  Bai and Yin~\cite{bai1993lse} proved a theorem that mirrors Theorem~\ref{T:max-wishart-eig-limit}.
+
+\begin{theorem}\label{T:min-wishart-eig-limit}
+    Let $\mX_n$, $n$, $p$, and $\{ l_{n,i} \}_{i=1}^p$ be as in
+    Theorem~\ref{T:max-wishart-eig-limit}.  If $\E X_{n,11}^4 < \infty$ and
+    $\gamma \geq 1$, then
+    \[
+        l_{n,1} \toas \left( 1 - \gamma^{-1/2} \right)^2.
+    \]
+    With the same moment assumption on $X_{n,11}$, if $0 < \gamma < 1$, then
+    \[
+        l_{n,p-n+1} \toas \left( 1 - \gamma^{-1/2} \right)^2.
+    \]
+\end{theorem}
+
+\noindent
+For the case when the elements of $\mX_n$ are correlated, Bai and Silverstein~\cite{bai1998neo} give a general result that subsumes Theorems~\ref{T:max-wishart-eig-limit}~and~\ref{T:min-wishart-eig-limit}.
+
+After appropriate centering and scaling, the largest eigenvalue of a white
+Wishart matrix converges weakly to a random variable with known distribution.
+Johansson~\cite{johansson2000sfa} proved this statement and identified the
+limiting distribution for complex white Wishart matrices.  Johnstone~\cite{johnstone2001dle} later provided an analogous result for real matrices.  
+
+\begin{theorem}\label{T:tw-limit-largest}
+    Let $\mX_1, \mX_2, \ldots, \mX_n$ be a sequence of random matrices of
+    increasing dimension, with $\mX_n \in \reals^{n\times p}$, $p = p(n)$,
+    and $n \to \infty$ with $\frac{n}{p} \to \gamma \in (0, \infty)$.  Define
+    $\mS_n = \frac{1}{n} \mX_n^T \mX_n$ and label its eigenvalues
+    \(
+        l_{n,1} \leq l_{n,2} \leq \cdots \leq l_{n,p}.
+    \)
+    If the elements of $\mX_n$ are \iid with
+    \(
+        X_{n,11} \sim \Normal\left( 0, \, 1 \right),
+    \)
+    then
+    \[
+        \frac{l_{n,p} - \mu_{n,p}}{\sigma_{n,p}}
+        \tod
+        W_1
+        \sim
+        \FTW_1,
+    \]
+    where
+    \begin{align*}
+        \mu_{n,p} 
+            &=
+            \frac{1}{n}
+            \left(
+                \sqrt{n - 1/2}
+                +
+                \sqrt{p - 1/2}
+            \right), \\
+        \sigma_{n,p}
+            &= 
+            \frac{1}{n}
+            \left(
+                \sqrt{n - 1/2}
+                +
+                \sqrt{p - 1/2}
+            \right)
+            \left(
+                \frac{1}{\sqrt{n - 1/2}}
+                +
+                \frac{1}{\sqrt{p - 1/2}}
+            \right)^{1/3},
+    \end{align*}
+    and $\FTW_1$ is the Tracy-Widom law of order 1.
+\end{theorem}
+
+\noindent
+El Karoui~\cite{elkaroui2003lew} extended this result to apply $\gamma = 0$ and $\gamma = \infty$.  With appropriate modifications to $\mu_{n,p}$ and $\sigma_{n,p}$, he later gave a convergence rate of order $(n \wedge p)^{2/3}$ \cite{elkaroui2006mpt}.  Ma~\cite{ma2008atw} gave the analogous result for real-valued data.  For correlated complex normals, El Karoui~\cite{elkaroui2007twl} derived a more general version of Theorem~\ref{T:tw-limit-largest}.  
+
+The Tracy-Widom distribution, which appears in Theorem~\ref{T:tw-limit-largest}, was  established to be the limiting distribution (after appropriate scaling) of the maximum eigenvalue from an $n \times n$ symmetric matrix with independent entries distributed as $\Normal\left( 0, \, 2 \right)$ along the main diagonal and $\Normal\left( 0, \, 1 \right)$ otherwise \cite{tracy1994lsd} \cite{tracy1996oas}.  To describte $\FTW_1$, let $q(x)$ solve the Painlev\'e II equation
+\[
+    q''(x) = x q(x) + 2 q^3(x),
+\]
+with boundary condition $q(x) \sim \Ai(x)$ as $x \to \infty$ and $\Ai(x)$ the Airy function.  Then it follows that
+\[
+    \FTW_1(x)
+    =
+    \exp \left\{
+        -
+        \frac{1}{2}
+        \int_s^\infty
+            q(x)
+            +
+            (x-s)^2
+            \,
+            dx
+    \right\}.
+\]
+Hastings and McLeod~\cite{hastings1980bvp} study the tail behavior of $q(x)$.  Using their analysis, one can show \cite{perry2009mre} that for $s \to -\infty$, 
+\[
+    \FTW_1(s)
+    \sim
+    \exp \left(
+        -\frac{|s|^3}{24}
+    \right),
+\]
+while for $s \to \infty$,
+\[
+    1 - \FTW_1(s)
+    \sim
+    \frac{ s^{-3/4} }
+         { 4 \sqrt{ \pi } }
+    \exp \left(
+        -
+        \frac{2}{3}
+        s^{3/2}
+    \right).
+\]
+The density of $\FTW_1$ is shown in Figure~\ref{F:tw-density}.
+
+\begin{figure}
+    \centering
+    \includegraphics{tw-law}
+    \caption{
+        \captiontitle{Tracy-Widom Law}
+        Limiting density of the largest eigenvalue from a white Wishart
+        matrix after appropriate centering and scaling.
+    }
+    \label{F:tw-density}
+\end{figure}
+
+A result like Theorem~\ref{T:tw-limit-largest} holds true for the smallest eigenvalue.  We define the \emph{Reflected Tracy-Widom Law} to have distribution function $\GTW_1(s) = 1 - \FTW_1(-s)$.  Then Paul~\cite{paul2006dse} showed the following:
+
+\begin{theorem}\label{T:tw-limit-smallest}
+    With the same assumptions as in Theorem~\ref{T:tw-limit-largest}, if
+    $\gamma \in (1,\infty)$ then
+    \[
+        \frac{l_{n,1} - \mu_{n,p}^-}{\sigma_{n,p}^-}
+        \tod
+        W_1
+        \sim
+        \GTW_1,
+    \]
+    where
+    \begin{align*}
+        \mu_{n,p}^-
+            &=
+            \frac{1}{n}
+            \left(
+                \sqrt{n - 1/2}
+                -
+                \sqrt{p - 1/2}
+            \right), \\
+        \sigma_{n,p}^-
+            &= 
+            \frac{1}{n}
+            \left(
+                \sqrt{n - 1/2}
+                -
+                \sqrt{p - 1/2}
+            \right)
+            \left(
+                \frac{1}{\sqrt{n - 1/2}}
+                -
+                \frac{1}{\sqrt{p - 1/2}}
+            \right)^{1/3}.
+    \end{align*}
+    If $\gamma \in (0, 1)$, then
+    \[
+        \frac{l_{n,p-n+1} - \mu_{n,p}^-}{\sigma_{n,p}^-}
+        \tod
+        W_1
+        \sim
+        \GTW_1.
+    \]
+\end{theorem}
+
+\noindent
+We get the result for $\gamma \in (0,1)$ by reversing the role of $n$ and $p$.
+In practice, the distribution of $\log l_{n,p}$ converges faster than that of $l_{n,p}$.  When $\gamma > 1$, Ma~\cite{ma2008atw} recommends appropriate centering and scaling for $\log l_{n,p}$ to converge to a $\GTW_1$ random variable at rate of order $(n \wedge p)^{2/3}$.
+
+Theorem~\ref{T:tw-limit-smallest} does not apply when $\frac{n}{p} \to 1$.  Edelman~\cite{edelman1988ecn} derived the limiting distribution of the smallest eigenvalue when $n = p$.  It is not known if his result holds more generally when $\frac{n}{p} \to 1$.
+
+\begin{theorem}\label{T:edelman-limit-smallest}
+    Let $\mX_n$ and $\{ l_{n,i} \}_{i=1}^p$ be as in 
+    Theorem~\ref{T:tw-limit-largest}.  If $p(n) = n$, then for $t \geq 0$,
+    \[
+        \Prob\left\{
+            n l_{n,1} \leq t
+        \right\}
+        \to
+        \int_0^t
+            \frac{1 + \sqrt{x}}{\sqrt{x}}
+            e^{-(x/2 + \sqrt{x})}
+            \,
+            dx.
+    \]
+\end{theorem}
+
+In addition to the extreme eigenvalues, it is possible to study the joint distribution of top or bottom $k$ sample eigenvalues for fixed $k$ as
+$n \to \infty$.  In light of Theorem~\ref{T:mp-limit}, for fixed $k$ we must have that the top (respectively, bottom) sample eigenvalues converge almost-surely to the same limit.  Furthermore, Soshnikov~\cite{soshnikov2002nud} showed that applying the centering and scaling from Theorem~\ref{T:tw-limit-largest} to the top $k$ sample eigenvalues gives a specific limiting distribution.
+
+It is natural to ask if the limiting eigenvalue distributions are specific to Wishart matrices, or if they apply to non-Gaussian data as well.  There is compelling evidence that the Tracy-Widom law is universal.   Soshnikov~\cite{soshnikov2002nud} extended Theorem~\ref{T:tw-limit-largest} to more general $\mX_n$ under the assumption that $X_{n,11}$ is sub-Gaussian and $n-p = \Oh(p^{1/3})$.  Tao and Vu~\cite{tao2009rmd} showed that Theorem~\ref{T:tw-limit-smallest} applies for general $X_{n,11}$ with $\E X_{n,11} = 0$ and $\E X_{n,11}^2 = 1$.
