@@ -5,7 +5,7 @@ Multivariate statistics will prove to be a central tool in our later analyses.  
 
 \section{The multivariate normal and Wishart distributions}\label{S:mulitivariate-definitions}
 
-We start the definition of the multivariate normal distribution and some basic properties, which can be found, for example, in \cite{muirhead1982ams}[Chapters 1--3].
+We start with the definition of the multivariate normal distribution and some basic properties, which can be found, for example, in \cite{muirhead1982ams}[Chapters 1--3].
 
 \begin{definition}[Multivariate Normal Distribution]
     \label{D:multivariate-normal}
@@ -1488,3 +1488,80 @@ In addition to the extreme eigenvalues, it is possible to study the joint distri
 $n \to \infty$.  In light of Theorem~\ref{T:mp-limit}, for fixed $k$ we must have that the top (respectively, bottom) sample eigenvalues converge almost-surely to the same limit.  Furthermore, Soshnikov~\cite{soshnikov2002nud} showed that applying the centering and scaling from Theorem~\ref{T:tw-limit-largest} to the top $k$ sample eigenvalues gives a specific limiting distribution.
 
 It is natural to ask if the limiting eigenvalue distributions are specific to Wishart matrices, or if they apply to non-Gaussian data as well.  There is compelling evidence that the Tracy-Widom law is universal.   Soshnikov~\cite{soshnikov2002nud} extended Theorem~\ref{T:tw-limit-largest} to more general $\mX_n$ under the assumption that $X_{n,11}$ is sub-Gaussian and $n-p = \Oh(p^{1/3})$.  Tao and Vu~\cite{tao2009rmd} showed that Theorem~\ref{T:tw-limit-smallest} applies for general $X_{n,11}$ with $\E X_{n,11} = 0$ and $\E X_{n,11}^2 = 1$.
+
+
+\subsection{Eigenvectors}
+
+Relatively little attention has been focused on the eigenvectors of sample covariance matrices.  While many results are known, as of yet there is no complete characterization of the eigenvectors from a general sample covariance matrix.  Most of the difficulty in tackling the problem is that it is difficult to describe convergence properties of $\mU_n$, the $p\times p$ matrix of eigenvectors, when $n$ and $p$ go to infinity.  The individual $p^2$ elements of $\mU_n$ do converge in any meaningful way, so the challenge is to come up with relevant macroscopic characteristics of $\mU_n$.
+
+Silverstein~\cite{silverstein1979reg} was perhaps the first to study the eigenvectors of large-dimensional sample covariance matrices.  He hypothesized that for sample covariance matrices of increasing dimension, the eigenvector matrix becomes more and more ``Haar-like''.  A random matrix $\mU \in \reals^{p\times p}$ is said to be Haar-distributed over the orthogonal group if for every fixed $p \times p$ orthogonal matrix $\mO$, the rotated matrix $\mO \mU$ is has the same distribution as $\mU$.  That is, $\mO \mU \eqd \mU$.  Silverstein's conjecture was that as $n \to \infty$, $\mU_n$ behaves more and more like a Haar-distributed matrix.  The next theorem displays one aspect Haar-like behavior.
+
+\begin{theorem}\label{T:evec-functional-limit}
+    Let $\mX_1, \mX_2, \ldots, \mX_n$ be a sequence of random matrices of
+    increasing dimension, with $\mX_n \in \reals^{n \times p}$, $p = p(n)$,
+    and $\mX_n$ having \iid elements with 
+    \(
+        \E X_{n,11} = 0,
+    \)
+    \(
+        \E X_{n,11}^2 = 1,
+    \)
+    and
+    \(
+        \E X_{n,11}^4 < \infty.
+    \)
+    Define $\mS_n = \frac{1}{n} \mX_n^T \mX_n$.  Let
+    $\va_1, \va_2, \ldots, \va_n$ be a sequence of unit vectors with $\va_n$ 
+    in $\reals^p$ and let $g : \reals \to \reals$ be a continuous bounded 
+    function.  If $n \to \infty$ and
+    $\frac{n}{p} \to \gamma \in (0,\infty)$, then
+    \[
+        \va_n^T g\left( \mS_n \right) \va_n
+        \toas
+        \int
+            g(x)
+            \,
+            d\FMP_\gamma(x).
+    \]
+\end{theorem}
+
+\noindent
+Silverstein~\cite{silverstein1979reg} proves the result for convergence in probability and a specific class of $\mX_n$.  Bai et al~\cite{bai2007ael} strengthen the result to a larger class of $\mX_n$ and proves almost-sure convergence.  They also consider dependence in $\mX_n$.
+
+It may not be immediately obvious how Theorem~\ref{T:evec-functional-limit}
+is related to eigenvectors.  If $\mS_n = \mU_n \mL_n \mU_n$ is the
+eigendecomposition of $\mS_n$, with 
+\(
+    \mL_n
+    = 
+    \diag\left(
+        l_{n,1}, l_{n,2}, \ldots, l_{n,p}
+    \right),
+\)
+then we let 
+\(
+    g(\mL_n)
+    =
+    \diag \left(
+        g(l_{n,1}), g(l_{n,2}), \ldots, g(l_{n,p})
+    \right)
+\)
+and define
+\(
+    g(\mS_n)
+    =
+    \mU_n
+    g(\mL_n)
+    \mU_n^T.
+\)
+We let $\vb_n = \mU_n \va_n$.  Then,
+\begin{equation}\label{E:evector-functional}
+    \va_n^T g(\mS_n) \va_n
+    =
+    \sum_{i=1}^p
+        b_{n,i}^2
+        \,
+        g( l_{n,i} ).
+\end{equation}
+If $\mU_n$ is Haar-distributed, then $\vb_n$ will be distributed uniformly over the unit sphere in $\reals^p$, and the average in \eqref{E:evector-functional} will put about weight $\frac{1}{p}$ on each eigenvalue.  If $\mU_n$ puts bias in any particular direction then the average might put extra weight on particular eigenvalues.
+
