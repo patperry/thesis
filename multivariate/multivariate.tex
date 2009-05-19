@@ -142,36 +142,6 @@ Then
 \).
 \end{corollary}    
 
-In proving that a random vector has a multivariate normal distribution,
-the following theorem is often useful.
-
-\begin{theorem}[Cram\'er-Wold Device]\label{T:cramer-wold}
-A random vector
-\(
-    \vX \in \reals^p
-\)
-is distributed as 
-\(
-    \Normal \left(
-        \vmu, \,
-        \mSigma
-    \right)
-\)
-iff for all fixed vectors
-\(
-    \va \in \reals^p
-\)
-we have that
-\(
-    \va^T \vX
-    \sim
-    \Normal \left(
-        \va^T \vmu, \,
-        \va^T \mSigma \va
-    \right).
-\)
-\end{theorem}
-
 We are often interested in estimating the underlying parameters from
 multivariate normal data.  The sufficient statistics are the standard
 estimates.
