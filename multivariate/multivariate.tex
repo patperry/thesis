@@ -179,12 +179,12 @@ and the sample covariance
 are sufficient statistics for $\vmu$ and $\mSigma$.
 \end{proposition}
 
-To descripte the distribution of $\mS_n$, we need to introduce the 
+To describe the distribution of $\mS_n$, we need to introduce the 
 Wishart distribution.
 
 \begin{definition}[Wishart Distribution]\label{D:wishart}
 Let $\vX_1, \vX_2, \ldots, \vX_n \in \reals^p$ be an \iid sequence of
-random vectors with each distributed as
+random vectors, each distributed as
 \(
     \Normal \left(
         \vzero, \,
@@ -339,9 +339,9 @@ and
     >
     0.
 \)
-Then $\mO$ and $\mL$ are independent with $\mO$ Haar-distributed over
+Then $\mO$ and $\mL$ are independent, with $\mO$ Haar-distributed over
 the group of $p \times p$ orthogonal matrices and the elements of $\mL$
-have density
+having density
 \begin{equation}\label{E:wishart-eig-density}
     \frac{ \pi^{p^2/2} }
          { \left( 2 \sigma^2 \right)^{np/2}
@@ -361,7 +361,7 @@ In the random matrix theory literature, with $\sigma^2 = 1$ the eigenvalue densi
 
 In this section we present results about sample covariance matrices when the sample size, $n$, tends to infinity, with the number of dimensions, $p$ a fixed constant.  A straightforward application of the strong law of large numbers gives us the limits of the sample mean and covariance.
 
-\begin{lemma}\label{L:suff-stat-limits}
+\begin{proposition}\label{P:suff-stat-limits}
 Let $\vX_1, \vX_2, \ldots, \vX_n$ be a sequence of \iid random vectors in $\reals^p$ with
 \(
     \E \left[
@@ -400,15 +400,15 @@ and
     \toas
     \mSigma.
 \]
-\end{lemma}
+\end{proposition}
 
 To simplify matters, for the rest of the section we will mostly work in a setting when the variables have been centered.  In this case, the sample covariance matrix takes the form
 \(
     \mS_n = \frac{1}{n} \sum_{i=1}^n \vX_i \vX_i^T.
 \)
-To see that centering the variables does not change the theory in any essential way, we provide the following lemma.
+To see that centering the variables does not change the theory in any essential way, we provide the following proposition.
 
-\begin{lemma}
+\begin{proposition}
 Let $\vX_1, \vX_2, \ldots, \vX_n$ be a sequence of random vectors in $\reals^p$ with mean $\vmu$ and covariance $\mSigma$.  Let
 \(
     \vbX_n = \frac{1}{n} \sum_{i=1}^n \vX_i
@@ -455,7 +455,7 @@ In particular, this implies that
     + 
     \OhP \left( \frac{1}{\sqrt{n}} \right).
 \]
-\end{lemma}
+\end{proposition}
 \begin{proof}
 We can write
 \begin{align*}
@@ -499,7 +499,7 @@ and
 
 The next fact follows directly from the multivariate central limit theorem.
 
-\begin{lemma}\label{L:sample-cov-limit}
+\begin{proposition}\label{P:sample-cov-limit}
 Suppose that 
 \(
     \vX_1, \vX_2, \ldots, \vX_n
@@ -512,7 +512,7 @@ is a sequence of \iid random vectors in $\reals^p$ with
     =
     \mSigma,
 \]
-and for all $1 \leq i,j,i',j' \leq p$ there exists 
+and that for all $1 \leq i,j,i',j' \leq p$ there exists 
 \(
     \Gamma_{iji'j'} < \infty
 \)
@@ -565,9 +565,48 @@ a mean-zero multivariate normal having covariance
     =
     \Gamma_{iji'j'}.
 \)
-\end{lemma}
+\end{proposition}
 
 \noindent
+If the elements of $\vX_1$ have vanishing first and third moments (for instance if
+\(
+    \vX_1 \eqd - \vX_1
+\)
+), and if
+\(
+    \E \left[
+        \vX_1 \vX_1^T
+    \right]
+    =
+    \diag \left(
+        \lambda_1,
+        \lambda_2,
+        \ldots,
+        \lambda_p
+    \right),
+\)
+then $\Gamma_{iji'j'}$ simplifies to
+\begin{subequations}
+\begin{align}
+    \Gamma_{iiii} &= \E \left[ X_{1i}^4 \right] - \lambda_i^2 \quad 
+                         &&\text{for $1 \leq i \leq p$}, \\
+    \Gamma_{ijij} = \Gamma_{ijji} &= \E \left[ X_{1i}^2 X_{1j}^2 \right]
+                         &&\text{for $ 1 \leq i,j \leq p$, $i \neq j$;}
+\end{align}
+\end{subequations}
+all other values of $\Gamma_{iji'j'}$ are $0$.  In particular, this
+implies that the elements of $\vecm \left( \mG \right)$ are independent.
+If we also have that $\vX_1$ is multivariate normal, then 
+\begin{subequations}
+\begin{align}
+    \Gamma_{iiii} &= 2 \lambda_i^2
+                         &&\text{for $1 \leq i \leq p$, and} \\    
+    \Gamma_{ijij} = \Gamma_{ijji} &= \lambda_i \lambda_j
+                         &&\text{for $ 1 \leq i,j \leq p$, $i \neq j$.}
+\end{align}
+\end{subequations}
+
+
 It is inconvenient to study the properties of the sample covariance matrix when the population covariance
 \(
     \mSigma
@@ -614,45 +653,8 @@ With this transformation, we can characterize the distribution of $\mS_n$ comple
         \vtX_i \vtX_i^T.
 \)
 
-If the elements of $\vX_1$ have vanishing first and third moments (for instance if
-\(
-    \vX_1 \eqd - \vX_1
-\)
-), and if
-\(
-    \E \left[
-        \vX_1 \vX_1^T
-    \right]
-    =
-    \diag \left(
-        \lambda_1,
-        \lambda_2,
-        \ldots,
-        \lambda_p
-    \right),
-\)
-then $\Gamma_{iji'j'}$ simplifies to
-\begin{subequations}
-\begin{align}
-    \Gamma_{iiii} &= \E \left[ X_{1i}^4 \right] - \lambda_i^2 \quad 
-                         &&\text{for $1 \leq i \leq p$}, \\
-    \Gamma_{ijij} = \Gamma_{ijji} &= \E \left[ X_{1i}^2 X_{1j}^2 \right]
-                         &&\text{for $ 1 \leq i,j \leq p$, $i \neq j$;}
-\end{align}
-\end{subequations}
-all other values of $\Gamma_{iji'j'}$ are $0$.  In particular, this
-implies that the elements of $\vecm \left( \mG \right)$ are independent.
-If we also have that $\vX_1$ is multivariate normal, then 
-\begin{subequations}
-\begin{align}
-    \Gamma_{iiii} &= 2 \lambda_i^2
-                         &&\text{for $1 \leq i \leq p$, and} \\    
-    \Gamma_{ijij} = \Gamma_{ijji} &= \lambda_i \lambda_j
-                         &&\text{for $ 1 \leq i,j \leq p$, $i \neq j$.}
-\end{align}
-\end{subequations}
 
-The next result we present is about the sample principal compoents.  It is motivated by Proposition~\ref{L:sample-cov-limit} and is originally due to Anderson~\cite{anderson1963atp}, though he does not state result quite like this.  
+The next result we present is about the sample principal compoents.  It is motivated by Proposition~\ref{P:sample-cov-limit} and is originally due to Anderson~\cite{anderson1963atp}, though he does not state result quite like this.  
 
 \begin{theorem}\label{T:eigen-random-perturb}
 For $n\to \infty$ and $p$ fixed, let $\mS_1, \mS_2, \ldots, \mS_n$ be a sequence of random symmetric $p \times p$ matrices with 
@@ -678,7 +680,7 @@ and
 \(
     l_{n,1} \geq l_{n,2} \geq \cdots \geq l_{n,p}.
 \)
-If $\mG = \OhP\left( 1 \right)$, and the signs of $\mU_n$ are chosen so that $\mU_{n,ii} \geq 0$ for $1 \leq i \leq p$, then the elements of $\mU_n$ and $\mL_n$ converge jointly as
+If $\mG = \OhP\left( 1 \right)$, and the signs of $\mU_n$ are chosen so that $U_{n,ii} \geq 0$ for $1 \leq i \leq p$, then the elements of $\mU_n$ and $\mL_n$ converge jointly as
 \begin{subequations}
 \begin{alignat}{2}
     \sqrt{n}
@@ -981,7 +983,7 @@ for $1 \leq i \leq p$.  Then
 \end{enumerate}
 \end{theorem}
 \begin{proof}
-Part (i) is a restatement of Lemma~\ref{L:suff-stat-limits}.  Part (ii) follows from Lemma~\ref{L:sample-cov-limit} and Theorem~\ref{L:eigen-perturb}.
+Part (i) is a restatement of Proposition~\ref{P:suff-stat-limits}.  Part (ii) follows from Proposition~\ref{P:sample-cov-limit} and Theorem~\ref{L:eigen-perturb}.
 \end{proof}
 
 
@@ -1045,7 +1047,7 @@ so that
 Most asymptotic results about sample covariance matrices are expressed in terms of $\mX_n$ rather than $\mS_n$.  For example, the next theorem about the spectral measure of a large covariance matrix is stated this way.
 
 \begin{theorem}\label{T:mp-limit}
-Let $\mX_1, \mX_2, \ldots, \mX_n$ be a sequence of random matrices of increasing dimension, so that $\mX_n \in \reals^{n\times p}$ and $p = p(n)$.
+Let $\mX_1, \mX_2, \ldots, \mX_n$ be a sequence of random matrices of increasing dimension as $n \to \infty$, so that $\mX_n \in \reals^{n\times p}$ and $p = p(n)$.
 Define $\mS_n = \frac{1}{n} \mX_n^T \mX_n$.  If the elements of $\mX_n$ are \iid with $\E| X_{n,11} - \E X_{n,11} |^2 = 1$ and $\frac{n}{p} \to \gamma > 0$, then the empirical spectral measure $F^{\mS_n}$ almost surely converges in distribution to a deterministic probability measure.  This measure, denoted
 $\FMP_\gamma$, is called the Mar\v{c}enko-Pastur Law.  For $\gamma \geq 1$ it
 has density
@@ -1117,7 +1119,7 @@ Equivalently, Theorem~\ref{T:mp-limit} can be stated as a strong law of large nu
     \end{equation}
 \end{corollary}
 
-Concerning converging rates for the quantities in Theorem~\ref{T:mp-limit},  Bai et al. \cite{bai2003crs} study the total variation distance between $F^{\mS_n}$ and $\FMP_\gamma$.  Under suitable conditions on $X_{11}$ and $\gamma$, they show that
+Concerning convergence rates for the quantities in Theorem~\ref{T:mp-limit},  Bai et al. \cite{bai2003crs} study the total variation distance between $F^{\mS_n}$ and $\FMP_\gamma$.  Under suitable conditions on $X_{11}$ and $\gamma$, they show that
 \(
     \| F^{\mS_n} - \FMP_\gamma \|_\text{TV}
     =
@@ -1155,7 +1157,8 @@ It is interesting to look at the scaled behavior in equation~\eqref{E:wishart-fu
     matrices with $p = p(n)$.  Assume that $\mX_n$ has \iid elements and that 
     $\E\left[ X_{n,11} \right] = 0$ and $\E\left[ X_{n,11}^2 \right] = 1$.  
     Define $\mS_n = \frac{1}{n} \mX_n^T \mX_n$ and let $F^{\mS_n}$ be its 
-    spectral measure.  If $\frac{n}{p} \to \gamma$ and $g_1, g_2, \ldots, g_k$ 
+    spectral measure.  If $n \to \infty$, $\frac{n}{p} \to \gamma$ and $g_1, 
+    g_2, \ldots, g_k$ 
     are real-valued functions analytic on the support of $\FMP_\gamma$, then 
     the sequence of random vectors
     \begin{multline*}
@@ -1222,7 +1225,7 @@ The case when $\E\left[ X_{n,11}^4 \right] = 3$ is of particular interest
 because it arises when $X_{n,11} \sim \Normal\left( 0, 1 \right)$.
 This theorem was proved by Bai and Silverstein~\cite{bai2004clt}, and can
 be considered a generalization of the work by Johnsson~\cite{jonsson1982slt}.
-In computing the variance integral, it is useful to know that $m$ satisfies
+In computing the variance integral~\eqref{E:wishart-clt-cov}, it is useful to know that $m$ satisfies
 the identities 
 \[
     m(\bar z) = \overline{m (z) },
@@ -1242,14 +1245,15 @@ We now turn our attention to the extreme eigenvalues of a sample covariance
 matrix.  It seems plausible that if $F^{\mS_n} \tod \FMP_\gamma$, then the
 extreme eigenvalues of $\mS_n$ should converge to the edges of the support
 of $\FMP_\gamma$.  Indeed, under suitable assumptions, this is exactly what
-happens.  For the largest eigenvalue, work on this problem started with Geman~\cite{geman1980ltn}, with his assumptions further weekend by Jonsson~\cite{jonsson1983ole} and Silverstein~\cite{silverstein1984ole}.
+happens.  For the largest eigenvalue, work on this problem started with Geman~\cite{geman1980ltn}, and his assumptions were further weekend by Jonsson~\cite{jonsson1983ole} and Silverstein~\cite{silverstein1984ole}.
 Yin et al.~\cite{yin1988lle} prove the result under the weakest possible
 conditions \cite{bai1988nle}.
 
 \begin{theorem}\label{T:max-wishart-eig-limit}
     Let $\mX_1, \mX_2, \ldots, \mX_n$ be a sequence of random matrices of
-    increasing dimension, with $\mX_n$ of size $n \times p$, $p = p(n)$, and
-    $\frac{n}{p} \to \gamma$.  Let $\mS_n = \frac{1}{n} \mX_n^T \mX_n$ and 
+    increasing dimension, with $\mX_n$ of size $n \times p$, $p = p(n)$, 
+    $n \to \infty$, and
+    $\frac{n}{p} \to \gamma \in (0,\infty)$.  Let $\mS_n = \frac{1}{n} \mX_n^T \mX_n$ and 
     denote its eigenvalues by 
     $l_{n,1} \leq l_{n,2} \leq \cdots \leq l_{n,p}$.  If the 
     elements of $\mX_n$ are 
@@ -1332,7 +1336,7 @@ limiting distribution for complex white Wishart matrices.  Johnstone~\cite{johns
 \end{theorem}
 
 \noindent
-El Karoui~\cite{elkaroui2003lew} extended this result to apply $\gamma = 0$ and $\gamma = \infty$.  With appropriate modifications to $\mu_{n,p}$ and $\sigma_{n,p}$, he later gave a convergence rate of order $(n \wedge p)^{2/3}$ \cite{elkaroui2006mpt}.  Ma~\cite{ma2008atw} gave the analogous result for real-valued data.  For correlated complex normals, El Karoui~\cite{elkaroui2007twl} derived a more general version of Theorem~\ref{T:tw-limit-largest}.  
+El Karoui~\cite{elkaroui2003lew} extended this result to apply when $\gamma = 0$ or $\gamma = \infty$.  With appropriate modifications to $\mu_{n,p}$ and $\sigma_{n,p}$, he later gave a convergence rate of order $(n \wedge p)^{2/3}$  for complex-valued data \cite{elkaroui2006mpt}.  Ma~\cite{ma2008atw} gave the analogous result for real-valued data.  For correlated complex normals, El Karoui~\cite{elkaroui2007twl} derived a more general version of Theorem~\ref{T:tw-limit-largest}.  
 
 The Tracy-Widom distribution, which appears in Theorem~\ref{T:tw-limit-largest}, was  established to be the limiting distribution (after appropriate scaling) of the maximum eigenvalue from an $n \times n$ symmetric matrix with independent entries distributed as $\Normal\left( 0, \, 2 \right)$ along the main diagonal and $\Normal\left( 0, \, 1 \right)$ otherwise \cite{tracy1994lsd} \cite{tracy1996oas}.  To describte $\FTW_1$, let $q(x)$ solve the Painlev\'e II equation
 \[
@@ -1559,7 +1563,7 @@ Silverstein investigated second-order behavior of eigenvectors in \cite{silverst
         \right)
     \end{multline*}
     converges in distribution to a mean-zero multivariate normal with
-    covariance between the $i$th and $j$th components given equal to
+    covariance between the $i$th and $j$th components equal to
     \[
         \int
             g_i(x) g_j(x) \, d\FMP_\gamma(x)
