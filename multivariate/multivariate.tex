@@ -1511,9 +1511,9 @@ Silverstein~\cite{silverstein1979reg} was perhaps the first to study the eigenve
         \E X_{n,11}^4 < \infty.
     \)
     Define $\mS_n = \frac{1}{n} \mX_n^T \mX_n$.  Let
-    $\va_1, \va_2, \ldots, \va_n$ be a sequence of unit vectors with $\va_n$ 
-    in $\reals^p$ and let $g : \reals \to \reals$ be a continuous bounded 
-    function.  If $n \to \infty$ and
+    $\va_1, \va_2, \ldots, \va_n$ be a sequence of nonrandom unit vectors with 
+    $\va_n$ in $\reals^p$ and let $g : \reals \to \reals$ be a continuous 
+    bounded function.  If $n \to \infty$ and
     $\frac{n}{p} \to \gamma \in (0,\infty)$, then
     \[
         \va_n^T g\left( \mS_n \right) \va_n
@@ -1526,7 +1526,7 @@ Silverstein~\cite{silverstein1979reg} was perhaps the first to study the eigenve
 \end{theorem}
 
 \noindent
-Silverstein~\cite{silverstein1979reg} proves the result for convergence in probability and a specific class of $\mX_n$.  Bai et al~\cite{bai2007ael} strengthen the result to a larger class of $\mX_n$ and proves almost-sure convergence.  They also consider dependence in $\mX_n$.
+Silverstein~\cite{silverstein1979reg} proves the result for convergence in probability and a specific class of $\mX_n$.  Bai et al.~\cite{bai2007ael} strengthen the result to a larger class of $\mX_n$ and proves almost-sure convergence.  They also consider dependence in $\mX_n$.
 
 It may not be immediately obvious how Theorem~\ref{T:evec-functional-limit}
 is related to eigenvectors.  If $\mS_n = \mU_n \mL_n \mU_n$ is the
@@ -1565,3 +1565,53 @@ We let $\vb_n = \mU_n \va_n$.  Then,
 \end{equation}
 If $\mU_n$ is Haar-distributed, then $\vb_n$ will be distributed uniformly over the unit sphere in $\reals^p$, and the average in \eqref{E:evector-functional} will put about weight $\frac{1}{p}$ on each eigenvalue.  If $\mU_n$ puts bias in any particular direction then the average might put extra weight on particular eigenvalues.
 
+Silverstein investigated second-order behavior of eigenvectors in \cite{silverstein1981dbe}, \cite{silverstein1984slt}, \cite{silverstein1989eld}, and \cite{silverstein1990wcr}.  He demonstrated that certain second-order behavior of $\mU_n$ depends in a crucial way on the fourth moment of $X_{n,11}$.  This greatly restricts the class of $\mX_n$ for with the eigenvectors of $\mS_n$ are Haar-like.
+
+\begin{theorem}\label{T:evec-functional-scaled-limit}
+    Let $\mX_n$, $\mS_n$, and $\va_n$ be as in 
+    Theorem~\ref{T:evec-functional-limit}. Suppose also that
+    $\E X_{n,11}^4 = 3$.  Let $g_1, g_2, \ldots, g_k$
+    be real-valued functions analytic on the support of $\FMP_\gamma$.  
+    Then, the random vector
+    \begin{multline*}
+        \sqrt{p} \cdot
+        \left(
+            \va_n^T g_1( \mS_n ) \va_n
+            -
+            \int g_1(x) \, d\FMP_\gamma(x), \right. \\
+            \va_n^T g_2( \mS_n ) \va_n
+            -
+            \int g_2(x) \, d\FMP_\gamma(x),
+            \ldots, \\ \left.
+            \va_n^T g_k( \mS_n ) \va_n
+            -
+            \int g_k(x) \, d\FMP_\gamma(x),
+        \right)
+    \end{multline*}
+    converges in distribution to a mean-zero multivariate normal with
+    covariance between the $i$th and $j$th components given equal to
+    \[
+        \int
+            g_i(x) g_j(x) \, d\FMP_\gamma(x)
+        -
+        \int
+            g_i(x) \, d\FMP_\gamma(x)
+        \cdot
+        \int
+            g_j(x) \, d\FMP_\gamma(x)
+    \]
+\end{theorem}
+
+\noindent
+Bai et al.~\cite{bai2007ael} give a similar result for complex-valued and correlated $\mX_n$.  Silverstein~\cite{silverstein1989eld} showed that if $g_1(x) = x$ and $g_2(x) = x^2$, then the condition $\E X_{n,11}^4 = 3$ is necessary for the random vector in Theorem~\ref{T:evec-functional-scaled-limit} to converge in distribution for all $\va_n$.  However, for the specific choice of
+\(
+    \va_n
+    =
+    \left(
+        \frac{1}{\sqrt{p}},
+        \frac{1}{\sqrt{p}},
+        \ldots,        
+        \frac{1}{\sqrt{p}}        
+    \right),
+\)
+he later showed that the conclusions of Theorem~\ref{T:evec-functional-scaled-limit} hold more generally when $X_{n,11}$ is symmetric and $\E X_{n,11}^4 < \infty$ \cite{silverstein1990wcr}.  
