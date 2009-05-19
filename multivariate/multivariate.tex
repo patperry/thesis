@@ -31,13 +31,13 @@ is distributed from the multivariate normal distribution, denoted
     \right)
 \)
 if for every fixed vector $\va \in \reals^p$, the vector
-$\va^T \vX$ has a univariate normal distribution with mean
+$\va^\trans \vX$ has a univariate normal distribution with mean
 \(
-    \va^T \vmu
+    \va^\trans \vmu
 \)
 and variance
 \(
-    \va^T \mSigma \va
+    \va^\trans \mSigma \va
 \).
 \end{definition}
 
@@ -54,7 +54,7 @@ If $\vX \in \reals^p$ follows a multivariate normal distribution with mean $\vmu
     \exp\left(
         -
         \frac{1}{2}
-        (\vx - \vmu)^T
+        (\vx - \vmu)^\trans
         \mSigma^{-1}
         (\vx - \mu)
     \right).
@@ -86,7 +86,7 @@ Define $\vY = \mC \vX + \va$.  Then
     \sim
     \Normal \left( 
         \mC \vmu + \va, \,
-        \mC \mSigma \mC^T
+        \mC \mSigma \mC^\trans
     \right).
 \)
 \end{proposition}
@@ -124,7 +124,7 @@ Suppose that
         \mSigma
     \right)
 \)
-and that $\mSigma = \mC \mC^T$ for a matrix $\mC \in \reals^{p \times p}$.
+and that $\mSigma = \mC \mC^\trans$ for a matrix $\mC \in \reals^{p \times p}$.
 Let 
 \(
     \vZ
@@ -193,7 +193,7 @@ random vectors, each distributed as
 \)
 Then the matrix
 \[
-    \mA = \sum_{i=1}^n \vX_i \vX_i^T
+    \mA = \sum_{i=1}^n \vX_i \vX_i^\trans
 \]
 is said to have the Wishart distribution with $n$ degrees of freedom and scale parameter $\mSigma$.  We denote this by
 \(
@@ -310,7 +310,7 @@ with
 \)
 and let
 \(
-    \mA = n \mO \mL \mO^T
+    \mA = n \mO \mL \mO^\trans
 \)
 be the spectral decomposition of
 \(
@@ -374,7 +374,7 @@ and
 \(
     \E \left[
         \left( \vX_1 - \vmu \right)
-        \left( \vX_1 - \vmu \right)^T
+        \left( \vX_1 - \vmu \right)^\trans
     \right]
     =
     \mSigma.
@@ -396,7 +396,7 @@ and
     \frac{1}{n-1}
     \sum_{i=1}^{n}
         \left( \vX_i - \vbX_n \right)
-        \left( \vX_i - \vbX_n \right)^T
+        \left( \vX_i - \vbX_n \right)^\trans
     \toas
     \mSigma.
 \]
@@ -404,7 +404,7 @@ and
 
 To simplify matters, for the rest of the section we will mostly work in a setting when the variables have been centered.  In this case, the sample covariance matrix takes the form
 \(
-    \mS_n = \frac{1}{n} \sum_{i=1}^n \vX_i \vX_i^T.
+    \mS_n = \frac{1}{n} \sum_{i=1}^n \vX_i \vX_i^\trans.
 \)
 To see that centering the variables does not change the theory in any essential way, we provide the following proposition.
 
@@ -419,8 +419,8 @@ and
     =
     \frac{1}{n-1}
     \sum_{i=1}^n
-        \left( \vX_i - \vbX_n \right)
-        \left( \vX_i - \vbX_n \right)^T
+        \left( \vX_i - \vbX_n \right) \!
+        \left( \vX_i - \vbX_n \right)^\trans
 \)
 be the sample mean and covariance, respectively.  Define the centered
 variables
@@ -433,7 +433,7 @@ Then
     =
     \frac{1}{n}
     \sum_{i=1}^n
-        \vtX_i \vtX_i^T
+        \vtX_i \vtX_i^\trans
     +
     \OhP\left( \frac{1}{n} \right).
 \]
@@ -448,7 +448,7 @@ In particular, this implies that
     \left(
         \frac{1}{n}
         \sum_{i=1}^n
-            \vtX_i \vtX_i^T
+            \vtX_i \vtX_i^\trans
         -
         \mSigma
     \right)
@@ -460,7 +460,7 @@ In particular, this implies that
 We can write
 \begin{align*}
     \mS_n &= \frac{1}{n-1}
-             \sum_{i=1}^n \vtX_i \vtX_i^T
+             \sum_{i=1}^n \vtX_i \vtX_i^\trans
              +
              \frac{n}{n-1}
              \left(
@@ -468,13 +468,13 @@ We can write
              \right)
              \left(
                 \vbX_n - \vmu
-             \right)^T \\
+             \right)^\trans \\
           &= \left(
                 \frac{1}{n}
                 +
                 \frac{1}{n (n-1) }
              \right)
-             \sum_{i=1}^n \vtX_i \vtX_i^T
+             \sum_{i=1}^n \vtX_i \vtX_i^\trans
              +
              \frac{n}{n-1}
              \left(
@@ -482,11 +482,11 @@ We can write
              \right)
              \left(
                 \vbX_n - \vmu
-             \right)^T
+             \right)^\trans
 \end{align*}
 The result follows since
 \(
-    \vtX_i \vtX_i^T = \OhP \left( 1 \right)
+    \vtX_i \vtX_i^\trans = \OhP \left( 1 \right)
 \)
 and
 \(
@@ -507,7 +507,7 @@ Suppose that
 is a sequence of \iid random vectors in $\reals^p$ with 
 \[
     \E \left[
-        \vX_1 \vX_1^T
+        \vX_1 \vX_1^\trans
     \right]
     =
     \mSigma,
@@ -539,7 +539,7 @@ If
     =
     \frac{1}{n}
     \sum_{i=1}^n
-        \vX_i \vX_i^T,
+        \vX_i \vX_i^\trans,
 \)
 then
 \(
@@ -575,7 +575,7 @@ If the elements of $\vX_1$ have vanishing first and third moments (for instance 
 ), and if
 \(
     \E \left[
-        \vX_1 \vX_1^T
+        \vX_1 \vX_1^\trans
     \right]
     =
     \diag \left(
@@ -617,19 +617,19 @@ is not diagonal.  By factorizing
     =
     \mPhi
     \mLambda
-    \mPhi^T
+    \mPhi^\trans
 \)
 for orthogonal $\mPhi$ and diagonal $\mLambda$, we can introduce
 \(
     \vtX_i
     \define
-    \mPhi^T \vX_i
+    \mPhi^\trans \vX_i
 \)
 to get
 \(
     \E \left[
         \vtX_i
-        \vtX_i^T
+        \vtX_i^\trans
     \right]
     =
     \mLambda
@@ -642,15 +642,15 @@ and
     \left(
         \frac{1}{n}
         \sum_{i=1}^n
-            \vtX_i \vtX_i^T
+            \vtX_i \vtX_i^\trans
     \right)
-    \mPhi^T.
+    \mPhi^\trans.
 \)
 With this transformation, we can characterize the distribution of $\mS_n$ completely in terms of
 \(
     \frac{1}{n}
     \sum_{i=1}^n
-        \vtX_i \vtX_i^T.
+        \vtX_i \vtX_i^\trans.
 \)
 
 
@@ -670,7 +670,7 @@ for a deterministic
 having $\lambda_1 > \lambda_2 > \cdots > \lambda_p$ and a random symmetric matrix $\mG$.
 Let
 \(
-    \mS_n = \mU_n \mL_n \mU_n^T
+    \mS_n = \mU_n \mL_n \mU_n^\trans
 \)
 be the eigendecomposition of $\mS_n$, with
 \(
@@ -745,7 +745,7 @@ and
 \(
     \mH_n = \Oh\left( 1 \right).
 \)
-Let $\mS_n = \mU_n \mL_n \mU_n^T$ be the eigendecomposition of $\mS_n$, with
+Let $\mS_n = \mU_n \mL_n \mU_n^\trans$ be the eigendecomposition of $\mS_n$, with
 \(
     \mL_n
     =
@@ -814,15 +814,15 @@ We have that
     &= \mLambda 
        + \frac{1}{\sqrt{n}} \mH_n 
        + \oh \left( \frac{1}{\sqrt{n}}\right) \notag \\
-    &= \mU_n \mL_n \mU_n^T \notag \\
-    &= \mE_n \mLambda \mE_n^T
+    &= \mU_n \mL_n \mU_n^\trans \notag \\
+    &= \mE_n \mLambda \mE_n^\trans
        + 
        \frac{1}{\sqrt{n}} \left(
-           \mE_n \mDelta_n \mE_n^T
+           \mE_n \mDelta_n \mE_n^\trans
            +
-           \mF_n \mLambda \mE_n^T
+           \mF_n \mLambda \mE_n^\trans
            +
-           \mE_n \mLambda \mF_n^T
+           \mE_n \mLambda \mF_n^\trans
        \right)
        +
        \frac{1}{n}
@@ -831,19 +831,19 @@ We have that
 where the elements of $\mM_n$ are sums of $\Oh\left( p \right)$ terms, with each term a product of elements taken from $\mE_n$, $\mF_n$, $\mLambda$, and $\mDelta_n$.  Also,
 \begin{align}
     \mI_p
-    &= \mU_n \mU_n^T \notag \\
-    &= \mE_n \mE_n^T
+    &= \mU_n \mU_n^\trans \notag \\
+    &= \mE_n \mE_n^\trans
        + 
        \frac{1}{\sqrt{n}} \left(
-           \mF_n \mE_n^T
+           \mF_n \mE_n^\trans
            +
-           \mE_n \mF_n^T
+           \mE_n \mF_n^\trans
        \right)
        + 
        \frac{1}{n}
        \mW_n, \label{L:eigen-perturb:E:orthog-perturb}
 \end{align}
-where $\mW_n = \mF_n \mF_n^T$.
+where $\mW_n = \mF_n \mF_n^\trans$.
 From \eqref{L:eigen-perturb:E:orthog-perturb} we see that for $1 \leq i,j \leq p$ and $i \neq j$ we must have
 \begin{subequations}
 \begin{align}
@@ -922,7 +922,7 @@ and sample covariance
 \(
     \mS_n.
 \)
-Let $\mSigma = \mPhi \mLambda \mPhi^T$ be the eigendecomposition
+Let $\mSigma = \mPhi \mLambda \mPhi^\trans$ be the eigendecomposition
 of $\mSigma$, with
 \(
     \mLambda = \diag \left(
@@ -936,7 +936,7 @@ and
 \(
     \lambda_1 > \lambda_2 > \cdots > \lambda_p > 0
 \).
-Similarly, let $\mS_n = \mU_n \mL_n \mU_n^T$ be the eigendecomposition of $\mS_n$, likewise with
+Similarly, let $\mS_n = \mU_n \mL_n \mU_n^\trans$ be the eigendecomposition of $\mS_n$, likewise with
 \(
     \mL_n = \diag \left(
         l_{n,1},
@@ -950,7 +950,7 @@ Similarly, let $\mS_n = \mU_n \mL_n \mU_n^T$ be the eigendecomposition of $\mS_n
 \),
 and signs chosen so that
 \(
-    \left( \mPhi^T \mU_n \right)_{ii} \geq 0
+    \left( \mPhi^\trans \mU_n \right)_{ii} \geq 0
 \)
 for $1 \leq i \leq p$.  Then
 \begin{enumerate}[(i)]
@@ -964,7 +964,7 @@ for $1 \leq i \leq p$.  Then
         \]
         and
         \[
-            \sqrt{n} \left( \mPhi^T \mU_n - \mI_p \right) \tod \mF,
+            \sqrt{n} \left( \mPhi^\trans \mU_n - \mI_p \right) \tod \mF,
         \]
         where $\mF$ is a skew-symmetric matrix independent of the
         eigenvalue limits with elements above the diagonal independent of
@@ -1022,7 +1022,7 @@ $\vX_{n,1}, \vX_{n,2}, \ldots, \vX_{n,n}$.  Specifically,
     \mS_n
     =
     \frac{1}{n}
-    \sum_{i=1}^n \vX_{n,i} \vX_{n,i}^T.
+    \sum_{i=1}^n \vX_{n,i} \vX_{n,i}^\trans.
 \)
 We let $\mX_n$ be the $n \times p$ matrix
 \(
@@ -1030,10 +1030,10 @@ We let $\mX_n$ be the $n \times p$ matrix
     =
     \left(
     \begin{matrix}
-        \vX_{n,1}^T \\
-        \vX_{n,2}^T \\
+        \vX_{n,1}^\trans \\
+        \vX_{n,2}^\trans \\
         \vdots \\
-        \vX_{n,n}^T
+        \vX_{n,n}^\trans
     \end{matrix}
     \right),
 \)
@@ -1042,13 +1042,13 @@ so that
     \mS_n
     =
     \frac{1}{n}
-    \mX_n^T \mX_n.
+    \mX_n^\trans \mX_n.
 \)
 Most asymptotic results about sample covariance matrices are expressed in terms of $\mX_n$ rather than $\mS_n$.  For example, the next theorem about the spectral measure of a large covariance matrix is stated this way.
 
 \begin{theorem}\label{T:mp-limit}
 Let $\mX_1, \mX_2, \ldots, \mX_n$ be a sequence of random matrices of increasing dimension as $n \to \infty$, so that $\mX_n \in \reals^{n\times p}$ and $p = p(n)$.
-Define $\mS_n = \frac{1}{n} \mX_n^T \mX_n$.  If the elements of $\mX_n$ are \iid with $\E| X_{n,11} - \E X_{n,11} |^2 = 1$ and $\frac{n}{p} \to \gamma > 0$, then the empirical spectral measure $F^{\mS_n}$ almost surely converges in distribution to a deterministic probability measure.  This measure, denoted
+Define $\mS_n = \frac{1}{n} \mX_n^\trans \mX_n$.  If the elements of $\mX_n$ are \iid with $\E| X_{n,11} - \E X_{n,11} |^2 = 1$ and $\frac{n}{p} \to \gamma > 0$, then the empirical spectral measure $F^{\mS_n}$ almost surely converges in distribution to a deterministic probability measure.  This measure, denoted
 $\FMP_\gamma$, is called the Mar\v{c}enko-Pastur Law.  For $\gamma \geq 1$ it
 has density
 \begin{equation}
@@ -1156,7 +1156,7 @@ It is interesting to look at the scaled behavior in equation~\eqref{E:wishart-fu
     Let $\mX_1, \mX_2, \ldots, \mX_n$ be a sequence of random $n\times p$ 
     matrices with $p = p(n)$.  Assume that $\mX_n$ has \iid elements and that 
     $\E\left[ X_{n,11} \right] = 0$ and $\E\left[ X_{n,11}^2 \right] = 1$.  
-    Define $\mS_n = \frac{1}{n} \mX_n^T \mX_n$ and let $F^{\mS_n}$ be its 
+    Define $\mS_n = \frac{1}{n} \mX_n^\trans \mX_n$ and let $F^{\mS_n}$ be its 
     spectral measure.  If $n \to \infty$, $\frac{n}{p} \to \gamma$ and $g_1, 
     g_2, \ldots, g_k$ 
     are real-valued functions analytic on the support of $\FMP_\gamma$, then 
@@ -1253,7 +1253,7 @@ conditions \cite{bai1988nle}.
     Let $\mX_1, \mX_2, \ldots, \mX_n$ be a sequence of random matrices of
     increasing dimension, with $\mX_n$ of size $n \times p$, $p = p(n)$, 
     $n \to \infty$, and
-    $\frac{n}{p} \to \gamma \in (0,\infty)$.  Let $\mS_n = \frac{1}{n} \mX_n^T \mX_n$ and 
+    $\frac{n}{p} \to \gamma \in (0,\infty)$.  Let $\mS_n = \frac{1}{n} \mX_n^\trans \mX_n$ and 
     denote its eigenvalues by 
     $l_{n,1} \leq l_{n,2} \leq \cdots \leq l_{n,p}$.  If the 
     elements of $\mX_n$ are 
@@ -1292,7 +1292,7 @@ limiting distribution for complex white Wishart matrices.  Johnstone~\cite{johns
     Let $\mX_1, \mX_2, \ldots, \mX_n$ be a sequence of random matrices of
     increasing dimension, with $\mX_n \in \reals^{n\times p}$, $p = p(n)$,
     and $n \to \infty$ with $\frac{n}{p} \to \gamma \in (0, \infty)$.  Define
-    $\mS_n = \frac{1}{n} \mX_n^T \mX_n$ and label its eigenvalues
+    $\mS_n = \frac{1}{n} \mX_n^\trans \mX_n$ and label its eigenvalues
     \(
         l_{n,1} \leq l_{n,2} \leq \cdots \leq l_{n,p}.
     \)
@@ -1484,13 +1484,13 @@ Silverstein~\cite{silverstein1979reg} was perhaps the first to study the eigenve
     \(
         \E X_{n,11}^4 < \infty.
     \)
-    Define $\mS_n = \frac{1}{n} \mX_n^T \mX_n$.  Let
+    Define $\mS_n = \frac{1}{n} \mX_n^\trans \mX_n$.  Let
     $\va_1, \va_2, \ldots, \va_n$ be a sequence of nonrandom unit vectors with 
     $\va_n$ in $\reals^p$ and let $g : \reals \to \reals$ be a continuous 
     bounded function.  If $n \to \infty$ and
     $\frac{n}{p} \to \gamma \in (0,\infty)$, then
     \[
-        \va_n^T g\left( \mS_n \right) \va_n
+        \va_n^\trans g\left( \mS_n \right) \va_n
         \toas
         \int
             g(x)
@@ -1526,11 +1526,11 @@ and define
     =
     \mU_n
     g(\mL_n)
-    \mU_n^T.
+    \mU_n^\trans.
 \)
 We let $\vb_n = \mU_n \va_n$.  Then,
 \begin{equation}\label{E:evector-functional}
-    \va_n^T g(\mS_n) \va_n
+    \va_n^\trans g(\mS_n) \va_n
     =
     \sum_{i=1}^p
         b_{n,i}^2
@@ -1550,14 +1550,14 @@ Silverstein investigated second-order behavior of eigenvectors in \cite{silverst
     \begin{multline*}
         \sqrt{p} \cdot
         \left(
-            \va_n^T g_1( \mS_n ) \va_n
+            \va_n^\trans g_1( \mS_n ) \va_n
             -
             \int g_1(x) \, d\FMP_\gamma(x), \right. \\
-            \va_n^T g_2( \mS_n ) \va_n
+            \va_n^\trans g_2( \mS_n ) \va_n
             -
             \int g_2(x) \, d\FMP_\gamma(x),
             \ldots, \\ \left.
-            \va_n^T g_k( \mS_n ) \va_n
+            \va_n^\trans g_k( \mS_n ) \va_n
             -
             \int g_k(x) \, d\FMP_\gamma(x)
         \right)
