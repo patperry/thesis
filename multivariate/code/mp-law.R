@@ -9,7 +9,7 @@ mp <- ldply( gamma,
               a <- ( 1 - sqrt( 1/g ) )^2; 
               b <- ( 1 + sqrt( 1/g ) )^2; 
               x <- seq(a, b, len=100 ); 
-              y <- dmp( x, conc=g ); 
+              y <- dmp( x, svr=g ); 
               data.frame( concentration=g, quantile=x, density=y ) } )
          
 p <- ( ggplot( mp, aes( quantile, density, color=concentration ) )
