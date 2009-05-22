@@ -1,2 +1,1512 @@
 
-\chapter{Low rank plus noise matrix models}
+\chapter{Behavior of the SVD in low-rank plus noise models}
+
+
+\newcommand{\ba}{\boldsymbol{a}}      
+\newcommand{\be}{\boldsymbol{e}}      
+\newcommand{\bo}{\boldsymbol{o}}      
+\newcommand{\bu}{\boldsymbol{u}}      
+\newcommand{\bv}{\boldsymbol{v}}
+\newcommand{\by}{\boldsymbol{y}}
+\newcommand{\bz}{\boldsymbol{z}}
+\newcommand{\bS}{\boldsymbol{S}}
+\newcommand{\bW}{\boldsymbol{W}}
+\newcommand{\bX}{\boldsymbol{X}}
+
+\newcommand{\tPsi}{\tilde \Psi}       % tilde symbols
+
+\newcommand{\F}{\mathcal{F}}          % sigma-fields
+\newcommand{\N}{\mathcal{N}}          % Normal
+\newcommand{\Q}{\mathcal{Q}}
+\newcommand{\U}{\mathcal{U}}          % script symbols
+\newcommand{\V}{\mathcal{V}}
+\newcommand{\W}{\mathcal{W}}
+
+
+\newcommand{\half}{\frac{1}{2}}
+\newcommand{\Thalf}{\frac{T}{2}}
+\newcommand{\fourth}{\frac{1}{4}}
+
+
+\section{Introduction}
+
+Many modern data sets involve simultaneous measurements of a large number of
+variables. Some financial applications including portfolio selection involve
+looking at the market prices of hundreds or thousands of stocks and their
+evolution over time \cite{markowitz1952ps}. Microarray studies
+\cite{biotechnol1995sms} involve measuring the expression levels of thousands of
+genes simultaneously. Text processing \cite{manning1999fsn} involves counting
+the appearances of thousands of words on thousands of documents. In all of these
+applications, it is natural to suppose that even though the data are
+high-dimensional, their dynamics are driven by a relatively small number of
+latent factors.
+
+Under the hypothesis that one ore more latent factors explain the behavior
+of a data set, principal component analysis (PCA) \cite{jolliffe2002pca} is a
+popular method for estimating these latent factors.  When the dimensionality
+of the data is small relative to the sample size, Anderson's 1963 paper
+\cite{anderson1963atp} gives a complete treatment of how the procedure
+behaves.  Unfortunately, his results do not apply when the sample size is
+comparable to the dimensionality.
+
+A further complication with many modern data sets is that it is no longer
+appropriate to assume the observations are i.i.d. Also, sometimes it is
+difficult to distinguish between ``observation'' and ``variable''. We call such
+data ``transposable''. A microarray study involving measurements of $p$ genes
+for $n$ different patients can be considered transposable: we can either treat
+each gene as a measurement of the patient, or we can treat each patient as a
+measurement of the gene. There are correlations both between the genes
+\emph{and} between the patients, so in fact both interpretations are relevant
+\cite{efron2008smi}.
+
+One can study latent factor models in a transpose-agnostic way be considering
+generative models of the form $X = U D V^T + E$. Here, $X$ is the $n \times p$
+observed data matrix. The unobserved row and column factors are given by $U$
+and $V$, respectively, matrices with $k$ orthonormal columns each, with $k \ll
+\min(n,p)$. The strengths of the factors are given in the $k\times k$ diagonal
+matrix $D$, and $E$ is a matrix of noise. A natural estimator for the latent
+factor term $U D V^T$ can be gotten from truncating the singular value
+decomposition (SVD) \cite{golub1996mc} of $X$. The goal of this paper is to
+study the behavior of the SVD when $n$ and $p$ both tend to infinity, with
+their ratio tending to a nonzero constant.
+
+In an upcoming paper, Alexei Onatski~\cite{onatski} gives a very thorough 
+treatment of these models.  He assumes that the elements of $E$ are i.i.d.
+Gaussians, that $\sqrt{n} ( U^T U - I_k) $ tends to a multivariate Gaussian
+distribution, and that $V$ and $D$ are both nonrandom.
+
+Slight variations of the above model have been analyzed by
+Baik~\&~Silverstein~\cite{baik2006els}, and by Paul~\cite{paul2007ase}. These
+authors look at matrices of the form $X = T^{1/2} Z$, where $Z$ is a matrix with
+iid entries, and $T$ is a ``spiked'' covariance matrix, i.e. a positive-definite
+matrix with a few large eigenvalues. Baik \& Silverstein prove quite general
+results using the Stieltjes transform only assuming finite fourth moments, but
+they limit their study to the almost sure limits of the top singular values of
+$X$. Paul gives the limiting distributions of the sample singular values as well
+as the singular vectors, but he assumes that the elements of $Z$ are independent
+standard Gaussians. Later, Paul and coauthors \cite{paul} generalized his
+results to allow for correlated Gaussian loadings of the factors.
+
+The main contributions of this paper are twofold.  First, we work under a 
+transpose-agnostic generative model that allows randomness in all three of
+$U$, $D$, and $V$.  Second, we give a more complete picture of the almost-sure
+limits of the sample singular vectors, taking into account their projections
+onto the space orthogonal to the population singular vectors.  
+
+We describe the results in Section 2. The rest of the paper is dedicated to
+proving the two main theorems. We owe a substantial debt to Onatski's work.
+Although some significant details below are different, the general outline and
+the main points of the argument are the same.
+
+\section{Assumptions, notation, and main results}
+
+Here we make explicit what the model and assumptions are, and we present our
+main results.
+
+\subsection{Assumptions and notation}
+
+We will work sequences of matrices indexed by $n$, with
+\[
+    X_n = \sqrt{n} U_n D_n V_n^T + E_n.
+\]
+We denote by $\sqrt{n} U_n D_n V_n^T$ the ``signal'' part of the matrix $X_n$
+and $E_n$ the ``noise'' part.  We will often refer to $U_n$ and $V_n$ as the
+left and right factors of $X_n$, and the matrix $D_n$ will be called the
+matrix of normalized factor strengths.  The first two assumptions concern the
+signal part:
+
+\begin{assumption}\label{A:factors}
+    The factors $U_n$ and $V_n$ are random matrices of dimensions
+    $n \times k$ and $p \times k$, respectively.  The number of factors, $k$,
+    is a fixed constant.  The factors are normalized so that
+    $U_n^T U_n =  V_n^T V_n = I_k$, where $I_k$ denotes the
+    $k \times k$ identity matrix.  The ratio $p/n = \gamma$ is a fixed nonzero
+    scalar in the range $(0,\infty)$.
+\end{assumption}
+\noindent
+
+\begin{assumption}\label{A:sizes}
+    The matrix of factor strengths, $D_n$, is of size $k\times k$ and 
+    diagonal, with $D_n = \diag(d_{n,1}, \ldots, d_{n,k})$ and
+    $d_{n,1} > d_{n,2} > \cdots > d_{n,k} > 0$.  The matrix $D_n$ converges
+    almost surely to a deterministic matrix 
+    $D = \diag( \mu_1^\half, \mu_2^\half, \ldots, \mu_k^\half)$ with
+    $\mu_1 > \mu_2 > \cdots > \mu_k > 0$. Moreover, the vector
+    \(
+        \sqrt{n} ( d_{n,1}^2 - \mu_1, d_{n,1}^2 - \mu_2, 
+                   \ldots, 
+                   d_{n,K}^2 - \mu_k )
+    \)
+    converges in distribution to a mean-zero multivariate normal with 
+    covariance matrix $\Sigma$ having entries $(\Sigma)_{ij} = \sigma_{ij}$
+    (possibly degenerate).
+\end{assumption}
+\noindent
+The next assumption concerns the noise part:
+
+\begin{assumption}\label{A:noise}
+    The noise matrix $E_n$ is an $n\times p$ matrix with entries $(E_n)_{ij}$
+    independent $\N(0,\sigma^2)$ random variables, also independent of
+    $U_n$, $D_n$, and $V_n$.
+\end{assumption}
+\noindent
+
+We need to introduce some more notation.  To reduce clutter, we drop the
+subscripts on $U_n$, $V_n$, and $E_n$ so that $U = U_n$, $V = V_n$, and
+$E = E_n$. We denote the columns of $U$ and $V$ by $\bu_{1}, \ldots, \bu_{k}$ and
+$\bv_{1}, \ldots, \bv_{k}$, respectively.
+Finally, we let $X_n \approx \sqrt{n} \hat U \hat D_n \hat V^T$ be the singular value
+decomposition of $X_n$ truncated to $k$ terms, where 
+$\hat D_n = \diag( \hat \mu_{n,1}^\half, \ldots, \hat \mu_{n,k}^\half)$ and the columns of
+$\hat U$ and $\hat V$ are given by $\hat \bu_{1}, \ldots, \hat \bu_{k}$
+and $\hat \bv_{1}, \ldots, \hat \bv_{k}$, respectively.
+
+
+\subsection{Main results}
+
+We are now in a position to say what the results are.  There are two main
+theorems, one concerning the sample singular values and the other concerning
+the sample singular vectors.  First we give the result about the singular
+values.
+\begin{theorem}\label{T:values}
+    Under Assumptions~\ref{A:factors}~--~\ref{A:noise},
+    the vector $\hat \vmu = (\hat \mu_1, \hat \mu_2, \ldots, \hat \mu_k)$
+    converges almost surely to 
+    $\tilde \vmu = (\tilde \mu_1, \tilde \mu_2, \ldots, \tilde \mu_k)$,
+    where
+    \[
+        \tilde \mu_k
+        =
+        \begin{cases}
+            \left( \mu_i + \sigma^2 \right)
+            \left( 1 + \frac{ \gamma \sigma^2 }{ \mu_i } \right)
+                &\text{when $\mu_i > \sqrt{\gamma} \sigma^2$}, \\
+            \sigma^2 \left( 1 + \sqrt{\gamma} \right)^2
+                &\text{otherwise.}
+        \end{cases}
+    \]
+    Moveover, 
+    \(
+        \sqrt{n} (\hat \vmu - \tilde \vmu)
+    \)
+    converges in distribution to a (possibly degenerate) multivariate normal
+    with covariance matrix $\tilde \Sigma$ whose $ij$ element is given by
+    \[
+        \tilde \sigma_{ij}
+        \equiv
+        \begin{cases}
+            \sigma_{ij} 
+            \left(
+                1 - \frac{ \gamma \sigma^4 }{ \mu_i^2 }
+            \right)
+            \left(
+                1 - \frac{ \gamma \sigma^4 }{ \mu_j^2 }
+            \right)
+            +
+            \delta_{ij}
+            2
+            \sigma^2
+            \left(
+                2 \mu_i + \sigma^2 + \gamma \sigma^2 \right)
+            \left(
+                1 - \frac{ \gamma \sigma^4 }{ \mu_i^2 }
+            \right)
+                &\text{when $\mu_i > \sqrt{\gamma} \sigma^2$ 
+                       and $\mu_j > \sqrt{\gamma} \sigma^2$,} \\
+            0
+                &\text{otherwise.}
+        \end{cases}.
+    \]
+    When $\sigma_{ii} = 2 \mu_i^2$, 
+    and $\mu_i > \sqrt{\gamma} \sigma^2$, the variance of the $i$th
+    component simplifies to
+    \(
+        \tilde \sigma_{ii} 
+        = 
+        2 (\mu_i + \sigma^2)^2 \left( 1 - \gamma \sigma^4 / \mu_i^2 \right).
+    \)
+\end{theorem}
+
+Next, we give the result for the singular vectors:
+\begin{theorem}\label{T:vectors}
+    Say Assumptions~\ref{A:factors}~--~\ref{A:noise} hold.  Then the
+    $k\times k$ matrix $R_n \equiv V^T \hat V$ converges almost surely
+    to a matrix $R = \diag(r_1, r_2, \ldots, r_k)$, where
+    \begin{equation}
+        |r_i|^2
+        =
+        \begin{cases}
+            \frac{ 1 - \frac{ \gamma \sigma^4 }{ \mu_i^2 } }
+                 { 1 + \frac{ \gamma \sigma^2 }{ \mu_i   } }
+            &\text{when $\mu_i > \sqrt{\gamma} \sigma^2$,} \\
+            0
+            &\text{otherwise.}
+        \end{cases}
+    \end{equation}
+\end{theorem}
+
+
+\subsection{Notes}
+
+Some discussion of the assumptions and the results are in order:
+
+\begin{enumerate}
+    
+\item
+Assumptions~\ref{A:factors}~and~\ref{A:sizes} are simpler than the assumptions given in many other papers while still being quite general.  For example, Paul's ``spiked'' covariance model has data of the form
+\[
+    X = Z \Theta^T + E,
+\]
+where $\Theta$ is an $p \times k$ matrix of factors and $Z$ is an $n\times k$ matrix of factor loadings whose rows are i.i.d multivariate $\N(0,C)$ random variables for covariance matrx $C$ having eigen-decomposition $C = Q \Lambda Q^T$.  Letting $Z = \sqrt{n} \hat P \hat \Lambda \hat Q^T$ be the SVD of $Z$, Anderson's results \cite{anderson1963atp} give us that $\hat \Lambda$ and $\hat Q$ converge almost surely to $\Lambda$ and $Q$, respectively, and that the diagonal elements of $\sqrt{n} (\hat \Lambda - \Lambda)$ converge to a mean-zero multivariate normal whenever $C$ has no repeated eigenvalues.  If we define $U = \hat P$, $D = \hat \Lambda^\half$, and $V = \Theta \hat Q$, then $X = \sqrt{n} U D V^T + E$, where the factors satisfy Assumptions~\ref{A:factors}~and~\ref{A:sizes}.  Dropping the normality assumption on the rows of $Z$ poses no problem.  Moreover, we can suppose instead of i.i.d. that the rows of $Z$ be a martingale difference array with well-behaved low-order moments and still perform a transformation of the variables to get factors of the form we need for Theorems~\ref{T:values}~and~\ref{T:vectors}.
+
+\item
+There is a sign-indeterminancy in the sample and population singular vectors. Since we only give results for the squares $R^T R$ the signs do not matter and we choose them arbitrarily.
+
+\item 
+Most of the results in Theorems~\ref{T:values}~and~\ref{T:vectors} can be gotten from Onatski's results \cite{onatski}.   However, Onatski does not show that $\sqrt{n} (\hat \mu_i - \tilde \mu_i) \toP 0$ when $\mu_i$ is below the critical threshold.  Furthermore, Onatski proves convergence in probability, not almost sure convergence.
+
+\end{enumerate}
+
+\section{Linear algebra}\label{S:linalg}
+
+We are now ready to proceed with proving the theorems.  In this section we introduce a linear algebra trick originally devised by Onatski \cite{onatski}, similar to what is done in Paul \cite{paul2007ase}.  Nadler~\cite{nadler2008fsa} employs the same trick, but he limits his study to the case when $k = 1$. Onatski's trick will let us analyze the behavior of the squares of the singular values along with the right singular vectors in terms of matrices of dimensions much smaller than $n \times p$.
+
+Define $U_1 = U$, and choose $U_2$ so that
+\(
+    \U 
+    = 
+    \left( 
+    \begin{matrix}
+        U_1 & U_2 
+    \end{matrix}
+    \right)
+\) 
+is an orthogonal matrix. Then $\U^T E \eqd E$.  Partition the rows of $\U^T E$ as 
+\(
+    \U^T E 
+    = 
+    \left(
+    \begin{matrix}
+        E_1 \\ E_2
+    \end{matrix}
+    \right)
+\)
+where $E_i = U_i^T E$ and $E_1$ is a $k \times p$ matrix.  Let $(1/n) E_2^T E_2 = O \Lambda O^T$ be the spectral decomposition of $(1/n) E_2^T E_2$.  Note that $O \sim \Haar(\O_M)$ and that $\lambda_1, \ldots, \lambda_p$, the diagonal entries of $\Lambda$, are eigenvalues of a Wishart $\W(I_p, n-k)$ matrix scaled by $(1/n)$.  
+
+We have
+\begin{align*}
+    \U^T U D_n V^T
+        &= \left(
+           \begin{matrix}
+               U_1^T \\ 
+               U_2^T
+           \end{matrix}
+           \right) 
+           U D_n V^T \\
+        &= \left(
+           \begin{matrix}
+               D_n V^T \\
+               0
+           \end{matrix}
+           \right)
+\end{align*}
+so that in block form,
+\[
+    \U^T X_n
+    =
+    \left(
+    \begin{matrix}
+            n^\half D_n V^T + E_1  \\
+            E_2
+    \end{matrix}
+    \right).
+\]
+If we define 
+\begin{equation} \label{E:psi}
+    \Psi_n = V D_n + (1 / n^\half) E_1^T,
+\end{equation}
+then 
+\begin{equation}\label{E:arrow}
+    (1/n) X_n^T X_n = (1/n) X_n \U \U^T X_n^T = \Psi_n \Psi_n^T + O \Lambda O^T.
+\end{equation}
+This simple form makes it very easy to analyze the eigenvalues and eigenvectors of $(1/n) X_n^T X_n$.
+
+Suppose $\by$ is an eigenvector of $(1/n) X_n^T X_n$ with eigenvalue $\mu$.  Then $\mu \by = \Psi_n \Psi_n^T \by + O \Lambda O^T \by$, i.e.
+\[
+    O (\mu I - \Lambda) O^T \by = \Psi_n \Psi_n^T \by.
+\]
+If $\mu \neq \lambda_j$ for all $j = 1, \ldots, p$, then
+\begin{align*}
+    \by &= O (\mu I - \Lambda)^{-1} O^T \Psi_n \Psi_n^T \by \\
+    \intertext{so that}
+    (\Psi_n^T \by) &= \big(\Psi_n^T O (\mu I - \Lambda)^{-1} O^T \Psi_n \big) (\Psi_n^T \by).
+\end{align*}
+The matrix 
+\begin{equation}
+    R_1(\mu)
+    \equiv
+    O (\mu I - \Lambda)^{-1} O^T
+\end{equation}
+is the \emph{resolvent} of $(1/n) E_2^T E_2$.  We see that
+$\Psi_n^T \by$ is an eigenvector of $\Psi^T R_1 (\mu) \Psi$
+with eigenvalue $1$.  We can prove a stronger result:
+
+\begin{lemma}\label{L:secular}
+    Say $\mu \neq \lambda_i$ for all $i = 1, \ldots, p$.  Then $\mu$ is an
+    eigenvalue of $(1/n) X_n^T X_n$ iff
+    $\Psi_n^T R_1 (\mu) \Psi_n$ has an eigenvalue equal to $1$.
+\end{lemma}
+\begin{proof}
+    It remains to be shown that the condition is sufficient.  Say 
+    $\Psi_n^T R_1 (\mu) \Psi_n$ has an eigenvector $\bz$ with unit eigenvalue. 
+    Define
+    $\by = O (\mu I - \Lambda)^{-1} O^T \Psi_n \bz$.  Then 
+    \(
+        \Psi_n^T \by = \Psi_n^T R_1 (\mu) \Psi_n \bz = \bz,
+    \)
+    so that
+    \(
+        O (\mu I - \Lambda) O^T \by 
+        =
+        \Psi_n \bz
+        =
+        \Psi_n \Psi_n^T \by.
+    \)
+    Referring to Equation \eqref{E:arrow}, we see that
+    $\by$ is an eigenvector of $(1/n) X_n X_n^T$ with
+    eigenvalue $\mu$.
+\end{proof}
+
+In light of the proof of Lemma~\ref{L:secular}, our problem has been 
+simplified to finding pairs $(\mu, \bz)$ with
+$\Psi_n^T R_1 (\mu) \Psi_n \bz = \bz$.  For then
+$\by = R_1(\mu) \Psi_n \bz$ is an eigenvector of
+$(1/n) X_n^T X_n$ with eigenvalue $\mu$.  The length
+of $\by$ is given by
+\begin{align}
+    \| \by \|_2^2 
+        &= \bz^T \Psi_n^T \big( O^T (\mu I - \Lambda)^{-2} O \big) \Psi_n \bz 
+            \notag \\
+        &= \bz^T \Psi_n^T R_2(\mu) \Psi_n \bz.
+            \label{E:normY}
+\end{align}
+where $R_2(\mu) \equiv O^T (\mu I - \Lambda)^{-2} O$.  Also, $V^T \by$ is 
+given by
+\begin{align}
+    V^T \by 
+        &= V^T \big( O^T (\mu I - \Lambda)^{-1} O \big) \Psi_n \bz \notag \\
+        &= V^T R_1(\mu) \Psi_n \bz.  \label{E:corrY}
+\end{align}
+
+We can see that $R_1(x)$ is intimately involved with the eigenvalues and
+eigenvectors of $(1/n)X_n^T X_n$.  We define
+\begin{align}
+    S_{n,1} (z) &= \Psi_n^T R_1 (z) \Psi_n, \\
+    S_{n,2} (z) &= \Psi_n^T R_2 (z) \Psi_n, \\
+\intertext{and also}
+    T_n (z) &= V^T R_1 (z) \Psi_n.
+\end{align}
+We analyze the asymptotic properties these matrices in
+Section~\ref{S:resolvent}.
+
+\section{Linear functionals of eigenvalues}
+
+In the analysis that follows, we will often need to look at sums of the form
+\[
+    \frac{1}{p} \sum_{\alpha=1}^p g (\lambda_\alpha).
+\]
+Such sums are called linear functionals of the eigenvalues.  They have been
+studied quite extensively for various classes of random matrices.  Hiai and Petz~\cite{hiai1998edw} derived a large deviation principle for the spectral measure  of a Wishart matrix, which implies a strong law of large numbers.  For a  general class of Wishart-like matrices, Bai and Silverstein~\cite{bai2004cls} proved a central limit theorem for linear functionals of eigenvalues.  These two results are much stronger than what we will need.  We summarize the parts of the results that we need in the following two lemmas. For both of them, $g: \reals \to \reals$ is any function analytic on an open interval containing $[a,b]$  and $\bar g = \int g(\lambda) d\FMP_\gamma (\lambda)$.
+
+\begin{lemma}[Hiai \& Petz]\label{L:wishart-lln}
+    A large deviations principle holds for the empirical law of 
+    $\{ \lambda_\alpha \}$.  Combined with the Borel-Cantelli Lemma, this
+    implies that a strong law of large numbers holds for $g(\lambda_\alpha)$. 
+    Specifically,
+    \[
+        \frac{1}{p} \sum_{\alpha=1}^p g( \lambda_\alpha ) \toas \bar g.
+    \]
+\end{lemma}
+    
+\begin{lemma}[Bai \& Silverstein]\label{L:wishart-clt}
+    A central limit theorem holds for $g(\lambda_\alpha)$.  Although it is
+    possible to obtain explicit mean and variance, a crude form of the
+    result is that
+    \[
+        \frac{1}{p} 
+        \sum_{\alpha=1}^p
+            g( \lambda_\alpha ) - \bar g 
+        = O_P(p^{-1}).
+    \]  
+\end{lemma}
+
+Note that in the previous lemma, the scaling is $p$ instead of $\sqrt{p}$ like in the classical central limit theorem.
+
+It will be convenient to consider functions that are continuous on the support
+of $\FMP_\gamma$ but not necessarily on all of $\reals$.  A result of Yin, Bai, and
+Krishnaiah \cite{yin1988lle} is that $\lambda_1$ converges almost surely to
+$\bar b$.  Further, Bai and Yin \cite{bai1993lse} later proved that
+$\lambda_M$ converges almost surely to $\bar a$.  Thus, if $g$ is 
+bounded and continuous on $[\bar a, \bar b]$ and we define 
+\[
+    \tilde g (x)
+    =
+    \begin{cases}
+        g(x), &\text{ when $x \in [\bar a, \bar b]$} \\
+        0,    &\text{otherwise,}
+    \end{cases}
+\]
+then $(1/M) \sum_{\alpha=1}^M [ g(\lambda) - \tilde g (\lambda)] \toas 0$.  
+Therefore, the above two lemmas hold when $g$ is bounded and continuous only
+on $[\bar a, \bar b]$.
+
+We will need to know the limits of certain functionals.  For
+$z, z_1, z_2 > \bar b$, we define
+\begin{align*}
+    \rho_1(z)
+        &=
+        \frac{1}{2 \gamma}
+        -
+        \frac{\sqrt{(z - b)(z - a)} + \sqrt{ a b}}
+             {2 \gamma z}, \\
+    \rho_2(z)
+        &= -\rho_{1}'(z) \\
+\intertext{and}
+    \rho_2(z_1, z_2)
+        &= - \frac{r_1(z_2) - r_1(z_1)}{z_2 - z_1}.
+\end{align*}
+
+\noindent
+When $z_1 \to z_2$ we get that $\rho_2 (z_1, z_2) \to - \rho_1'(z_1)$.  In this way we can extend $\rho_2 (z_1, z_2)$ to the case when $z_1 = z_2$.
+
+Calculations in the Appendix show that
+\begin{align}
+    r_{1}(z)
+        &\equiv \int \frac{d\FMP_\gamma(\lambda)}{z - \lambda} \notag \\
+        &= \begin{cases}
+               \rho_1(z) &\text{when $\gamma \leq 1$} \\
+               \rho_1(z) + (1 - \gamma^{-1}) z^{-1} &\text{otherwise,}
+           \end{cases} 
+           \label{E:r1-z} \\
+    r_{2}(z)
+        &\equiv \int \frac{d\FMP_\gamma(\lambda)}{(z - \lambda)^2} \notag \\
+        &= \begin{cases}
+               \rho_2(z) &\text{when $\gamma \leq 1$} \\
+               \rho_2(z) + (1 - \gamma^{-1}) z^{-2} &\text{otherwise,}
+           \end{cases} 
+           \label{E:r2-z} \\
+\intertext{and}
+    r_2(z_1, z_2)
+        &\equiv \int \frac{d\FMP_\gamma(\lambda)}
+                          {(z_1 - \lambda)(z_2 - \lambda)} \notag \\    
+        &= \begin{cases}
+               \rho_2(z_1, z_2) &\text{when $c \leq 1$} \\
+               \rho_2(z_1, z_2) + (1 - \gamma^{-1}) z_1^{-1} z_2^{-1} &\text{otherwise.}
+           \end{cases} 
+           \label{E:r2-z1-z2}
+\end{align}
+
+
+\section{The resolvent}\label{S:resolvent}
+
+In this section we study the resolvent $R_t(z) = O^T (z I - \Lambda)^{-t} O$ 
+and its interaction with the matrices $\Psi_n$ and $U$.  Recall from equation
+\eqref{E:psi} that $\Psi_n = V D_n + (1/n^{\half}) E_1^T$.  We have that
+$O \Psi_n = O V D_n + (1/n^{\half}) \tilde E_1^T$, where $\tilde E_1 = E_1 O$.
+Due the the dependence between the rows of $O V$, it is inconvenient to
+deal with $O \Psi_n$ directly.  Let $Z$ be a $p \times k$ matrix of i.i.d. standard normals.  Since $O V$ is uniformly distributed over the Steifel manifold, we have
+\begin{align}\label{E:OU}
+    O V
+        &\overset{d}{=} Z (Z^T Z)^{-T/2}  \notag \\
+        &= (1/p^\half) Z \big((1/p) Z^T Z\big)^{-T/2}.  
+\end{align}    
+We know that
+$(1/p) Z^T Z \toas I_k$.  Defining $G = (1/p) Z^T Z - I_k$ and using the
+delta method, it is not hard to see that $G = O_P(1/p^\half)$.  For the rest
+of the section, we will use the representation in \eqref{E:OU} for $OV$.  We
+define $\tilde V = (1/p^\half) Z$,
+$\tilde \Psi_n =  \tilde V D_n + (\gamma^{\half} / p^\half) \tilde E_1$,
+and $\tilde R_t (z) = (z I_M - \Lambda)^{-t}$.  We also let 
+$\tilde R_2(z_1, z_2) = \tilde R_1 (z_1) \tilde R_1 (z_2)$.
+
+
+\subsection{Almost sure limits}
+
+We first demonstrate that $\tilde \Psi_n^T \tilde R_p(z) \tilde \Psi_n$ and 
+$\Psi_n^T R_p (z) \Psi_n$ are asymptotically almost surely
+equal. A similar result holds for the pairs 
+$(\tilde \Psi_n^T \tilde R_2(z_1, z_2) \tilde \Psi_n,
+  \Psi_n^T R_2(z_1, z_2) \Psi_n)$
+and $(\tilde V^T \tilde R_1(z) \tilde \Psi_n, V^T R_1(z) \Psi_n)$.
+To see this for $\Psi_n^T R_p(z) \Psi_n$, note that
+\begin{align*}
+    \begin{split}
+    \Psi_n^T R_t (z) \Psi_n
+    &=
+    \tilde \Psi_n^T \tilde R_t(z) \tilde \Psi_n \\
+        &+ \frac{1}{p} \Big\{
+        G^T D_n^T Z^T \tilde R_p(z) ( Z D_n + \gamma^\half \tilde E_1) \\
+        &\qquad \qquad +
+        ( Z D_n + \gamma^\half \tilde E_1)^T \tilde R_p(z) Z D_n G \\
+        &\qquad \qquad +
+        G^T D_n^T Z^T \tilde R_p(z) Z D_n G
+        \Big\}.
+    \end{split}
+\end{align*}
+The remainder terms all go to $0$ almost surely.
+Lemma~\ref{L:strong-weighted}, a strong law of large numbers for weigted sums,
+makes this more rigorous.  The term 
+$\tilde \Psi_n^T \tilde R_t(z) \tilde \Psi_n$ is a sum of the form
+\[
+    \tilde \Psi_n^T \tilde R_t(z) \tilde \Psi_n 
+    =
+    \sum_{\alpha=1}^p
+        \frac{\tilde \vpsi_\alpha \tilde \vpsi^T_\alpha }
+             {(z - \lambda_\alpha)^t},
+\]
+where $\tilde \vpsi_1, \ldots, \tilde \vpsi_p$ are the rows of $\tilde \Psi_n$.
+Since the $\tilde \vpsi_\alpha$ are i.i.d, it is quite plausible that the sum
+converges to $r_1(z) \E[ \tilde \Psi_n^T \tilde \Psi_n ]$.  Indeed, the strong
+law of Lemma~\ref{L:strong-weighted} proves exactly this.  With the additional
+help of Lemma~\ref{L:wishart-lln}, we can prove:
+
+\begin{lemma}\label{L:Sbar}
+    For $z > \bar b$, 
+    \begin{align*}
+        S_{n,1}(z) &\toas r_1(z) \left( D^2 + \gamma I_k \right), \\
+        S_{n,2}(z) &\toas r_2(z) \left( D^2 + \gamma I_k \right), \\
+    \intertext{and}
+        T_n(z) &\toas r_1(z) D.
+    \end{align*}
+\end{lemma}
+
+For convenience, we define
+\begin{align*}
+    \bar S_1(z) &= r_1(z) \left( D^2 + \gamma I_k \right), \\
+    \bar S_2(z) &= r_2(z) \left( D^2 + \gamma I_k \right), \\
+\intertext{and}
+    \bar T(z) &= r_1(z) D.
+\end{align*}
+
+\subsection{Asymptotic normality}
+
+Slightly trickier but still tractable is to get the asymptotic distributions
+of $\sqrt{n} \big( S_{n,1}(z) - \bar S_1 (z) \big)$ and the other similar expressions.
+Assume that there exist random matrix-valued functions 
+$S_1(z)$, $S_2(z)$, and $T(z)$ defined on some probability space
+such that for some finite set $\{ z_j \}_{j=1}^J$ with $z_j > b$ for all $j$, 
+the matrices
+\begin{equation*}
+    \left\{ 
+        \sqrt{n} \big( S_{n,1}(z_j) - \bar S_1 (z_j) \big), \quad
+        \sqrt{n} \big( S_{n,2}(z_j) - \bar S_2 (z_j) \big), \quad
+        \sqrt{n} \big( T_n(z_j) - \bar T (z_j) \big) 
+    \right\}_{j=1}^{J}
+\end{equation*}
+converge jointly in distribution to
+\[
+    \Big\{
+        S_1(z_j), S_2(z_j), T(z_j)
+    \Big\}_{j=1}^{J}.
+\]
+The purpose of this section is to prove that such an assumption is justified
+and to describe explicitly this limiting distribution. 
+
+We first start with $S_{n,1}$.  We have that
+\begin{align*}
+    \sqrt{n} \big( S_{n,1} (z) &- \bar S_1 (z) \big) = \\
+        \gamma^{-\half} \sqrt{p} &\Bigg\{
+            D_n 
+            \left( \frac{1}{p} Z^T Z \right)^{-\half}
+            \left(
+                \frac{1}{p} Z^T (z I_p - \Lambda)^{-1} Z
+                -
+                r_1(z) I_k
+            \right)
+            \left( \frac{1}{p} Z^T Z \right)^{-\Thalf}
+            D_n \\
+            &-{}
+            r_1(z)
+            D_n 
+            \left( \frac{1}{p} Z^T Z \right)^{-\half}
+            \left(
+                \frac{1}{p} Z^T Z - I_k
+            \right)
+            \left( \frac{1}{p} Z^T Z \right)^{-\Thalf}
+            D_n \\
+            &+{}
+            r_1(z) \left( D_n^2 - D^2 \right) \\
+            &+{}
+            \gamma^\half
+            D_n 
+            \left( \frac{1}{p} Z^T Z \right)^{-\half}
+            \left(
+                \frac{1}{p} Z^T (z I_p - \Lambda)^{-1} \tilde E_1
+            \right) \\
+            &+{}
+            \gamma^\half
+            \left(
+                \frac{1}{p} \tilde E_1^T (z I_p - \Lambda)^{-1} Z
+            \right)
+            \left( \frac{1}{p} Z^T Z \right)^{-\Thalf}
+            D_n \\
+            &+{}
+            \gamma
+            \left(
+                \frac{1}{p} \tilde E_1^T (z I_p - \Lambda)^{-1} \tilde E_1
+                -
+                r_1(z) I_k
+            \right)
+        \Bigg\}.
+\end{align*}
+Employing Slutzky's theorem, this has the same limiting distribution as
+\begin{align*}
+    S_{n,1}^{(1)}(z) \equiv 
+        \gamma^{-\half} \sqrt{p} &\Bigg\{
+            D
+            \left(
+                \frac{1}{p} Z^T (z I_p - \Lambda)^{-1} Z
+                -
+                r_1(z) I_k
+            \right)
+            D \\
+            &-{}
+            r_1(z)
+            D
+            \left(
+                \frac{1}{p} Z^T Z - I_k
+            \right)
+            D \\
+            &+{}
+            r_1(z) \left( D_n^2 - D^2 \right) \\
+            &+{}
+            \gamma^\half
+            D 
+            \left(
+                \frac{1}{p} Z^T (z I_p - \Lambda)^{-1} \tilde E_1
+            \right) \\
+            &+{}
+            \gamma^\half
+            \left(
+                \frac{1}{p} \tilde E_1^T (z I_p - \Lambda)^{-1} Z
+            \right)
+            D \\
+            &+{}
+            \gamma
+            \left(
+                \frac{1}{p} \tilde E_1^T (z I_p - \Lambda)^{-1} \tilde E_1
+                -
+                r_1(z) I_k
+            \right)
+        \Bigg\}.
+\end{align*}
+Combining Lemmas \ref{L:wishart-lln}, \ref{L:wishart-clt}, and 
+\ref{L:clt-weighted}, we can see that $S_1(z)$, the limiting distribution of
+$S_{n,1}^{(1)}(z)$ has elements above and along the main diagonal converging
+to a multivariate normal with
+\begin{align}
+    \cov[ (S_1(z_1))_{ij}, (S_1(z_2))_{ij} ]
+    &= \gamma^{-1} (1 + \delta_{ij}) \mu_i \mu_j 
+                 \big( r_2 (z_1, z_2) - r_1(z_1) r_1 (z_2) \big) \notag \\
+      &+ (1 + \delta_{ij}) (\mu_i + \mu_j + \gamma) r_2(z_1, z_2) \notag \\
+      &+ \delta_{ij} \sigma_{ii} r_1(z_1) r_1(z_2), \label{E:cov-S1-1}
+\end{align}
+and for $i \neq j$,
+\begin{align}
+    \cov[ (S_1(z_1))_{ii}, (S_1(z_2))_{jj} ]
+    &= \sigma_{ij} r_1(z_1) r_1(z_2). \label{E:cov-S1-2}
+\end{align}
+All other correlations are $0$.
+
+\section{Limits of singular values}
+
+We are finally ready to study the limits of the top eigenvalues of
+$(1/n) X_n^T X_n$.  We have that
+$(1/n) X_n^T X_n = \Psi_n \Psi_n^T + O \Lambda O^T$. Recall from
+Lemma~\ref{L:secular} that the $j$th eigenvalue of $(1/n) X_n^T X_n$, say 
+$\hat \mu_j$, is either equal to some $\lambda_i$ or else the matrix
+$S_{n,1}(\hat \mu_j)$ has a unit eigenvalue; conversely all values of $z$ with
+$S_{n,1}(z)$ having a unit eigenvalue are eigenvalues of $(1/n) X_n^T X_n$.
+Lemma~\ref{L:lowrank-perturb}, in the Appendix, shows that  almost surely
+$(1/n) X_n^T X_n$ has no nonzero eigenvalue equal to any $\lambda_i$.  Thus,
+we can study the nonzero eigenvalues of $(1/n) X_n^T X_n$ by studying the
+random matrix-valued function $S_{n,1}(z)$.
+
+We denote by $\hat \mu_i$ the $i$th largest eigenvalue of $(1/n) X_n^T X_n$.
+
+\subsection{Almost sure limits}\label{SS:value-limit}
+
+Assume for now that $\gamma \leq 1$.  Denote by $\bar k$ the maximum index such that $\mu_{\bar k} > \sqrt{\gamma}$.  For $\varepsilon$ small enough, there are exactly $\bar k$ values of $z$ in  $(b + \varepsilon, \infty)$ for which $\bar S_1(z)$, the limit of $S_{n,1}(z)$ has a unit eigenvalue.  This is because 
+\(
+    \bar S_1(z) 
+    = 
+    \diag( r_1(z) (\mu_1 + \gamma), \ldots, r_1(z) (\mu_K + \gamma))
+\)
+and $r_1(z) < (\sqrt{\gamma} + \gamma)^{-1}$ on $(b, \infty)$.  A straightforward calculation shows that $r_1(z)$ has inverse
+\[
+    z(r_1)
+    =
+    \frac{1}{r_1}
+    + 
+    \frac{1}{1 - \gamma r_1}
+\]
+For $i \leq \bar K$, we define
+\begin{align*}
+    \tilde \mu_i
+    &\equiv z\left( (\mu_i + \gamma)^{-1} \right) \\
+    &= \left( \mu_i + 1 \right) 
+       \left( 1 + \frac{\gamma}{\mu_i} \right)
+\end{align*}
+Due to the continuity of eigenvalues, for $i$ in this range, $\tilde \mu_i$ is
+almost surely a limiting eigenvalue of $(1/n) X_n^T X_n$.  Thus for $i \leq K$,
+$\hat \mu_i \toas \tilde \mu_i$.
+
+Since $(1/n) O^T X_n^T X_n O - \Lambda$ is positive-semidefinite, the
+Courant-Fischer min-max characterization of eigenvalues tells us that
+$\hat \mu_i \geq \lambda_i$. Therefore, for $\bar k < i \leq k$,
+\[
+    b
+    \leq
+    \liminf_{n \to \infty} \hat \mu_i
+    \leq
+    \limsup_{n \to \infty} \hat \mu_i    
+    \leq
+    b + \varepsilon.
+\]
+Defining $\tilde \mu_i = b$ for $\bar k < i \leq k$, we can let
+$\varepsilon \to 0$ to get that for $i$ in this range,
+$\hat \mu_i \toas \tilde \mu_i$.
+
+Now suppose that $\gamma > 1$.  We can use the work above to derive the limits of the top singular values since the nontrivial eigenvalues of $(1/n) X^T X$ and $\gamma (1/p) X X^T$ are the same.  If we replace $\gamma$ by $\gamma^{-1}$ and $\mu$ by $\mu \gamma^{-1}$, then we can apply the above theory.  The critical threshold is $\mu_i \gamma^{-1} > \gamma^{-1/2}$, i.e. $\mu_i > \sqrt{\gamma}$.  Above this threshold, the limit is given by $\gamma ( \mu \gamma^{-1} + 1)(1 + 1/\mu) = (\mu + 1)\left( 1 + \gamma/\mu \right)$.  Below the threshold, the limit is $\gamma (1 + \gamma^{-1/2})^2 = (1 + \gamma^{1/2})^2$.  We see that the formulas are the same as for $\gamma \leq 1$.
+
+\subsection{Asymptotic normality}
+
+Next, we turn our attention to the asymptotic distribution of 
+$\sqrt{n} (\hat \mu_i - \tilde \mu_i)$.  Again, we start by assuming that $\gamma \leq 1$.  Let $\nu_i(z)$ denote the $i$th
+eigenvalue of $S_{n,1}(z)$.  Since the off-diagonal elements of $S_{n,1}(z)$ are
+of size $O_P(1/n^\half)$ and the diagonal elements are of size
+$O(1) + O_P(1/n^\half)$, a standard perturbation argument
+(which can be found, for example in \cite{anderson1963atp}) shows that
+$\nu_i(z) = (S_{n,1}(z))_{ii} + O_P(1/n)$.
+Since $S_{n,1}(z) \eqd \bar S_{n,1}(z) + (1/n^\half) S_1(z) + O_P(1/n)$, we
+have that 
+$\nu_i(z) \eqd r_1(z) (\mu_i + \gamma) + (1/n^\half) (S_1(z))_{ii} + O_P(1/n)$.
+For $i \geq \bar k$, using the Taylor expansion 
+$r_1(z) = r_1 (\tilde \mu_i) + r_1'(\tilde \mu_i) (z - \tilde \mu_i) + O(|z - \tilde \mu_i|^2)$
+and the fact that $\nu_i (\hat \mu_i) = 1$, we have that
+\[
+    1 \eqd 1 
+            + r_1' (\tilde \mu_i)(\hat \mu_i - \tilde \mu_i)(\mu_i + \gamma) 
+            + (1/n^\half) (S_1(\hat \mu_i))_{ii}
+            + O(|\hat \mu_i - \tilde \mu_i|^2) 
+            + O_P(1/n)
+\]
+so that
+\[
+    \sqrt{n} (\hat \mu_i - \tilde \mu_i)
+    \eqd
+        -\frac{(S_1(\hat \mu_i))_{ii}}
+              {r_1' (\tilde \mu_i) (\mu_i + \gamma)}
+        + O(\sqrt{n}|\hat \mu_i - \tilde \mu_i|^2)       
+        + O_P(1/n^\half).
+\]
+This in turn implies that $(\hat \mu_i - \tilde \mu_i) = O_P(1/n^\half)$.
+Using a Taylor expansion of $S_1(z)$ about $\tilde \mu_i$, we get that jointly
+for $i \leq \bar k$,
+\[
+    \sqrt{n} (\hat \mu_i - \tilde \mu_i)
+        \tod -\frac{(S_1(\tilde \mu_i))_{ii}}
+                   {r_1' (\tilde \mu_i) (\mu_i + \gamma)}.
+\]
+It is straightforward to show that 
+\(
+    r_2(\tilde \mu_i, \tilde \mu_j) 
+    =
+    \mu_i \mu_j 
+    / 
+    [ (\mu_i \mu_j - \gamma) (\mu_i + \gamma) (\mu_j + \gamma) ].
+\)
+Putting $i = j$, we have that
+\(
+    \left[ -r_1'(\tilde \mu_i ) \right]^{-1}
+    =
+    \left[ r_2(\tilde \mu_i, \tilde \mu_i) \right]^{-1}
+    =
+    \left( \mu_i + \gamma \right)^2
+    \left( 1 - \gamma/\mu_i^2 \right)
+\)
+The previous section shows that jointly the unique elements
+of $\{ S_1(\tilde \mu_i) \}_{i=1}^{\bar K}$ have a multivariate normal distribution.
+Equations~\eqref{E:cov-S1-1}~and~\eqref{E:cov-S1-2} give
+\begin{align*}
+    \var [ (S_1(\tilde \mu_i))_{ii} ]
+        &= \frac{1}{(\mu_i + \gamma)^2}
+           \left[
+               2 ( 2 \mu_i + \gamma + 1 )
+               \left(
+                   \frac{\mu_i^2}{\mu_i^2 - \gamma}
+               \right)
+               +
+               \sigma_{ii}
+           \right] \\
+\intertext{and for $i \neq j$}
+    \cov [ (S_1(\tilde \mu_i))_{ii},  (S_1(\tilde \mu_j))_{jj}]
+        &= \frac{\sigma_{ij}}
+                {(\mu_i + \gamma)(\mu_j + \gamma)}.
+\end{align*}
+Thus, the vector 
+\(
+    \sqrt{n} 
+    (\hat \mu_1 - \tilde \mu_1, 
+     \ldots, 
+     \hat \mu_{\bar k} - \tilde \mu_{\bar k}
+    )
+\)
+converges in distribution to a multivariate normal with the covariance
+between elements $i$ and $j$ given by
+\[
+    \tilde \sigma_{ij}
+    \equiv
+    \sigma_{ij} 
+    \frac{(\mu_i^2 - \gamma)(\mu_j^2 - \gamma)}{\mu_i^2 \mu_j^2}
+    +
+    \delta_{ij}
+    2(2\mu_i + \gamma + 1)
+    \left(
+        \frac{\mu_i^2 - \gamma}{\mu_i^2}
+    \right).
+\]
+
+When $\bar k < \mu_i \leq k$, to get asymptotic variance of
+$\sqrt{n} (\hat \mu_i - \tilde \mu_i)$.  We must know finer asymptotics of
+the leading eigenvalues $\lambda_1, \ldots, \lambda_k$.  Johnstone
+\cite{johnstone2001dle} showed that $\lambda_1 = b + O_P(1/n^\frac{2}{3})$.
+Soshnikov \cite{soshnikov2002nud} generalized this result to the top
+$k$ eigenvalues, for fixed $k$.  Let $\varepsilon_n = \lambda_1 - b$  and
+$\varepsilon_n' = b - \lambda_i$.  Denote by $Z_n$ the random variable
+$b + 2 \varepsilon_n$. Since $Z_n > \lambda_1$ and $Z_n \toas b$,
+the smallest eigenvalue of $S_{n,1} (Z_n)$ converges almost surely to a
+value greater than $1$.  Thus, 
+$\limsup_{n\to\infty} \hat \mu_i \leq \liminf Z_n$, and further
+\[
+    \limsup_{n\to\infty} \sqrt{n} \varepsilon_n'
+    \leq
+    \liminf_{n\to\infty} \sqrt{n} (\hat \mu_i - b)
+    \leq
+    \limsup_{n\to\infty} \sqrt{n} (\hat \mu_i - b)
+    \leq
+    \liminf_{n\to\infty} \sqrt{n} (2 \varepsilon_n).
+\]
+Therefore, $\sqrt{n} (\hat \mu_i - b) \toP 0$.
+
+Now suppose that $\gamma > 1$.  Using the same transformation as the one at the end of Subsection~\ref{SS:value-limit}, it is straightforward to 
+check that we get the same expression for the asymptotic covariance.
+
+\section{Limits of singular vectors}
+
+In this section we derive the limiting behavior of the singular vectors
+of $(1/n) X_n^T X_n$, looking at the limits of $V^T \hat V$.
+
+First suppose that $i \leq \bar k$.  Then $\hat \mu_i \toas \tilde \mu_i$ and
+$S_{n,1}(\hat \mu_i) \toas \bar S_1 (\tilde \mu_i)$.  The $i$th eigenvalue
+of $S_{n,1} (\hat \mu_i)$ converges almost surely to $1$ and the $i$th
+eigenvector converges almost surely to $\be_i$.  This fact, 
+Lemmas~\ref{L:secular}, Lemma~\ref{L:Sbar}, and equation~\eqref{E:normY} 
+tell us that $\hat \bv_i$, the normalized $i$th eigenvector of
+$(1/n) X_n^T X_n$ almost surely has the same limit as
+\[
+    (\bar S_2(\tilde \mu_i))_{ii}^{-\half} R_1(\tilde \mu_i) \Psi_n \be_i.
+\]
+Combining this result with equation~\eqref{E:corrY}, we get that
+\begin{align*}
+    V^T \hat \bv_i
+        &\toas
+        (\bar S_2(\tilde \mu_i))_{ii}^{-\half} \bar T(\tilde \mu_i) \be_i \\
+        &= \left( r_2( \tilde \mu_i ) (\mu_i + \gamma )\right)^\half
+           \left( r_1( \tilde \mu_i ) \mu_i^\half \right) \\
+        &= \sqrt{
+                \frac{ 1 - \gamma/\mu_i^2}
+                     { 1 + \gamma/\mu_i  }
+           }
+\end{align*}
+
+Next say that $\bar k < i \leq k$.  In this case, since 
+$\lim_{z \to b^+} r_2(z) = \infty$ and $\lim_{z \to b^+} r_1(z) < \infty$, we must have that  $V^T \hat v_i \toas 0$.
+
+\section*{Appendix A: Integral calculations}
+
+Here we compute the limits of certain linear functionals of Wishart
+eigenvalues.
+
+\begin{lemma}
+    For $z > b$, and $\gamma > 0$, $\int \frac{\fMP_\gamma(x)}{z - x} dx$
+    is equal to
+    \[
+        \rho_1(z) 
+        =
+        \frac{1}{2 \gamma}
+        -
+        \frac{ \sqrt{(z - b)(z - a)} + \sqrt{ a b } }
+             { 2 \gamma z}.
+    \]
+\end{lemma}
+\begin{proof}
+    To compute the integral, we make the substitution 
+    $x = 2 \gamma^{1/2} t + 1 + \gamma$ and then set $\cos \theta = t$.
+    Using the identity that for $|y| > 1$,
+    \(
+        \int_0^\pi \frac{d\theta}{\cos \theta + y}
+        = \sgn(y) \frac{\pi}{(y^2 - 1)^\half},
+    \)
+    the result follows.
+\end{proof}
+
+\begin{lemma}
+    For $z > b$ and $\gamma > 0$, the integral
+    $\rho_2(z) = \int \frac{\fMP_\gamma(x)}{(z - x)^2} dx$ is equal to
+    \[
+        -\rho_{1}'(z)
+        =
+        \frac{1}{2 \gamma z^2}
+        \left(
+            \frac{(a + b) z - 2 a b}
+                 {2 \sqrt{(z - b)(z - a)}}
+            -
+            \sqrt{a b}
+        \right).
+    \]
+\end{lemma}
+\begin{proof}
+    From the previous lemma we have that
+    $\rho_{1}(z) = \int \frac{\fMP_\gamma(x)}{z - x} dx$.
+    We can differentiate under the integral to get that
+    $\int \frac{\fMP_\gamma(x)}{(z - x)^2} dx = - \rho_{1}'(z)$.    
+\end{proof}
+
+\begin{lemma}
+For $z_1, z_2 > \bar b$, $\gamma > 0$, and $z_1 \neq z_2$, the integral
+    $\int \frac{\fMP_\gamma(x)}{(z_1 - x)(z_2 - x)} dx$ is equal to
+    \[
+        \rho_2(z_1, z_2)
+        =
+        -
+        \frac{\rho_1(z_2) - \rho_1(z_1)}{z_2 - z_1}.
+    \]
+\end{lemma}
+\begin{proof}
+    We have that
+    \[
+        \rho_2 (z_1, z_2)
+        =
+        \frac{1}{2 \pi \gamma}
+        \int_{a}^{b}
+        \frac{\sqrt{(x - a)(b - x)}}
+             {x (z_1 - x) (z_2 - x)}
+        dx.
+    \]
+    We first make the substitution 
+    $x = \frac{b - a}{2} t + \frac{b + a}{2} = 2 \gamma^{1/2} t + 1 + \gamma$.
+    Letting $\beta = (\gamma^{1/2} + \gamma^{-1/2})/2$ and
+    $\alpha_i = -\frac{z_i}{2 \gamma^{1/2}} + \beta$, we have
+    \begin{align*}
+        \rho_2(z_1, z_2)
+        &=
+        \frac{1}{2 \pi \gamma}
+        \int_{-1}^{1}
+        \frac{4 \gamma \sqrt{(t + 1)(1 - t)}}
+             {(2 \gamma^{1/2} t + 1 + \gamma)
+              (z_1 - 2 \gamma^{1/2} t - 1 - \gamma)
+              (z_2 - 2 \gamma^{1/2} t - 1 - \gamma)}
+        dt \\
+        &=
+        \frac{1}{4 \pi \gamma^{3/2}}
+        \int_{-1}^{1}
+        \frac{\sqrt{1 - t^2}}
+             {(t + \alpha_1)(t + \alpha_2)(t + \beta)}
+        dt.
+    \end{align*}
+    We make the substitution $t = \cos \theta$ to get
+    \[
+        \rho_2(z_1, z_2)
+        =
+        \frac{1}{4 \pi \gamma^{3/2}}
+        \int_0^\pi
+        \frac{1 - \cos^2 \theta}
+             {(\cos \theta + \alpha_1)
+              (\cos \theta + \alpha_2)
+              (\cos \theta + \beta)}
+        d\theta.
+    \]
+    We expand the fraction as
+    \[
+        \frac{1 - \cos^2 \theta}
+             {(\cos \theta + \alpha_1)
+              (\cos \theta + \alpha_2)
+              (\cos \theta + \beta)}
+        =
+        \frac{A_1}{\cos \theta + \alpha_1}
+        +
+        \frac{A_2}{\cos \theta + \alpha_2}
+        +
+        \frac{B}{\cos \theta + \beta}.
+    \]
+    This gives us the system of equations
+    \[
+        \left(
+        \begin{matrix}
+            1                  & 1                  & 1                \\
+            (\alpha_2 + \beta) & (\alpha_1 + \beta) & (\alpha_1 + \alpha_2) \\
+            \alpha_2 \beta     & \alpha_1 \beta     & \alpha_1 \alpha_2
+        \end{matrix}
+        \right)
+        \left(
+        \begin{matrix}
+            A_1 \\
+            A_2 \\
+            B
+        \end{matrix}
+        \right)
+        =
+        \left(
+        \begin{matrix}
+            -1 \\
+             0 \\
+             1
+        \end{matrix}
+        \right).
+    \]
+    We employ Cramer's rule to get that
+    \[
+        A_1
+        =
+        \frac{(\alpha_1^2 - 1)(\beta - \alpha_2)}
+             {\alpha_1^2 (\alpha_2 - \beta)
+              + \alpha_2^2  (\beta - \alpha)
+              + \beta^2 (\alpha_1 - \alpha_2)},
+    \]
+    with a similar expression for $A_2$ and $B$.  Using the identity that
+    for $|y| > 1$,
+    \(
+        \int_0^\pi \frac{d\theta}{\cos \theta + y}
+        = \sgn(y) \frac{\pi}{(y^2 - 1)^\half},
+    \)
+    and noting that $\alpha_1$ and $\alpha_2$ are both negative while $\beta$ 
+    is positive, we get that the integral evaluates to
+    \begin{align*}
+        \rho_2 (z_1, z_2)
+        &=
+        \frac{1}{4 \gamma^{3/2}}
+        \cdot
+            \frac{(\alpha_1^2 - 1)^\half (\alpha_2 - \beta)
+                   + (\alpha_2^2 - 1)^\half (\beta - \alpha_1)
+                   + (\beta^2 - 1)^\half (\alpha_2 - \alpha_1)}
+                 {\alpha_1^2 (\alpha_2 - \beta)
+                   + \alpha_2^2  (\beta - \alpha_1)
+                   + \beta^2 (\alpha_1 - \alpha_2)}.
+    \end{align*}
+    We can simplify the above expression using that 
+    $\alpha_1 - \alpha_2 = (z_2 - z_1)/(2 \gamma^{1/2})$, 
+    $\beta - \alpha_1 = z_1/(2 \gamma^{1/2})$, and
+    $\alpha_2 - \beta = -z_2/(2 \gamma^{1/2})$ as
+    \[
+        \rho_2 (z_1, z_2)
+        =
+        \frac{1}{4 \gamma^{3/2}}
+        \cdot
+            \frac{- z_2 (\alpha_1^2 - 1)^\half
+                   + z_1 (\alpha_2^2 - 1)^\half 
+                   + (z_1 - z_2)(\beta^2 - 1)^\half }
+                 {-z_2 \alpha_1^2 
+                   + z_1 \alpha_2^2 
+                   + (z_2 - z_1) \beta^2 }.    
+    \]
+    After some algebra, we see that the expression simplifies to
+    \[
+        \rho_2 (z_1, z_2)
+        =
+        \frac{ z_1 \sqrt{ (z_2 - a) (z_2 - b)}
+               - z_2 \sqrt{ (z_1 - a) (z_1 - b)}
+               + (z_1 - z_2) \sqrt{ a b} }
+             {2 \gamma z_1 z_2 (z_2 - z_1)}.
+    \]
+\end{proof}
+
+
+\section*{Appendix B: Low-rank perturbations of diagonal matrices}
+
+Our aim in this section is to prove the following lemma:
+
+\begin{lemma}\label{L:lowrank-perturb}
+    Let $A$ be a random $n\times n$ symmetric matrix with rank $k$, and
+    $0 < k < n$.  Suppose that $A$ is orthogonally-invariant, in the sense that 
+    $O^T A O \eqd A$ for all orthogonal $O$ independent of $A$.  Let
+    $D = \diag(d_1, d_2, \ldots, d_n)$ be a diagonal matrix.  Then, if
+    $\#\{ i : d_i = d \} \leq k$, then almost surely $A + D$ has no eigenvalue
+    equal to $d$.
+\end{lemma}
+
+\noindent Do to so, we will need two lemmas, which we state and prove now.
+
+\begin{lemma}
+    Let $A$ be as above.  Partition $A$ as 
+    \[
+        A
+        =
+        \left(
+        \begin{matrix}
+            a_{11}   & \ba_{12}^T \\
+            \ba_{21} & A_{22}
+        \end{matrix}
+        \right)
+    \]
+    and define $A_2 = A_{22} - a_{11}^{-1} \ba_{21} \ba_{12}^T$.  Then:
+    \begin{enumerate}[(i)]
+        \item $a_{11}$ has a continuous density,
+        \item $A_2$ almost surely has rank $k-1$,
+        \item $A_2$ is orthogonally-invariant.
+    \end{enumerate}
+\end{lemma}
+\begin{proof}
+    The matrix $A$ is equal in distribution to $U \Lambda U^T$ for a
+    Haar-distributed $U$ and some diagonal $\Lambda$ independent of $U$.  
+    Without loss of generality, say the nonzero entries of $\Lambda$ are
+    $\lambda_{1}, \ldots, \lambda_k$.  Then 
+    $a_{11} \eqd \sum_{i=1}^k \lambda_i (U)_{1i}^2$.  Since $0 < k < n$, 
+    and $((U)_{11}, \ldots, (U)_{1(n-1)})$ has a continuous density, this is a
+    random variable with continuous density as well.
+    
+    Since $a_{11}$ has a continuous density, $a_{11} \neq 0$ almost surely.
+    Since $A$ can be transformed to
+    \(
+        \left(
+        \begin{matrix}
+            a_{11} & \ba_{12}^T \\
+            0      & A_2
+        \end{matrix}
+        \right)
+    \)
+    via row operations, $A_2$ must have rank one less than $A$.
+    
+    Letting $O_2$ be any $(n-1)\times(n-1)$ orthogonal matrix, we have
+    that
+    \[
+        \left(
+        \begin{matrix}
+            1 & 0 \\
+            0 & O_2^T
+        \end{matrix}
+        \right)
+        A
+        \left(
+        \begin{matrix}
+            1 & 0 \\
+            0 & O_2
+        \end{matrix}
+        \right)
+        =
+        \left(
+        \begin{matrix}
+            a_{11}   & \ba_{12}^T O_2 \\
+            O_2^T \ba_{21} & O_2^T A_{22} O_2
+        \end{matrix}
+        \right).
+    \]
+    Since $A$ is orthogonally invariant, this implies that $A_2$ is
+    as well.
+\end{proof}
+
+\begin{lemma}
+    Let $A$ be as above except with rank $k$ possibly equal to $0$.  
+    Let $D = \diag(d_1, d_2, \ldots, d_n)$ be a diagonal matrix independent of
+    $A$ with rank greater than or equal to $n-k$ almost surely.  Then
+    $A + D$ almost surely has full rank.
+\end{lemma}
+\begin{proof}
+    If $k = 0$, the result is trivial.  Otherwise,
+    without loss of generality, assume that either $D$ is of full rank
+    or $d_1 = 0$.  Partition $A$ as in the previous lemma and let 
+    \(
+        D_2 = \diag(d_2, \ldots, d_n).
+    \)
+    The determinant of $A + D$ is equal to
+    \begin{align*}
+        \det ( A + D )
+            &= \left|
+               \begin{matrix}
+                   a_{11} + d_1 & \ba_{12}^T \\
+                   \ba_{21}     & A_{22} + D_2
+               \end{matrix}
+               \right| \\
+            &= \left|
+               \begin{matrix}
+                   a_{11} + d_1 & \ba_{12}^T \\
+                   0            & A_{22} - a_{11}^{-1} \ba_{21} \ba_{12}^T + D_2
+               \end{matrix}
+               \right| \\
+            &= (a_{11} + d_1) \det (A_2 + D_2),
+    \end{align*}
+    We note that $D_2$ is of rank at least $(n-1) - (k-1)$. 
+    By the previous lemma, $A_2$ has rank $k - 1 < n - 1$ and is
+    orthogonally-invariant.  Since $a_{11}$ has a continuous density and
+    is independent of $d_{1}$, $a_{11} + d_1 \neq 0$.  By induction,
+    $\det (A_2 + D_2 \neq 0)$ and the result follows.
+\end{proof}
+
+Now, Lemma~\ref{L:lowrank-perturb} is an easy corollary:
+
+\begin{proof}[Proof of Lemma~\ref{L:lowrank-perturb}]
+    Say $A + D$ has an eigenvalue equal to $d$, with
+    $\#\{ i : d_i = d \} \leq k$.  Then $A + D - d I_n$ is not
+    of full rank.  Since $D - d I_n$ has at least $n-k$ nonzero entries,
+    this contradicts the previous lemma.
+\end{proof}    
+
+\section*{Appendix C: Limit theorems for weighted sums}
+
+In this appendix we state and prove some limit theorems for weighted sums
+of i.i.d. random variables.  First, we give a weak law of large numbers:
+
+\begin{lemma}\label{L:weak-weighted}
+    Let $X_i^N$ for $i = 1, \ldots N$ be a triangular array of random variables
+    with $X_i^N$ independent and identically distributed such that
+    $\E[ X_1^N ] = \mu$ and $\E [ X_1^N ]^2$ is uniformly bounded.  
+    Furthermore, let $W_i^N$ for $i = 1, \ldots N$ be another triangular array
+    of random variables independent of the $\{ X_i^N \}$ (but not necessarily
+    of each other).  Define $\bar W^N = (1/N) \sum_{i=1}^N W_i^N$ and assume
+    $\bar W^N \toP \bar W$ and that
+    $\E \left[ (1/N) \sum_{i=1}^N (W_i^N)^2 \right]$ is uniformly bounded.
+    Then
+    \[
+        \frac{1}{N} \sum_{i=1}^N X_i^N W_i^N \toP \mu \bar W.
+    \]
+\end{lemma}
+
+We do not give a proof of the above lemma, but instead prove derive a
+strong law of large numbers below.  The proof of the weak law is 
+similar.  Here is the strong law:
+
+\begin{lemma}\label{L:strong-weighted}
+    Let $X_i^N$ for $i = 1, \ldots N$ be a triangular array of random variables
+    with $X_i^N$ independent and identically distributed such that
+    $\E[ X_1^N ] = \mu$ and $\E [ X_1^N ]^4$ is uniformly bounded.  
+    Furthermore, let $W_i^N$ for $i = 1, \ldots N$ be another triangular array
+    of random variables independent of the $\{ X_i^N \}$ (but not necessarily
+    of each other).  Define $\bar W^N = (1/N) \sum_{i=1}^N W_i^N$ and assume
+    $\bar W^N \toas \bar W$ and that
+    $\E \left[ (1/N) \sum_{i=1}^N (W_i^N)^4 \right]$ is uniformly bounded.
+    Then
+    \[
+        \frac{1}{N} \sum_{i=1}^N X_i^N W_i^N \toas \mu \bar W.
+    \]
+\end{lemma}
+\begin{proof}
+    Define $S^N = \sum_{i=1}^N X_i^N W_i^N$ and let
+    $\F^N_W = \sigma( W_1^N, \ldots, W_N^N)$.  We have that
+    \[
+        \frac{1}{N} S^N - \mu \bar W^N
+        = 
+       \frac{1}{N}
+       \sum_{i=1}^N
+           (X_i^N - \mu) W_i^N
+    \]
+    Note that
+    \begin{align*}
+        \begin{split}
+        \E \Bigg[
+            \frac{1}{N^2}
+            \Bigg(
+                \sum_{i=1}^N
+                    (X_i^N &-{} \mu) W_i^N
+            \Bigg)^4
+        \mid
+            \F_W^N
+        \Bigg] \\
+        &= \frac{1}{N^2} \left(
+               \E [ X_1^N - \mu]^4
+               \sum_{i=1}^N
+                   (W_i^N)^4
+               +
+               3 \E \left[
+                   (X_1^N - \mu)^2 (X_2^N - \mu)^2
+               \right]
+               \sum_{i \neq j}
+                   (W_i^N)^2 (W_j^N)^2
+           \right)
+        \end{split} \\
+        &\leq C_1 \left[
+            \frac{1}{N}
+            \sum_{i=1}^N (W_i^N)^2
+        \right]^2
+    \end{align*}
+    for some constant $C_1$.  Therefore, the full expectation is bounded by
+    some other constant $C_2$.  We have that
+    \[
+        \E \left[ 
+            \frac{1}{N} S^N - \mu \bar W^N
+           \right]^4
+        \leq \frac{C}{N^2}
+    \]
+    for some constant $C$.  Applying Chebyschev, we get
+    \[
+        P \left\{
+            \left|
+                \frac{1}{N} S^N - \mu \bar W^N
+            \right|
+            > \varepsilon
+        \right\}
+        \leq \frac{C}{N^2 \varepsilon^4}.
+    \]
+    Combined with Borel-Cantelli, we get the almost-sure convergene of the
+    sum.
+\end{proof}
+
+Next, we derive a central limit theorem (CLT).  To prove it we will need a
+CLT for dependent variables, which we take from McLeish \cite{mcleish1974dcl}:
+
+\begin{lemma}[McLeish]\label{L:mcleigh}
+    Let $X^N_i, \F^N_i, i = 1, \ldots, N$ be a martingale difference array.  If
+    the Lindeburg condition 
+    $\sum_{i=1}^N \E \left[ (X^N_i)^2 ; | X^N_i | > \varepsilon \right] \to 0$
+    is satisfied and $\sum_{i=1}^N (X^N_i)^2 \toP \sigma^2$ then
+    $\sum_{i=1}^N X^N_i \tod \N (0, \sigma^2)$.
+\end{lemma}
+
+Here is the result we are interested in proving:
+
+\begin{lemma}\label{L:clt-weighted}
+    Let $\bX_i^N, i = 1, \ldots, N$ be a triangular array of random vectors
+    in $\reals^K$ with $\bX_i^N$ independent and identically distributed such that
+    $\E[ \bX_1^N ] = \vmu^X$, $\var[ \bX_1^N] = \Sigma^X$, and all fourth
+    moments of the elements of $\bX_1^N$ uniformly bounded.  Let 
+    $\bW_i^N, i = 1, \ldots, N$ be another triangular array of random vectors
+    in $\reals^K$, independent of the $\bX_i^N$ but not necessarily of each
+    other.  Assume that 
+    $N^\half \left[ (1/N) \sum_{i=1}^N \bW_i^N - \vmu^W \right] \toP 0$, that
+    $(1/N) \sum_{i=1}^N (\bW_i^N)(\bW_i^N)^T \toP \Sigma^W$, and that for
+    all sets of indices $j_1, \ldots, j_4$, with each index between $1$ and
+    $K$, we have that
+    \(
+        \E \left[ 
+            (1/N) 
+            \sum_{i=1}^N
+                W^N_{ij_1} 
+                W^N_{ij_2} 
+                W^N_{ij_3} 
+                W^N_{ij_4} 
+        \right]
+    \) is uniformly bounded.  Then
+    \[
+        \sqrt{N}
+        \left[
+            \frac{1}{N}
+            \sum_{i=1}^N
+                \bX_i^N \bullet \bW_i^N
+            -
+            \vmu^X \bullet \vmu^W
+        \right]
+        \tod
+        \N( 0, \Sigma^X \bullet \Sigma^W),
+    \]
+    where $\bullet$ denotes Hadamard (elementwise) product.
+\end{lemma}
+\begin{proof}
+    Since $(1/N) \sum_{i=1}^N \bW_i - \vmu^W = o_P(N^{-\half})$, it is
+    sufficient to prove convergence of
+    \[
+        \bS^N
+        \equiv
+        \sqrt{N} \left[ (1/N) \sum_{i=1}^N \bX^N_i \bullet \bW_i^N
+            - (1/N) \sum_{i=1}^N \vmu^X \bullet \bW_i^N \right].
+    \]
+    We will use the Cramer-Wold device.  Let $\vtheta \in \reals^K$ be
+    arbitrary.  Define
+    \[
+        Y_i^N 
+        = 
+        \frac{1}{\sqrt{N}}
+        \sum_{j=1}^K
+            \theta_j (X^N_{ij} - \mu^X_j) W^N_{ij}
+    \]
+    Then $\langle \vtheta, \bS^N \rangle = \sum_{i=1}^N Y^N_i$.  Also, with
+    $\F^N_i = \sigma( Y^N_1, \ldots, Y^N_{i-1})$, the collection
+    $\{ Y^N_i, \F^N_i \}$ is a martingale difference array.  We will
+    use Lemma~\ref{L:mcleigh} to prove the the result.  First, we compute
+    the variance as
+    \begin{align*}
+        \sum_{i=1}^N (Y_i^N)^2
+        &=  \frac{1}{N}
+            \sum_{i=1}^N
+            \left[
+                \sum_{j=1}^K
+                    \theta_j (X^N_{ij} - \mu^X_j) W^N_{ij}
+            \right]^2 \\
+        &=  \frac{1}{N}
+            \sum_{i=1}^N
+            \sum_{j=1}^K
+            \sum_{k=1}^K
+                \theta_j \theta_k
+                (X^N_{ij} - \mu^X_j) (X^N_{ik} - \mu^X_k)
+                W^N_{ij} W^N_{ik} \\
+        &\toP \sum_{j=1}^K \sum_{k=1}^K
+              \theta_j \theta_k
+              \Sigma^X_{jk} \Sigma^W_{jk},
+    \end{align*}
+    where we have used  the fourth moment assumptions and
+    Lemma~\ref{L:weak-weighted} to get the convergence.  Lastly we check the
+    Lindeburg condition.  We have that
+    \begin{align*}
+        \sum_{i=1}^N 
+            &\E \left[ 
+                (Y_i^N)^2 ; | Y_i^N | > \varepsilon
+            \right] \\
+        &\leq
+            \frac{1}{\varepsilon^2}
+            \sum_{i=1}^N 
+            \E \left[ 
+                (Y_i^N)^4
+            \right] \\
+        &= 
+            \frac{1}{\varepsilon^2 N^2}
+            \sum_{i=1}^N
+            \sum_{j_1, \ldots, j_4}
+                \theta_{j_1}
+                \theta_{j_2}
+                \theta_{j_3}
+                \theta_{j_4}
+                \E \left[ 
+                    (X^N_{ij_1} - \mu^X_{j_1})
+                    (X^N_{ij_2} - \mu^X_{j_2})
+                    (X^N_{ij_3} - \mu^X_{j_3})
+                    (X^N_{ij_4} - \mu^X_{j_4})
+                \right]
+                \E \left[ 
+                    W^N_{ij_1}
+                    W^N_{ij_2}
+                    W^N_{ij_3}
+                    W^N_{ij_4}
+                \right] \\
+        &\leq
+            \frac{C_1}{\varepsilon^2 N}
+            \sum_{j_1, \ldots, j_4}
+                \E \left[
+                    \frac{1}{N}
+                    \sum_{i=1}^N
+                        W^N_{ij_1}
+                        W^N_{ij_2}
+                        W^N_{ij_3}
+                        W^N_{ij_4}
+                \right] \\
+        &\leq
+            \frac{C_2 K^4}{\varepsilon^2 N} \\
+        &\to 0
+    \end{align*}
+    where $C_1$ and $C_2$ are constants bounding the moments of the random
+    variables.
+\end{proof}
+
+
+\section*{Acknowledgements}
+
+I would like to thank Persi Diaconis, Zongming Ma, Alexei Onatski, and Debashis
+Paul for their helpful communications and discussions. I would also like to
+thank Art Owen, my thesis advisor, for his support and encouragement.

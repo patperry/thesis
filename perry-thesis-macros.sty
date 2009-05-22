@@ -4,6 +4,17 @@
 \RequirePackage{amsmath}
 \RequirePackage{amssymb}
 \RequirePackage{amsthm}
+\usepackage{url}
+\usepackage{enumerate} % fancy enumerations
+
+
+%% Define a new 'leo' style for the package that will use a smaller font.
+\makeatletter
+\def\url@leostyle{%
+  \@ifundefined{selectfont}{\def\UrlFont{\sf}}{\def\UrlFont{\small\ttfamily}}}
+\makeatother
+%% Now actually use the newly defined style.
+\urlstyle{leo}
 
 \newcommand{\captiontitle}[1]{\textsc{#1}.}
 \newtheorem{assumption}{Assumption}
@@ -31,6 +42,7 @@
 \newcommand{\vx}{\vectorsymbol{x}}
 
 \newcommand{\vmu}{\vectorsymbol{\mu}}
+\newcommand{\vpsi}{\vectorsymbol{\psi}}
 \newcommand{\vtheta}{\vectorsymbol{\theta}}
 
 \newcommand{\vA}{\vectorsymbol{A}}
@@ -94,6 +106,7 @@
 
 \newcommand{\Normal}{\mathcal{N}}
 \newcommand{\Wishart}{\mathcal{W}}
+\newcommand{\Haar}{\mathrm{Haar}}
 \newcommand{\FMP}{F^\text{MP}}
 \newcommand{\fMP}{f^\text{MP}}
 \newcommand{\FTW}{F^\text{TW}}
@@ -102,6 +115,7 @@
 \newcommand{\gTW}{g^\text{TW}}
 
 \DeclareMathOperator*{\Ai}{Ai}
+\DeclareMathOperator*{\sgn}{sgn}
 
 \newcommand{\trans}{\mathrm{T} }
 \DeclareMathOperator*{\tr}{tr}
