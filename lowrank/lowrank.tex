@@ -84,7 +84,7 @@ results using the Stieltjes transform only assuming finite fourth moments, but
 they limit their study to the almost sure limits of the top singular values of
 $X$. Paul gives the limiting distributions of the sample singular values as well
 as the singular vectors, but he assumes that the elements of $Z$ are independent
-standard Gaussians. Later, Paul and coauthors \cite{paul} generalized his
+standard Gaussians. Later, Chen and coauthors \cite{chen2009ppc} generalized his
 results to allow for correlated Gaussian loadings of the factors.
 
 The main contributions of this paper are twofold.  First, we work under a 
@@ -416,7 +416,7 @@ In the analysis that follows, we will often need to look at sums of the form
     \frac{1}{p} \sum_{\alpha=1}^p g (\lambda_\alpha).
 \]
 Such sums are called linear functionals of the eigenvalues.  They have been
-studied quite extensively for various classes of random matrices.  Hiai and Petz~\cite{hiai1998edw} derived a large deviation principle for the spectral measure  of a Wishart matrix, which implies a strong law of large numbers.  For a  general class of Wishart-like matrices, Bai and Silverstein~\cite{bai2004cls} proved a central limit theorem for linear functionals of eigenvalues.  These two results are much stronger than what we will need.  We summarize the parts of the results that we need in the following two lemmas. For both of them, $g: \reals \to \reals$ is any function analytic on an open interval containing $[a,b]$  and $\bar g = \int g(\lambda) d\FMP_\gamma (\lambda)$.
+studied quite extensively for various classes of random matrices.  Hiai and Petz~\cite{hiai1998edw} derived a large deviation principle for the spectral measure  of a Wishart matrix, which implies a strong law of large numbers.  For a  general class of Wishart-like matrices, Bai and Silverstein~\cite{bai2004clt} proved a central limit theorem for linear functionals of eigenvalues.  These two results are much stronger than what we will need.  We summarize the parts of the results that we need in the following two lemmas. For both of them, $g: \reals \to \reals$ is any function analytic on an open interval containing $[a,b]$  and $\bar g = \int g(\lambda) d\FMP_\gamma (\lambda)$.
 
 \begin{lemma}[Hiai \& Petz]\label{L:wishart-lln}
     A large deviations principle holds for the empirical law of 
@@ -1505,8 +1505,9 @@ Here is the result we are interested in proving:
 \end{proof}
 
 
-\section*{Acknowledgements}
+%\section*{Acknowledgements}
 
-I would like to thank Persi Diaconis, Zongming Ma, Alexei Onatski, and Debashis
-Paul for their helpful communications and discussions. I would also like to
-thank Art Owen, my thesis advisor, for his support and encouragement.
+%I would like to thank Persi Diaconis, Zongming Ma, Alexei Onatski, and
+% Debashis Paul for their helpful communications and discussions. I would
+% also like to thank Art Owen, my thesis advisor, for his support and 
+% encouragement.
