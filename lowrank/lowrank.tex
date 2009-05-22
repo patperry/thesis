@@ -1,5 +1,5 @@
 
-\chapter{Behavior of the SVD in low-rank plus noise models}
+\chapter[Behavior of the SVD]{Behavior of the SVD in low-rank plus noise models}
 
 
 \newcommand{\ba}{\boldsymbol{a}}      
@@ -16,7 +16,6 @@
 \newcommand{\tPsi}{\tilde \Psi}       % tilde symbols
 
 \newcommand{\F}{\mathcal{F}}          % sigma-fields
-\newcommand{\N}{\mathcal{N}}          % Normal
 \newcommand{\Q}{\mathcal{Q}}
 \newcommand{\U}{\mathcal{U}}          % script symbols
 \newcommand{\V}{\mathcal{V}}
@@ -50,7 +49,7 @@ behaves.  Unfortunately, his results do not apply when the sample size is
 comparable to the dimensionality.
 
 A further complication with many modern data sets is that it is no longer
-appropriate to assume the observations are i.i.d. Also, sometimes it is
+appropriate to assume the observations are \iid Also, sometimes it is
 difficult to distinguish between ``observation'' and ``variable''. We call such
 data ``transposable''. A microarray study involving measurements of $p$ genes
 for $n$ different patients can be considered transposable: we can either treat
@@ -60,38 +59,40 @@ measurement of the gene. There are correlations both between the genes
 \cite{efron2008smi}.
 
 One can study latent factor models in a transpose-agnostic way be considering
-generative models of the form $X = U D V^T + E$. Here, $X$ is the $n \times p$
-observed data matrix. The unobserved row and column factors are given by $U$
-and $V$, respectively, matrices with $k$ orthonormal columns each, with $k \ll
-\min(n,p)$. The strengths of the factors are given in the $k\times k$ diagonal
-matrix $D$, and $E$ is a matrix of noise. A natural estimator for the latent
-factor term $U D V^T$ can be gotten from truncating the singular value
-decomposition (SVD) \cite{golub1996mc} of $X$. The goal of this paper is to
-study the behavior of the SVD when $n$ and $p$ both tend to infinity, with
-their ratio tending to a nonzero constant.
+generative models of the form $\mX = \mU \mD \mV^\trans + \mE$. Here, $\mX$ is
+the $n \times p$ observed data matrix. The unobserved row and column factors
+are given by $\mU$ and $\mV$, respectively, matrices with $k$ orthonormal
+columns each, with $k \ll \min(n,p)$. The strengths of the factors are given
+in the $k\times k$ diagonal matrix $\mD$, and $\mE$ is a matrix of noise. A
+natural estimator for the latent factor term $\mU \mD \mV^\trans$ can be
+gotten from truncating the singular value decomposition (SVD)
+\cite{golub1996mc} of $\mX$. The goal of this paper is to study the behavior
+of the SVD when $n$ and $p$ both tend to infinity, with their ratio tending to
+a nonzero constant.
 
-In an upcoming paper, Alexei Onatski~\cite{onatski} gives a very thorough 
-treatment of these models.  He assumes that the elements of $E$ are i.i.d.
-Gaussians, that $\sqrt{n} ( U^T U - I_k) $ tends to a multivariate Gaussian
-distribution, and that $V$ and $D$ are both nonrandom.
+In an upcoming paper, Onatski~\cite{onatski} gives a very thorough treatment
+of these models. He assumes that the elements of $E$ are \iid Gaussians, that
+$\sqrt{n} ( \mU^\trans \mU - \mI_k) $ tends to a multivariate Gaussian
+distribution, and that $\mV$ and $\mD$ are both nonrandom.
 
 Slight variations of the above model have been analyzed by
 Baik~\&~Silverstein~\cite{baik2006els}, and by Paul~\cite{paul2007ase}. These
-authors look at matrices of the form $X = T^{1/2} Z$, where $Z$ is a matrix with
-iid entries, and $T$ is a ``spiked'' covariance matrix, i.e. a positive-definite
-matrix with a few large eigenvalues. Baik \& Silverstein prove quite general
-results using the Stieltjes transform only assuming finite fourth moments, but
-they limit their study to the almost sure limits of the top singular values of
-$X$. Paul gives the limiting distributions of the sample singular values as well
-as the singular vectors, but he assumes that the elements of $Z$ are independent
-standard Gaussians. Later, Chen and coauthors \cite{chen2009ppc} generalized his
-results to allow for correlated Gaussian loadings of the factors.
+authors look at matrices of the form $\mX = \mT^{1/2} \mZ$, where $\mZ$ is a
+matrix with iid entries, and $\mT$ is a ``spiked'' covariance matrix, i.e. a
+positive-definite matrix with a few large eigenvalues. Baik \& Silverstein
+prove quite general results using the Stieltjes transform only assuming finite
+fourth moments, but they limit their study to the almost sure limits of the
+top singular values of $\mX$. Paul gives the limiting distributions of the
+sample singular values as well as the singular vectors, but he assumes that
+the elements of $\mZ$ are independent standard Gaussians. Later, Chen and
+coauthors \cite{chen2009ppc} generalized his results to allow for correlated
+Gaussian loadings of the factors.
 
-The main contributions of this paper are twofold.  First, we work under a 
+The contributions of this chapter are twofold. First, we work under a
 transpose-agnostic generative model that allows randomness in all three of
-$U$, $D$, and $V$.  Second, we give a more complete picture of the almost-sure
-limits of the sample singular vectors, taking into account their projections
-onto the space orthogonal to the population singular vectors.  
+$\mU$, $\mD$, and $\mV$. Second, we give a more complete picture of the
+almost-sure limits of the sample singular vectors, taking into account their
+projections onto the space orthogonal to the population singular vectors.
 
 We describe the results in Section 2. The rest of the paper is dedicated to
 proving the two main theorems. We owe a substantial debt to Onatski's work.
@@ -107,30 +108,34 @@ main results.
 
 We will work sequences of matrices indexed by $n$, with
 \[
-    X_n = \sqrt{n} U_n D_n V_n^T + E_n.
+    \mX_n = \sqrt{n} \mU_n \mD_n \mV_n^\trans + \mE_n.
 \]
-We denote by $\sqrt{n} U_n D_n V_n^T$ the ``signal'' part of the matrix $X_n$
-and $E_n$ the ``noise'' part.  We will often refer to $U_n$ and $V_n$ as the
-left and right factors of $X_n$, and the matrix $D_n$ will be called the
-matrix of normalized factor strengths.  The first two assumptions concern the
-signal part:
+We denote by $\sqrt{n} \mU_n \mD_n \mV_n^\trans$ the ``signal'' part of the
+matrix $\mX_n$ and $\mE_n$ the ``noise'' part. We will often refer to $\mU_n$
+and $\mV_n$ as the left and right factors of $\mX_n$, and the matrix $\mD_n$
+will be called the matrix of normalized factor strengths. The first two
+assumptions concern the signal part:
 
 \begin{assumption}\label{A:factors}
-    The factors $U_n$ and $V_n$ are random matrices of dimensions
+    The factors $\mU_n$ and $\mV_n$ are random matrices of dimensions
     $n \times k$ and $p \times k$, respectively.  The number of factors, $k$,
     is a fixed constant.  The factors are normalized so that
-    $U_n^T U_n =  V_n^T V_n = I_k$, where $I_k$ denotes the
-    $k \times k$ identity matrix.  The ratio $p/n = \gamma$ is a fixed nonzero
-    scalar in the range $(0,\infty)$.
+    $\mU_n^\trans \mU_n =  \mV_n^\trans \mV_n = \mI_k$, where $\mI_k$ denotes 
+    the $k \times k$ identity matrix.  The ratio $p/n = \gamma$ is a fixed 
+    nonzero scalar in the range $(0,\infty)$.
 \end{assumption}
 \noindent
 
 \begin{assumption}\label{A:sizes}
-    The matrix of factor strengths, $D_n$, is of size $k\times k$ and 
-    diagonal, with $D_n = \diag(d_{n,1}, \ldots, d_{n,k})$ and
-    $d_{n,1} > d_{n,2} > \cdots > d_{n,k} > 0$.  The matrix $D_n$ converges
+    The matrix of factor strengths, $\mD_n$, is of size $k\times k$ and 
+    diagonal, with 
+    \(
+        \mD_n = \diag \left( d_{n,1}, d_{n,2}, \ldots, d_{n,k} \right)
+    \)
+    and
+    $d_{n,1} > d_{n,2} > \cdots > d_{n,k} > 0$.  The matrix $\mD_n$ converges
     almost surely to a deterministic matrix 
-    $D = \diag( \mu_1^\half, \mu_2^\half, \ldots, \mu_k^\half)$ with
+    $\mD = \diag( \mu_1^\half, \mu_2^\half, \ldots, \mu_k^\half)$ with
     $\mu_1 > \mu_2 > \cdots > \mu_k > 0$. Moreover, the vector
     \(
         \sqrt{n} ( d_{n,1}^2 - \mu_1, d_{n,1}^2 - \mu_2, 
@@ -138,28 +143,30 @@ signal part:
                    d_{n,K}^2 - \mu_k )
     \)
     converges in distribution to a mean-zero multivariate normal with 
-    covariance matrix $\Sigma$ having entries $(\Sigma)_{ij} = \sigma_{ij}$
+    covariance matrix $\mSigma$ having entries $\Sigma_{ij} = \sigma_{ij}$
     (possibly degenerate).
 \end{assumption}
 \noindent
 The next assumption concerns the noise part:
 
 \begin{assumption}\label{A:noise}
-    The noise matrix $E_n$ is an $n\times p$ matrix with entries $(E_n)_{ij}$
-    independent $\N(0,\sigma^2)$ random variables, also independent of
-    $U_n$, $D_n$, and $V_n$.
+    The noise matrix $\mE_n$ is an $n\times p$ matrix with entries 
+    $E_{n,ij}$ independent $\Normal(0,\, \sigma^2)$ random variables, also
+    independent of $\mU_n$, $\mD_n$, and $\mV_n$.
 \end{assumption}
 \noindent
 
-We need to introduce some more notation.  To reduce clutter, we drop the
-subscripts on $U_n$, $V_n$, and $E_n$ so that $U = U_n$, $V = V_n$, and
-$E = E_n$. We denote the columns of $U$ and $V$ by $\bu_{1}, \ldots, \bu_{k}$ and
-$\bv_{1}, \ldots, \bv_{k}$, respectively.
-Finally, we let $X_n \approx \sqrt{n} \hat U \hat D_n \hat V^T$ be the singular value
-decomposition of $X_n$ truncated to $k$ terms, where 
-$\hat D_n = \diag( \hat \mu_{n,1}^\half, \ldots, \hat \mu_{n,k}^\half)$ and the columns of
-$\hat U$ and $\hat V$ are given by $\hat \bu_{1}, \ldots, \hat \bu_{k}$
-and $\hat \bv_{1}, \ldots, \hat \bv_{k}$, respectively.
+We need to introduce some more notation. We denote the columns of $\mU_n$ and
+$\mV_n$ by $\vU_{n,1}, \vU_{n,2}, \ldots, \vU_{n,k}$ and $\vV_{n,1},
+\vV_{n,2}, \ldots, \vV_{n,k}$, respectively. We let 
+\[
+    \mX_n \approx \sqrt{n} \mhU_n \mhD_n \mhV_n^\trans
+\]
+be the singular value decomposition of
+$\mX_n$ truncated to $k$ terms, where $\mhD_n = \diag( \hat \mu_{n,1}^\half,
+\ldots, \hat \mu_{n,k}^\half)$ and the columns of $\mhU$ and $\mhV$ are given
+by $\vhU_{n,1}, \vhU_{n,2} \ldots, \vhU_{n,k}$ and $\vhV_{n,1}, \vhV_{n,2},
+\ldots, \vhV_{n,k}$, respectively.
 
 
 \subsection{Main results}
@@ -179,7 +186,7 @@ values.
         =
         \begin{cases}
             \left( \mu_i + \sigma^2 \right)
-            \left( 1 + \frac{ \gamma \sigma^2 }{ \mu_i } \right)
+            \left( 1 + \gamma \sigma^2 / \mu_i \right)
                 &\text{when $\mu_i > \sqrt{\gamma} \sigma^2$}, \\
             \sigma^2 \left( 1 + \sqrt{\gamma} \right)^2
                 &\text{otherwise.}
@@ -190,32 +197,34 @@ values.
         \sqrt{n} (\hat \vmu - \tilde \vmu)
     \)
     converges in distribution to a (possibly degenerate) multivariate normal
-    with covariance matrix $\tilde \Sigma$ whose $ij$ element is given by
+    with covariance matrix $\mtSigma$ whose $ij$ element is given by
     \[
         \tilde \sigma_{ij}
         \equiv
         \begin{cases}
-            \sigma_{ij} 
-            \left(
-                1 - \frac{ \gamma \sigma^4 }{ \mu_i^2 }
-            \right)
-            \left(
-                1 - \frac{ \gamma \sigma^4 }{ \mu_j^2 }
-            \right)
-            +
-            \delta_{ij}
-            2
-            \sigma^2
-            \left(
-                2 \mu_i + \sigma^2 + \gamma \sigma^2 \right)
-            \left(
-                1 - \frac{ \gamma \sigma^4 }{ \mu_i^2 }
-            \right)
-                &\text{when $\mu_i > \sqrt{\gamma} \sigma^2$ 
-                       and $\mu_j > \sqrt{\gamma} \sigma^2$,} \\
+            \begin{aligned}
+                \sigma_{ij}
+                &\left(
+                    1 - \gamma \sigma^4 / \mu_i^2
+                \right)
+                \left(
+                    1 - \gamma \sigma^4 / \mu_j^2
+                \right)
+                \\
+                &+ \delta_{ij}
+                2
+                \sigma^2
+                \left(
+                    2 \mu_i + \sigma^2 + \gamma \sigma^2
+                \right)
+                \left(
+                    1 - \gamma \sigma^4 / \mu_i^2
+                \right)
+            \end{aligned}
+                &\text{when $\mu_i, \, \mu_j > \gamma^{1/2} \sigma^2$,} \\
             0
                 &\text{otherwise.}
-        \end{cases}.
+        \end{cases}
     \]
     When $\sigma_{ii} = 2 \mu_i^2$, 
     and $\mu_i > \sqrt{\gamma} \sigma^2$, the variance of the $i$th
@@ -230,14 +239,14 @@ values.
 Next, we give the result for the singular vectors:
 \begin{theorem}\label{T:vectors}
     Say Assumptions~\ref{A:factors}~--~\ref{A:noise} hold.  Then the
-    $k\times k$ matrix $R_n \equiv V^T \hat V$ converges almost surely
-    to a matrix $R = \diag(r_1, r_2, \ldots, r_k)$, where
+    $k\times k$ matrix $\mR_n \equiv \mV_n^\trans \mhV_n$ converges almost 
+    surely to a matrix $\mR = \diag(r_1, r_2, \ldots, r_k)$, where
     \begin{equation}
         |r_i|^2
         =
         \begin{cases}
-            \frac{ 1 - \frac{ \gamma \sigma^4 }{ \mu_i^2 } }
-                 { 1 + \frac{ \gamma \sigma^2 }{ \mu_i   } }
+            \frac{ 1 - \gamma \sigma^4 / \mu_i^2 }
+                 { 1 + \gamma \sigma^2 / \mu_i  }
             &\text{when $\mu_i > \sqrt{\gamma} \sigma^2$,} \\
             0
             &\text{otherwise.}
@@ -255,12 +264,12 @@ Some discussion of the assumptions and the results are in order:
 \item
 Assumptions~\ref{A:factors}~and~\ref{A:sizes} are simpler than the assumptions given in many other papers while still being quite general.  For example, Paul's ``spiked'' covariance model has data of the form
 \[
-    X = Z \Theta^T + E,
+    \mX = \mZ \mTheta^\trans + \mE,
 \]
-where $\Theta$ is an $p \times k$ matrix of factors and $Z$ is an $n\times k$ matrix of factor loadings whose rows are i.i.d multivariate $\N(0,C)$ random variables for covariance matrx $C$ having eigen-decomposition $C = Q \Lambda Q^T$.  Letting $Z = \sqrt{n} \hat P \hat \Lambda \hat Q^T$ be the SVD of $Z$, Anderson's results \cite{anderson1963atp} give us that $\hat \Lambda$ and $\hat Q$ converge almost surely to $\Lambda$ and $Q$, respectively, and that the diagonal elements of $\sqrt{n} (\hat \Lambda - \Lambda)$ converge to a mean-zero multivariate normal whenever $C$ has no repeated eigenvalues.  If we define $U = \hat P$, $D = \hat \Lambda^\half$, and $V = \Theta \hat Q$, then $X = \sqrt{n} U D V^T + E$, where the factors satisfy Assumptions~\ref{A:factors}~and~\ref{A:sizes}.  Dropping the normality assumption on the rows of $Z$ poses no problem.  Moreover, we can suppose instead of i.i.d. that the rows of $Z$ be a martingale difference array with well-behaved low-order moments and still perform a transformation of the variables to get factors of the form we need for Theorems~\ref{T:values}~and~\ref{T:vectors}.
+where $\mTheta$ is an $p \times k$ matrix of factors and $\mZ$ is an $n\times k$ matrix of factor loadings whose rows are \iid multivariate $\Normal(0,\, \mC)$ random variables for covariance matrx $\mC$ having eigen-decomposition $\mC = \mQ \mLambda \mQ^\trans$.  Letting $\mZ = \sqrt{n} \mhP \mhLambda \mhQ^\trans$ be the SVD of $\mZ$, Anderson's results \cite{anderson1963atp} give us that $\mhLambda$ and $\mhQ$ converge almost surely to $\mLambda$ and $\mQ$, respectively, and that the diagonal elements of $\sqrt{n} (\mhLambda - \mLambda)$ converge to a mean-zero multivariate normal whenever $C$ has no repeated eigenvalues.  If we define $\mU = \mhP$, $\mD = \mhLambda^\half$, and $\mV = \mTheta \mhQ$, then $\mX = \sqrt{n} \mU \mD \mV^\trans + \mE$, where the factors satisfy Assumptions~\ref{A:factors}~and~\ref{A:sizes}.  Dropping the normality assumption on the rows of $\mZ$ poses no problem.  Moreover, we can suppose instead of \iid that the rows of $\mZ$ be a martingale difference array with well-behaved low-order moments and still perform a transformation of the variables to get factors of the form we need for Theorems~\ref{T:values}~and~\ref{T:vectors}.
 
 \item
-There is a sign-indeterminancy in the sample and population singular vectors. Since we only give results for the squares $R^T R$ the signs do not matter and we choose them arbitrarily.
+There is a sign-indeterminancy in the sample and population singular vectors. Since we only give results for the squares $\mR_n^\trans \mR$ the signs do not matter and we choose them arbitrarily.
 
 \item 
 Most of the results in Theorems~\ref{T:values}~and~\ref{T:vectors} can be gotten from Onatski's results \cite{onatski}.   However, Onatski does not show that $\sqrt{n} (\hat \mu_i - \tilde \mu_i) \toP 0$ when $\mu_i$ is below the critical threshold.  Furthermore, Onatski proves convergence in probability, not almost sure convergence.
@@ -514,7 +523,7 @@ and its interaction with the matrices $\Psi_n$ and $U$.  Recall from equation
 \eqref{E:psi} that $\Psi_n = V D_n + (1/n^{\half}) E_1^T$.  We have that
 $O \Psi_n = O V D_n + (1/n^{\half}) \tilde E_1^T$, where $\tilde E_1 = E_1 O$.
 Due the the dependence between the rows of $O V$, it is inconvenient to
-deal with $O \Psi_n$ directly.  Let $Z$ be a $p \times k$ matrix of i.i.d. standard normals.  Since $O V$ is uniformly distributed over the Steifel manifold, we have
+deal with $O \Psi_n$ directly.  Let $Z$ be a $p \times k$ matrix of \iid standard normals.  Since $O V$ is uniformly distributed over the Steifel manifold, we have
 \begin{align}\label{E:OU}
     O V
         &\overset{d}{=} Z (Z^T Z)^{-T/2}  \notag \\
@@ -1264,7 +1273,7 @@ Now, Lemma~\ref{L:lowrank-perturb} is an easy corollary:
 \section*{Appendix C: Limit theorems for weighted sums}
 
 In this appendix we state and prove some limit theorems for weighted sums
-of i.i.d. random variables.  First, we give a weak law of large numbers:
+of \iid random variables.  First, we give a weak law of large numbers:
 
 \begin{lemma}\label{L:weak-weighted}
     Let $X_i^N$ for $i = 1, \ldots N$ be a triangular array of random variables
@@ -1368,7 +1377,7 @@ CLT for dependent variables, which we take from McLeish \cite{mcleish1974dcl}:
     the Lindeburg condition 
     $\sum_{i=1}^N \E \left[ (X^N_i)^2 ; | X^N_i | > \varepsilon \right] \to 0$
     is satisfied and $\sum_{i=1}^N (X^N_i)^2 \toP \sigma^2$ then
-    $\sum_{i=1}^N X^N_i \tod \N (0, \sigma^2)$.
+    $\sum_{i=1}^N X^N_i \tod \Normal (0, \, \sigma^2)$.
 \end{lemma}
 
 Here is the result we are interested in proving:
@@ -1405,7 +1414,7 @@ Here is the result we are interested in proving:
             \vmu^X \bullet \vmu^W
         \right]
         \tod
-        \N( 0, \Sigma^X \bullet \Sigma^W),
+        \Normal( 0, \, \Sigma^X \bullet \Sigma^W),
     \]
     where $\bullet$ denotes Hadamard (elementwise) product.
 \end{lemma}
