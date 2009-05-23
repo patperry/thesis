@@ -9,20 +9,15 @@
 \newcommand{\bv}{\boldsymbol{v}}
 \newcommand{\by}{\boldsymbol{y}}
 \newcommand{\bz}{\boldsymbol{z}}
-\newcommand{\bS}{\boldsymbol{S}}
-\newcommand{\bW}{\boldsymbol{W}}
-\newcommand{\bX}{\boldsymbol{X}}
 
 \newcommand{\tPsi}{\tilde \Psi}       % tilde symbols
 
-\newcommand{\F}{\mathcal{F}}          % sigma-fields
 \newcommand{\Q}{\mathcal{Q}}
 \newcommand{\U}{\mathcal{U}}          % script symbols
 \newcommand{\V}{\mathcal{V}}
 \newcommand{\W}{\mathcal{W}}
 
 
-\newcommand{\half}{\frac{1}{2}}
 \newcommand{\Thalf}{\frac{T}{2}}
 \newcommand{\fourth}{\frac{1}{4}}
 
@@ -563,7 +558,7 @@ To see this for $\Psi_n^T R_p(z) \Psi_n$, note that
     \end{split}
 \end{align*}
 The remainder terms all go to $0$ almost surely.
-Lemma~\ref{L:strong-weighted}, a strong law of large numbers for weigted sums,
+Proposition~\ref{P:weighted-slln}, a strong law of large numbers for weigted sums,
 makes this more rigorous.  The term 
 $\tilde \Psi_n^T \tilde R_t(z) \tilde \Psi_n$ is a sum of the form
 \[
@@ -576,7 +571,7 @@ $\tilde \Psi_n^T \tilde R_t(z) \tilde \Psi_n$ is a sum of the form
 where $\tilde \vpsi_1, \ldots, \tilde \vpsi_p$ are the rows of $\tilde \Psi_n$.
 Since the $\tilde \vpsi_\alpha$ are i.i.d, it is quite plausible that the sum
 converges to $r_1(z) \E[ \tilde \Psi_n^T \tilde \Psi_n ]$.  Indeed, the strong
-law of Lemma~\ref{L:strong-weighted} proves exactly this.  With the additional
+law of Proposition~\ref{P:weighted-slln} proves exactly this.  With the additional
 help of Lemma~\ref{L:wishart-lln}, we can prove:
 
 \begin{lemma}\label{L:Sbar}
@@ -709,8 +704,7 @@ Employing Slutzky's theorem, this has the same limiting distribution as
             \right)
         \Bigg\}.
 \end{align*}
-Combining Lemmas \ref{L:wishart-lln}, \ref{L:wishart-clt}, and 
-\ref{L:clt-weighted}, we can see that $S_1(z)$, the limiting distribution of
+Combining Lemmas \ref{L:wishart-lln}, \ref{L:wishart-clt}, and Proposition~\ref{P:weighted-clt}, we can see that $S_1(z)$, the limiting distribution of
 $S_{n,1}^{(1)}(z)$ has elements above and along the main diagonal converging
 to a multivariate normal with
 \begin{align}
