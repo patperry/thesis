@@ -261,7 +261,7 @@ Assumptions~\ref{A:factors}~and~\ref{A:sizes} are simpler than the assumptions g
 \[
     \mX = \mZ \mTheta^\trans + \mE,
 \]
-where $\mTheta$ is an $p \times k$ matrix of factors and $\mZ$ is an $n\times k$ matrix of factor loadings whose rows are \iid multivariate $\Normal(0,\, \mC)$ random variables for covariance matrx $\mC$ having eigen-decomposition $\mC = \mQ \mLambda \mQ^\trans$.  Letting $\mZ = \sqrt{n} \mhP \mhLambda \mhQ^\trans$ be the SVD of $\mZ$, Anderson's results \cite{anderson1963atp} give us that $\mhLambda$ and $\mhQ$ converge almost surely to $\mLambda$ and $\mQ$, respectively, and that the diagonal elements of $\sqrt{n} (\mhLambda - \mLambda)$ converge to a mean-zero multivariate normal whenever $C$ has no repeated eigenvalues.  If we define $\mU = \mhP$, $\mD = \mhLambda^\half$, and $\mV = \mTheta \mhQ$, then $\mX = \sqrt{n} \mU \mD \mV^\trans + \mE$, where the factors satisfy Assumptions~\ref{A:factors}~and~\ref{A:sizes}.  Dropping the normality assumption on the rows of $\mZ$ poses no problem.  Moreover, we can suppose instead of \iid that the rows of $\mZ$ be a martingale difference array with well-behaved low-order moments and still perform a transformation of the variables to get factors of the form we need for Theorems~\ref{T:values}~and~\ref{T:vectors}.
+where $\mTheta$ is an $p \times k$ matrix of factors and $\mZ$ is an $n\times k$ matrix of factor loadings whose rows are \iid multivariate $\Normal(0,\, \mC)$ random variables for covariance matrx $\mC$ having eigen-decomposition $\mC = \mQ \mLambda \mQ^\trans$.  Letting $\mZ = \sqrt{n} \mhP \mhLambda \mhQ^\trans$ be the SVD of $\mZ$, Anderson's results \cite{anderson1963atp} give us that $\mhLambda$ and $\mhQ$ converge almost surely to $\mLambda$ and $\mQ$, respectively, and that the diagonal elements of $\sqrt{n} (\mhLambda - \mLambda)$ converge to a mean-zero multivariate normal whenever $\mC$ has no repeated eigenvalues.  If we define $\mU = \mhP$, $\mD = \mhLambda^\half$, and $\mV = \mTheta \mhQ$, then $\mX = \sqrt{n} \mU \mD \mV^\trans + \mE$, where the factors satisfy Assumptions~\ref{A:factors}~and~\ref{A:sizes}.  Dropping the normality assumption on the rows of $\mZ$ poses no problem.  Moreover, we can suppose instead of \iid that the rows of $\mZ$ be a martingale difference array with well-behaved low-order moments and still perform a transformation of the variables to get factors of the form we need for Theorems~\ref{T:values}~and~\ref{T:vectors}.
 
 \item
 There is a sign-indeterminancy in the sample and population singular vectors. Since we only give results for the squares $\mR_n^\trans \mR$ the signs do not matter and we choose them arbitrarily.
@@ -275,27 +275,45 @@ Most of the results in Theorems~\ref{T:values}~and~\ref{T:vectors} can be gotten
 
 We are now ready to proceed with proving the theorems.  In this section we introduce a linear algebra trick originally devised by Onatski \cite{onatski}, similar to what is done in Paul \cite{paul2007ase}.  Nadler~\cite{nadler2008fsa} employs the same trick, but he limits his study to the case when $k = 1$. Onatski's trick will let us analyze the behavior of the squares of the singular values along with the right singular vectors in terms of matrices of dimensions much smaller than $n \times p$.
 
-Define $U_1 = U$, and choose $U_2$ so that
+Define $\mU_{n,1} = \mU_n$, and choose $\mU_{n,2}$ so that
 \(
-    \U 
-    = 
     \left( 
     \begin{matrix}
-        U_1 & U_2 
+        \mU_{n,1} & \mU_{n,2}
     \end{matrix}
     \right)
 \) 
-is an orthogonal matrix. Then $\U^T E \eqd E$.  Partition the rows of $\U^T E$ as 
+is an orthogonal matrix. 
+Then 
 \(
-    \U^T E 
+    \left( 
+    \begin{matrix}
+        \mU_{n,1}^\trans \\
+        \mU_{n,2}^\trans
+    \end{matrix}
+    \right)
+    \mE_n
+    \eqd
+    \mE_n.
+\)
+Partition the rows of the product as
+\(
+    \left(
+    \begin{matrix}
+        \mU_{n,1}^\trans \\
+        \mU_{n,2}^\trans
+    \end{matrix}
+    \right)
+    \mE_n
     = 
     \left(
     \begin{matrix}
-        E_1 \\ E_2
+        \mE_{n,1} \\
+        \mE_{n,2}
     \end{matrix}
     \right)
 \)
-where $E_i = U_i^T E$ and $E_1$ is a $k \times p$ matrix.  Let $(1/n) E_2^T E_2 = O \Lambda O^T$ be the spectral decomposition of $(1/n) E_2^T E_2$.  Note that $O \sim \Haar(\O_M)$ and that $\lambda_1, \ldots, \lambda_p$, the diagonal entries of $\Lambda$, are eigenvalues of a Wishart $\W(I_p, n-k)$ matrix scaled by $(1/n)$.  
+where $\mE_{n,i} = \mU_{n,i}^\trans \mE_n$ so that $\mE_{n,1}$ is a $k \times p$ matrix.  Let $(1/n) E_2^T E_2 = O \Lambda O^T$ be the spectral decomposition of $(1/n) E_2^T E_2$.  Note that $O \sim \Haar(\O_M)$ and that $\lambda_1, \ldots, \lambda_p$, the diagonal entries of $\Lambda$, are eigenvalues of a Wishart $\W(I_p, n-k)$ matrix scaled by $(1/n)$.  
 
 We have
 \begin{align*}
