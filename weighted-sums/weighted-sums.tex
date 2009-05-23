@@ -1,0 +1,286 @@
+\chapter{Limit theorems for weighted sums}
+
+In this appendix we state and prove some limit theorems for weighted sums
+of \iid random variables.  First, we give a weak law of large numbers (WLLN):
+
+\begin{proposition}[Weighted WLLN]\label{P:weighted-wlln}
+    Let $X_{n,1}, X_{n,2}, \ldots, X_{n,n}$ be a triangular array of random
+    variables, \iid across each row, with $\E X_{n,1} = \mu$ and $\E 
+    X_{n,1}^2$  uniformly bounded in $n$.  Also, let $W_{n,1}, W_{n,2}, \ldots, 
+    W_{n,n}$ be another triangular array of random variables independent of 
+    the $X_{n,i}$ (but not necessarily of each other).  Define 
+    \(
+        \bW_n = \frac{1}{n} \sum_{i=1}^n W_{n,i}.
+    \) 
+    If $\bW_n \toP \bW$ and that
+    $\E \left[ \frac{1}{n} \sum_{i=1}^n W_{n,i}^2 \right]$ is uniformly 
+    bounded in $n$, then
+    \[
+        \frac{1}{n} \sum_{i=1}^n W_{n,i} \, X_{n,i} \toP \bW \mu.
+    \]
+\end{proposition}
+
+We do not give a proof of Proposition~\ref{P:weighted-wlln}, but instead derive a strong law of large numbers (SLLN) below.  The proof of the weak law is similar.  Here is the strong law:
+
+\begin{proposition}[Weighted SLLN]\label{P:weighted-slln}
+    Let $X_{n,1}, X_{n,2}, \ldots, X_{n,n}$ be a triangular array of random
+    variables, \iid across each row, with $\E X_{n,1} = \mu$ and 
+    $\E X_{n,1}^4$  uniformly bounded in $n$.
+    Also, let $W_{n,1}, W_{n,2}, \ldots, 
+    W_{n,n}$ be another triangular array of random variables independent of 
+    the $X_{n,i}$ (but not necessarily of each other).  Define 
+    \(
+        \bW_n = \frac{1}{n} \sum_{i=1}^n W_{n,i}.
+    \) 
+    If $\bW_n \toas \bW$ and 
+    $\E \left[ \frac{1}{n} \sum_{i=1}^n W_{n,i}^4 \right]$ is uniformly 
+    bounded in $n$, then
+    \[
+        \frac{1}{n} \sum_{i=1}^n W_{n,i} \, X_{n,i} \toas \bW \mu.
+    \]
+\end{proposition}
+\begin{proof}
+    Define $S_n = \sum_{i=1}^n W_{n,i} \, X_{n,i}$ and let
+    $\F^W_n = \sigma( W_{n,1}, W_{n,2}, \ldots, W_{n,n})$.  We have that
+    \[
+        \frac{1}{n} S_n - \bW_n \, \mu
+        = 
+       \frac{1}{n}
+       \sum_{i=1}^n
+           W_{n,i} \,
+           (X_{n,i} - \mu) 
+    \]
+    Note that
+    \begin{align*}
+        \begin{split}
+        \E \Bigg[
+            \frac{1}{n^2}
+            &\left(
+                \sum_{i=1}^n
+                    W_{n,i} \,
+                    (X_{n,i} - \mu) 
+            \right)^4
+        \,\, \Bigg| \,\,
+            \F^W_n
+        \Bigg] \\
+        &= \frac{1}{n^2} \left(
+               \E \left[ X_{n,1} - \mu \right]^4
+               \sum_{i=1}^n
+                   W_{n,i}^4
+               +
+               3 \E \left[
+                   (X_{n,1} - \mu)^2 (X_{n,2} - \mu)^2
+               \right]
+               \sum_{i \neq j}
+                   W_{n,i}^2 W_{n,j}^2
+           \right)
+        \end{split} \\
+        &\leq C_1 \left[
+            \frac{1}{n}
+            \sum_{i=1}^n W_{n,i}^2
+        \right]^2
+    \end{align*}
+    for some constant $C_1$ bounding $\E \left[ X_{n,1} - \mu \right]^4$
+    and $3 \E \left[ (X_{n,1} - \mu)^2 (X_{n,2} - \mu)^2 \right]$.
+    Therefore, the full expectation is bounded by some other constant $C_2$.  
+    We have just shown that
+    \[
+        \E \left[ 
+            \frac{1}{n} S_n - \bW_n \, \mu
+           \right]^4
+        \leq \frac{C}{n^2}
+    \]
+    for some constant $C$.  Applying Chebyschev's inequality, we get
+    \[
+        P \left\{
+            \left|
+                \frac{1}{n} S_n - \bW_n \, \mu
+            \right|
+            > \varepsilon
+        \right\}
+        \leq \frac{C}{n^2 \varepsilon^4}.
+    \]
+    Invoking the first Borel-Cantelli Lemma, we ge that the sum converes
+    almost surely.
+\end{proof}
+
+Next, we derive a central limit theorem (CLT).  To prove it we will need a
+CLT for dependent variables, which we take from McLeish \cite{mcleish1974dcl}:
+
+\begin{lemma}\label{L:mcleigh}
+    Let $X_{n,i}, \F_{n,i}, i = 1, \ldots, n$ be a martingale difference 
+    array.  If the Lindeburg condition 
+    $\sum_{i=1}^n \E \left[ X_{n,i}^2 ; | X_{n,i} | > \varepsilon \right] \to 0$
+    is satisfied and $\sum_{i=1}^n X_{n,i}^2 \toP \sigma^2$ then
+    $\sum_{i=1}^n X_{n,i} \tod \Normal (0, \, \sigma^2)$.
+\end{lemma}
+
+\noindent
+With this Lemma, we can prove a CLT for weighted sums.
+
+\begin{proposition}[Weighted CLT]\label{P:weighted-clt}
+    Let $\vX_{n,i}, i = 1, \ldots, n$ be a triangular array of random vectors
+    in $\reals^p$ with $\vX_{n,i}$ \iid
+    such that $\E \vX_{n,1} = \vmu^X$, $\cov[ \vX_{n,1}] = \mSigma^X$, and all 
+    mixed fourth moments of the elements of $\vX_{n,1}$ uniformly bounded in 
+    $n$.  Let  $\vW_{n,i}$, $i = 1, \ldots, n$ be another triangular array 
+    of random 
+    vectors in $\reals^p$, independent of the $\vX_{n,i}$ but not necessarily 
+    of each other.  Assume that 
+    $\frac{1}{n} \sum_{i=1}^n \vW_{n,i} \vW_{n,i}^\trans \toP \mSigma^W$, and 
+    that for
+    all sets of indices $j_1, \ldots, j_4$, with each index between $1$ and
+    $p$, we have that
+    \(
+        \E \left[ 
+            \frac{1}{n}
+            \sum_{i=1}^n
+                W_{n,ij_1} 
+                W_{n,ij_2} 
+                W_{n,ij_3} 
+                W_{n,ij_4} 
+        \right]
+    \) is uniformly bounded in $n$.  Then
+    \[
+        \sqrt{n}
+        \left[
+            \frac{1}{n}
+            \sum_{i=1}^n
+                \vW_{n,i} \bullet \vX_{n,i}
+            -
+            \frac{1}{n} 
+            \sum_{i=1}^n 
+                \vW_{n,i} \bullet \vmu^X
+        \right]
+        \tod
+        \Normal\left( 0, \, \mSigma^W \bullet \mSigma^X \right),
+    \]
+    where $\bullet$ denotes Hadamard (elementwise) product.
+\end{proposition}
+\begin{proof}
+    Let
+    \[
+        \vS_n
+        =
+        \sqrt{n} \left[ \frac{1}{n} \sum_{i=1}^n \vW_{n,i} \bullet \vX_{n,i}
+            - \frac{1}{n} \sum_{i=1}^n \vW_{n,i} \bullet \vmu^X\right].
+    \]
+    We will use the Cram\'er-Wold device.  Let $\vtheta \in \reals^p$ be
+    arbitrary.  Define
+    \[
+        Y_{n,i} 
+        = 
+        \frac{1}{\sqrt{n}}
+        \sum_{j=1}^p
+            \theta_j W_{n,ij} \, (X_{n,ij} - \mu^X_j),
+    \]
+    so that $\vtheta^\trans \vS_n = \sum_{i=1}^n Y_{n,i}$.  Also, with
+    $\F_{n,i} = \sigma( Y_{n,1}, Y_{n,2}, \ldots, Y_{n,i-1})$, the collection
+    $\{ Y_{n,i}, \F_{n,i} \}$ is a martingale difference array.  We will
+    use Lemma~\ref{L:mcleigh} to prove the result.  First, we compute
+    the variance as
+    \begin{align*}
+        \sum_{i=1}^n Y_{n,i}^2
+        &=  \frac{1}{n}
+            \sum_{i=1}^n
+            \left[
+                \sum_{j=1}^p
+                    \theta_j W_{n,ij} \, (X_{n,ij} - \mu^X_j) 
+            \right]^2 \\
+        &=  \frac{1}{n}
+            \sum_{i=1}^n
+            \sum_{j=1}^n
+            \sum_{k=1}^p
+                \theta_j \theta_k
+                W_{n,ij} W_{n,ik}
+                (X_{n,ij} - \mu^X_j) (X_{n,ik} - \mu^X_k) \\
+        &\toP \sum_{j=1}^p \sum_{k=1}^p
+              \theta_j \theta_k
+              \Sigma^W_{jk} \Sigma^X_{jk} \\
+        &= \vtheta^\trans 
+           \left(
+               \mSigma^W
+               \bullet
+               \mSigma^X
+           \right)
+           \vtheta,
+    \end{align*}
+    where we have used  the fourth moment assumptions and
+    Proposition~\ref{P:weighted-wlln} to get the convergence.  Lastly we check 
+    the Lindeburg condition.  We have that
+    \begin{align*}
+        \sum_{i=1}^n
+            &\E \left[ 
+                Y_{n,i}^2 ; | Y_{n,i} | > \varepsilon
+            \right] \\
+        &\leq
+            \frac{1}{\varepsilon^2}
+            \sum_{i=1}^n
+            \E \left[ 
+                Y_{n,i}^4
+            \right] \\
+        &=
+            \frac{1}{\varepsilon^2 n^2}
+            \sum_{i=1}^n
+            \sum_{j_1, \ldots, j_4}
+                \Bigg\{
+                 \theta_{j_1}
+                 \theta_{j_2}
+                 \theta_{j_3}
+                 \theta_{j_4} 
+                 \cdot \E \left[ 
+                         W_{n,ij_1}
+                         W_{n,ij_2}
+                         W_{n,ij_3}
+                         W_{n,ij_4}
+                     \right] \\
+                &\qquad\qquad\qquad\qquad\qquad \cdot \E \Big[ 
+                        (X_{n,ij_1} - \mu^X_{j_1})
+                        (X_{n,ij_2} - \mu^X_{j_2})
+                        (X_{n,ij_3} - \mu^X_{j_3})
+                        (X_{n,ij_4} - \mu^X_{j_4})
+                    \Big] \Bigg\} \\
+        &\leq
+            \frac{C_1}{\varepsilon^2 n}
+            \sum_{j_1, \ldots, j_4}
+                \E \left[
+                    \frac{1}{n}
+                    \sum_{i=1}^n
+                        W_{n,ij_1}
+                        W_{n,ij_2}
+                        W_{n,ij_3}
+                        W_{n,ij_4}
+                \right] \\
+        &\leq
+            \frac{C_1 C_2 p^4}{\varepsilon^2 n} \\
+        &\to 0
+    \end{align*}
+    where $C_1$ is a constant bounding $|\theta_{j}|^4$ and the
+    centered fourth moments of $X_{n,ij}$, and $C_2$ bounds the
+    fourth moments of the weights.
+\end{proof}
+
+For some classes of weights, we can get a stronger result.
+
+\begin{corollary}\label{C:strong-weighted-clt}
+    With the same assumptions as in Proposition~\ref{P:weighted-clt},
+    if the mean of the weights converges sufficiently fast as
+    \(
+        \sqrt{n} \left[ \frac{1}{n} \sum_{i=1}^n \vW_{n,i} - \vmu^W \right] 
+        \toP 
+        0,
+    \)
+    then
+    \[
+        \sqrt{n}
+        \left[
+            \frac{1}{n}
+            \sum_{i=1}^n
+                \vW_{n,i} \bullet \vX_{n,i}
+            -
+            \vmu^W \bullet \vmu^X
+        \right]
+        \tod
+        \Normal\left( 0, \, \mSigma^W \bullet \mSigma^X \right).
+    \]
+\end{corollary}
