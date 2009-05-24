@@ -130,7 +130,7 @@ assumptions concern the signal part:
     and
     $d_{n,1} > d_{n,2} > \cdots > d_{n,k} > 0$.  The matrix $\mD_n$ converges
     almost surely to a deterministic matrix 
-    $\mD = \diag( \mu_1^\half, \mu_2^\half, \ldots, \mu_k^\half)$ with
+    $\mD = \diag( \mu_1^{1/2}, \mu_2^{1/2}, \ldots, \mu_k^{1/2})$ with
     $\mu_1 > \mu_2 > \cdots > \mu_k > 0$. Moreover, the vector
     \(
         \sqrt{n} ( d_{n,1}^2 - \mu_1, d_{n,1}^2 - \mu_2, 
@@ -158,8 +158,8 @@ $\mV_n$ by $\vU_{n,1}, \vU_{n,2}, \ldots, \vU_{n,k}$ and $\vV_{n,1},
     \mX_n \approx \sqrt{n} \mhU_n \mhD_n \mhV_n^\trans
 \]
 be the singular value decomposition of
-$\mX_n$ truncated to $k$ terms, where $\mhD_n = \diag( \hat \mu_{n,1}^\half,
-\ldots, \hat \mu_{n,k}^\half)$ and the columns of $\mhU$ and $\mhV$ are given
+$\mX_n$ truncated to $k$ terms, where $\mhD_n = \diag( \hat \mu_{n,1}^{1/2},
+\hat \mu_{n,2}^{1/2}, \ldots, \hat \mu_{n,k}^{1/2})$ and the columns of $\mhU$ and $\mhV$ are given
 by $\vhU_{n,1}, \vhU_{n,2} \ldots, \vhU_{n,k}$ and $\vhV_{n,1}, \vhV_{n,2},
 \ldots, \vhV_{n,k}$, respectively.
 
@@ -271,11 +271,13 @@ Most of the results in Theorems~\ref{T:values}~and~\ref{T:vectors} can be gotten
 
 \end{enumerate}
 
-\section{Linear algebra}\label{S:linalg}
+\section{Preliminaries}\label{S:lowrank-preliminaries}
 
-We are now ready to proceed with proving the theorems.  In this section we introduce a linear algebra trick originally devised by Onatski \cite{onatski}, similar to what is done in Paul \cite{paul2007ase}.  Nadler~\cite{nadler2008fsa} employs the same trick, but he limits his study to the case when $k = 1$. Onatski's trick will let us analyze the behavior of the squares of the singular values along with the right singular vectors in terms of matrices of dimensions much smaller than $n \times p$.
+Without loss of generality we will assume that $\sigma^2 = 1$.  For now, we will also assume that $\gamma \geq 1$.
 
-Define $\mU_{n,1} = \mU_n$, and choose $\mU_{n,2}$ so that
+\subsection{Change of basis}
+
+A convenient choice of basis will make it easier to study the SVD of $\mX_n$.  Define $\mU_{n,1} = \mU_n$, and choose $\mU_{n,2}$ so that
 \(
     \left( 
     \begin{matrix}
@@ -283,153 +285,469 @@ Define $\mU_{n,1} = \mU_n$, and choose $\mU_{n,2}$ so that
     \end{matrix}
     \right)
 \) 
-is an orthogonal matrix. 
-Then 
+is an orthogonal matrix. Similarly, put $\mV_{n,1} = \mV_n$ and choose
+$\mV_{n,2}$ so that
 \(
+    \left(
+    \begin{matrix}
+        \mV_{n,1} & \mV_{n,2}
+    \end{matrix}
+    \right)
+\)
+is orthogonal.  If we define
+\(
+    \mtE_{n,ij} = \mU_{n,i}^\trans \mE_n \mV_{n,j}
+\)
+and
+\(
+    \mX_{n,ij} = \mU_{n,i}^\trans \mX_n \mV_{n,j},
+\)
+then in block form,
+\[
     \left( 
     \begin{matrix}
         \mU_{n,1}^\trans \\
         \mU_{n,2}^\trans
     \end{matrix}
     \right)
-    \mE_n
-    \eqd
-    \mE_n.
-\)
-Partition the rows of the product as
-\(
+    \mX_n
     \left(
     \begin{matrix}
-        \mU_{n,1}^\trans \\
-        \mU_{n,2}^\trans
+        \mV_{n,1} & \mV_{n,2}
     \end{matrix}
     \right)
-    \mE_n
-    = 
-    \left(
-    \begin{matrix}
-        \mE_{n,1} \\
-        \mE_{n,2}
-    \end{matrix}
-    \right)
-\)
-where $\mE_{n,i} = \mU_{n,i}^\trans \mE_n$ so that $\mE_{n,1}$ is a $k \times p$ matrix.  Let $(1/n) E_2^T E_2 = O \Lambda O^T$ be the spectral decomposition of $(1/n) E_2^T E_2$.  Note that $O \sim \Haar(\O_M)$ and that $\lambda_1, \ldots, \lambda_p$, the diagonal entries of $\Lambda$, are eigenvalues of a Wishart $\W(I_p, n-k)$ matrix scaled by $(1/n)$.  
-
-We have
-\begin{align*}
-    \U^T U D_n V^T
-        &= \left(
-           \begin{matrix}
-               U_1^T \\ 
-               U_2^T
-           \end{matrix}
-           \right) 
-           U D_n V^T \\
-        &= \left(
-           \begin{matrix}
-               D_n V^T \\
-               0
-           \end{matrix}
-           \right)
-\end{align*}
-so that in block form,
-\[
-    \U^T X_n
     =
     \left(
     \begin{matrix}
-            n^\half D_n V^T + E_1  \\
-            E_2
+        \sqrt{n} \mD_n + \mtE_{n,11} & \mtE_{n,12} \\
+        \mtE_{n,21}                  & \mtE_{n,22}
     \end{matrix}
     \right).
 \]
-If we define 
-\begin{equation} \label{E:psi}
-    \Psi_n = V D_n + (1 / n^\half) E_1^T,
-\end{equation}
-then 
-\begin{equation}\label{E:arrow}
-    (1/n) X_n^T X_n = (1/n) X_n \U \U^T X_n^T = \Psi_n \Psi_n^T + O \Lambda O^T.
-\end{equation}
-This simple form makes it very easy to analyze the eigenvalues and eigenvectors of $(1/n) X_n^T X_n$.
-
-Suppose $\by$ is an eigenvector of $(1/n) X_n^T X_n$ with eigenvalue $\mu$.  Then $\mu \by = \Psi_n \Psi_n^T \by + O \Lambda O^T \by$, i.e.
+Because Gaussian white noise is orthogonally invariant, the
+matrices $\mtE_{n,ij}$ are all independent with \iid $\Normal(0, \, 1)$ elements.  Let
 \[
-    O (\mu I - \Lambda) O^T \by = \Psi_n \Psi_n^T \by.
+    \mtE_{n,22}
+    =
+    \sqrt{n}
+    \left(
+    \begin{matrix}
+        \mO_{n,1} & \mO_{n,2}
+    \end{matrix}
+    \right)
+    \left(
+    \begin{matrix}
+        \mLambda_n^{1/2} \\
+        0
+    \end{matrix}
+    \right)
+    \mP_{n}^\trans
 \]
-If $\mu \neq \lambda_j$ for all $j = 1, \ldots, p$, then
+be the SVD of $\mtE_{n,22}$, with
+\(
+    \mLambda_n
+    =
+    \diag \left(
+        \lambda_{n,1}, 
+        \lambda_{n,2}, 
+        \ldots
+        \lambda_{n,p-k}
+    \right)
+\)
+.  Note that 
+\(
+    \mtE_{n,22}^\trans \mtE_{n,22}
+    \sim
+    \Wishart_{p-k} \left( n-k, \mI_{p-k} \right).
+\)
+Define
 \begin{align*}
-    \by &= O (\mu I - \Lambda)^{-1} O^T \Psi_n \Psi_n^T \by \\
-    \intertext{so that}
-    (\Psi_n^T \by) &= \big(\Psi_n^T O (\mu I - \Lambda)^{-1} O^T \Psi_n \big) (\Psi_n^T \by).
+    \mtX_n
+        &=
+            \left(
+            \begin{matrix}
+                \mI_k & 0 \\
+                0  & \mO_{n,1}^\trans \\
+                0  & \mO_{n,2}^\trans
+            \end{matrix}
+            \right)
+            \left(
+            \begin{matrix}
+                \sqrt{n} \mD_n + \mtE_{n,11} & \mtE_{n,12} \\
+                \mtE_{n,21}                  & \mtE_{n,22}
+            \end{matrix}
+            \right)
+            \left(
+            \begin{matrix}
+                \mI_k & 0 \\
+                0     & \mP_n
+            \end{matrix}
+            \right) \\
+        &=
+            \left(
+            \begin{matrix}
+                \sqrt{n} \mD_n + \mE_{n,11} & \mE_{n,12} \\
+                \mE_{n,21}                  & \sqrt{n} \mLambda^{1/2}_n \\
+                \mE_{n,31}                  & 0
+            \end{matrix}
+            \right),
 \end{align*}
-The matrix 
-\begin{equation}
-    R_1(\mu)
-    \equiv
-    O (\mu I - \Lambda)^{-1} O^T
+where 
+$\mE_{n,11} = \mtE_{n,11}$, 
+$\mE_{n,12} = \mtE_{n,12} \mP_n$,
+$\mE_{n,21} = \mO_{n,1}^\trans \mtE_{n,21}$, and
+$\mE_{n,31} = \mO_{n,2}^\trans \mtE_{n,31}$.
+Finally, let
+\[
+    \mtX_n
+    \approx
+    \mtU_n \mtD_n \mtV_n
+\]
+be the SVD of $\mtX_n$, truncated to $k$ terms.  Lastly, put the left and right singular vectors in block form as
+\[
+    \mtU_n
+    =
+    \left(
+    \begin{matrix}
+        \mtU_{n,1} \\
+        \mtU_{n,2}
+    \end{matrix}
+    \right)
+\]
+and
+\[
+    \mtV_n
+    =
+    \left(
+    \begin{matrix}
+        \mtV_{n,1} \\
+        \mtV_{n,2}
+    \end{matrix}
+    \right),
+\]
+where $\mtU_{n,1}$ and $\mtV_{n,1}$ both $k\times k$ matrices.
+
+We have gotten to $\mtX_n$ via an orthogonal change of basis applied to $\mX_n$.  By carefully choosing this basis, we have assured that:
+\begin{enumerate}
+    \item The blocks of $\mtX_n$ are all independent.
+    \item The elements of the matrices $\mE_{n,ij}$ are 
+        \iid $\Normal\left( 0, 1 \right)$.
+    \item The elements 
+        $\{ n \lambda_{n,1}, n \lambda_{n,2}, \ldots, 
+            n \lambda_{n,p-k} \}$ are eigenvalues from
+        a white Wishart matrix with $n-k$ degrees of freedom.
+    \item $\mtX_n$ and $\mX_n$ have the same singular values.  This implies
+        that $\mhD_n = \mtD_n$.
+    \item The left singular vectors of $\mX_n$ can be recovered from the
+        left singular vectors of $\mtX_n$ via multiplication by an orthogonal
+        matrix.  The same holds for the right singular vectors.
+    \item The dot product matrix $\mU_n^\trans \mhU_n$ is equal to
+        $\mtU_{n,1}$.
+        Similarly, $\mV_n^\trans \mhV_n = \mtV_{n,1}$.
+\end{enumerate}
+
+\subsection{Perturbation expansion}
+
+We set $\mS_n = \frac{1}{n} = \mtX_n^\trans \mtX_n$.  The eigenvalues and eigenvectors of $\mS_n$ are the squares of the singular values of $\mtX_n$ and its right singular vectors, respectively.  In block form, we have
+\[
+    \mS_n
+    =
+    \left(
+    \begin{matrix}
+        \mS_{n,11} & \mS_{n,12} \\
+        \mS_{n,21} & \mS_{n,22}
+    \end{matrix}
+    \right),
+\]
+where
+\begin{align*}
+    \begin{split}
+    \mS_{n,11}
+        &=
+            \mD_n^2 
+            + 
+            \frac{1}{\sqrt{n}} 
+            \left( 
+                \mD_n \mE_{n,11} + \mE_{n,11}^\trans \mD_n
+            \right) \\
+            &\phantom{= \mD_n^2} +
+            \frac{1}{n}
+            \left(
+                \mE_{n,11}^\trans \mE_{n,11}
+                +
+                \mE_{n,21}^\trans \mE_{n,21}
+                +
+                \mE_{n,31}^\trans \mE_{n,31}
+            \right),
+    \end{split} \\
+    \mS_{n,12}
+        &=
+            \frac{1}{\sqrt{n}}
+            \left(
+                \mD_n \mE_{n,12} + \mE_{n,21}^\trans \mLambda_n^{1/2}
+            \right)
+            +
+            \frac{1}{n}
+            \mE_{n,11}^\trans \mE_{n,12}, \\
+    \mS_{n,21}
+        &=
+            \frac{1}{\sqrt{n}}
+            \left(
+                \mE_{n,12}^\trans \mD_n
+                +
+                \mLambda_n^{1/2} \mE_{n,21}
+            \right)
+            +
+            \frac{1}{n}
+            \mE_{n,12}^\trans \mE_{n,11}, \\
+    \mS_{n,22}
+        &=
+            \mLambda_n
+            +
+            \frac{1}{n}
+            \mE_{n,12}^\trans \mE_{n,12}.
+\end{align*}
+We write $\mS_n$ as a sum of two terms.  First, let
+\[
+    \mS_n^0
+    =
+    \left(
+    \begin{matrix}
+        \mS_{n,11}^0 & \mS_{n,12}^0 \\
+        \mS_{n,21}^0 & \mS_{n,22}^0
+    \end{matrix}
+    \right),
+\]
+where
+\begin{align*}
+    \mS_{n,11}^0
+        &=
+            \mD_n^2 + \mI_k, \\
+    \mS_{n,12}^0
+        &=
+            \frac{1}{\sqrt{n}} 
+            \left( 
+                \mD_n \mE_{n,12}
+                +
+                \mE_{n,21}^\trans \mLambda_n^{1/2} 
+            \right), \\
+    \mS_{n,21}^0
+        &=
+            \frac{1}{\sqrt{n}} 
+            \left( 
+                \mE_{n,12}^\trans \mD_n
+                +
+                \mLambda_n^{1/2} \mE_{n,21}
+                \right), \\
+    \mS_{n,22}^0
+        &=
+            \mLambda_n 
+            +
+            \frac{1}{n}
+            \mE_{n,12}^\trans \mE_{n,12}.
+\end{align*}
+Next, put
+\[
+    \mS_n^1
+    =
+    \left(
+    \begin{matrix}
+        \mS_{n,11}^1 & \mS_{n,12}^1 \\
+        \mS_{n,21}^1 & 0
+    \end{matrix}
+    \right),
+\]
+with
+\begin{align*} 
+    \begin{split}   
+    \mS_{n,11}^1
+        &=
+            \mD_n \mE_{n,11}
+            +
+            \mE_{n,11}^\trans \mD_n \\
+            &\qquad +
+            \frac{1}{\sqrt{n}} 
+            \left(
+                \mE_{n,11}^\trans \mE_{n,11}
+                +
+                \mE_{n,21}^\trans \mE_{n,21}
+                +
+                \mE_{n,31}^\trans \mE_{n,31}
+            \right)
+            -
+            \sqrt{n} \mI_k,
+    \end{split} \\
+    \mS_{n,12}^1
+        &= \frac{1}{\sqrt{n}} \mE_{n,11}^\trans \mE_{n,12}, \\
+    \mS_{n,21}^1
+        &= \frac{1}{\sqrt{n}} \mE_{n,12}^\trans \mE_{n,11}.
+\end{align*}
+
+We have that
+\[
+    \mS_n = \mS_n^0 + \frac{1}{\sqrt{n}} \mS_n^1.
+\]
+Since $\| \mS_n^1 \|_\Frob = \OhP( k )$,
+it turns out that the eigenvalues and eigenvectors of $\mS_n$ are small
+perturbations of the corresponding properties of $\mS_n^0$.  We will explore this further in section TODO.
+
+\subsection{The secular equation}
+
+We first study the eigendecomposition of $\mS_n^0$.  If 
+\(
+    \vx
+    = 
+    \left( 
+    \begin{matrix}
+        \vx_{1} \\
+        \vx_{2}
+    \end{matrix}
+    \right)
+\)
+is an eigenvector of $\mS_n^0$ with eigenvalue $\mu$, then
+\[
+    \left(
+    \begin{matrix}
+        \mS_{n,11}^0 & \mS_{n,12}^0 \\
+        \mS_{n,21}^0 & \mS_{n,22}^0
+    \end{matrix}
+    \right)
+    \left( 
+    \begin{matrix}
+        \vx_{1} \\
+        \vx_{2}
+    \end{matrix}
+    \right)
+    =
+    \mu
+    \left( 
+    \begin{matrix}
+        \vx_{1} \\
+        \vx_{2}
+    \end{matrix}
+    \right).
+\]
+If $\mu$ is not an eigenvalue of $\mS_{n,22}^0$, then we get
+\begin{subequations}
+\begin{equation}\label{E:x2-from-x1}
+    \vx_2
+    =
+    -
+    \left(
+        \mS_{n,22}^0
+        -
+        \mu
+        \mI_{p-k}
+    \right)^{-1}
+    \mS_{n,21}^0 \,
+    \vx_1
 \end{equation}
-is the \emph{resolvent} of $(1/n) E_2^T E_2$.  We see that
-$\Psi_n^T \by$ is an eigenvector of $\Psi^T R_1 (\mu) \Psi$
-with eigenvalue $1$.  We can prove a stronger result:
+and
+\begin{equation}\label{E:secular-nof}
+    \left(
+        \mS_{n,11}^0
+        -
+        \mu
+        \mI_k
+        -
+        \mS_{n,12}^0
+        \left(
+            \mS_{n,22}^0
+            -
+            \mu
+            \mI_{p-k}
+        \right)^{-1}
+        \mS_{n,21}^0
+    \right)
+    \vx_1
+    =
+    0.
+\end{equation}
+\end{subequations}
+Conversely, if $(\mu, \vx_1)$ is a pair that solves~\eqref{E:secular-nof}, then
+\begin{equation}\label{E:x-from-x1}
+    \vx
+    =
+    \left(
+    \begin{matrix}
+        \vx_1 \\
+        -
+        \left(
+            \mS_{n,22}^0
+            -
+            \mu
+            \mI_{p-k}
+        \right)^{-1}
+        \mS_{n,21}^0 \,
+        \vx_1
+    \end{matrix}
+    \right)
+\end{equation}
+is an eigenvector of $\mS_n^0$ with eigenvalue $\mu$.  We define
+\begin{equation}\label{E:secular-f}
+    f_n ( \mu, \vx_1 )
+    =
+    \left(
+        \mS_{n,11}^0
+        -
+        \mu
+        \mI_k
+        -
+        \mS_{n,12}^0
+        \left(
+            \mu
+            \mI_{p-k}
+            -
+            \mS_{n,22}^0
+        \right)^{-1}
+        \mS_{n,21}^0
+    \right)
+    \vx_1
+\end{equation}
+and refer to the equation $f_n(\mu, \vx_1) = 0$ as the \emph{secular equation}.
 
-\begin{lemma}\label{L:secular}
-    Say $\mu \neq \lambda_i$ for all $i = 1, \ldots, p$.  Then $\mu$ is an
-    eigenvalue of $(1/n) X_n^T X_n$ iff
-    $\Psi_n^T R_1 (\mu) \Psi_n$ has an eigenvalue equal to $1$.
-\end{lemma}
-\begin{proof}
-    It remains to be shown that the condition is sufficient.  Say 
-    $\Psi_n^T R_1 (\mu) \Psi_n$ has an eigenvector $\bz$ with unit eigenvalue. 
-    Define
-    $\by = O (\mu I - \Lambda)^{-1} O^T \Psi_n \bz$.  Then 
-    \(
-        \Psi_n^T \by = \Psi_n^T R_1 (\mu) \Psi_n \bz = \bz,
-    \)
-    so that
-    \(
-        O (\mu I - \Lambda) O^T \by 
-        =
-        \Psi_n \bz
-        =
-        \Psi_n \Psi_n^T \by.
-    \)
-    Referring to Equation \eqref{E:arrow}, we see that
-    $\by$ is an eigenvector of $(1/n) X_n X_n^T$ with
-    eigenvalue $\mu$.
-\end{proof}
+\subsection{Outline of the proof}
 
-In light of the proof of Lemma~\ref{L:secular}, our problem has been 
-simplified to finding pairs $(\mu, \bz)$ with
-$\Psi_n^T R_1 (\mu) \Psi_n \bz = \bz$.  For then
-$\by = R_1(\mu) \Psi_n \bz$ is an eigenvector of
-$(1/n) X_n^T X_n$ with eigenvalue $\mu$.  The length
-of $\by$ is given by
-\begin{align}
-    \| \by \|_2^2 
-        &= \bz^T \Psi_n^T \big( O^T (\mu I - \Lambda)^{-2} O \big) \Psi_n \bz 
-            \notag \\
-        &= \bz^T \Psi_n^T R_2(\mu) \Psi_n \bz.
-            \label{E:normY}
-\end{align}
-where $R_2(\mu) \equiv O^T (\mu I - \Lambda)^{-2} O$.  Also, $V^T \by$ is 
-given by
-\begin{align}
-    V^T \by 
-        &= V^T \big( O^T (\mu I - \Lambda)^{-1} O \big) \Psi_n \bz \notag \\
-        &= V^T R_1(\mu) \Psi_n \bz.  \label{E:corrY}
-\end{align}
+We first show that with probability one, $\mS_n^0$ and $\mS_{n,22}^0$ have no eigenvalues in common.  This implies that all of the eigenvalues of $\mS_n^0$ are solutions to the secular equation.  Next, we study the solutions of 
+$f_n(\mu, \vx_1) = 0$.  It turns out that these solutions are dramatically different depending on the size of $\mu$.  If $\mu > (1 + \gamma^{-1/2})^2$,
+then we can write
+\begin{align*}
+    \mu 
+        &= 
+            \mu^0 
+            + 
+            \frac{1}{\sqrt{n}}
+            \mu^1 
+            + 
+            \ohP\left( \frac{1}{\sqrt{n}} \right), \\
+    \vx_1
+        &=
+            \vx_1^0
+            +
+            \frac{1}{\sqrt{n}}
+            \vx_1^1
+            + 
+            \ohP\left( \frac{1}{\sqrt{n}} \right).
+\end{align*}
+Otherwise, the solution is
+\begin{align*}
+    \mu
+        &=
+            \mu^0
+            + 
+            \ohP\left( \frac{1}{\sqrt{n}} \right), \\
+    \vx_1
+        &=
+            \vx_1^0
+            +
+            \ohP\left( \frac{1}{\sqrt{n}} \right).
+\end{align*}
+Once we have a solution to the secular equation, we can construct an
+eigenvector $\vx$ of $\mS_n^0$ using equation~\eqref{E:x-from-x1}.  Finally, we will use another perturbation argument to express the eigenvalues and eigenvectors of $\mS_n$ in terms of those of $\mS_n^0$ and $\mS_n^1$.
 
-We can see that $R_1(x)$ is intimately involved with the eigenvalues and
-eigenvectors of $(1/n)X_n^T X_n$.  We define
-\begin{align}
-    S_{n,1} (z) &= \Psi_n^T R_1 (z) \Psi_n, \\
-    S_{n,2} (z) &= \Psi_n^T R_2 (z) \Psi_n, \\
-\intertext{and also}
-    T_n (z) &= V^T R_1 (z) \Psi_n.
-\end{align}
-We analyze the asymptotic properties these matrices in
-Section~\ref{S:resolvent}.
+\clearpage
+
+
 
 \section{Linear functionals of eigenvalues}
 
