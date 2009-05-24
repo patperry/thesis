@@ -936,7 +936,7 @@ If we define $\mtD_n = \mD_n + \frac{1}{\sqrt{n}} \mE_{n,11}$, then we can compu
 \end{align*}
 To put it mildly, this is a formidable expression.  We can simplify the formula substantially when $\mu > \left(1 + \gamma^{-1/2} \right)^2$.
 
-\begin{lemma}
+\begin{lemma}\label{L:eij-product-limits}
     If $\mu > \left(1 + \gamma^{-1/2} \right)^2$, then
     \begin{align*}
         \frac{1}{n}
@@ -954,19 +954,7 @@ To put it mildly, this is a formidable expression.  We can simplify the formula 
                 \cdot
                 \mI_k, \\
         \frac{1}{n}
-        \mE_{n,21}^\trans
-        \mLambda_n^{1/2}
-        \left(
-            \mLambda_n
-            -
-            \mu \mI_{p-k}
-        \right)^{-1}
-        \mE_{n,12}^\trans
-            &\toas
-                0, \\
-        \frac{1}{n}
-        \mE_{n,21}^\trans
-        \mLambda_n^{1/2}
+        \mE_{n,12}
         \left(
             \mLambda_n
             -
@@ -975,10 +963,35 @@ To put it mildly, this is a formidable expression.  We can simplify the formula 
         \mLambda_n^{1/2}
         \mE_{n,21}
             &\toas
+                0, \\
+        \frac{1}{n}
+        \mE_{n,21}^\trans
+        \left(
+            \mLambda_n
+            -
+            \mu \mI_{p-k}
+        \right)^{-1}
+        \mE_{n,21}
+            &\toas
                 \gamma^{-1}
                 \int
-                    \frac{t}{t - \mu} d\FMP_\gamma(t)
+                    \frac{1}{t - \mu} d\FMP_\gamma(t)
                 \cdot
+                \mI_k, \\
+        \frac{1}{n}
+        \mE_{n,12} \mE_{n,12}^\trans
+            &\toas
+            \gamma^{-1}
+            \mI_k, \\
+        \frac{1}{n}
+        \mE_{n,21}^\trans \mE_{n,21}
+            &\toas
+                \gamma^{-1}
+                \mI_k, \\
+        \frac{1}{n}
+        \mE_{n,31}^\trans \mE_{n,31}
+            &\toas
+                \left( 1 - \gamma^{-1} \right)
                 \mI_k.
     \end{align*}
 \end{lemma}
@@ -1050,21 +1063,217 @@ Since $\frac{p-k}{n} \to \gamma^{-1}$, this completes the proof.
 \end{proof}
 
 The quantity
-\begin{equation}
-    m(\mu)
-    \define
-    \int
-        \frac{1}{t - \mu} d\FMP_\gamma(t)
-\end{equation}
-is equal to the Stieltjes transform of $\FMP_\gamma$.  We can simplify
-\[
-    \int
-        \frac{t}{t - \mu} d\FMP_\gamma(t)
-    =
-    1 + \mu \, m(\mu).
-\]
+\begin{subequations}
+\begin{align}
+    m(z)
+        &\define
+            \int
+                \frac{1}{t - z} d\FMP_\gamma(t) \notag \\
+        &=
+            \gamma
+            \cdot
+            \frac{ -(z + 1 - \gamma^{-1})
+                   +\sqrt{ \big( z - b(\gamma) \big) 
+                           \big( z - a(\gamma) \big) } }
+                 { 2 z },
+\end{align}
+is equal to the Stieltjes transform of $\FMP_\gamma$, where
+\begin{align}
+    a(\gamma) &= \left( 1 - \gamma^{-1/2} \right)^2, \\
+    b(\gamma) &= \left( 1 + \gamma^{-1/2} \right)^2.
+\end{align}
+\end{subequations}
 
-In fact we can get the second-order behavior of these quantities as well.
+In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:eij-product-limits}.
+
+\begin{lemma}\label{L:eij-product-scaled-limits}
+    If $\mu_1, \mu_2, \ldots, \mu_l > \left( 1 + \gamma^{-1/2} \right)^2$, 
+    then jointly for $\mu \in \{ \mu_1, \mu_2, \ldots, \mu_l \}$
+    \begin{align*}
+        \sqrt{n}
+        \left(
+            \frac{1}{n}
+            \mE_{n,12}
+            \left(
+                \mLambda_n
+                -
+                \mu
+                \mI_{p-k}
+            \right)
+            \mE_{n,12}^\trans
+            -
+            \gamma^{-1}
+            m(\mu)
+            \mI_k
+        \right)
+            &\tod \mF(\mu) \\
+        \sqrt{n}
+        \left(
+            \frac{1}{n}
+            \mE_{n,12}
+            \left(
+                \mLambda_n
+                -
+                \mu
+                \mI_{p-k}
+            \right)
+            \mLambda_{n}^{1/2}
+            \mE_{n,21}
+        \right)
+            &\tod \mG(\mu) \\
+        \sqrt{n}
+        \left(
+            \frac{1}{n}
+            \mE_{n,21}^\trans
+            \left(
+                \mLambda_n
+                -
+                \mu
+                \mI_{p-k}
+            \right)
+            \mE_{n,21}
+            -
+            \gamma^{-1}
+            m(\mu)
+            \mI_k
+        \right)
+            &\tod \mH(\mu), \\
+        \sqrt{n}
+        \left(
+            \frac{1}{n}
+            \mE_{n,12} \mE_{n,12}^\trans
+            -
+            \gamma^{-1}
+            \mI_k
+        \right)
+            &\tod \mK, \\
+        \sqrt{n}
+        \left(
+            \frac{1}{n}
+            \mE_{n,21}^\trans \mE_{n,21}
+            -
+            \gamma^{-1}
+            \mI_k
+        \right)
+            &\tod \mL_1, \\
+        \sqrt{n}
+        \left(
+            \frac{1}{n}
+            \mE_{n,31}^\trans \mE_{n,31}
+            -
+            \left( 1 - \gamma^{-1} \right)
+            \mI_k
+        \right)
+            &\tod \mL_2,
+    \end{align*}
+    where $\mF(\mu)$, $\mG(\mu)$, $\mH(\mu)$, $\mK$, $\mL_1$ and $\mL_2$ are 
+    defined on the same probability space.  
+    All but $\mG(\mu)$ are symmetric. Jointly, their elements are
+    distributed as a multivariate normal.  If we define
+    \[
+        \mathcal{M}
+        =
+        \Big\{ \mK, \mL_1, \mL_2 \Big\}
+        \cup
+        \Bigg(
+        \bigcup_{i=1}^l
+            \Big\{ 
+                \mF(\mu_i), \mG(\mu_i), \mH(\mu_i)
+            \Big\}
+        \Bigg),
+    \] 
+    then for $\mA, \mB \in \mathcal{M}$, $(i,j) \neq (i',j')$, and 
+    $(i,j) \neq (j',i')$,
+    \[
+        \cov\left( \mA_{ij}, \mB_{i'j'} \right)
+        =
+        0.
+    \]
+    The sets
+    \[
+        \Big\{ \mK, \mF( \mu ) \Big\},
+        \Big\{ \mG( \mu) \Big\},
+        \Big\{ \mL_1, \mH( \mu )\Big\},
+        \Big\{ \mL_2 \Big\}
+    \]
+    are mutually independent of each other.
+    The other covariances are defined by
+    \begin{align*}
+        \cov\Big( F_{ij}(\mu_1), \, F_{ij}(\mu_2) \Big)
+            &= \gamma^{-1}
+               \left( 1 + \delta_{ij} \right)
+               \frac{ m(\mu_1) - m(\mu_2) }
+                    { \mu_1 - \mu_2 }, \\
+        \cov\Big( F_{ij}(\mu_1), \, K_{ij} \Big)
+            &= \gamma^{-1}
+               \left( 1 + \delta_{ij} \right) m(\mu_1), \\
+        \cov\Big( K_{ij}, \, K_{ij} \Big)
+            &= \gamma^{-1}
+               \left( 1 + \delta_{ij} \right), \\
+        \cov\Big( G_{ij}(\mu_1), \, G_{ij}(\mu_2) \Big)
+            &= \gamma^{-1} \,
+               \frac{ \mu_1 \, m(\mu_1) - \mu_2 \, m(\mu_2) }
+                    { \mu_1 - \mu_2 }, \\
+        \cov\Big( H_{ij}(\mu_1), \, H_{ij}(\mu_2) \Big)
+            &= \gamma^{-1}
+               \left( 1 + \delta_{ij} \right)
+               \frac{ m(\mu_1) - m(\mu_2) }
+                    { \mu_1 - \mu_2 }, \\
+        \cov\Big( H_{ij}(\mu_1), \, L_{1,ij} \Big)
+            &= \gamma^{-1}
+               \left( 1 + \delta_{ij} \right) m(\mu_1), \\
+        \cov\Big( L_{1,ij}, \, L_{1,ij} \Big)
+            &= \gamma^{-1}
+               \left( 1 + \delta_{ij} \right), \\
+        \cov\Big( L_{2,ij}, \, L_{2,ij} \Big)
+            &= \gamma^{-1}
+               \left( 1 + \delta_{ij} \right),
+    \end{align*}
+    With the interpretation
+    \begin{align*}
+        \frac{ m(\mu_1) - m(\mu_2) }
+             { \mu_1 - \mu_2 }
+            &=
+                m'(\mu_1), \\
+    \intertext{and}
+        \frac{ \mu_1 \, m(\mu_1) - \mu_1 \, m(\mu_2) }
+             { \mu_1 - \mu_2 }
+            &= m( \mu_1 ) + \mu_1 \, m'(\mu_1)
+    \end{align*}
+    for $\mu_1 = \mu_2$.
+\end{lemma}
+\begin{proof}
+    The distributions of $\mK$, $\mL_1$, and $\mL_2$ follow from the 
+    multivariate CLT.  For 
+    example, we have
+    \begin{align*}
+        \sqrt{n}
+        \left(
+            \frac{1}{n} \mE_{n,12} \mE_{n,12}^\trans
+            -
+            \gamma^{-1}
+            \mI_k
+        \right)
+            &=
+                \left(
+                    \gamma^{-1}
+                    \sqrt{ \frac{ n }{ p - k } }
+                \right)
+                \cdot
+                \left(
+                    \sqrt{ p - k }
+                    \left[
+                        \frac{1}{p-k}
+                        \mE_{n,12} \mE_{n,12}^\trans
+                        -
+                        \mI_k
+                    \right]
+                \right) \\
+            &\tod
+                \gamma^{-1/2}
+                \mK
+    \end{align*}
+\end{proof}
 
 \clearpage
 
