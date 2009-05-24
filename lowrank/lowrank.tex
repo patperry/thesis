@@ -1014,16 +1014,18 @@ and let
     Y_{N,\alpha} = \left( \mE_{n,12} \right)_{i\alpha}
                    \left( \mE_{n,12} \right)_{j\alpha}.
 \)
-The function
+Letting $b(\gamma) = \left( 1 + \gamma^{-1/2} \right)^2$, the function
 \[
     g(t) 
     = 
-    \frac{1}{t - \mu} 
-    \wedge
-    \frac{1}{b(\gamma) - \mu}
+    \begin{cases}
+        \frac{1}{t - \mu} 
+            &\text{if $t \leq b(\gamma)$,} \\
+        \frac{1}{b(\gamma) - \mu}
+            &\text{otherwise,}
+    \end{cases}
 \]
-with $b(\gamma) = \left( 1 + \gamma^{-1/2} \right)^2$ is bounded and 
-continuous.  Moreover, since $\lambda_{n,1} \toas b(\gamma)$, with probability one $g(\lambda_{n,\alpha})$ is eventually equal to $W_{N,\alpha}$ for all $\alpha$.  The Wishart LLN (Corollary~\ref{C:wishart-lln}) gives us that
+is bounded and continuous.  Moreover, since $\lambda_{n,1} \toas b(\gamma)$, with probability one $g(\lambda_{n,\alpha})$ is eventually equal to $W_{N,\alpha}$ for all $\alpha$.  The Wishart LLN (Corollary~\ref{C:wishart-lln}) gives us that
 \[
     \frac{1}{N}
     \sum_{i=\alpha}^N W_{N,\alpha}
