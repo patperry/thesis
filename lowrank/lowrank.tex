@@ -446,7 +446,7 @@ We have gotten to $\mtX_n$ via an orthogonal change of basis applied to $\mX_n$.
         Similarly, $\mV_n^\trans \mhV_n = \mtV_{n,1}$.
 \end{enumerate}
 
-\subsection{Perturbation expansion}
+\subsection{The secular equation}
 
 We set $\mS_n = \frac{1}{n} = \mtX_n^\trans \mtX_n$.  The eigenvalues and eigenvectors of $\mS_n$ are the squares of the singular values of $\mtX_n$ and its right singular vectors, respectively.  In block form, we have
 \[
@@ -507,93 +507,8 @@ where
             \frac{1}{n}
             \mE_{n,12}^\trans \mE_{n,12}.
 \end{align*}
-We write $\mS_n$ as a sum of two terms.  First, let
-\[
-    \mS_n^0
-    =
-    \left(
-    \begin{matrix}
-        \mS_{n,11}^0 & \mS_{n,12}^0 \\
-        \mS_{n,21}^0 & \mS_{n,22}^0
-    \end{matrix}
-    \right),
-\]
-where
-\begin{align*}
-    \mS_{n,11}^0
-        &=
-            \mD_n^2 + \mI_k, \\
-    \mS_{n,12}^0
-        &=
-            \frac{1}{\sqrt{n}} 
-            \left( 
-                \mD_n \mE_{n,12}
-                +
-                \mE_{n,21}^\trans \mLambda_n^{1/2} 
-            \right), \\
-    \mS_{n,21}^0
-        &=
-            \frac{1}{\sqrt{n}} 
-            \left( 
-                \mE_{n,12}^\trans \mD_n
-                +
-                \mLambda_n^{1/2} \mE_{n,21}
-                \right), \\
-    \mS_{n,22}^0
-        &=
-            \mLambda_n 
-            +
-            \frac{1}{n}
-            \mE_{n,12}^\trans \mE_{n,12}.
-\end{align*}
-Next, put
-\[
-    \mS_n^1
-    =
-    \left(
-    \begin{matrix}
-        \mS_{n,11}^1 & \mS_{n,12}^1 \\
-        \mS_{n,21}^1 & 0
-    \end{matrix}
-    \right),
-\]
-with
-\begin{align*} 
-    \begin{split}   
-    \mS_{n,11}^1
-        &=
-            \mD_n \mE_{n,11}
-            +
-            \mE_{n,11}^\trans \mD_n \\
-            &\qquad +
-            \frac{1}{\sqrt{n}} 
-            \left(
-                \mE_{n,11}^\trans \mE_{n,11}
-                +
-                \mE_{n,21}^\trans \mE_{n,21}
-                +
-                \mE_{n,31}^\trans \mE_{n,31}
-            \right)
-            -
-            \sqrt{n} \mI_k,
-    \end{split} \\
-    \mS_{n,12}^1
-        &= \frac{1}{\sqrt{n}} \mE_{n,11}^\trans \mE_{n,12}, \\
-    \mS_{n,21}^1
-        &= \frac{1}{\sqrt{n}} \mE_{n,12}^\trans \mE_{n,11}.
-\end{align*}
 
-We have that
-\[
-    \mS_n = \mS_n^0 + \frac{1}{\sqrt{n}} \mS_n^1.
-\]
-Since $\| \mS_n^1 \|_\Frob = \OhP( k )$,
-it turns out that the eigenvalues and eigenvectors of $\mS_n$ are small
-perturbations of the corresponding properties of $\mS_n^0$.  We will explore this further in section TODO.
-
-\subsection{The secular equation}
-
-We first study the eigendecomposition of $\mS_n^0$.  If 
+Now we study the eigendecomposition of $\mS_n$.  If 
 \(
     \vx
     = 
@@ -604,12 +519,12 @@ We first study the eigendecomposition of $\mS_n^0$.  If
     \end{matrix}
     \right)
 \)
-is an eigenvector of $\mS_n^0$ with eigenvalue $\mu$, then
+is an eigenvector of $\mS_n$ with eigenvalue $\mu$, then
 \[
     \left(
     \begin{matrix}
-        \mS_{n,11}^0 & \mS_{n,12}^0 \\
-        \mS_{n,21}^0 & \mS_{n,22}^0
+        \mS_{n,11} & \mS_{n,12} \\
+        \mS_{n,21} & \mS_{n,22}
     \end{matrix}
     \right)
     \left( 
@@ -627,37 +542,37 @@ is an eigenvector of $\mS_n^0$ with eigenvalue $\mu$, then
     \end{matrix}
     \right).
 \]
-If $\mu$ is not an eigenvalue of $\mS_{n,22}^0$, then we get
+If $\mu$ is not an eigenvalue of $\mS_{n,22}$, then we get
 \begin{subequations}
 \begin{equation}\label{E:x2-from-x1}
     \vx_2
     =
     -
     \left(
-        \mS_{n,22}^0
+        \mS_{n,22}
         -
         \mu
         \mI_{p-k}
     \right)^{-1}
-    \mS_{n,21}^0 \,
+    \mS_{n,21} \,
     \vx_1
 \end{equation}
 and
 \begin{equation}\label{E:secular-nof}
     \left(
-        \mS_{n,11}^0
+        \mS_{n,11}
         -
         \mu
         \mI_k
         -
-        \mS_{n,12}^0
+        \mS_{n,12}
         \left(
-            \mS_{n,22}^0
+            \mS_{n,22}
             -
             \mu
             \mI_{p-k}
         \right)^{-1}
-        \mS_{n,21}^0
+        \mS_{n,21}
     \right)
     \vx_1
     =
@@ -673,34 +588,34 @@ Conversely, if $(\mu, \vx_1)$ is a pair that solves~\eqref{E:secular-nof}, then
         \vx_1 \\
         -
         \left(
-            \mS_{n,22}^0
+            \mS_{n,22}
             -
             \mu
             \mI_{p-k}
         \right)^{-1}
-        \mS_{n,21}^0 \,
+        \mS_{n,21} \,
         \vx_1
     \end{matrix}
     \right)
 \end{equation}
-is an eigenvector of $\mS_n^0$ with eigenvalue $\mu$.  We define
+is an eigenvector of $\mS_n$ with eigenvalue $\mu$.  We define
 \begin{equation}\label{E:secular-f}
     f_n ( \mu, \vx_1 )
     =
     \left(
-        \mS_{n,11}^0
+        \mS_{n,11}
         -
         \mu
         \mI_k
         -
-        \mS_{n,12}^0
+        \mS_{n,12}
         \left(
-            \mS_{n,22}^0
+            \mS_{n,22}
             -
             \mu
             \mI_{p-k}
         \right)^{-1}
-        \mS_{n,21}^0
+        \mS_{n,21}
     \right)
     \vx_1
 \end{equation}
@@ -708,7 +623,7 @@ and refer to the equation $f_n(\mu, \vx_1) = 0$ as the \emph{secular equation}.
 
 \subsection{Outline of the proof}
 
-We first show that with probability one, $\mS_n^0$ and $\mS_{n,22}^0$ have no eigenvalues in common.  This implies that all of the eigenvalues of $\mS_n^0$ are solutions to the secular equation.  Next, we study the solutions of 
+We first show that with probability one, $\mS_n$ and $\mS_{n,22}$ have no eigenvalues in common.  This implies that all of the eigenvalues of $\mS_n$ are solutions to the secular equation.  Next, we study the solutions of 
 $f_n(\mu, \vx_1) = 0$.  It turns out that these solutions are dramatically different depending on the size of $\mu$.  If $\mu > (1 + \gamma^{-1/2})^2$,
 then we can write
 \begin{align*}
@@ -743,14 +658,14 @@ Otherwise, the solution is
             \ohP\left( \frac{1}{\sqrt{n}} \right).
 \end{align*}
 Once we have a solution to the secular equation, we can construct an
-eigenvector $\vx$ of $\mS_n^0$ using equation~\eqref{E:x-from-x1}.  Finally, we will use another perturbation argument to express the eigenvalues and eigenvectors of $\mS_n$ in terms of those of $\mS_n^0$ and $\mS_n^1$.
+eigenvector $\vx$ of $\mS_n$ using equation~\eqref{E:x-from-x1}.  Finally, we will derive the left singular vectors from the right by multiplying by $\mtX_n$.
 
 \section{Analysis of the secular equation}
 
 By making use of the Sherman-Morrison-Wordbury formula~\cite{golub1996mc}, we can simplify $f_n(\mu, \vx_1)$.  We first write
 \begin{align*}
     \left(
-        \mS_{n,22}^0 - \mu \mI_{p-k}
+        \mS_{n,22} - \mu \mI_{p-k}
     \right)^{-1}
         &=
             \left(
@@ -802,28 +717,28 @@ By making use of the Sherman-Morrison-Wordbury formula~\cite{golub1996mc}, we ca
             \right)^{-1}.
     \end{split}
 \end{align*}
-Next,
+If we define $\mtD_n = \mD_n + \frac{1}{\sqrt{n}} \mE_{n,11}$, then we can compute
 \begin{align*}
     \begin{split}
-    \mS_{n,12}^0 
+    \mS_{n,12} 
     \Big(
-        \mS_{n,22}^0 &- \mu \mI_{p-k}
+        \mS_{n,22} &- \mu \mI_{p-k}
     \Big)^{-1}
-    \mS_{n,21}^0 \\
+    \mS_{n,21} \\
         &=
             \frac{1}{n}
             \left(
-                \mD_n \mE_{n,12}
+                \mtD_n^\trans \mE_{n,12}
                 +
                 \mE_{n,21}^\trans \mLambda_n^{1/2}
             \right) \\
             &\qquad\cdot
             \left(
-                \mS_{n,22}^0 - \mu \mI_{p-k}
+                \mS_{n,22} - \mu \mI_{p-k}
             \right)^{-1} \\
             &\qquad\cdot
             \left(
-                \mE_{n,12}^\trans \mD_n
+                \mE_{n,12}^\trans \mtD_n
                 +
                 \mLambda_n^{1/2} \mE_{n,21}
             \right)
@@ -831,7 +746,7 @@ Next,
     \begin{split}
         &=
             \frac{1}{n}
-            \mD_n
+            \mtD_n^\trans
             \mE_{n,12}
             \left(
                 \mLambda_n
@@ -840,10 +755,10 @@ Next,
                 \mI_{p-k}
             \right)^{-1}
             \mE_{n,12}^\trans
-            \mD_n \\
+            \mtD_n \\
             &\qquad+
             \frac{1}{n}
-            \mD_n
+            \mtD_n^\trans
             \mE_{n,12}
             \left(
                 \mLambda_n
@@ -864,7 +779,7 @@ Next,
                 \mI_{p-k}
             \right)^{-1}
             \mE_{n,12}^\trans
-            \mD_n \\
+            \mtD_n \\
             &\qquad+
             \frac{1}{n}
             \mE_{n,21}^\trans
@@ -879,7 +794,7 @@ Next,
             \mE_{n,21} \\
             &\qquad+
             \frac{1}{n^2}
-            \mD_n
+            \mtD_n^\trans
             \mE_{n,12}
             \left(
                 \mLambda_n
@@ -911,10 +826,10 @@ Next,
                 \mI_{p-k}
             \right)^{-1}
             \mE_{n,12}^\trans
-            \mD_n \\
+            \mtD_n \\
             &\qquad+
             \frac{1}{n^2}
-            \mD_n
+            \mtD_n^\trans
             \mE_{n,12}
             \left(
                 \mLambda_n
@@ -981,7 +896,7 @@ Next,
                 \mI_{p-k}
             \right)^{-1}
             \mE_{n,12}^\trans
-            \mD_n \\
+            \mtD_n \\
             &\qquad+
             \frac{1}{n^2}
             \mE_{n,21}^\trans
