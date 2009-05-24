@@ -695,10 +695,10 @@ is an eigenvector of $\mS_n^0$ with eigenvalue $\mu$.  We define
         -
         \mS_{n,12}^0
         \left(
+            \mS_{n,22}^0
+            -
             \mu
             \mI_{p-k}
-            -
-            \mS_{n,22}^0
         \right)^{-1}
         \mS_{n,21}^0
     \right)
@@ -744,6 +744,15 @@ Otherwise, the solution is
 \end{align*}
 Once we have a solution to the secular equation, we can construct an
 eigenvector $\vx$ of $\mS_n^0$ using equation~\eqref{E:x-from-x1}.  Finally, we will use another perturbation argument to express the eigenvalues and eigenvectors of $\mS_n$ in terms of those of $\mS_n^0$ and $\mS_n^1$.
+
+\section{Analysis of the secular equation}
+
+By making use of the Sherman-Morrison-Wordbury formula~\cite{golub1996mc}, we can simplify $f_n(\mu, \vx_1)$.  We first write
+\begin{align*}
+    \left(
+        \mS_{n,22}^0
+    \right)
+\end{align*}
 
 \clearpage
 
