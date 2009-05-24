@@ -1070,56 +1070,6 @@ In fact we can get the second-order behavior of these quantities as well.
 
 
 
-\section{Linear functionals of eigenvalues}
-
-In the analysis that follows, we will often need to look at sums of the form
-\[
-    \frac{1}{p} \sum_{\alpha=1}^p g (\lambda_\alpha).
-\]
-Such sums are called linear functionals of the eigenvalues.  They have been
-studied quite extensively for various classes of random matrices.  Hiai and Petz~\cite{hiai1998edw} derived a large deviation principle for the spectral measure  of a Wishart matrix, which implies a strong law of large numbers.  For a  general class of Wishart-like matrices, Bai and Silverstein~\cite{bai2004clt} proved a central limit theorem for linear functionals of eigenvalues.  These two results are much stronger than what we will need.  We summarize the parts of the results that we need in the following two lemmas. For both of them, $g: \reals \to \reals$ is any function analytic on an open interval containing $[a,b]$  and $\bar g = \int g(\lambda) d\FMP_\gamma (\lambda)$.
-
-\begin{lemma}[Hiai \& Petz]\label{L:wishart-lln}
-    A large deviations principle holds for the empirical law of 
-    $\{ \lambda_\alpha \}$.  Combined with the Borel-Cantelli Lemma, this
-    implies that a strong law of large numbers holds for $g(\lambda_\alpha)$. 
-    Specifically,
-    \[
-        \frac{1}{p} \sum_{\alpha=1}^p g( \lambda_\alpha ) \toas \bar g.
-    \]
-\end{lemma}
-    
-\begin{lemma}[Bai \& Silverstein]\label{L:wishart-clt}
-    A central limit theorem holds for $g(\lambda_\alpha)$.  Although it is
-    possible to obtain explicit mean and variance, a crude form of the
-    result is that
-    \[
-        \frac{1}{p} 
-        \sum_{\alpha=1}^p
-            g( \lambda_\alpha ) - \bar g 
-        = O_P(p^{-1}).
-    \]  
-\end{lemma}
-
-Note that in the previous lemma, the scaling is $p$ instead of $\sqrt{p}$ like in the classical central limit theorem.
-
-It will be convenient to consider functions that are continuous on the support
-of $\FMP_\gamma$ but not necessarily on all of $\reals$.  A result of Yin, Bai, and
-Krishnaiah \cite{yin1988lle} is that $\lambda_1$ converges almost surely to
-$\bar b$.  Further, Bai and Yin \cite{bai1993lse} later proved that
-$\lambda_M$ converges almost surely to $\bar a$.  Thus, if $g$ is 
-bounded and continuous on $[\bar a, \bar b]$ and we define 
-\[
-    \tilde g (x)
-    =
-    \begin{cases}
-        g(x), &\text{ when $x \in [\bar a, \bar b]$} \\
-        0,    &\text{otherwise,}
-    \end{cases}
-\]
-then $(1/M) \sum_{\alpha=1}^M [ g(\lambda) - \tilde g (\lambda)] \toas 0$.  
-Therefore, the above two lemmas hold when $g$ is bounded and continuous only
-on $[\bar a, \bar b]$.
 
 We will need to know the limits of certain functionals.  For
 $z, z_1, z_2 > \bar b$, we define
@@ -1140,39 +1090,11 @@ $z, z_1, z_2 > \bar b$, we define
 \noindent
 When $z_1 \to z_2$ we get that $\rho_2 (z_1, z_2) \to - \rho_1'(z_1)$.  In this way we can extend $\rho_2 (z_1, z_2)$ to the case when $z_1 = z_2$.
 
-Calculations in the Appendix show that
-\begin{align}
-    r_{1}(z)
-        &\equiv \int \frac{d\FMP_\gamma(\lambda)}{z - \lambda} \notag \\
-        &= \begin{cases}
-               \rho_1(z) &\text{when $\gamma \leq 1$} \\
-               \rho_1(z) + (1 - \gamma^{-1}) z^{-1} &\text{otherwise,}
-           \end{cases} 
-           \label{E:r1-z} \\
-    r_{2}(z)
-        &\equiv \int \frac{d\FMP_\gamma(\lambda)}{(z - \lambda)^2} \notag \\
-        &= \begin{cases}
-               \rho_2(z) &\text{when $\gamma \leq 1$} \\
-               \rho_2(z) + (1 - \gamma^{-1}) z^{-2} &\text{otherwise,}
-           \end{cases} 
-           \label{E:r2-z} \\
-\intertext{and}
-    r_2(z_1, z_2)
-        &\equiv \int \frac{d\FMP_\gamma(\lambda)}
-                          {(z_1 - \lambda)(z_2 - \lambda)} \notag \\    
-        &= \begin{cases}
-               \rho_2(z_1, z_2) &\text{when $c \leq 1$} \\
-               \rho_2(z_1, z_2) + (1 - \gamma^{-1}) z_1^{-1} z_2^{-1} &\text{otherwise.}
-           \end{cases} 
-           \label{E:r2-z1-z2}
-\end{align}
-
-
 \section{The resolvent}\label{S:resolvent}
 
 In this section we study the resolvent $R_t(z) = O^T (z I - \Lambda)^{-t} O$ 
 and its interaction with the matrices $\Psi_n$ and $U$.  Recall from equation
-\eqref{E:psi} that $\Psi_n = V D_n + (1/n^{\half}) E_1^T$.  We have that
+{E:psi} that $\Psi_n = V D_n + (1/n^{\half}) E_1^T$.  We have that
 $O \Psi_n = O V D_n + (1/n^{\half}) \tilde E_1^T$, where $\tilde E_1 = E_1 O$.
 Due the the dependence between the rows of $O V$, it is inconvenient to
 deal with $O \Psi_n$ directly.  Let $Z$ be a $p \times k$ matrix of \iid standard normals.  Since $O V$ is uniformly distributed over the Steifel manifold, we have
@@ -1229,7 +1151,7 @@ where $\tilde \vpsi_1, \ldots, \tilde \vpsi_p$ are the rows of $\tilde \Psi_n$.
 Since the $\tilde \vpsi_\alpha$ are i.i.d, it is quite plausible that the sum
 converges to $r_1(z) \E[ \tilde \Psi_n^T \tilde \Psi_n ]$.  Indeed, the strong
 law of Proposition~\ref{P:weighted-slln} proves exactly this.  With the additional
-help of Lemma~\ref{L:wishart-lln}, we can prove:
+help of Lemma {L:wishart-lln}, we can prove:
 
 \begin{lemma}\label{L:Sbar}
     For $z > \bar b$, 
@@ -1251,7 +1173,7 @@ For convenience, we define
 
 \subsection{Asymptotic normality}
 
-Slightly trickier but still tractable is to get the asymptotic distributions
+It is slightly trickier but still tractable is to get the asymptotic distributions
 of $\sqrt{n} \big( S_{n,1}(z) - \bar S_1 (z) \big)$ and the other similar expressions.
 Assume that there exist random matrix-valued functions 
 $S_1(z)$, $S_2(z)$, and $T(z)$ defined on some probability space
@@ -1361,7 +1283,7 @@ Employing Slutzky's theorem, this has the same limiting distribution as
             \right)
         \Bigg\}.
 \end{align*}
-Combining Lemmas \ref{L:wishart-lln}, \ref{L:wishart-clt}, and Proposition~\ref{P:weighted-clt}, we can see that $S_1(z)$, the limiting distribution of
+Combining Lemmas {L:wishart-lln}, {L:wishart-clt}, and Proposition {P:weighted-clt}, we can see that $S_1(z)$, the limiting distribution of
 $S_{n,1}^{(1)}(z)$ has elements above and along the main diagonal converging
 to a multivariate normal with
 \begin{align}
@@ -1383,11 +1305,11 @@ All other correlations are $0$.
 We are finally ready to study the limits of the top eigenvalues of
 $(1/n) X_n^T X_n$.  We have that
 $(1/n) X_n^T X_n = \Psi_n \Psi_n^T + O \Lambda O^T$. Recall from
-Lemma~\ref{L:secular} that the $j$th eigenvalue of $(1/n) X_n^T X_n$, say 
+Lemma {L:secular} that the $j$th eigenvalue of $(1/n) X_n^T X_n$, say 
 $\hat \mu_j$, is either equal to some $\lambda_i$ or else the matrix
 $S_{n,1}(\hat \mu_j)$ has a unit eigenvalue; conversely all values of $z$ with
 $S_{n,1}(z)$ having a unit eigenvalue are eigenvalues of $(1/n) X_n^T X_n$.
-Lemma~\ref{L:lowrank-perturb}, in the Appendix, shows that  almost surely
+Lemma {L:lowrank-perturb}, in the Appendix, shows that  almost surely
 $(1/n) X_n^T X_n$ has no nonzero eigenvalue equal to any $\lambda_i$.  Thus,
 we can study the nonzero eigenvalues of $(1/n) X_n^T X_n$ by studying the
 random matrix-valued function $S_{n,1}(z)$.
@@ -1571,13 +1493,13 @@ First suppose that $i \leq \bar k$.  Then $\hat \mu_i \toas \tilde \mu_i$ and
 $S_{n,1}(\hat \mu_i) \toas \bar S_1 (\tilde \mu_i)$.  The $i$th eigenvalue
 of $S_{n,1} (\hat \mu_i)$ converges almost surely to $1$ and the $i$th
 eigenvector converges almost surely to $\be_i$.  This fact, 
-Lemmas~\ref{L:secular}, Lemma~\ref{L:Sbar}, and equation~\eqref{E:normY} 
+Lemmas {L:secular}, Lemma~\ref{L:Sbar}, and equation {E:normY} 
 tell us that $\hat \bv_i$, the normalized $i$th eigenvector of
 $(1/n) X_n^T X_n$ almost surely has the same limit as
 \[
     (\bar S_2(\tilde \mu_i))_{ii}^{-\half} R_1(\tilde \mu_i) \Psi_n \be_i.
 \]
-Combining this result with equation~\eqref{E:corrY}, we get that
+Combining this result with equation {E:corrY}, we get that
 \begin{align*}
     V^T \hat \bv_i
         &\toas
