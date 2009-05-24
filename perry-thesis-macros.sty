@@ -4,6 +4,17 @@
 \RequirePackage{amsmath}
 \RequirePackage{amssymb}
 \RequirePackage{amsthm}
+\usepackage{url}
+\usepackage{enumerate} % fancy enumerations
+
+
+%% Define a new 'leo' style for the package that will use a smaller font.
+\makeatletter
+\def\url@leostyle{%
+  \@ifundefined{selectfont}{\def\UrlFont{\sf}}{\def\UrlFont{\small\ttfamily}}}
+\makeatother
+%% Now actually use the newly defined style.
+\urlstyle{leo}
 
 \newcommand{\captiontitle}[1]{\textsc{#1}.}
 \newtheorem{assumption}{Assumption}
@@ -13,6 +24,13 @@
 \newtheorem{theorem}{Theorem}
 \newtheorem{proposition}{Proposition}
 
+\numberwithin{equation}{chapter}
+\numberwithin{assumption}{chapter}
+\numberwithin{corollary}{chapter}
+\numberwithin{definition}{chapter}
+\numberwithin{lemma}{chapter}
+\numberwithin{theorem}{chapter}
+\numberwithin{proposition}{chapter}
 
 \newcommand{\define}{\equiv}
 
@@ -20,31 +38,45 @@
 \newcommand{\vectorsymbol}{\underline}
 \newcommand{\matrixsymbol}{\boldsymbol}
 
+\newcommand{\bW}{\bar W}
+
 \newcommand{\vzero}{\vectorsymbol{0}}
 \newcommand{\vone}{\vectorsymbol{1}}
-
 
 \newcommand{\va}{\vectorsymbol{a}}
 \newcommand{\vb}{\vectorsymbol{b}}
 \newcommand{\vd}{\vectorsymbol{d}}
 \newcommand{\vu}{\vectorsymbol{u}}
+\newcommand{\vv}{\vectorsymbol{v}}
 \newcommand{\vx}{\vectorsymbol{x}}
 
 \newcommand{\vmu}{\vectorsymbol{\mu}}
+\newcommand{\vpsi}{\vectorsymbol{\psi}}
 \newcommand{\vtheta}{\vectorsymbol{\theta}}
 
 \newcommand{\vA}{\vectorsymbol{A}}
+\newcommand{\vS}{\vectorsymbol{S}}
+\newcommand{\vU}{\vectorsymbol{U}}
+\newcommand{\vhU}{\vectorsymbol{\hat U}}
+\newcommand{\vV}{\vectorsymbol{V}}
+\newcommand{\vhV}{\vectorsymbol{\hat V}}
+\newcommand{\vtV}{\vectorsymbol{\tilde V}}
+\newcommand{\vW}{\vectorsymbol{W}}
 \newcommand{\vX}{\vectorsymbol{X}}
 \newcommand{\vbX}{\vectorsymbol{\bar X}}
 \newcommand{\vtX}{\vectorsymbol{\tilde X}}
 \newcommand{\vY}{\vectorsymbol{Y}}
 \newcommand{\vZ}{\vectorsymbol{Z}}
 
+\newcommand{\mZero}{\matrixsymbol{0}}
 \newcommand{\mA}{\matrixsymbol{A}}
 \newcommand{\mB}{\matrixsymbol{B}}
 \newcommand{\mC}{\matrixsymbol{C}}
 \newcommand{\mD}{\matrixsymbol{D}}
+\newcommand{\mhD}{\matrixsymbol{\hat D}}
+\newcommand{\mtD}{\matrixsymbol{\tilde D}}
 \newcommand{\mE}{\matrixsymbol{E}}
+\newcommand{\mtE}{\matrixsymbol{\tilde E}}
 \newcommand{\mF}{\matrixsymbol{F}}
 \newcommand{\mG}{\matrixsymbol{G}}
 \newcommand{\mH}{\matrixsymbol{H}}
@@ -56,26 +88,37 @@
 \newcommand{\mN}{\matrixsymbol{N}}
 \newcommand{\mO}{\matrixsymbol{O}}
 \newcommand{\mP}{\matrixsymbol{P}}
+\newcommand{\mhP}{\matrixsymbol{\hat P}}
 \newcommand{\mQ}{\matrixsymbol{Q}}
+\newcommand{\mhQ}{\matrixsymbol{\hat Q}}
 \newcommand{\mR}{\matrixsymbol{R}}
 \newcommand{\mS}{\matrixsymbol{S}}
 \newcommand{\mT}{\matrixsymbol{T}}
 \newcommand{\mU}{\matrixsymbol{U}}
+\newcommand{\mhU}{\matrixsymbol{\hat U}}
+\newcommand{\mtU}{\matrixsymbol{\tilde U}}
 \newcommand{\mV}{\matrixsymbol{V}}
+\newcommand{\mhV}{\matrixsymbol{\hat V}}
+\newcommand{\mtV}{\matrixsymbol{\tilde V}}
 \newcommand{\mW}{\matrixsymbol{W}}
 \newcommand{\mX}{\matrixsymbol{X}}
+\newcommand{\mtX}{\matrixsymbol{\tilde X}}
 \newcommand{\mY}{\matrixsymbol{Y}}
 \newcommand{\mZ}{\matrixsymbol{Z}}
 
 \newcommand{\mDelta}{\matrixsymbol{\Delta}}
 \newcommand{\mGamma}{\matrixsymbol{\Gamma}}
 \newcommand{\mLambda}{\matrixsymbol{\Lambda}}
+\newcommand{\mhLambda}{\matrixsymbol{\hat \Lambda}}
 \newcommand{\mPhi}{\matrixsymbol{\Phi}}
 \newcommand{\mSigma}{\matrixsymbol{\Sigma}}
 \newcommand{\mhSigma}{\matrixsymbol{\hat \Sigma}}
+\newcommand{\mtSigma}{\matrixsymbol{\tilde \Sigma}}
+\newcommand{\mTheta}{\matrixsymbol{\Theta}}
 
 \newcommand{\Prob}{\mathbb{P}}
 \newcommand{\E}{\mathbb{E}}
+\newcommand{\F}{\mathcal{F}}
 \DeclareMathOperator*{\var}{Var}
 \DeclareMathOperator*{\cov}{Cov}
 
@@ -94,6 +137,7 @@
 
 \newcommand{\Normal}{\mathcal{N}}
 \newcommand{\Wishart}{\mathcal{W}}
+\newcommand{\Haar}{\mathrm{Haar}}
 \newcommand{\FMP}{F^\text{MP}}
 \newcommand{\fMP}{f^\text{MP}}
 \newcommand{\FTW}{F^\text{TW}}
@@ -102,14 +146,17 @@
 \newcommand{\gTW}{g^\text{TW}}
 
 \DeclareMathOperator*{\Ai}{Ai}
+\DeclareMathOperator*{\sgn}{sgn}
 
 \newcommand{\trans}{\mathrm{T} }
 \DeclareMathOperator*{\tr}{tr}
 \DeclareMathOperator*{\vecm}{vec}
 \DeclareMathOperator*{\spanm}{span}
 \DeclareMathOperator*{\diag}{diag}
+\newcommand{\Frob}{\text{F}}
 
 \newcommand{\one}{1}
+\newcommand{\half}{1/2}
 
 \newcommand{\reals}{\mathbb{R}}
 \newcommand{\complexes}{\mathbb{C}}
