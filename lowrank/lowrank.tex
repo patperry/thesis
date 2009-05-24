@@ -750,9 +750,404 @@ eigenvector $\vx$ of $\mS_n^0$ using equation~\eqref{E:x-from-x1}.  Finally, we 
 By making use of the Sherman-Morrison-Wordbury formula~\cite{golub1996mc}, we can simplify $f_n(\mu, \vx_1)$.  We first write
 \begin{align*}
     \left(
-        \mS_{n,22}^0
-    \right)
+        \mS_{n,22}^0 - \mu \mI_{p-k}
+    \right)^{-1}
+        &=
+            \left(
+                \left(
+                    \mLambda_n - \mu \mI_{p-k}
+                \right)
+                +
+                \frac{1}{n}
+                \mE_{n,12}^\trans \mE_{n12}
+            \right)^{-1} \\
+        \begin{split}
+        &=
+            \left(
+                \mLambda_n
+                -
+                \mu
+                \mI_{p-k}
+            \right)^{-1} \\
+            &\qquad-
+            \frac{1}{n}
+            \left(
+                \mLambda_n
+                -
+                \mu
+                \mI_{p-k}
+            \right)^{-1} \\
+            &\qquad\qquad\cdot
+            \mE_{n,12}^\trans
+            \left(
+                \mI_k
+                +
+                \frac{1}{n}
+                \mE_{n,12}
+                \left(
+                    \mLambda_n
+                    -
+                    \mu
+                    \mI_{p-k}
+                \right)^{-1}
+                \mE_{n,12}^\trans
+            \right)^{-1}
+            \mE_{n,12} \\
+            &\qquad\qquad\cdot
+            \left(
+                \mLambda_n
+                -
+                \mu
+                \mI_{p-k}
+            \right)^{-1}.
+    \end{split}
 \end{align*}
+Next,
+\begin{align*}
+    \begin{split}
+    \mS_{n,12}^0 
+    \Big(
+        \mS_{n,22}^0 &- \mu \mI_{p-k}
+    \Big)^{-1}
+    \mS_{n,21}^0 \\
+        &=
+            \frac{1}{n}
+            \left(
+                \mD_n \mE_{n,12}
+                +
+                \mE_{n,21}^\trans \mLambda_n^{1/2}
+            \right) \\
+            &\qquad\cdot
+            \left(
+                \mS_{n,22}^0 - \mu \mI_{p-k}
+            \right)^{-1} \\
+            &\qquad\cdot
+            \left(
+                \mE_{n,12}^\trans \mD_n
+                +
+                \mLambda_n^{1/2} \mE_{n,21}
+            \right)
+    \end{split} \\
+    \begin{split}
+        &=
+            \frac{1}{n}
+            \mD_n
+            \mE_{n,12}
+            \left(
+                \mLambda_n
+                -
+                \mu
+                \mI_{p-k}
+            \right)^{-1}
+            \mE_{n,12}^\trans
+            \mD_n \\
+            &\qquad+
+            \frac{1}{n}
+            \mD_n
+            \mE_{n,12}
+            \left(
+                \mLambda_n
+                -
+                \mu
+                \mI_{p-k}
+            \right)^{-1}
+            \mLambda_n^{1/2}
+            \mE_{n,21} \\
+            &\qquad+
+            \frac{1}{n}
+            \mE_{n,21}^\trans
+            \mLambda_n^{1/2}
+            \left(
+                \mLambda_n
+                -
+                \mu
+                \mI_{p-k}
+            \right)^{-1}
+            \mE_{n,12}^\trans
+            \mD_n \\
+            &\qquad+
+            \frac{1}{n}
+            \mE_{n,21}^\trans
+            \mLambda_n^{1/2}
+            \left(
+                \mLambda_n
+                -
+                \mu
+                \mI_{p-k}
+            \right)^{-1}
+            \mLambda_n^{1/2}
+            \mE_{n,21} \\
+            &\qquad+
+            \frac{1}{n^2}
+            \mD_n
+            \mE_{n,12}
+            \left(
+                \mLambda_n
+                -
+                \mu
+                \mI_{p-k}
+            \right)^{-1}
+            \mE_{n,12}^\trans \\
+            &\qquad\qquad\cdot
+            \left(
+                \mI_k
+                +
+                \frac{1}{n}
+                \mE_{n,12}
+                \left(
+                    \mLambda_n
+                    -
+                    \mu
+                    \mI_{p-k}
+                \right)^{-1}
+                \mE_{n,12}^\trans
+            \right)^{-1} \\
+            &\qquad\qquad\cdot
+            \mE_{n,12}
+            \left(
+                \mLambda_n
+                -
+                \mu
+                \mI_{p-k}
+            \right)^{-1}
+            \mE_{n,12}^\trans
+            \mD_n \\
+            &\qquad+
+            \frac{1}{n^2}
+            \mD_n
+            \mE_{n,12}
+            \left(
+                \mLambda_n
+                -
+                \mu
+                \mI_{p-k}
+            \right)^{-1}
+            \mE_{n,12}^\trans \\
+            &\qquad\qquad\cdot
+            \left(
+                \mI_k
+                +
+                \frac{1}{n}
+                \mE_{n,12}
+                \left(
+                    \mLambda_n
+                    -
+                    \mu
+                    \mI_{p-k}
+                \right)^{-1}
+                \mE_{n,12}^\trans
+            \right)^{-1} \\
+            &\qquad\qquad\cdot
+            \mE_{n,12}
+            \left(
+                \mLambda_n
+                -
+                \mu
+                \mI_{p-k}
+            \right)^{-1}
+            \mLambda_n^{1/2}
+            \mE_{n,21} \\
+            &\qquad+
+            \frac{1}{n^2}
+            \mE_{n,21}^\trans
+            \mLambda_{n}^{1/2}
+            \left(
+                \mLambda_n
+                -
+                \mu
+                \mI_{p-k}
+            \right)^{-1}
+            \mE_{n,12}^\trans \\
+            &\qquad\qquad\cdot
+            \left(
+                \mI_k
+                +
+                \frac{1}{n}
+                \mE_{n,12}
+                \left(
+                    \mLambda_n
+                    -
+                    \mu
+                    \mI_{p-k}
+                \right)^{-1}
+                \mE_{n,12}^\trans
+            \right)^{-1} \\
+            &\qquad\qquad\cdot
+            \mE_{n,12}
+            \left(
+                \mLambda_n
+                -
+                \mu
+                \mI_{p-k}
+            \right)^{-1}
+            \mE_{n,12}^\trans
+            \mD_n \\
+            &\qquad+
+            \frac{1}{n^2}
+            \mE_{n,21}^\trans
+            \mLambda_{n}^{1/2}
+            \left(
+                \mLambda_n
+                -
+                \mu
+                \mI_{p-k}
+            \right)^{-1}
+            \mE_{n,12}^\trans \\
+            &\qquad\qquad\cdot
+            \left(
+                \mI_k
+                +
+                \frac{1}{n}
+                \mE_{n,12}
+                \left(
+                    \mLambda_n
+                    -
+                    \mu
+                    \mI_{p-k}
+                \right)^{-1}
+                \mE_{n,12}^\trans
+            \right)^{-1} \\
+            &\qquad\qquad\cdot
+            \mE_{n,12}
+            \left(
+                \mLambda_n
+                -
+                \mu
+                \mI_{p-k}
+            \right)^{-1}
+            \mLambda_{n}^{1/2}
+            \mE_{n,21}
+    \end{split}
+\end{align*}
+To put it mildly, this is a formidable expression.  We can simplify the formula substantially when $\mu > \left(1 + \gamma^{-1/2} \right)^2$.
+
+\begin{lemma}
+    If $\mu > \left(1 + \gamma^{-1/2} \right)^2$, then
+    \begin{align*}
+        \frac{1}{n}
+        \mE_{n,12}
+        \left(
+            \mLambda_n
+            -
+            \mu \mI_{p-k}
+        \right)^{-1}
+        \mE_{n,12}^\trans
+            &\toas
+                \gamma^{-1}
+                \int
+                    \frac{1}{t - \mu} d\FMP_\gamma(t)
+                \cdot
+                \mI_k, \\
+        \frac{1}{n}
+        \mE_{n,21}^\trans
+        \mLambda_n^{1/2}
+        \left(
+            \mLambda_n
+            -
+            \mu \mI_{p-k}
+        \right)^{-1}
+        \mE_{n,12}^\trans
+            &\toas
+                0, \\
+        \frac{1}{n}
+        \mE_{n,21}^\trans
+        \mLambda_n^{1/2}
+        \left(
+            \mLambda_n
+            -
+            \mu \mI_{p-k}
+        \right)^{-1}
+        \mLambda_n^{1/2}
+        \mE_{n,21}
+            &\toas
+                \gamma^{-1}
+                \int
+                    \frac{t}{t - \mu} d\FMP_\gamma(t)
+                \cdot
+                \mI_k.
+    \end{align*}
+\end{lemma}
+\begin{proof}
+We prove the result for the first quantity and the other derivations are analogous.  We have that
+\begin{align*}
+    \left(
+        \frac{1}{n}
+        \mE_{n,12}
+        \left(
+            \mLambda_n
+            -
+            \mu \mI_{p-k}
+        \right)^{-1}
+        \mE_{n,12}^\trans    
+    \right)_{ij}
+    =
+    \frac{p-k}{n}
+    \cdot
+    \frac{1}{p-k}
+    \sum_{\alpha=1}^{p-k}
+        \frac{ \left( \mE_{n,12} \right)_{i\alpha}
+               \left( \mE_{n,12} \right)_{j\alpha}
+             }
+             { \lambda_{n,\alpha} - \mu }
+\end{align*}
+Let $N = p-k$, define weights 
+\(
+    W_{N,\alpha} = (\lambda_{n,\alpha} - \mu)^{-1},
+\)
+and let
+\(
+    Y_{N,\alpha} = \left( \mE_{n,12} \right)_{i\alpha}
+                   \left( \mE_{n,12} \right)_{j\alpha}.
+\)
+The function
+\[
+    g(t) 
+    = 
+    \frac{1}{t - \mu} 
+    \wedge
+    \frac{1}{b(\gamma) - \mu}
+\]
+with $b(\gamma) = \left( 1 + \gamma^{-1/2} \right)^2$ is bounded and 
+continuous.  Moreover, since $\lambda_{n,1} \toas b(\gamma)$, with probability one $g(\lambda_{n,\alpha})$ is eventually equal to $W_{N,\alpha}$ for all $\alpha$.  The Wishart LLN (Corollary~\ref{C:wishart-lln}) gives us that
+\[
+    \frac{1}{N}
+    \sum_{i=\alpha}^N W_{N,\alpha}
+        \toas
+            \int
+                \frac{1}{t - \mu} d\FMP_\gamma(t).
+\]
+Since $| W_{N,\alpha} | \leq W_{N,1} \overset{\text{a.s.}}{\leq} b(\gamma)$, the fourth moments of the weights are uniformly bounded in $N$.  
+
+The $Y_{N,\alpha}$ are all \iid with $\E Y_{N,\alpha} = \delta_{ij}$ and $\E Y_{N,\alpha}^4 < \infty$.  The weighed SLLN (Proposition~\ref{P:weighted-slln}) gives us that
+\[
+    \frac{1}{N}
+    \sum_{\alpha=1}^N
+        W_{N,\alpha}
+        Y_{N,\alpha}
+    \toas
+        \delta_{ij}
+        \int
+            \frac{1}{t - \mu} d\FMP_\gamma(t).
+\]
+Since $\frac{p-k}{n} \to \gamma^{-1}$, this completes the proof.
+\end{proof}
+
+The quantity
+\begin{equation}
+    m(\mu)
+    \define
+    \int
+        \frac{1}{t - \mu} d\FMP_\gamma(t)
+\end{equation}
+is equal to the Stieltjes transform of $\FMP_\gamma$.  We can simplify
+\[
+    \int
+        \frac{t}{t - \mu} d\FMP_\gamma(t)
+    =
+    1 + \mu \, m(\mu).
+\]
+
+In fact we can get the second-order behavior of these quantities as well.
 
 \clearpage
 
