@@ -1229,7 +1229,7 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
             &= (1 - \gamma^{-1})
                \left( 1 + \delta_{ij} \right),
     \end{align*}
-    With the interpretation
+    with the interpretation
     \begin{align*}
         \frac{ m(\mu_1) - m(\mu_2) }
              { \mu_1 - \mu_2 }
@@ -1244,8 +1244,7 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
 \end{lemma}
 \begin{proof}
     The distributions of $\mK$, $\mL_1$, and $\mL_2$ follow from the 
-    multivariate CLT.  For 
-    example, we have
+    multivariate CLT.  For example, we have
     \begin{align*}
         \sqrt{n}
         \left(
@@ -1271,8 +1270,269 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
                 \right) \\
             &\tod
                 \gamma^{-1/2}
-                \mK
+                \mK.
     \end{align*}
+    For the other limits, we will need the Wishart CLT 
+    (Theorem~\ref{T:wishart-clt}) and the strong weighted multivariate CLT
+    (Corollary~\ref{C:strong-weighted-clt}).  To save space we only
+    give the argument for the joint distribution of $\mF(\mu_1)$ and 
+    $\mF(\mu_2)$.
+    
+    Put $N = p-k$ and consider the $2 k^2$-dimensional vector
+    \(
+        \vY_{N,\alpha}
+        =
+        \left(
+        \begin{matrix}
+            \vtY_{N,\alpha} \\
+            \vtY_{N,\alpha}
+        \end{matrix}
+        \right),
+    \)
+    where
+    \(
+        \vtY_{N,\alpha}
+        =
+        \vecm \left(
+            \vE_{n,12,\alpha} \, \vE_{n,12,\alpha}^\trans
+        \right)
+    \)
+    and
+    \(
+        \mE_{n,12}
+        =
+        \left(
+        \begin{matrix}
+            \vE_{n,12,1} &
+            \vE_{n,12,2} &
+            \cdots &
+            \vE_{n,12,N} &            
+        \end{matrix}
+        \right).
+    \)
+    Define the $2 k^2$-dimensional weight vector
+    \(
+        \vW_{N,\alpha}
+        =
+        \left(
+        \begin{matrix}
+            \vW_{N,\alpha,1} \\
+            \vW_{N,\alpha,2}
+        \end{matrix}
+        \right),
+    \)
+    where
+    \(
+        \vW_{N,\alpha,i}
+        =
+        \frac{1}{\lambda_\alpha - \mu_i}
+        \vone.
+    \)
+    We have that for $\alpha = 1, 2, \ldots, N$, the $\vY_{N,\alpha}$ are
+    \iid with
+    \[
+        \E \left[ \vY_{N,1} \right]
+        =
+        \vmu^Y
+        =
+        \left(
+        \begin{matrix}
+            \vtmu^Y \\
+            \vtmu^Y
+        \end{matrix}
+        \right),
+    \]
+    where $\vtmu^Y = \vecm\left( \mI_k \right)$.  Also, we have
+    \[
+        \E \left[ 
+            \left(
+                \vY_{N,1}
+                -
+                \vmu^Y
+            \right)
+            \left(
+                \vY_{N,1}
+                -
+                \vmu^Y
+            \right)^\trans
+        \right]
+        =
+        \mSigma^Y
+        =
+        \left(
+        \begin{matrix}
+            \mtSigma^Y & \mtSigma^Y \\
+            \mtSigma^Y & \mtSigma^Y
+        \end{matrix}
+        \right)
+    \]
+    and
+    \(
+        \mtSigma^Y
+        =
+        \E \Big[
+            \Big( \!
+                \vecm\left( 
+                    \vE_{n,12,1} \vE_{n,12,1}^\trans - \mI_k
+                \right) \! \!
+            \Big)
+            \Big( \!
+                \vecm\left( 
+                    \vE_{n,12,1} \vE_{n,12,1}^\trans - \mI_k
+                \right) \! \!
+            \Big)^{\! \trans}
+        \Big]
+    \)
+    is a $k^2 \times k^2$ matrix defined by the relation
+    \[
+        \E \left[
+            \left( 
+                \vE_{n,12,1} \vE_{n,12,1}^\trans - \mI_k
+            \right)_{ij}
+            \left( 
+                \vE_{n,12,1} \vE_{n,12,1}^\trans - \mI_k
+            \right)_{i'j'}
+        \right]
+        =
+        \delta_{(i,j) = (i',j')}
+        +
+        \delta_{(i,j) = (j',i')}.
+    \]
+    That is, the diagonal elements of 
+    $\vE_{n,12,1} \vE_{n,12,1}^\trans - \mI_k$ have variance $2$ and
+    the off-diagonal elements have variance $1$.  Aside from the matrix
+    being symmetric, the unique elements are all uncorrelated.
+    
+    Letting
+    \begin{align*}
+        \mu^W_i
+            &=
+                \int \frac{ d\FMP_\gamma(t) }
+                          { (t - \mu_i) } \\
+            &=
+                m( \mu_i ), \\
+        \sigma^W_{ij}
+            &=
+                \int \frac{ d\FMP_\gamma(t) }
+                          { (t - \mu_i)(t - \mu_j) } \\
+            &=
+                \frac{ m( \mu_1 ) - m( \mu_2 ) }
+                     { \mu_1 - \mu_2 },
+    \end{align*}
+    the Wishart LLN combined with the truncation argument of
+    Lemma~\ref{L:eij-product-limits} gives us that
+    \begin{align*}
+        \frac{1}{N}
+        \sum_{\alpha=1}^N
+            \frac{1}{ ( \lambda_{n,\alpha} - \mu_i ) }
+            &\toas
+                \mu^W_{i} \\
+        \frac{1}{N}
+        \sum_{\alpha=1}^N
+            \frac{1}{ ( \lambda_{n,\alpha} - \mu_i )
+                      ( \lambda_{n,\alpha} - \mu_j ) }
+            &\toas
+                \sigma^W_{ij}.
+    \end{align*}
+    Thus,
+    \begin{align*}
+        \frac{1}{N}
+        \sum_{\alpha=1}^N
+            \vW_{N,\alpha}
+            &\toas
+                \vmu^W \\
+            &=
+                \left(
+                \begin{matrix}
+                    \mu^W_1 \vone \\
+                    \mu^W_2 \vone
+                \end{matrix}
+                \right), \\
+    \intertext{and}
+        \frac{1}{N}
+        \sum_{\alpha=1}^N
+            \vW_{N,\alpha} \,
+            \vW_{N,\alpha}^\trans
+            &\toas
+                \mSigma^W \\
+            &=
+                \left(
+                \begin{matrix}
+                    \sigma^W_{11} \vone \, \vone^\trans &
+                        \sigma^W_{12} \vone \, \vone^\trans \\
+                    \sigma^W_{21} \vone \, \vone^\trans &
+                        \sigma^W_{11} \vone \, \vone^\trans
+                \end{matrix}
+                \right).
+    \end{align*}
+    Moreover, the Wishart CLT tells us that the error in each of the
+    sums is of size $\OhP\left( \frac{1}{N} \right)$.  
+        
+    As in Lemma~\ref{L:eij-product-limits}, the fourth moments of
+    $\vW_{N,\alpha}$ and $\vY_{N,\alpha}$ are all well-behaved.  Finally,
+    we can invoke the strong weighted CLT 
+    (Corollary~\ref{C:strong-weighted-clt}) to get that
+    \[
+        \sqrt{N} \left(
+            \frac{1}{N}
+            \sum_{\alpha=1}^N
+                \vW_{N,\alpha} \bullet \vY_{N,\alpha}
+            -
+                \vmu^W \bullet \vmu^T
+        \right)
+    \]
+    converges in distribution to a mean-zero multivariate normal with
+    covariance
+    \[
+        \mSigma^W \bullet \mSigma^Y
+            =
+                \left(
+                \begin{matrix}
+                    \sigma^W_{11} \mtSigma &
+                        \sigma^W_{12} \mtSigma \\
+                    \sigma^W_{21} \mtSigma &
+                        \sigma^W_{22} \mtSigma 
+                \end{matrix}
+                \right).
+    \]
+    This complete the proof since
+    \begin{multline*}
+        \sqrt{n}
+        \vecm \left(
+            \frac{1}{n}
+            \mE_{n,12}
+            \left(
+                \mLambda_n
+                -
+                \mu
+                \mI_{p-k}
+            \right)
+            \mE_{n,12}^\trans
+            -
+            \gamma^{-1}
+            m( \mu )
+            \mI_k
+        \right) \\
+            =
+                \gamma^{-1}
+                \sqrt{ \frac{n}{p-k} }
+                \cdot
+                \sqrt{ N }
+                \Bigg( 
+                    \frac{1}{N}
+                    \sum_{\alpha=1}^N
+                        \vW_{N,\alpha} \bullet \vY_{N,\alpha}
+                    -
+                        \vmu^W \bullet \vmu^Y
+                \Bigg)
+    \end{multline*}
+    and
+    \(
+        \gamma^{-1}
+        \sqrt{ \frac{n}{p-k} }
+        \to
+        \gamma^{-1/2}.
+    \)
 \end{proof}
 
 \clearpage
