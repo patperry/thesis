@@ -792,7 +792,7 @@ If we define $\mtD_n = \mD_n + \frac{1}{\sqrt{n}} \mE_{n,11}$, then we can compu
             \right)^{-1}
             \mLambda_n^{1/2}
             \mE_{n,21} \\
-            &\qquad+
+            &\qquad-
             \frac{1}{n^2}
             \mtD_n^\trans
             \mE_{n,12}
@@ -827,7 +827,7 @@ If we define $\mtD_n = \mD_n + \frac{1}{\sqrt{n}} \mE_{n,11}$, then we can compu
             \right)^{-1}
             \mE_{n,12}^\trans
             \mtD_n \\
-            &\qquad+
+            &\qquad-
             \frac{1}{n^2}
             \mtD_n^\trans
             \mE_{n,12}
@@ -862,7 +862,7 @@ If we define $\mtD_n = \mD_n + \frac{1}{\sqrt{n}} \mE_{n,11}$, then we can compu
             \right)^{-1}
             \mLambda_n^{1/2}
             \mE_{n,21} \\
-            &\qquad+
+            &\qquad-
             \frac{1}{n^2}
             \mE_{n,21}^\trans
             \mLambda_{n}^{1/2}
@@ -897,7 +897,7 @@ If we define $\mtD_n = \mD_n + \frac{1}{\sqrt{n}} \mE_{n,11}$, then we can compu
             \right)^{-1}
             \mE_{n,12}^\trans
             \mtD_n \\
-            &\qquad+
+            &\qquad-
             \frac{1}{n^2}
             \mE_{n,21}^\trans
             \mLambda_{n}^{1/2}
@@ -1495,7 +1495,7 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
                 \end{matrix}
                 \right).
     \]
-    This complete the proof since
+    This completes the proof since
     \begin{multline*}
         \sqrt{n}
         \vecm \left(
@@ -1533,6 +1533,179 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
         \to
         \gamma^{-1/2}.
     \)
+\end{proof}
+
+With Lemmas~\ref{L:eij-product-limits}~and~\ref{L:eij-product-scaled-limits},
+we can simplify $f(\mu, \vx_1)$.
+
+\begin{lemma}
+    If $\mu > (1 + \gamma^{-1/2})^2$, then
+    \(
+        f( \mu, \vx_1 )
+            \toas
+                f_0( \mu, \vx_1),
+    \)
+    where
+    \[
+        f_0( \mu, \vx_1 )
+            =
+                \left[
+                    \frac{1}{ 1 + \gamma^{-1} m(\mu) }
+                    \mD^2 
+                    +
+                    \bigg(
+                        1 
+                        - 
+                        \gamma^{-1}
+                        -
+                        \mu
+                        \cdot
+                        \Big(
+                            1
+                            +
+                            \gamma^{-1} m(\mu)
+                        \Big)
+                    \bigg)
+                    \mI_k
+                \right] \vx_1.
+    \]
+\end{lemma}
+
+\begin{lemma}
+    If $\mu_1, \mu_2, \ldots, \mu_l > (1 + \gamma^{-1/2})^2$ then jointly
+    for $\mu \in \{ \mu_1, \mu_2, \ldots, \mu_l \}$,
+    \[
+        f( \mu, \vx_1 ) 
+            = 
+                f_0( \mu, \vx_1 )
+                +
+                \frac{1}{\sqrt{n}}
+                f_1( \mu, \vx_1 )
+                +
+                \ohP\left( \frac{1}{\sqrt{n}} \right),
+    \]
+    where
+    \begin{equation*}
+        \begin{split}
+            f_1( \mu, \vx_1 ) 
+                &= \mL_2 
+                -
+                \big( 1 + \gamma^{-1} m(\mu) \big)^{-2}
+                    \cdot
+                    \mD \mF(\mu) \mD \\
+                &\quad+ 
+                \big( 1 + \gamma^{-1} m(\mu) \big)^{-1} \\
+                    &\quad\qquad\cdot
+                    \Big(
+                        \sqrt{n} \left( \mD_n^2 - \mD^2 \right)
+                        +
+                        \mD \big( \mE_{n,11} - \mG(\mu) \big)
+                        + 
+                        \big( \mE_{n,11} - \mG(\mu) \big)^\trans \mD
+                    \Big)  \\
+                &\quad-
+                \mu \, \mH(\mu) .
+        \end{split}
+    \end{equation*}
+\end{lemma}
+\begin{proof}
+    First, we have
+    \[
+        \mS_{n,11} 
+            = 
+                \mD_n^2 + \mI_k
+                + 
+                \frac{1}{\sqrt{n}}
+                \left(
+                    \mD \mE_{n,11}
+                    +
+                    \mE_{n,11}^\trans \mD
+                    +
+                    \mL_1
+                    +
+                    \mL_2
+                \right)
+                +
+                \ohP\left( \frac{1}{\sqrt{n}} \right).
+    \]
+    Next, we compute
+    \begin{align*}
+        \begin{split}
+        \Bigg(
+            \mI_k
+            +
+            \frac{1}{n}
+            \mE_{n,12}
+            \Big(
+                \mLambda_n &- \mu \mI_{p-k}
+            \Big)^{-1}
+            \mE_{n,12}^\trans
+        \Bigg) \\
+            &=
+                \left(
+                    \mI_k
+                    +
+                    \gamma^{-1}
+                    m( \mu )
+                    \mI_k
+                    +
+                    \frac{1}{\sqrt{n}}
+                    \mF
+                    +
+                    \ohP\Big( \frac{1}{\sqrt{n}} \Big)
+                \right)^{-1} 
+        \end{split} \\
+            &=
+                \big(1 + \gamma^{-1} m(\mu)\big)^{-1}
+                \left(
+                    \mI_k
+                    +
+                    \frac{1}{\sqrt{n}}
+                    \big( 1 + \gamma^{-1} m(\mu) \big)^{-1}
+                    \mF
+                    +
+                    \ohP\Big( \frac{1}{\sqrt{n}} \Big)
+                \right)^{-1} \\
+            &=
+                \big( 1 + \gamma^{-1} m(\mu) \big)^{-1} \mI_k
+                -
+                \frac{1}{\sqrt{n}}
+                \big( 1 + \gamma^{-1} m(\mu) \big)^{-2}
+                \mF
+                +
+                \ohP\Big( \frac{1}{\sqrt{n}} \Big).              
+    \end{align*}
+    Using this, after some simplification we get
+    \[
+        \begin{split}
+            \mS_{n,12} \Big( \mS_{n,22} &- \mu \mI_{p-k} \Big) \mS_{n,21} \\
+                &=
+                \gamma^{-1}
+                \big( 1 + \mu \, m(\mu) \big) \mI_k
+                +
+                \frac{\gamma^{-1} m(\mu)}
+                     { 1 + \gamma^{-1} m(\mu)} \mD_n^2 \\
+                &\quad+
+                \frac{1}{\sqrt{n}} \Bigg\{
+                    \frac{1}{1 + \gamma^{-1} m(\mu)}
+                        \left( \mD \mG(\mu) + \mG^\trans(\mu) \mD \right) \\
+                    &\quad\qquad\qquad+
+                    \frac{\gamma^{-1} m(\mu)}{1 + \gamma^{-1} m(\mu)}
+                    \left( \mD \mE_{n,11} + \mE_{n,11}^\trans \mD \right) \\
+                    &\quad\qquad\qquad+
+                    \left(
+                        \frac{1}{1 + \gamma^{-1} m(\mu)}
+                    \right)^2
+                    \mD \mF(\mu) \mD
+                    +
+                    \mL_1
+                    +
+                    \mu \, \mH( \mu ) \Bigg\} \\
+                &\quad+
+                \ohP\left( \frac{1}{\sqrt{n}} \right).
+        \end{split}
+    \]
+    The equations for $f_0$ and $f_1$ follow.
 \end{proof}
 
 \clearpage
