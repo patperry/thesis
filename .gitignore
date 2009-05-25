@@ -1,6 +1,7 @@
 perry-thesis.pdf
 suthesis
 *.aux
+*.bak
 *.bbl
 *.blg
 *.log
