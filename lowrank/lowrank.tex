@@ -1094,6 +1094,99 @@ It has inverse
             \frac{1}{1 + \gamma^{-1} \, m}.
 \end{equation}
 
+\begin{lemma}\label{L:eij-product-limits-uniform}
+    Considered as functions of $z$, the quantities in 
+    Lemma~\ref{L:eij-product-limits} converge uniformly over any closed
+    interval $[u,v] \subset \big( b(\gamma),\infty \big)$.
+\end{lemma}
+\begin{proof}
+    We show this for the first quantity and the other proofs are similar.
+    Defining
+    \[
+        e_{n,ij}(z)
+        =
+        \left(
+            \frac{1}{n}
+            \mE_{n,12}
+            \left(
+                \mLambda_n - z \mI_{p-k}
+            \right)^{-1}
+            \mE_{n,12}^\trans
+        \right)_{ij},
+    \]
+    we will show that for all $ij$ with $1 \leq i,j \leq k$, 
+    \[
+        \sup_{z \in [u,v]} 
+            \left|
+                e_{n,ij}(z)
+                    -
+                    \gamma^{-1}
+                    m(z)
+                    \delta_{ij}
+            \right|
+            \toas 0.
+    \]
+    Let $\epsilon > 0$ be arbitrary.  Note that for 
+    $z > b(\gamma)$, $m'(z) > 0$ and $m''(z) < 0$.  We let $d = m'(u)$ and
+    choose a grid
+    \[
+        u = z_1 < z_2 < \cdots < z_{M-1} < z_M = v,
+    \]
+    with $|z_l - z_{l+1}| = \frac{\gamma \epsilon}{2 d}$.  
+    Then $|\gamma^{-1} m(z_l) - \gamma^{-1} m(z_{l+1})| < \frac{\epsilon}{2}$.  
+    From 
+    Lemma~\ref{L:eij-product-limits}, we can find $N$ large enough such
+    that for $n > N$, 
+    \[
+        \max_{l\in\{1, \ldots, M\}}
+            \left|
+                e_{n,ij}(z_l)
+                    -
+                    \gamma^{-1}
+                    m(z_l)
+                    \delta_{ij}
+            \right|
+            <
+            \frac{\epsilon}{2}.
+    \]
+    Also guarantee that $N$ is large enough so that $\lambda_{n,1} < u$ 
+    (this is possible since $\lambda_{n,1} \toas b(\gamma) < u$).
+    Let $z \in [u,v]$ be arbitrary and find $l$ such that 
+    $z_l \leq z \leq z_{l+1}$.
+    Observe that $e_{n,ij}(z)$ is monotone for $z > \lambda_{n,1}$.  Thus,
+    either
+    \[
+        e_{n,ij}(z_l) \leq e_{n,ij}(z) \leq e_{n,ij}(z_{l+1})
+    \]
+    or
+    \[
+        e_{n,ij}(z_{l+1}) \leq e_{n,ij}(z) \leq e_{n,ij}(z_{l}).
+    \]
+    If $i \neq j$, we have for $n > N$,
+    \[
+        -\frac{\epsilon}{2} < e_{n,ij}(z) < \frac{\epsilon}{2},
+    \]
+    For $i = j$, $e_{n,ij}(z)$ is 
+    monotonically increasing and
+    \[
+        \gamma^{-1} m(z_l) - \frac{\epsilon}{2}
+            <
+                e_{n,ij}(z)
+                    <
+                        \gamma^{-1} m(z_{l+1}) + \frac{\epsilon}{2},
+    \]
+    so
+    \[
+        \gamma^{-1} m(z) - \epsilon
+            <
+                e_{n,ij}(z)
+                    <
+                        \gamma^{-1} m(z) + \epsilon.
+    \]
+    In either case, 
+    $|e_{n,ij}(z) - \gamma^{-1} m(z) \delta_{ij}| < \epsilon$.
+\end{proof}
+
 In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:eij-product-limits}.
 
 \begin{lemma}\label{L:eij-product-scaled-limits}
@@ -1109,7 +1202,7 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
                 -
                 z
                 \mI_{p-k}
-            \right)
+            \right)^{-1}
             \mE_{n,12}^\trans
             -
             \gamma^{-1}
@@ -1126,7 +1219,7 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
                 -
                 z
                 \mI_{p-k}
-            \right)
+            \right)^{-1}
             \mLambda_{n}^{1/2}
             \mE_{n,21}
         \right)
@@ -1140,7 +1233,7 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
                 -
                 z
                 \mI_{p-k}
-            \right)
+            \right)^{-1}
             \mE_{n,21}
             -
             \gamma^{-1}
@@ -1515,7 +1608,7 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
                 -
                 z_i
                 \mI_{p-k}
-            \right)
+            \right)^{-1}
             \mE_{n,12}^\trans
             -
             \gamma^{-1}
@@ -1556,7 +1649,7 @@ $\mF_n (z)$ such that
         -
         z
         \mI_{p-k}
-    \right)
+    \right)^{-1}
     \mE_{n,12}^\trans
         =
             \gamma^{-1}
@@ -1662,7 +1755,7 @@ with $\mG_n(z), \mH_n(z), \mK_n, \mL_{n,1},$ and $\mL_{n,2}$ defined similarly.
                 \mLambda_n - z \mI_{p-k}
             \Big)^{-1}
             \mE_{n,12}^\trans
-        \Bigg) \\
+        \Bigg)^{-1} \\
             &=
                 \left(
                     \mI_k
@@ -1755,6 +1848,48 @@ is a solution, then so is $(z, \alpha \, \vx)$ for any scalar $\alpha$.  We rest
 \(
     \max_i x_i = \max_i | x_i |.
 \)
+
+\subsection{Almost sure limits}
+
+Given a solution of $f_0(z, \vx) = 0$, it is not hard to believe that there is a sequence of solutions $(z_n, \vx_n)$ converging to $z$ and $\vx$.  We make this precise in the next lemma.
+
+\begin{lemma}
+    If $f_0( z_0, \vx_0) = 0$, then with probability one there exists a 
+    sequence $(z_n, \vx_n)$ satisfying $f_n(z_n, \vx_n) = 0$ such that
+    $z_n \to z_0$ and $\vx_n \to \vx_0$.
+\end{lemma}
+\begin{proof}
+    If $k = 1$, then the identifiability restrictions force $\vx_0 = 1$.  We
+    define $g_n(z) = f_n(z, 1)$.  For $z > \lambda_{n,1}$, $g_n$ is 
+    differentiable in a neighborhood of $z$, and $g'_n(z) > 0$.  The inverse 
+    function theorem guarantees existence of a map
+    $g_n^{-1} : \reals \to \reals$ defined in a neighborhood of $g_n(z)$ with
+    $g_n^{-1}(g(z)) = z$
+    
+    this case for $z > \lambda_{n,1}$ we have that 
+    $g_n(z) \equiv f_{n} (z, 1)$ is
+    differentiable with $g'_n(z) > 0$.
+    function in
+    
+    We the notation $\vx_{-k}$ to denote the vector
+    $(x_1, x_2, \ldots, x_{k-1})$.
+    Noting that $x_{k}$ is uniquely determined by $x_1, x_2, \ldots, x_{k-1}$, 
+    define
+    \[
+        g_n( z, x_1, x_2, \ldots, x_{k-1})
+            = f_n( z, x_1, x_2, \ldots, x_k).
+    \]
+    We have that on any compact set, 
+    \[
+        g_n( z, x_1, \ldots, x_{k-1} )
+            = g_0( z, x_1, \ldots, x_{k-1} ) 
+                + \epsilon_n( z, x_{1}, \ldots, x_{k-1} ),
+    \]
+    with $\epsilon_n(z, x_1, \ldots, x_{k-1}) \toas 0$.
+    For $z > \lambda_{n,1}$, $g_n(z, x_1, \ldots, x_{k-1})$ 
+    is differentiable in a neighborhood of $(z, x_1, \ldots, )$.
+\end{proof}
+
 
 
 \clearpage
