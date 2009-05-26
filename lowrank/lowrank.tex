@@ -600,26 +600,29 @@ and $\vx_1 \neq 0$, then
     \right)
 \end{equation}
 is an eigenvector of $\mS_n$ with eigenvalue $\mu$.  We define
-\begin{equation}\label{E:secular-f}
+\begin{gather}
+    \mT_n(z)
+        =
+            \left(
+                \mS_{n,11}
+                -
+                z
+                \mI_k
+                -
+                \mS_{n,12}
+                \left(
+                    \mS_{n,22}
+                    -
+                    z
+                    \mI_{p-k}
+                \right)^{-1}
+                \mS_{n,21}
+            \right), \label{E:secular-T} \\
     f_n ( z, \vx )
     =
-    \left(
-        \mS_{n,11}
-        -
-        z
-        \mI_k
-        -
-        \mS_{n,12}
-        \left(
-            \mS_{n,22}
-            -
-            z
-            \mI_{p-k}
-        \right)^{-1}
-        \mS_{n,21}
-    \right)
-    \vx
-\end{equation}
+    \mT_n(z) \,
+    \vx, \label{E:secular-f}
+\end{gather}
 and refer to the equation $f_n(z, \vx) = 0$ as the \emph{secular equation}.
 
 \subsection{Outline of the proof}
@@ -663,7 +666,7 @@ eigenvector of $\mS_n$ using equation~\eqref{E:x-from-x1}.  Finally, we will der
 
 \section{Analysis of the secular equation}
 
-By making use of the Sherman-Morrison-Wordbury formula~\cite{golub1996mc}, we can simplify $f_n(z, \vx)$.  We first write
+By making use of the Sherman-Morrison-Wordbury formula~\cite{golub1996mc}, we can simplify $\mT_n(z)$.  We first write
 \begin{align*}
     \left(
         \mS_{n,22} - z \mI_{p-k}
@@ -1667,43 +1670,41 @@ and $\mF_n(z) \tod \mF(z)$,
 with $\mG_n(z), \mH_n(z), \mK_n, \mL_{n,1},$ and $\mL_{n,2}$ defined similarly.
 
 \begin{lemma}
-    If $z > (1 + \gamma^{-1/2})^2$, then
+    If $[u,v] \subset \big( b(\gamma), \, \infty \big)$, then
     \(
-        f_n( z, \vx )
+        \mT_n( z )
             \toas
-                f_0( z, \vx),
+                \mT_0( z )
     \)
-    where
+    uniformly on $[u,v]$, where
     \[
-        f_0( z, \vx )
+        \mT_0( z )
             =
-                \left[
-                    \frac{1}{ 1 + \gamma^{-1} m(z) }
-                    \mD^2 
-                    +
-                    \frac{1}{m(z)}
-                    \mI_k
-                \right] \vx.
+                \frac{1}{ 1 + \gamma^{-1} m(z) }
+                \mD^2 
+                +
+                \frac{1}{m(z)}
+                \mI_k.
     \]
 \end{lemma}
 
 \begin{lemma}
     If $z > (1 + \gamma^{-1/2})^2$, then
     \[
-        f_n( z, \vx ) 
+        \mT_n( z ) 
             = 
-                f_0( z, \vx )
+                \mT_0( z )
                 +
                 \frac{1}{\sqrt{n}}
-                f_{n,1}( z, \vx )
+                \mT_{n,1}( z )
                 +
                 \ohP\left( \frac{1}{\sqrt{n}} \right),
     \]
     where
     \begin{equation*}
         \begin{split}
-            f_{n,1}( z, \vx ) 
-                &= \bigg[ \mL_{n,2}
+            \mT_{n,1}( z ) 
+                &= \mL_{n,2}
                 -
                 \big( 1 + \gamma^{-1} m(z) \big)^{-2}
                     \cdot
@@ -1719,7 +1720,7 @@ with $\mG_n(z), \mH_n(z), \mK_n, \mL_{n,1},$ and $\mL_{n,2}$ defined similarly.
                         \big( \mE_{n,11} - \mG_n(z) \big)^\trans \mD
                     \Big)  \\
                 &\quad\quad-
-                z \, \mH_n(z) \bigg] \, \vx.
+                z \, \mH_n(z).
         \end{split}
     \end{equation*}
 \end{lemma}
@@ -1823,7 +1824,7 @@ with $\mG_n(z), \mH_n(z), \mK_n, \mL_{n,1},$ and $\mL_{n,2}$ defined similarly.
                 \ohP\left( \frac{1}{\sqrt{n}} \right).
         \end{split}
     \]
-    The equations for $f_0$ and $f_{n,1}$ follow.  We use the identity
+    The equations for $\mT_0$ and $\mT_{n,1}$ follow.  We use the identity
     \[
         z
         \cdot
@@ -1838,7 +1839,7 @@ with $\mG_n(z), \mH_n(z), \mK_n, \mL_{n,1},$ and $\mL_{n,2}$ defined similarly.
         +
         (1 - \gamma^{-1})
     \]
-    to simplify the form of $f_0$.
+    to simplify the form of $\mT_0$.
 \end{proof}
 
 \section{Solutions to the secular equation}
