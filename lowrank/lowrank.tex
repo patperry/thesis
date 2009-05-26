@@ -1348,9 +1348,9 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
             \vtmu^Y \\
             \vtmu^Y
         \end{matrix}
-        \right),
+        \right)
     \]
-    where $\vtmu^Y = \vecm\left( \mI_k \right)$.  Also, we have
+    and $\vtmu^Y = \vecm\left( \mI_k \right)$.  Also, we have
     \[
         \E \left[ 
             \left(
@@ -1372,9 +1372,9 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
             \mtSigma^Y & \mtSigma^Y \\
             \mtSigma^Y & \mtSigma^Y
         \end{matrix}
-        \right)
+        \right),
     \]
-    and
+    where
     \(
         \mtSigma^Y
         =
@@ -1434,7 +1434,7 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
         \sum_{\alpha=1}^N
             \frac{1}{ ( \lambda_{n,\alpha} - \mu_i ) }
             &\toas
-                \mu^W_{i} \\
+                \mu^W_{i}, \\
         \frac{1}{N}
         \sum_{\alpha=1}^N
             \frac{1}{ ( \lambda_{n,\alpha} - \mu_i )
@@ -1593,8 +1593,7 @@ with $\mG_n(\mu), \mH_n(\mu), \mK_n, \mL_{n,1},$ and $\mL_{n,2}$ defined similar
 \end{lemma}
 
 \begin{lemma}
-    If $\mu_1, \mu_2, \ldots, \mu_l > (1 + \gamma^{-1/2})^2$ then jointly
-    for $\mu \in \{ \mu_1, \mu_2, \ldots, \mu_l \}$,
+    If $\mu > (1 + \gamma^{-1/2})^2$, then
     \[
         f_n( \mu, \vx_1 ) 
             = 
@@ -1750,218 +1749,6 @@ with $\mG_n(\mu), \mH_n(\mu), \mK_n, \mL_{n,1},$ and $\mL_{n,2}$ defined similar
 \clearpage
 
 
-
-
-\section{The resolvent}\label{S:resolvent}
-
-In this section we study the resolvent $R_t(z) = O^T (z I - \Lambda)^{-t} O$ 
-and its interaction with the matrices $\Psi_n$ and $U$.  Recall from equation
-{E:psi} that $\Psi_n = V D_n + (1/n^{\half}) E_1^T$.  We have that
-$O \Psi_n = O V D_n + (1/n^{\half}) \tilde E_1^T$, where $\tilde E_1 = E_1 O$.
-Due the the dependence between the rows of $O V$, it is inconvenient to
-deal with $O \Psi_n$ directly.  Let $Z$ be a $p \times k$ matrix of \iid standard normals.  Since $O V$ is uniformly distributed over the Steifel manifold, we have
-\begin{align}\label{E:OU}
-    O V
-        &\overset{d}{=} Z (Z^T Z)^{-T/2}  \notag \\
-        &= (1/p^\half) Z \big((1/p) Z^T Z\big)^{-T/2}.  
-\end{align}    
-We know that
-$(1/p) Z^T Z \toas I_k$.  Defining $G = (1/p) Z^T Z - I_k$ and using the
-delta method, it is not hard to see that $G = O_P(1/p^\half)$.  For the rest
-of the section, we will use the representation in \eqref{E:OU} for $OV$.  We
-define $\tilde V = (1/p^\half) Z$,
-$\tilde \Psi_n =  \tilde V D_n + (\gamma^{\half} / p^\half) \tilde E_1$,
-and $\tilde R_t (z) = (z I_M - \Lambda)^{-t}$.  We also let 
-$\tilde R_2(z_1, z_2) = \tilde R_1 (z_1) \tilde R_1 (z_2)$.
-
-
-\subsection{Almost sure limits}
-
-We first demonstrate that $\tilde \Psi_n^T \tilde R_p(z) \tilde \Psi_n$ and 
-$\Psi_n^T R_p (z) \Psi_n$ are asymptotically almost surely
-equal. A similar result holds for the pairs 
-$(\tilde \Psi_n^T \tilde R_2(z_1, z_2) \tilde \Psi_n,
-  \Psi_n^T R_2(z_1, z_2) \Psi_n)$
-and $(\tilde V^T \tilde R_1(z) \tilde \Psi_n, V^T R_1(z) \Psi_n)$.
-To see this for $\Psi_n^T R_p(z) \Psi_n$, note that
-\begin{align*}
-    \begin{split}
-    \Psi_n^T R_t (z) \Psi_n
-    &=
-    \tilde \Psi_n^T \tilde R_t(z) \tilde \Psi_n \\
-        &+ \frac{1}{p} \Big\{
-        G^T D_n^T Z^T \tilde R_p(z) ( Z D_n + \gamma^\half \tilde E_1) \\
-        &\qquad \qquad +
-        ( Z D_n + \gamma^\half \tilde E_1)^T \tilde R_p(z) Z D_n G \\
-        &\qquad \qquad +
-        G^T D_n^T Z^T \tilde R_p(z) Z D_n G
-        \Big\}.
-    \end{split}
-\end{align*}
-The remainder terms all go to $0$ almost surely.
-Proposition~\ref{P:weighted-slln}, a strong law of large numbers for weigted sums,
-makes this more rigorous.  The term 
-$\tilde \Psi_n^T \tilde R_t(z) \tilde \Psi_n$ is a sum of the form
-\[
-    \tilde \Psi_n^T \tilde R_t(z) \tilde \Psi_n 
-    =
-    \sum_{\alpha=1}^p
-        \frac{\tilde \vpsi_\alpha \tilde \vpsi^T_\alpha }
-             {(z - \lambda_\alpha)^t},
-\]
-where $\tilde \vpsi_1, \ldots, \tilde \vpsi_p$ are the rows of $\tilde \Psi_n$.
-Since the $\tilde \vpsi_\alpha$ are i.i.d, it is quite plausible that the sum
-converges to $r_1(z) \E[ \tilde \Psi_n^T \tilde \Psi_n ]$.  Indeed, the strong
-law of Proposition~\ref{P:weighted-slln} proves exactly this.  With the additional
-help of Lemma {L:wishart-lln}, we can prove:
-
-\begin{lemma}\label{L:Sbar}
-    For $z > \bar b$, 
-    \begin{align*}
-        S_{n,1}(z) &\toas r_1(z) \left( D^2 + \gamma I_k \right), \\
-        S_{n,2}(z) &\toas r_2(z) \left( D^2 + \gamma I_k \right), \\
-    \intertext{and}
-        T_n(z) &\toas r_1(z) D.
-    \end{align*}
-\end{lemma}
-
-For convenience, we define
-\begin{align*}
-    \bar S_1(z) &= r_1(z) \left( D^2 + \gamma I_k \right), \\
-    \bar S_2(z) &= r_2(z) \left( D^2 + \gamma I_k \right), \\
-\intertext{and}
-    \bar T(z) &= r_1(z) D.
-\end{align*}
-
-\subsection{Asymptotic normality}
-
-It is slightly trickier but still tractable is to get the asymptotic distributions
-of $\sqrt{n} \big( S_{n,1}(z) - \bar S_1 (z) \big)$ and the other similar expressions.
-Assume that there exist random matrix-valued functions 
-$S_1(z)$, $S_2(z)$, and $T(z)$ defined on some probability space
-such that for some finite set $\{ z_j \}_{j=1}^J$ with $z_j > b$ for all $j$, 
-the matrices
-\begin{equation*}
-    \left\{ 
-        \sqrt{n} \big( S_{n,1}(z_j) - \bar S_1 (z_j) \big), \quad
-        \sqrt{n} \big( S_{n,2}(z_j) - \bar S_2 (z_j) \big), \quad
-        \sqrt{n} \big( T_n(z_j) - \bar T (z_j) \big) 
-    \right\}_{j=1}^{J}
-\end{equation*}
-converge jointly in distribution to
-\[
-    \Big\{
-        S_1(z_j), S_2(z_j), T(z_j)
-    \Big\}_{j=1}^{J}.
-\]
-The purpose of this section is to prove that such an assumption is justified
-and to describe explicitly this limiting distribution. 
-
-We first start with $S_{n,1}$.  We have that
-\begin{align*}
-    \sqrt{n} \big( S_{n,1} (z) &- \bar S_1 (z) \big) = \\
-        \gamma^{-\half} \sqrt{p} &\Bigg\{
-            D_n 
-            \left( \frac{1}{p} Z^T Z \right)^{-\half}
-            \left(
-                \frac{1}{p} Z^T (z I_p - \Lambda)^{-1} Z
-                -
-                r_1(z) I_k
-            \right)
-            \left( \frac{1}{p} Z^T Z \right)^{-\Thalf}
-            D_n \\
-            &-{}
-            r_1(z)
-            D_n 
-            \left( \frac{1}{p} Z^T Z \right)^{-\half}
-            \left(
-                \frac{1}{p} Z^T Z - I_k
-            \right)
-            \left( \frac{1}{p} Z^T Z \right)^{-\Thalf}
-            D_n \\
-            &+{}
-            r_1(z) \left( D_n^2 - D^2 \right) \\
-            &+{}
-            \gamma^\half
-            D_n 
-            \left( \frac{1}{p} Z^T Z \right)^{-\half}
-            \left(
-                \frac{1}{p} Z^T (z I_p - \Lambda)^{-1} \tilde E_1
-            \right) \\
-            &+{}
-            \gamma^\half
-            \left(
-                \frac{1}{p} \tilde E_1^T (z I_p - \Lambda)^{-1} Z
-            \right)
-            \left( \frac{1}{p} Z^T Z \right)^{-\Thalf}
-            D_n \\
-            &+{}
-            \gamma
-            \left(
-                \frac{1}{p} \tilde E_1^T (z I_p - \Lambda)^{-1} \tilde E_1
-                -
-                r_1(z) I_k
-            \right)
-        \Bigg\}.
-\end{align*}
-Employing Slutzky's theorem, this has the same limiting distribution as
-\begin{align*}
-    S_{n,1}^{(1)}(z) \equiv 
-        \gamma^{-\half} \sqrt{p} &\Bigg\{
-            D
-            \left(
-                \frac{1}{p} Z^T (z I_p - \Lambda)^{-1} Z
-                -
-                r_1(z) I_k
-            \right)
-            D \\
-            &-{}
-            r_1(z)
-            D
-            \left(
-                \frac{1}{p} Z^T Z - I_k
-            \right)
-            D \\
-            &+{}
-            r_1(z) \left( D_n^2 - D^2 \right) \\
-            &+{}
-            \gamma^\half
-            D 
-            \left(
-                \frac{1}{p} Z^T (z I_p - \Lambda)^{-1} \tilde E_1
-            \right) \\
-            &+{}
-            \gamma^\half
-            \left(
-                \frac{1}{p} \tilde E_1^T (z I_p - \Lambda)^{-1} Z
-            \right)
-            D \\
-            &+{}
-            \gamma
-            \left(
-                \frac{1}{p} \tilde E_1^T (z I_p - \Lambda)^{-1} \tilde E_1
-                -
-                r_1(z) I_k
-            \right)
-        \Bigg\}.
-\end{align*}
-Combining Lemmas {L:wishart-lln}, {L:wishart-clt}, and Proposition {P:weighted-clt}, we can see that $S_1(z)$, the limiting distribution of
-$S_{n,1}^{(1)}(z)$ has elements above and along the main diagonal converging
-to a multivariate normal with
-\begin{align}
-    \cov[ (S_1(z_1))_{ij}, (S_1(z_2))_{ij} ]
-    &= \gamma^{-1} (1 + \delta_{ij}) \mu_i \mu_j 
-                 \big( r_2 (z_1, z_2) - r_1(z_1) r_1 (z_2) \big) \notag \\
-      &+ (1 + \delta_{ij}) (\mu_i + \mu_j + \gamma) r_2(z_1, z_2) \notag \\
-      &+ \delta_{ij} \sigma_{ii} r_1(z_1) r_1(z_2), \label{E:cov-S1-1}
-\end{align}
-and for $i \neq j$,
-\begin{align}
-    \cov[ (S_1(z_1))_{ii}, (S_1(z_2))_{jj} ]
-    &= \sigma_{ij} r_1(z_1) r_1(z_2). \label{E:cov-S1-2}
-\end{align}
-All other correlations are $0$.
-
 \section{Limits of singular values}
 
 We are finally ready to study the limits of the top eigenvalues of
@@ -2081,7 +1868,7 @@ Putting $i = j$, we have that
 \)
 The previous section shows that jointly the unique elements
 of $\{ S_1(\tilde \mu_i) \}_{i=1}^{\bar K}$ have a multivariate normal distribution.
-Equations~\eqref{E:cov-S1-1}~and~\eqref{E:cov-S1-2} give
+Equations~{E:cov-S1-1}~and~{E:cov-S1-2} give
 \begin{align*}
     \var [ (S_1(\tilde \mu_i))_{ii} ]
         &= \frac{1}{(\mu_i + \gamma)^2}
@@ -2155,7 +1942,7 @@ First suppose that $i \leq \bar k$.  Then $\hat \mu_i \toas \tilde \mu_i$ and
 $S_{n,1}(\hat \mu_i) \toas \bar S_1 (\tilde \mu_i)$.  The $i$th eigenvalue
 of $S_{n,1} (\hat \mu_i)$ converges almost surely to $1$ and the $i$th
 eigenvector converges almost surely to $\be_i$.  This fact, 
-Lemmas {L:secular}, Lemma~\ref{L:Sbar}, and equation {E:normY} 
+Lemmas {L:secular}, Lemma {L:Sbar}, and equation {E:normY} 
 tell us that $\hat \bv_i$, the normalized $i$th eigenvector of
 $(1/n) X_n^T X_n$ almost surely has the same limit as
 \[
@@ -2176,137 +1963,6 @@ Combining this result with equation {E:corrY}, we get that
 
 Next say that $\bar k < i \leq k$.  In this case, since 
 $\lim_{z \to b^+} r_2(z) = \infty$ and $\lim_{z \to b^+} r_1(z) < \infty$, we must have that  $V^T \hat v_i \toas 0$.
-
-\section*{Appendix B: Low-rank perturbations of diagonal matrices}
-
-Our aim in this section is to prove the following lemma:
-
-\begin{lemma}\label{L:lowrank-perturb}
-    Let $A$ be a random $n\times n$ symmetric matrix with rank $k$, and
-    $0 < k < n$.  Suppose that $A$ is orthogonally-invariant, in the sense that 
-    $O^T A O \eqd A$ for all orthogonal $O$ independent of $A$.  Let
-    $D = \diag(d_1, d_2, \ldots, d_n)$ be a diagonal matrix.  Then, if
-    $\#\{ i : d_i = d \} \leq k$, then almost surely $A + D$ has no eigenvalue
-    equal to $d$.
-\end{lemma}
-
-\noindent Do to so, we will need two lemmas, which we state and prove now.
-
-\begin{lemma}
-    Let $A$ be as above.  Partition $A$ as 
-    \[
-        A
-        =
-        \left(
-        \begin{matrix}
-            a_{11}   & \ba_{12}^T \\
-            \ba_{21} & A_{22}
-        \end{matrix}
-        \right)
-    \]
-    and define $A_2 = A_{22} - a_{11}^{-1} \ba_{21} \ba_{12}^T$.  Then:
-    \begin{enumerate}[(i)]
-        \item $a_{11}$ has a continuous density,
-        \item $A_2$ almost surely has rank $k-1$,
-        \item $A_2$ is orthogonally-invariant.
-    \end{enumerate}
-\end{lemma}
-\begin{proof}
-    The matrix $A$ is equal in distribution to $U \Lambda U^T$ for a
-    Haar-distributed $U$ and some diagonal $\Lambda$ independent of $U$.  
-    Without loss of generality, say the nonzero entries of $\Lambda$ are
-    $\lambda_{1}, \ldots, \lambda_k$.  Then 
-    $a_{11} \eqd \sum_{i=1}^k \lambda_i (U)_{1i}^2$.  Since $0 < k < n$, 
-    and $((U)_{11}, \ldots, (U)_{1(n-1)})$ has a continuous density, this is a
-    random variable with continuous density as well.
-    
-    Since $a_{11}$ has a continuous density, $a_{11} \neq 0$ almost surely.
-    Since $A$ can be transformed to
-    \(
-        \left(
-        \begin{matrix}
-            a_{11} & \ba_{12}^T \\
-            0      & A_2
-        \end{matrix}
-        \right)
-    \)
-    via row operations, $A_2$ must have rank one less than $A$.
-    
-    Letting $O_2$ be any $(n-1)\times(n-1)$ orthogonal matrix, we have
-    that
-    \[
-        \left(
-        \begin{matrix}
-            1 & 0 \\
-            0 & O_2^T
-        \end{matrix}
-        \right)
-        A
-        \left(
-        \begin{matrix}
-            1 & 0 \\
-            0 & O_2
-        \end{matrix}
-        \right)
-        =
-        \left(
-        \begin{matrix}
-            a_{11}   & \ba_{12}^T O_2 \\
-            O_2^T \ba_{21} & O_2^T A_{22} O_2
-        \end{matrix}
-        \right).
-    \]
-    Since $A$ is orthogonally invariant, this implies that $A_2$ is
-    as well.
-\end{proof}
-
-\begin{lemma}
-    Let $A$ be as above except with rank $k$ possibly equal to $0$.  
-    Let $D = \diag(d_1, d_2, \ldots, d_n)$ be a diagonal matrix independent of
-    $A$ with rank greater than or equal to $n-k$ almost surely.  Then
-    $A + D$ almost surely has full rank.
-\end{lemma}
-\begin{proof}
-    If $k = 0$, the result is trivial.  Otherwise,
-    without loss of generality, assume that either $D$ is of full rank
-    or $d_1 = 0$.  Partition $A$ as in the previous lemma and let 
-    \(
-        D_2 = \diag(d_2, \ldots, d_n).
-    \)
-    The determinant of $A + D$ is equal to
-    \begin{align*}
-        \det ( A + D )
-            &= \left|
-               \begin{matrix}
-                   a_{11} + d_1 & \ba_{12}^T \\
-                   \ba_{21}     & A_{22} + D_2
-               \end{matrix}
-               \right| \\
-            &= \left|
-               \begin{matrix}
-                   a_{11} + d_1 & \ba_{12}^T \\
-                   0            & A_{22} - a_{11}^{-1} \ba_{21} \ba_{12}^T + D_2
-               \end{matrix}
-               \right| \\
-            &= (a_{11} + d_1) \det (A_2 + D_2),
-    \end{align*}
-    We note that $D_2$ is of rank at least $(n-1) - (k-1)$. 
-    By the previous lemma, $A_2$ has rank $k - 1 < n - 1$ and is
-    orthogonally-invariant.  Since $a_{11}$ has a continuous density and
-    is independent of $d_{1}$, $a_{11} + d_1 \neq 0$.  By induction,
-    $\det (A_2 + D_2 \neq 0)$ and the result follows.
-\end{proof}
-
-Now, Lemma~\ref{L:lowrank-perturb} is an easy corollary:
-
-\begin{proof}[Proof of Lemma~\ref{L:lowrank-perturb}]
-    Say $A + D$ has an eigenvalue equal to $d$, with
-    $\#\{ i : d_i = d \} \leq k$.  Then $A + D - d I_n$ is not
-    of full rank.  Since $D - d I_n$ has at least $n-k$ nonzero entries,
-    this contradicts the previous lemma.
-\end{proof}    
-
-
 
 
 %\section*{Acknowledgements}
