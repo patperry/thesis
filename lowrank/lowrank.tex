@@ -1062,7 +1062,7 @@ The $Y_{N,\alpha}$ are all \iid with $\E Y_{N,\alpha} = \delta_{ij}$ and $\E Y_{
 Since $\frac{p-k}{n} \to \gamma^{-1}$, this completes the proof.
 \end{proof}
 
-The quantity
+As an aside, we remark that the quantity
 \begin{subequations}
 \begin{align}
     m(z)
@@ -1072,7 +1072,7 @@ The quantity
         &=
             \gamma
             \cdot
-            \frac{ -(z + 1 - \gamma^{-1})
+            \frac{ -(z - 1 + \gamma^{-1})
                    +\sqrt{ \big( z - b(\gamma) \big) 
                            \big( z - a(\gamma) \big) } }
                  { 2 z },
@@ -1083,6 +1083,15 @@ is equal to the Stieltjes transform of $\FMP_\gamma$, where
     b(\gamma) &= \left( 1 + \gamma^{-1/2} \right)^2.
 \end{align}
 \end{subequations}
+It has inverse
+\begin{equation}
+    z(m)
+        = 
+            -
+            \frac{1}{m}
+            +
+            \frac{1}{1 + \gamma^{-1} \, m}.
+\end{equation}
 
 In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:eij-product-limits}.
 
@@ -1236,7 +1245,7 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
             &=
                 m'(\mu_1), \\
     \intertext{and}
-        \frac{ \mu_1 \, m(\mu_1) - \mu_1 \, m(\mu_2) }
+        \frac{ \mu_1 \, m(\mu_1) - \mu_2 \, m(\mu_2) }
              { \mu_1 - \mu_2 }
             &= m( \mu_1 ) + \mu_1 \, m'(\mu_1)
     \end{align*}
@@ -1269,7 +1278,6 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
                     \right]
                 \right) \\
             &\tod
-                \gamma^{-1/2}
                 \mK.
     \end{align*}
     For the other limits, we will need the Wishart CLT 
@@ -1536,12 +1544,37 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
 \end{proof}
 
 With Lemmas~\ref{L:eij-product-limits}~and~\ref{L:eij-product-scaled-limits},
-we can simplify $f(\mu, \vx_1)$.
+we can simplify $f_n(\mu, \vx_1)$.  For convenience, we will define
+$\mF_n (\mu)$ such that
+\[
+    \frac{1}{n}
+    \mE_{n,12}
+    \left(
+        \mLambda_n
+        -
+        \mu
+        \mI_{p-k}
+    \right)
+    \mE_{n,12}^\trans
+        =
+            \gamma^{-1}
+            m(\mu)
+            \mI_k
+            +
+            \frac{1}{\sqrt{n}}
+            \mF_n(\mu)
+            +
+            \ohP\left(
+                \frac{1}{\sqrt{n}}
+            \right)
+\]
+and $\mF_n(\mu) \tod \mF(\mu)$,
+with $\mG_n(\mu), \mH_n(\mu), \mK_n, \mL_{n,1},$ and $\mL_{n,2}$ defined similarly.
 
 \begin{lemma}
     If $\mu > (1 + \gamma^{-1/2})^2$, then
     \(
-        f( \mu, \vx_1 )
+        f_n( \mu, \vx_1 )
             \toas
                 f_0( \mu, \vx_1),
     \)
@@ -1553,19 +1586,7 @@ we can simplify $f(\mu, \vx_1)$.
                     \frac{1}{ 1 + \gamma^{-1} m(\mu) }
                     \mD^2 
                     +
-                    \bigg(
-                        1 
-                        - 
-                        \gamma^{-1}
-                        -
-                        \mu
-                        \cdot
-                        \Big(
-                            1
-                            +
-                            \gamma^{-1} m(\mu)
-                        \Big)
-                    \bigg)
+                    \frac{1}{m(\mu)}
                     \mI_k
                 \right] \vx_1.
     \]
@@ -1575,36 +1596,36 @@ we can simplify $f(\mu, \vx_1)$.
     If $\mu_1, \mu_2, \ldots, \mu_l > (1 + \gamma^{-1/2})^2$ then jointly
     for $\mu \in \{ \mu_1, \mu_2, \ldots, \mu_l \}$,
     \[
-        f( \mu, \vx_1 ) 
+        f_n( \mu, \vx_1 ) 
             = 
                 f_0( \mu, \vx_1 )
                 +
                 \frac{1}{\sqrt{n}}
-                f_1( \mu, \vx_1 )
+                f_{n,1}( \mu, \vx_1 )
                 +
                 \ohP\left( \frac{1}{\sqrt{n}} \right),
     \]
     where
     \begin{equation*}
         \begin{split}
-            f_1( \mu, \vx_1 ) 
-                &= \mL_2 
+            f_{n,1}( \mu, \vx_1 ) 
+                &= \bigg[ \mL_{n,2}
                 -
                 \big( 1 + \gamma^{-1} m(\mu) \big)^{-2}
                     \cdot
-                    \mD \mF(\mu) \mD \\
-                &\quad+ 
+                    \mD \mF_n(\mu) \mD \\
+                &\quad\quad+ 
                 \big( 1 + \gamma^{-1} m(\mu) \big)^{-1} \\
-                    &\quad\qquad\cdot
+                    &\quad\quad\quad\cdot
                     \Big(
                         \sqrt{n} \left( \mD_n^2 - \mD^2 \right)
                         +
-                        \mD \big( \mE_{n,11} - \mG(\mu) \big)
+                        \mD \big( \mE_{n,11} - \mG_n(\mu) \big)
                         + 
-                        \big( \mE_{n,11} - \mG(\mu) \big)^\trans \mD
+                        \big( \mE_{n,11} - \mG_n(\mu) \big)^\trans \mD
                     \Big)  \\
-                &\quad-
-                \mu \, \mH(\mu) .
+                &\quad\quad-
+                \mu \, \mH_n(\mu) \bigg] \, \vx_1.
         \end{split}
     \end{equation*}
 \end{lemma}
@@ -1621,9 +1642,9 @@ we can simplify $f(\mu, \vx_1)$.
                     +
                     \mE_{n,11}^\trans \mD
                     +
-                    \mL_1
+                    \mL_{n,1}
                     +
-                    \mL_2
+                    \mL_{n,2}
                 \right)
                 +
                 \ohP\left( \frac{1}{\sqrt{n}} \right).
@@ -1636,8 +1657,8 @@ we can simplify $f(\mu, \vx_1)$.
             +
             \frac{1}{n}
             \mE_{n,12}
-            \Big(
-                \mLambda_n &- \mu \mI_{p-k}
+            &\Big(
+                \mLambda_n - \mu \mI_{p-k}
             \Big)^{-1}
             \mE_{n,12}^\trans
         \Bigg) \\
@@ -1650,7 +1671,7 @@ we can simplify $f(\mu, \vx_1)$.
                     \mI_k
                     +
                     \frac{1}{\sqrt{n}}
-                    \mF
+                    \mF_n(\mu)
                     +
                     \ohP\Big( \frac{1}{\sqrt{n}} \Big)
                 \right)^{-1} 
@@ -1662,7 +1683,7 @@ we can simplify $f(\mu, \vx_1)$.
                     +
                     \frac{1}{\sqrt{n}}
                     \big( 1 + \gamma^{-1} m(\mu) \big)^{-1}
-                    \mF
+                    \mF_{n}(\mu)
                     +
                     \ohP\Big( \frac{1}{\sqrt{n}} \Big)
                 \right)^{-1} \\
@@ -1671,7 +1692,7 @@ we can simplify $f(\mu, \vx_1)$.
                 -
                 \frac{1}{\sqrt{n}}
                 \big( 1 + \gamma^{-1} m(\mu) \big)^{-2}
-                \mF
+                \mF_{n}(\mu)
                 +
                 \ohP\Big( \frac{1}{\sqrt{n}} \Big).              
     \end{align*}
@@ -1688,7 +1709,10 @@ we can simplify $f(\mu, \vx_1)$.
                 &\quad+
                 \frac{1}{\sqrt{n}} \Bigg\{
                     \frac{1}{1 + \gamma^{-1} m(\mu)}
-                        \left( \mD \mG(\mu) + \mG^\trans(\mu) \mD \right) \\
+                        \left( 
+                            \mD \mG_n(\mu) 
+                            + \mG_n^\trans(\mu) \mD 
+                        \right) \\
                     &\quad\qquad\qquad+
                     \frac{\gamma^{-1} m(\mu)}{1 + \gamma^{-1} m(\mu)}
                     \left( \mD \mE_{n,11} + \mE_{n,11}^\trans \mD \right) \\
@@ -1696,16 +1720,31 @@ we can simplify $f(\mu, \vx_1)$.
                     \left(
                         \frac{1}{1 + \gamma^{-1} m(\mu)}
                     \right)^2
-                    \mD \mF(\mu) \mD
+                    \mD \mF_n(\mu) \mD
                     +
-                    \mL_1
+                    \mL_{n,1}
                     +
-                    \mu \, \mH( \mu ) \Bigg\} \\
+                    \mu \, \mH_n( \mu ) \Bigg\} \\
                 &\quad+
                 \ohP\left( \frac{1}{\sqrt{n}} \right).
         \end{split}
     \]
-    The equations for $f_0$ and $f_1$ follow.
+    The equations for $f_0$ and $f_{n,1}$ follow.  We use the identity
+    \[
+        \mu
+        \cdot
+        \Big(
+            1
+            +
+            \gamma^{-1} m(\mu)
+        \Big)
+        =
+        -
+        \frac{1}{m(\mu)}
+        +
+        (1 - \gamma^{-1})
+    \]
+    to simplify the form of $f_0$.
 \end{proof}
 
 \clearpage
