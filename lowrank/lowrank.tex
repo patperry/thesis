@@ -1852,43 +1852,97 @@ is a solution, then so is $(z, \alpha \, \vx)$ for any scalar $\alpha$.  We rest
 
 \subsection{Almost sure limits}
 
-Given a solution of $f_0(z, \vx) = 0$, it is not hard to believe that there is a sequence of solutions $(z_n, \vx_n)$ converging to $z$ and $\vx$.  We make this precise in the next lemma.
+First we look at the solutions of $f_0(z, \vx)$.  
 
 \begin{lemma}
-    If $f_0( z_0, \vx_0) = 0$, then with probability one there exists a 
-    sequence $(z_n, \vx_n)$ satisfying $f_n(z_n, \vx_n) = 0$ such that
-    $z_n \to z_0$ and $\vx_n \to \vx_0$.
+    Letting $\bar k = \max \{ i : \mu_i > \gamma^{-1/2} \}$, there are exactly
+    $\bar k$ solutions to the equation $f_0( z, \vx ) = 0$.  They are given
+    by
+    \[
+        ( \tmu_i, \ve_i ), \quad \text{$i = 1, \ldots, \bar k$},
+    \]
+    where $\tmu_i$ is the unique solution
+    \[
+        m( \tmu_i ) = \frac{1}{\mu_i + \gamma^{-1}},
+    \]
+    and $\ve_i$ is the $i$th standard basis vector.
 \end{lemma}
 \begin{proof}
-    If $k = 1$, then the identifiability restrictions force $\vx_0 = 1$.  We
-    define $g_n(z) = f_n(z, 1)$.  For $z > \lambda_{n,1}$, $g_n$ is 
-    differentiable in a neighborhood of $z$, and $g'_n(z) > 0$.  The inverse 
-    function theorem guarantees existence of a map
-    $g_n^{-1} : \reals \to \reals$ defined in a neighborhood of $g_n(z)$ with
-    $g_n^{-1}(g(z)) = z$
-    
-    this case for $z > \lambda_{n,1}$ we have that 
-    $g_n(z) \equiv f_{n} (z, 1)$ is
-    differentiable with $g'_n(z) > 0$.
-    function in
-    
-    We the notation $\vx_{-k}$ to denote the vector
-    $(x_1, x_2, \ldots, x_{k-1})$.
-    Noting that $x_{k}$ is uniquely determined by $x_1, x_2, \ldots, x_{k-1}$, 
-    define
+    We have that 
     \[
-        g_n( z, x_1, x_2, \ldots, x_{k-1})
-            = f_n( z, x_1, x_2, \ldots, x_k).
+        \mT_0(z) 
+        = 
+        \frac{1}{1 + \gamma^{-1} m(z)} \mD^2 
+        + 
+        \frac{1}{m(z)} \mI_k.
     \]
-    We have that on any compact set, 
+    Since this is diagonal, the equation $f_0(z, \vx) = 0$ holds iff the 
+    $i$the diagonal element of $\mT_0(z)$ is zero and $\vx = \ve_i$.  The 
+    $i$th diagonal is zero when 
     \[
-        g_n( z, x_1, \ldots, x_{k-1} )
-            = g_0( z, x_1, \ldots, x_{k-1} ) 
-                + \epsilon_n( z, x_{1}, \ldots, x_{k-1} ),
+        \frac{\mu_i}{1 + \gamma^{-1} m(z)} + \frac{1}{m(z)} = 0,
     \]
-    with $\epsilon_n(z, x_1, \ldots, x_{k-1}) \toas 0$.
-    For $z > \lambda_{n,1}$, $g_n(z, x_1, \ldots, x_{k-1})$ 
-    is differentiable in a neighborhood of $(z, x_1, \ldots, )$.
+    equivalently
+    \[
+        m(z) = - \frac{1}{\mu_i + \gamma^{-1}}.
+    \]
+    Note that $m(z) > - \left( \gamma^{-1/2} + \gamma^{-1} \right)^{-1}$ and
+    $m'(z) > 0$ on $\big( b(\gamma), \infty \big)$.  Hence, a unique solution
+    only exists when $\mu_i > \gamma^{-1/2}$.
+\end{proof}
+
+Given a solution of $f_0(z, \vx) = 0$, it is not hard to believe that there is a sequence of solutions $(z_n, \vx_n)$ converging to $z$ and $\vx$.  We make this precise in two lemmas below.
+
+\begin{lemma}\label{L:zn-sequence-exists}
+    If $\mu > b(\gamma)$ occurs $l$ times on the diagonal of $\mD^2$, then
+    with probability one there exist sequences $z_{n,1}, \ldots, z_{n,l}$
+    with 
+    \begin{enumerate}
+        \item $z_{n,i} \neq z_{n,j}$ for $i \neq j$
+        \item $\det \mT_n(z_{n,i}) = 0$ for $i = 1, \ldots, l$.
+        \item $z_{n,i} \to 
+                z_0 
+                = 
+                m^{-1} \left( \frac{1}{\mu + \gamma^{-1}} \right)$.
+    \end{enumerate}
+\end{lemma}
+
+The proof is an adaptation from Stewart \& Sun \cite{stewart1990mpt}[page 167].  It involves Rouch\'e's Theorem, which we state as a lemma.  
+\begin{lemma}[Roch\'e's Theorem]\label{L:rouche}
+    If $\phi$ and $\eta$ are analytic in a simply connected region
+    $\Omega$ and $\mathcal{D} \subset \Omega$ is a neighborhood for which
+    \[
+        | \eta(z) | < | \phi(z) |, \quad z \in \partial \, \mathcal{D},
+    \]
+    where $\partial \, \mathcal{D}$ is the boundary of $\mathcal{D}$, then
+    $\phi(z)$ and $\phi(z) + \eta(z)$ have the same number of
+    zeros in $\mathcal{D}$.
+\end{lemma}
+
+\begin{proof}[Proof of Lemma~\ref{L:zn-sequence-exists}]
+    Let $z_0$ be the unique solution of 
+    $m(z_0) = (\mu + \gamma^{-1})^{-1}$.  The function
+    $\phi_0(z) = \det \mT_0(z)$ has a zero of multiplicity $l$ at $z_0$.  Let
+    $\mathcal{D} \subset (b(\gamma), \infty)$ be a neighborhood of
+    $z_0$ containing no other zeros of $\phi_0(z)$ such that 
+    $\phi_0(z) > \epsilon > 0$ on $\partial \mathcal{D}$.
+    
+    Define $\phi_n(z) = \det \mT_n(z)$ and 
+    $\eta_n(z) = \phi_n(z) - \phi_0(z)$.  Since $\det$ is a continuous 
+    function, from Lemma~\ref{L:eij-product-limits-uniform} 
+    we have that $\eta_n(z) \toas 0$ uniformly on $\partial \mathcal{D}$.
+    Choose $n$ large enough such that $\phi_n(z)$ 
+    and $\phi_0(z)$ are both analytic on $\mathcal{D}$ and
+    $|\epsilon_n(z) | < \epsilon < |\phi_0(z) |$ on $\partial \mathcal{D}$.
+    Applying Lemma~\ref{L:rouche}, we have that $\phi_n(z)$ has $l$ zeros
+    in $\mathcal{D}$, call them $z_{n,1}, \ldots, z_{n,l}$.  Since the
+    zeros of $\det \mT_n(z)$ are eigenvalues of $\mS_n$, the $z_{n,i}$ must
+    almost-surely be unique.  Letting $r$ be the radius of $\mathcal{D}$, for
+    each $i$ we have that
+    \[
+        \limsup_{n \to \infty} | z_{n,i} - z_0 | \leq r.
+    \]
+    Letting $r \to 0$, we get $z_{n,i} \to z_0$.
 \end{proof}
 
 
