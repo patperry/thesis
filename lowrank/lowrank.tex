@@ -1066,7 +1066,7 @@ The $Y_{N,\alpha}$ are all \iid with $\E Y_{N,\alpha} = \delta_{ij}$ and $\E Y_{
 Since $\frac{p-k}{n} \to \gamma^{-1}$, this completes the proof.
 \end{proof}
 
-As an aside, we remark that the quantity
+The function
 \begin{subequations}
 \begin{align}
     m(z)
@@ -1081,13 +1081,13 @@ As an aside, we remark that the quantity
                            \big( z - a(\gamma) \big) } }
                  { 2 z },
 \end{align}
-is equal to the Stieltjes transform of $\FMP_\gamma$, where
+is the Stieltjes transform of $\FMP_\gamma$, where
 \begin{align}
     a(\gamma) &= \left( 1 - \gamma^{-1/2} \right)^2, \\
     b(\gamma) &= \left( 1 + \gamma^{-1/2} \right)^2.
 \end{align}
 \end{subequations}
-It has inverse
+When restricted to the complement of the support of $\FMP_\gamma$, it has a well-defined inverse
 \begin{equation}
     z(m)
         = 
@@ -1099,7 +1099,8 @@ It has inverse
 
 \begin{lemma}\label{L:eij-product-limits-uniform}
     Considered as functions of $z$, the quantities in 
-    Lemma~\ref{L:eij-product-limits} converge uniformly over any closed
+    Lemma~\ref{L:eij-product-limits} and their derivatives
+    converge uniformly over any closed
     interval $[u,v] \subset \big( b(\gamma),\infty \big)$.
 \end{lemma}
 \begin{proof}
@@ -1188,6 +1189,16 @@ It has inverse
     \]
     In either case, 
     $|e_{n,ij}(z) - \gamma^{-1} m(z) \delta_{ij}| < \epsilon$.
+    Since 
+    \[
+        \frac{d}{dz} \left[
+            \frac{1}{(\lambda - z)^k}
+        \right]
+            =
+            \frac{-k}{(\lambda - z)^{k+1}},
+    \]
+    which is monotone for $z > \lambda$, the same argument applies to show
+    that the derivatives converge uniformly.
 \end{proof}
 
 In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:eij-product-limits}.
@@ -1907,17 +1918,36 @@ Given a solution of $f_0(z, \vx) = 0$, it is not hard to believe that there is a
     \end{enumerate}
 \end{lemma}
 
-The proof is an adaptation from Stewart \& Sun \cite{stewart1990mpt}[page 167].  It involves Rouch\'e's Theorem, which we state as a lemma.  
-\begin{lemma}[Roch\'e's Theorem]\label{L:rouche}
-    If $\phi$ and $\eta$ are analytic in a simply connected region
-    $\Omega$ and $\mathcal{D} \subset \Omega$ is a neighborhood for which
-    \[
-        | \eta(z) | < | \phi(z) |, \quad z \in \partial \, \mathcal{D},
-    \]
-    where $\partial \, \mathcal{D}$ is the boundary of $\mathcal{D}$, then
-    $\phi(z)$ and $\phi(z) + \eta(z)$ have the same number of
-    zeros in $\mathcal{D}$.
+The proof involves a technical lemma, which we state and prove now.
+
+\begin{lemma}
+    Let $g_n(z)$ be a sequence of continuous real-valued functions that 
+    converge uniformly on $(u,v)$ to $g_0(z)$.  If $g_0(z)$ is analytic
+    on $(u,v)$, then for $n$ large enough, $g_n(z)$ and $g_0(z)$ have the
+    same number of zeros in $(u,v)$ (counting multiplicity).
 \end{lemma}
+\begin{proof}
+    Since $|g_0(z)|$ is bounded away from zero outside of the neighborhoods
+    of its zeros, it suffices to show that if $g_0(z)$ has a zero 
+    $z_0 \in (u,v)$ of multiplicity $l$, then for $n$ large enough, 
+    $g_n(z)$ has $l$ zeros in $(u,v)$.  Define
+    \(
+        \tg_n(z) = \frac{g_n(z)}{|z - z_0|^{l-1}}.
+    \)
+    The function $\tg_0(z)$ is bounded and continuous, and has a 
+    simple zero at $z_0$.  For $r$ small enough, $\tg_0(z_0 + r)$ and
+    $\tg_0(z_0 - r)$ have differing signs.  Without loss of generality,
+    say that the first is positive.  
+    
+    The sequence $\tg_n(z)$ converges uniformly to $\tg_0(z)$ outside of
+    a neighborhood of $z_0$.  Thus, for $n$ large enough, $\tg_n(z-r) < 0$
+    and $\tg_n(z+r) > 0$, so that $\tg_n(z)$ and $g_n(z)$ have a zero
+    in $(z_0-r,z_0+r) \subset (u,v)$.  Call this zero $z_{n,1}$.  Since
+    $r$ is arbitrary, $z_{n,1} \to z_0$, and
+    $\frac{g_n(z)}{z - z_{n,1}} \to \frac{g_0(z)}{z - z_0}$ uniformly on
+    $(u,v)$.  We can now proceed inductively, since $\frac{g_0(z)}{z - z_0}$
+    has a zero of multiplicity $l-1$ at $z_0$.
+\end{proof}
 
 \begin{proof}[Proof of Lemma~\ref{L:zn-sequence-exists}]
     Let $z_0$ be the unique solution of 
