@@ -579,7 +579,8 @@ and
     0.
 \end{equation}
 \end{subequations}
-Conversely, if $(\mu, \vx_1)$ is a pair that solves~\eqref{E:secular-nof}, then
+Conversely, if $(\mu, \vx_1)$ is a pair that solves~\eqref{E:secular-nof}
+and $\vx_1 \neq 0$, then
 \begin{equation}\label{E:x-from-x1}
     \vx
     =
@@ -599,78 +600,81 @@ Conversely, if $(\mu, \vx_1)$ is a pair that solves~\eqref{E:secular-nof}, then
     \right)
 \end{equation}
 is an eigenvector of $\mS_n$ with eigenvalue $\mu$.  We define
-\begin{equation}\label{E:secular-f}
-    f_n ( \mu, \vx_1 )
+\begin{gather}
+    \mT_n(z)
+        =
+            \left(
+                \mS_{n,11}
+                -
+                z
+                \mI_k
+                -
+                \mS_{n,12}
+                \left(
+                    \mS_{n,22}
+                    -
+                    z
+                    \mI_{p-k}
+                \right)^{-1}
+                \mS_{n,21}
+            \right), \label{E:secular-T} \\
+    f_n ( z, \vx )
     =
-    \left(
-        \mS_{n,11}
-        -
-        \mu
-        \mI_k
-        -
-        \mS_{n,12}
-        \left(
-            \mS_{n,22}
-            -
-            \mu
-            \mI_{p-k}
-        \right)^{-1}
-        \mS_{n,21}
-    \right)
-    \vx_1
-\end{equation}
-and refer to the equation $f_n(\mu, \vx_1) = 0$ as the \emph{secular equation}.
+    \mT_n(z) \,
+    \vx, \label{E:secular-f}
+\end{gather}
+and refer to the equation $f_n(z, \vx) = 0$ as the \emph{secular equation}.
 
 \subsection{Outline of the proof}
 
 We first show that with probability one, $\mS_n$ and $\mS_{n,22}$ have no eigenvalues in common.  This implies that all of the eigenvalues of $\mS_n$ are solutions to the secular equation.  Next, we study the solutions of 
-$f_n(\mu, \vx_1) = 0$.  It turns out that these solutions are dramatically different depending on the size of $\mu$.  If $\mu > (1 + \gamma^{-1/2})^2$,
+$f_n(z, \vx) = 0$.  It turns out that these solutions are dramatically different depending on the size of $z$.  If $z > (1 + \gamma^{-1/2})^2$,
 then we can write
 \begin{align*}
-    \mu 
+    z 
         &= 
-            \mu^0 
+            z^0 
             + 
             \frac{1}{\sqrt{n}}
-            \mu^1 
+            z^1 
             + 
             \ohP\left( \frac{1}{\sqrt{n}} \right), \\
-    \vx_1
+    \vx
         &=
-            \vx_1^0
+            \vx^0
             +
             \frac{1}{\sqrt{n}}
-            \vx_1^1
+            \vx^1
             + 
             \ohP\left( \frac{1}{\sqrt{n}} \right).
 \end{align*}
 Otherwise, the solution is
 \begin{align*}
-    \mu
+    z
         &=
-            \mu^0
+            z^0
             + 
             \ohP\left( \frac{1}{\sqrt{n}} \right), \\
-    \vx_1
+    \vx
         &=
-            \vx_1^0
+            \vx^0
             +
             \ohP\left( \frac{1}{\sqrt{n}} \right).
 \end{align*}
 Once we have a solution to the secular equation, we can construct an
-eigenvector $\vx$ of $\mS_n$ using equation~\eqref{E:x-from-x1}.  Finally, we will derive the left singular vectors from the right by multiplying by $\mtX_n$.
+eigenvector of $\mS_n$ using equation~\eqref{E:x-from-x1}.  Finally, we will derive the left singular vectors from the right by multiplying by $\mtX_n$.
 
 \section{Analysis of the secular equation}
 
-By making use of the Sherman-Morrison-Wordbury formula~\cite{golub1996mc}, we can simplify $f_n(\mu, \vx_1)$.  We first write
+By making use of the Sherman-Morrison-Wordbury formula~\cite{golub1996mc}, we can simplify $\mT_n(z)$.  We first write
 \begin{align*}
     \left(
-        \mS_{n,22} - \mu \mI_{p-k}
+        \mS_{n,22} - z \mI_{p-k}
     \right)^{-1}
         &=
             \left(
                 \left(
-                    \mLambda_n - \mu \mI_{p-k}
+                    \mLambda_n - z \mI_{p-k}
                 \right)
                 +
                 \frac{1}{n}
@@ -681,7 +685,7 @@ By making use of the Sherman-Morrison-Wordbury formula~\cite{golub1996mc}, we ca
             \left(
                 \mLambda_n
                 -
-                \mu
+                z
                 \mI_{p-k}
             \right)^{-1} \\
             &\qquad-
@@ -689,7 +693,7 @@ By making use of the Sherman-Morrison-Wordbury formula~\cite{golub1996mc}, we ca
             \left(
                 \mLambda_n
                 -
-                \mu
+                z
                 \mI_{p-k}
             \right)^{-1} \\
             &\qquad\qquad\cdot
@@ -702,7 +706,7 @@ By making use of the Sherman-Morrison-Wordbury formula~\cite{golub1996mc}, we ca
                 \left(
                     \mLambda_n
                     -
-                    \mu
+                    z
                     \mI_{p-k}
                 \right)^{-1}
                 \mE_{n,12}^\trans
@@ -712,7 +716,7 @@ By making use of the Sherman-Morrison-Wordbury formula~\cite{golub1996mc}, we ca
             \left(
                 \mLambda_n
                 -
-                \mu
+                z
                 \mI_{p-k}
             \right)^{-1}.
     \end{split}
@@ -722,7 +726,7 @@ If we define $\mtD_n = \mD_n + \frac{1}{\sqrt{n}} \mE_{n,11}$, then we can compu
     \begin{split}
     \mS_{n,12} 
     \Big(
-        \mS_{n,22} &- \mu \mI_{p-k}
+        \mS_{n,22} &- z \mI_{p-k}
     \Big)^{-1}
     \mS_{n,21} \\
         &=
@@ -734,7 +738,7 @@ If we define $\mtD_n = \mD_n + \frac{1}{\sqrt{n}} \mE_{n,11}$, then we can compu
             \right) \\
             &\qquad\cdot
             \left(
-                \mS_{n,22} - \mu \mI_{p-k}
+                \mS_{n,22} - z \mI_{p-k}
             \right)^{-1} \\
             &\qquad\cdot
             \left(
@@ -751,7 +755,7 @@ If we define $\mtD_n = \mD_n + \frac{1}{\sqrt{n}} \mE_{n,11}$, then we can compu
             \left(
                 \mLambda_n
                 -
-                \mu
+                z
                 \mI_{p-k}
             \right)^{-1}
             \mE_{n,12}^\trans
@@ -763,7 +767,7 @@ If we define $\mtD_n = \mD_n + \frac{1}{\sqrt{n}} \mE_{n,11}$, then we can compu
             \left(
                 \mLambda_n
                 -
-                \mu
+                z
                 \mI_{p-k}
             \right)^{-1}
             \mLambda_n^{1/2}
@@ -775,7 +779,7 @@ If we define $\mtD_n = \mD_n + \frac{1}{\sqrt{n}} \mE_{n,11}$, then we can compu
             \left(
                 \mLambda_n
                 -
-                \mu
+                z
                 \mI_{p-k}
             \right)^{-1}
             \mE_{n,12}^\trans
@@ -787,7 +791,7 @@ If we define $\mtD_n = \mD_n + \frac{1}{\sqrt{n}} \mE_{n,11}$, then we can compu
             \left(
                 \mLambda_n
                 -
-                \mu
+                z
                 \mI_{p-k}
             \right)^{-1}
             \mLambda_n^{1/2}
@@ -799,7 +803,7 @@ If we define $\mtD_n = \mD_n + \frac{1}{\sqrt{n}} \mE_{n,11}$, then we can compu
             \left(
                 \mLambda_n
                 -
-                \mu
+                z
                 \mI_{p-k}
             \right)^{-1}
             \mE_{n,12}^\trans \\
@@ -812,7 +816,7 @@ If we define $\mtD_n = \mD_n + \frac{1}{\sqrt{n}} \mE_{n,11}$, then we can compu
                 \left(
                     \mLambda_n
                     -
-                    \mu
+                    z
                     \mI_{p-k}
                 \right)^{-1}
                 \mE_{n,12}^\trans
@@ -822,7 +826,7 @@ If we define $\mtD_n = \mD_n + \frac{1}{\sqrt{n}} \mE_{n,11}$, then we can compu
             \left(
                 \mLambda_n
                 -
-                \mu
+                z
                 \mI_{p-k}
             \right)^{-1}
             \mE_{n,12}^\trans
@@ -834,7 +838,7 @@ If we define $\mtD_n = \mD_n + \frac{1}{\sqrt{n}} \mE_{n,11}$, then we can compu
             \left(
                 \mLambda_n
                 -
-                \mu
+                z
                 \mI_{p-k}
             \right)^{-1}
             \mE_{n,12}^\trans \\
@@ -847,7 +851,7 @@ If we define $\mtD_n = \mD_n + \frac{1}{\sqrt{n}} \mE_{n,11}$, then we can compu
                 \left(
                     \mLambda_n
                     -
-                    \mu
+                    z
                     \mI_{p-k}
                 \right)^{-1}
                 \mE_{n,12}^\trans
@@ -857,7 +861,7 @@ If we define $\mtD_n = \mD_n + \frac{1}{\sqrt{n}} \mE_{n,11}$, then we can compu
             \left(
                 \mLambda_n
                 -
-                \mu
+                z
                 \mI_{p-k}
             \right)^{-1}
             \mLambda_n^{1/2}
@@ -869,7 +873,7 @@ If we define $\mtD_n = \mD_n + \frac{1}{\sqrt{n}} \mE_{n,11}$, then we can compu
             \left(
                 \mLambda_n
                 -
-                \mu
+                z
                 \mI_{p-k}
             \right)^{-1}
             \mE_{n,12}^\trans \\
@@ -882,7 +886,7 @@ If we define $\mtD_n = \mD_n + \frac{1}{\sqrt{n}} \mE_{n,11}$, then we can compu
                 \left(
                     \mLambda_n
                     -
-                    \mu
+                    z
                     \mI_{p-k}
                 \right)^{-1}
                 \mE_{n,12}^\trans
@@ -892,7 +896,7 @@ If we define $\mtD_n = \mD_n + \frac{1}{\sqrt{n}} \mE_{n,11}$, then we can compu
             \left(
                 \mLambda_n
                 -
-                \mu
+                z
                 \mI_{p-k}
             \right)^{-1}
             \mE_{n,12}^\trans
@@ -904,7 +908,7 @@ If we define $\mtD_n = \mD_n + \frac{1}{\sqrt{n}} \mE_{n,11}$, then we can compu
             \left(
                 \mLambda_n
                 -
-                \mu
+                z
                 \mI_{p-k}
             \right)^{-1}
             \mE_{n,12}^\trans \\
@@ -917,7 +921,7 @@ If we define $\mtD_n = \mD_n + \frac{1}{\sqrt{n}} \mE_{n,11}$, then we can compu
                 \left(
                     \mLambda_n
                     -
-                    \mu
+                    z
                     \mI_{p-k}
                 \right)^{-1}
                 \mE_{n,12}^\trans
@@ -927,30 +931,30 @@ If we define $\mtD_n = \mD_n + \frac{1}{\sqrt{n}} \mE_{n,11}$, then we can compu
             \left(
                 \mLambda_n
                 -
-                \mu
+                z
                 \mI_{p-k}
             \right)^{-1}
             \mLambda_{n}^{1/2}
             \mE_{n,21}
     \end{split}
 \end{align*}
-To put it mildly, this is a formidable expression.  We can simplify the formula substantially when $\mu > \left(1 + \gamma^{-1/2} \right)^2$.
+To put it mildly, this is a formidable expression.  We can simplify the formula substantially when $z > \left(1 + \gamma^{-1/2} \right)^2$.
 
 \begin{lemma}\label{L:eij-product-limits}
-    If $\mu > \left(1 + \gamma^{-1/2} \right)^2$, then
+    If $z > \left(1 + \gamma^{-1/2} \right)^2$, then
     \begin{align*}
         \frac{1}{n}
         \mE_{n,12}
         \left(
             \mLambda_n
             -
-            \mu \mI_{p-k}
+            z \mI_{p-k}
         \right)^{-1}
         \mE_{n,12}^\trans
             &\toas
                 \gamma^{-1}
                 \int
-                    \frac{1}{t - \mu} d\FMP_\gamma(t)
+                    \frac{1}{t - z} d\FMP_\gamma(t)
                 \cdot
                 \mI_k, \\
         \frac{1}{n}
@@ -958,7 +962,7 @@ To put it mildly, this is a formidable expression.  We can simplify the formula 
         \left(
             \mLambda_n
             -
-            \mu \mI_{p-k}
+            z \mI_{p-k}
         \right)^{-1}
         \mLambda_n^{1/2}
         \mE_{n,21}
@@ -969,13 +973,13 @@ To put it mildly, this is a formidable expression.  We can simplify the formula 
         \left(
             \mLambda_n
             -
-            \mu \mI_{p-k}
+            z \mI_{p-k}
         \right)^{-1}
         \mE_{n,21}
             &\toas
                 \gamma^{-1}
                 \int
-                    \frac{1}{t - \mu} d\FMP_\gamma(t)
+                    \frac{1}{t - z} d\FMP_\gamma(t)
                 \cdot
                 \mI_k, \\
         \frac{1}{n}
@@ -1004,7 +1008,7 @@ We prove the result for the first quantity and the other derivations are analogo
         \left(
             \mLambda_n
             -
-            \mu \mI_{p-k}
+            z \mI_{p-k}
         \right)^{-1}
         \mE_{n,12}^\trans    
     \right)_{ij}
@@ -1016,11 +1020,11 @@ We prove the result for the first quantity and the other derivations are analogo
         \frac{ \left( \mE_{n,12} \right)_{i\alpha}
                \left( \mE_{n,12} \right)_{j\alpha}
              }
-             { \lambda_{n,\alpha} - \mu }
+             { \lambda_{n,\alpha} - z }
 \end{align*}
 Let $N = p-k$, define weights 
 \(
-    W_{N,\alpha} = (\lambda_{n,\alpha} - \mu)^{-1},
+    W_{N,\alpha} = (\lambda_{n,\alpha} - z)^{-1},
 \)
 and let
 \(
@@ -1032,9 +1036,9 @@ Letting $b(\gamma) = \left( 1 + \gamma^{-1/2} \right)^2$, the function
     g(t) 
     = 
     \begin{cases}
-        \frac{1}{t - \mu} 
+        \frac{1}{t - z} 
             &\text{if $t \leq b(\gamma)$,} \\
-        \frac{1}{b(\gamma) - \mu}
+        \frac{1}{b(\gamma) - z}
             &\text{otherwise,}
     \end{cases}
 \]
@@ -1044,7 +1048,7 @@ is bounded and continuous.  Moreover, since $\lambda_{n,1} \toas b(\gamma)$, wit
     \sum_{i=\alpha}^N W_{N,\alpha}
         \toas
             \int
-                \frac{1}{t - \mu} d\FMP_\gamma(t).
+                \frac{1}{t - z} d\FMP_\gamma(t).
 \]
 Since $| W_{N,\alpha} | \leq W_{N,1} \overset{\text{a.s.}}{\leq} b(\gamma)$, the fourth moments of the weights are uniformly bounded in $N$.  
 
@@ -1057,12 +1061,12 @@ The $Y_{N,\alpha}$ are all \iid with $\E Y_{N,\alpha} = \delta_{ij}$ and $\E Y_{
     \toas
         \delta_{ij}
         \int
-            \frac{1}{t - \mu} d\FMP_\gamma(t).
+            \frac{1}{t - z} d\FMP_\gamma(t).
 \]
 Since $\frac{p-k}{n} \to \gamma^{-1}$, this completes the proof.
 \end{proof}
 
-As an aside, we remark that the quantity
+The function
 \begin{subequations}
 \begin{align}
     m(z)
@@ -1077,13 +1081,13 @@ As an aside, we remark that the quantity
                            \big( z - a(\gamma) \big) } }
                  { 2 z },
 \end{align}
-is equal to the Stieltjes transform of $\FMP_\gamma$, where
+is the Stieltjes transform of $\FMP_\gamma$, where
 \begin{align}
     a(\gamma) &= \left( 1 - \gamma^{-1/2} \right)^2, \\
     b(\gamma) &= \left( 1 + \gamma^{-1/2} \right)^2.
 \end{align}
 \end{subequations}
-It has inverse
+When restricted to the complement of the support of $\FMP_\gamma$, it has a well-defined inverse
 \begin{equation}
     z(m)
         = 
@@ -1093,11 +1097,115 @@ It has inverse
             \frac{1}{1 + \gamma^{-1} \, m}.
 \end{equation}
 
+\begin{lemma}\label{L:eij-product-limits-uniform}
+    Considered as functions of $z$, the quantities in 
+    Lemma~\ref{L:eij-product-limits} and their derivatives
+    converge uniformly over any closed
+    interval $[u,v] \subset \big( b(\gamma),\infty \big)$.
+\end{lemma}
+\begin{proof}
+    We show this for the first quantity and the other proofs are similar.
+    Defining
+    \[
+        e_{n,ij}(z)
+        =
+        \left(
+            \frac{1}{n}
+            \mE_{n,12}
+            \left(
+                \mLambda_n - z \mI_{p-k}
+            \right)^{-1}
+            \mE_{n,12}^\trans
+        \right)_{ij},
+    \]
+    we will show that for all $ij$ with $1 \leq i,j \leq k$, 
+    \[
+        \sup_{z \in [u,v]} 
+            \left|
+                e_{n,ij}(z)
+                    -
+                    \gamma^{-1}
+                    m(z)
+                    \delta_{ij}
+            \right|
+            \toas 0.
+    \]
+    Let $\epsilon > 0$ be arbitrary.  Note that for 
+    $z > b(\gamma)$, $m'(z) > 0$ and $m''(z) < 0$.  We let $d = m'(u)$ and
+    choose a grid
+    \[
+        u = z_1 < z_2 < \cdots < z_{M-1} < z_M = v,
+    \]
+    with $|z_l - z_{l+1}| = \frac{\gamma \epsilon}{2 d}$.  
+    Then $|\gamma^{-1} m(z_l) - \gamma^{-1} m(z_{l+1})| < \frac{\epsilon}{2}$.  
+    From 
+    Lemma~\ref{L:eij-product-limits}, we can find $N$ large enough such
+    that for $n > N$, 
+    \[
+        \max_{l\in\{1, \ldots, M\}}
+            \left|
+                e_{n,ij}(z_l)
+                    -
+                    \gamma^{-1}
+                    m(z_l)
+                    \delta_{ij}
+            \right|
+            <
+            \frac{\epsilon}{2}.
+    \]
+    Also guarantee that $N$ is large enough so that $\lambda_{n,1} < u$ 
+    (this is possible since $\lambda_{n,1} \toas b(\gamma) < u$).
+    Let $z \in [u,v]$ be arbitrary and find $l$ such that 
+    $z_l \leq z \leq z_{l+1}$.
+    Observe that $e_{n,ij}(z)$ is monotone for $z > \lambda_{n,1}$.  Thus,
+    either
+    \[
+        e_{n,ij}(z_l) \leq e_{n,ij}(z) \leq e_{n,ij}(z_{l+1})
+    \]
+    or
+    \[
+        e_{n,ij}(z_{l+1}) \leq e_{n,ij}(z) \leq e_{n,ij}(z_{l}).
+    \]
+    If $i \neq j$, we have for $n > N$,
+    \[
+        -\frac{\epsilon}{2} < e_{n,ij}(z) < \frac{\epsilon}{2},
+    \]
+    For $i = j$, $e_{n,ij}(z)$ is 
+    monotonically increasing and
+    \[
+        \gamma^{-1} m(z_l) - \frac{\epsilon}{2}
+            <
+                e_{n,ij}(z)
+                    <
+                        \gamma^{-1} m(z_{l+1}) + \frac{\epsilon}{2},
+    \]
+    so
+    \[
+        \gamma^{-1} m(z) - \epsilon
+            <
+                e_{n,ij}(z)
+                    <
+                        \gamma^{-1} m(z) + \epsilon.
+    \]
+    In either case, 
+    $|e_{n,ij}(z) - \gamma^{-1} m(z) \delta_{ij}| < \epsilon$.
+    Since 
+    \[
+        \frac{d}{dz} \left[
+            \frac{1}{(\lambda - z)^k}
+        \right]
+            =
+            \frac{-k}{(\lambda - z)^{k+1}},
+    \]
+    which is monotone for $z > \lambda$, the same argument applies to show
+    that the derivatives converge uniformly.
+\end{proof}
+
 In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:eij-product-limits}.
 
 \begin{lemma}\label{L:eij-product-scaled-limits}
-    If $\mu_1, \mu_2, \ldots, \mu_l > \left( 1 + \gamma^{-1/2} \right)^2$, 
-    then jointly for $\mu \in \{ \mu_1, \mu_2, \ldots, \mu_l \}$
+    If $z_1, z_2, \ldots, z_l > \left( 1 + \gamma^{-1/2} \right)^2$, 
+    then jointly for $z \in \{ z_1, z_2, \ldots, z_l \}$
     \begin{align*}
         \sqrt{n}
         \left(
@@ -1106,16 +1214,16 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
             \left(
                 \mLambda_n
                 -
-                \mu
+                z
                 \mI_{p-k}
-            \right)
+            \right)^{-1}
             \mE_{n,12}^\trans
             -
             \gamma^{-1}
-            m(\mu)
+            m(z)
             \mI_k
         \right)
-            &\tod \mF(\mu), \\
+            &\tod \mF(z), \\
         \sqrt{n}
         \left(
             \frac{1}{n}
@@ -1123,13 +1231,13 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
             \left(
                 \mLambda_n
                 -
-                \mu
+                z
                 \mI_{p-k}
-            \right)
+            \right)^{-1}
             \mLambda_{n}^{1/2}
             \mE_{n,21}
         \right)
-            &\tod \mG(\mu), \\
+            &\tod \mG(z), \\
         \sqrt{n}
         \left(
             \frac{1}{n}
@@ -1137,16 +1245,16 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
             \left(
                 \mLambda_n
                 -
-                \mu
+                z
                 \mI_{p-k}
-            \right)
+            \right)^{-1}
             \mE_{n,21}
             -
             \gamma^{-1}
-            m(\mu)
+            m(z)
             \mI_k
         \right)
-            &\tod \mH(\mu), \\
+            &\tod \mH(z), \\
         \sqrt{n}
         \left(
             \frac{1}{n}
@@ -1175,9 +1283,9 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
         \right)
             &\tod \mL_2,
     \end{align*}
-    where $\mF(\mu)$, $\mG(\mu)$, $\mH(\mu)$, $\mK$, $\mL_1$ and $\mL_2$ are 
+    where $\mF(z)$, $\mG(z)$, $\mH(z)$, $\mK$, $\mL_1$ and $\mL_2$ are 
     defined on the same probability space.  
-    All but $\mG(\mu)$ are symmetric. Jointly, their elements are
+    All but $\mG(z)$ are symmetric. Jointly, their elements are
     distributed as a multivariate normal.  If we define
     \[
         \mathcal{M}
@@ -1187,7 +1295,7 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
         \Bigg(
         \bigcup_{i=1}^l
             \Big\{ 
-                \mF(\mu_i), \mG(\mu_i), \mH(\mu_i)
+                \mF(z_i), \mG(z_i), \mH(z_i)
             \Big\}
         \Bigg),
     \] 
@@ -1200,37 +1308,37 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
     \]
     The sets
     \[
-        \Big\{ \mK, \mF( \mu ) \Big\},
-        \Big\{ \mG( \mu) \Big\},
-        \Big\{ \mL_1, \mH( \mu )\Big\},
+        \Big\{ \mK, \mF( z ) \Big\},
+        \Big\{ \mG( z) \Big\},
+        \Big\{ \mL_1, \mH( z )\Big\},
         \Big\{ \mL_2 \Big\}
     \]
     are mutually independent of each other.
     The other covariances are defined by
     \begin{align*}
-        \cov\Big( F_{ij}(\mu_1), \, F_{ij}(\mu_2) \Big)
+        \cov\Big( F_{ij}(z_1), \, F_{ij}(z_2) \Big)
             &= \gamma^{-1}
                \left( 1 + \delta_{ij} \right)
-               \frac{ m(\mu_1) - m(\mu_2) }
-                    { \mu_1 - \mu_2 }, \\
-        \cov\Big( F_{ij}(\mu_1), \, K_{ij} \Big)
+               \frac{ m(z_1) - m(z_2) }
+                    { z_1 - z_2 }, \\
+        \cov\Big( F_{ij}(z_1), \, K_{ij} \Big)
             &= \gamma^{-1}
-               \left( 1 + \delta_{ij} \right) m(\mu_1), \\
+               \left( 1 + \delta_{ij} \right) m(z_1), \\
         \cov\Big( K_{ij}, \, K_{ij} \Big)
             &= \gamma^{-1}
                \left( 1 + \delta_{ij} \right), \\
-        \cov\Big( G_{ij}(\mu_1), \, G_{ij}(\mu_2) \Big)
+        \cov\Big( G_{ij}(z_1), \, G_{ij}(z_2) \Big)
             &= \gamma^{-1} \,
-               \frac{ \mu_1 \, m(\mu_1) - \mu_2 \, m(\mu_2) }
-                    { \mu_1 - \mu_2 }, \\
-        \cov\Big( H_{ij}(\mu_1), \, H_{ij}(\mu_2) \Big)
+               \frac{ z_1 \, m(z_1) - z_2 \, m(z_2) }
+                    { z_1 - z_2 }, \\
+        \cov\Big( H_{ij}(z_1), \, H_{ij}(z_2) \Big)
             &= \gamma^{-1}
                \left( 1 + \delta_{ij} \right)
-               \frac{ m(\mu_1) - m(\mu_2) }
-                    { \mu_1 - \mu_2 }, \\
-        \cov\Big( H_{ij}(\mu_1), \, L_{1,ij} \Big)
+               \frac{ m(z_1) - m(z_2) }
+                    { z_1 - z_2 }, \\
+        \cov\Big( H_{ij}(z_1), \, L_{1,ij} \Big)
             &= \gamma^{-1}
-               \left( 1 + \delta_{ij} \right) m(\mu_1), \\
+               \left( 1 + \delta_{ij} \right) m(z_1), \\
         \cov\Big( L_{1,ij}, \, L_{1,ij} \Big)
             &= \gamma^{-1}
                \left( 1 + \delta_{ij} \right), \\
@@ -1240,16 +1348,16 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
     \end{align*}
     with the interpretation
     \begin{align*}
-        \frac{ m(\mu_1) - m(\mu_2) }
-             { \mu_1 - \mu_2 }
+        \frac{ m(z_1) - m(z_2) }
+             { z_1 - z_2 }
             &=
-                m'(\mu_1), \\
+                m'(z_1), \\
     \intertext{and}
-        \frac{ \mu_1 \, m(\mu_1) - \mu_2 \, m(\mu_2) }
-             { \mu_1 - \mu_2 }
-            &= m( \mu_1 ) + \mu_1 \, m'(\mu_1)
+        \frac{ z_1 \, m(z_1) - z_2 \, m(z_2) }
+             { z_1 - z_2 }
+            &= m( z_1 ) + z_1 \, m'(z_1)
     \end{align*}
-    for $\mu_1 = \mu_2$.
+    for $z_1 = z_2$.
 \end{lemma}
 \begin{proof}
     The distributions of $\mK$, $\mL_1$, and $\mL_2$ follow from the 
@@ -1283,8 +1391,8 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
     For the other limits, we will need the Wishart CLT 
     (Theorem~\ref{T:wishart-clt}) and the strong weighted multivariate CLT
     (Corollary~\ref{C:strong-weighted-clt}).  To save space we only
-    give the argument for the joint distribution of $\mF(\mu_1)$ and 
-    $\mF(\mu_2)$.
+    give the argument for the joint distribution of $\mF(z_1)$ and 
+    $\mF(z_2)$.
     
     Put $N = p-k$ and consider the $2 k^2$-dimensional vector
     \(
@@ -1333,7 +1441,7 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
     \(
         \vW_{N,\alpha,i}
         =
-        \frac{1}{\lambda_\alpha - \mu_i}
+        \frac{1}{\lambda_\alpha - z_i}
         \vone.
     \)
     We have that for $\alpha = 1, 2, \ldots, N$, the $\vY_{N,\alpha}$ are
@@ -1348,9 +1456,9 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
             \vtmu^Y \\
             \vtmu^Y
         \end{matrix}
-        \right),
+        \right)
     \]
-    where $\vtmu^Y = \vecm\left( \mI_k \right)$.  Also, we have
+    and $\vtmu^Y = \vecm\left( \mI_k \right)$.  Also, we have
     \[
         \E \left[ 
             \left(
@@ -1372,9 +1480,9 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
             \mtSigma^Y & \mtSigma^Y \\
             \mtSigma^Y & \mtSigma^Y
         \end{matrix}
-        \right)
+        \right),
     \]
-    and
+    where
     \(
         \mtSigma^Y
         =
@@ -1416,29 +1524,29 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
         \mu^W_i
             &=
                 \int \frac{ d\FMP_\gamma(t) }
-                          { (t - \mu_i) } \\
+                          { t - z_i } \\
             &=
-                m( \mu_i ), \\
+                m( z_i ), \\
         \sigma^W_{ij}
             &=
                 \int \frac{ d\FMP_\gamma(t) }
-                          { (t - \mu_i)(t - \mu_j) } \\
+                          { (t - z_i)(t - z_j) } \\
             &=
-                \frac{ m( \mu_1 ) - m( \mu_2 ) }
-                     { \mu_1 - \mu_2 },
+                \frac{ m( z_1 ) - m( z_2 ) }
+                     { z_1 - z_2 },
     \end{align*}
     the Wishart LLN combined with the truncation argument of
     Lemma~\ref{L:eij-product-limits} gives us that
     \begin{align*}
         \frac{1}{N}
         \sum_{\alpha=1}^N
-            \frac{1}{ ( \lambda_{n,\alpha} - \mu_i ) }
+            \frac{1}{  \lambda_{n,\alpha} - z_i  }
             &\toas
-                \mu^W_{i} \\
+                \mu^W_{i}, \\
         \frac{1}{N}
         \sum_{\alpha=1}^N
-            \frac{1}{ ( \lambda_{n,\alpha} - \mu_i )
-                      ( \lambda_{n,\alpha} - \mu_j ) }
+            \frac{1}{ ( \lambda_{n,\alpha} - z_i )
+                      ( \lambda_{n,\alpha} - z_j ) }
             &\toas
                 \sigma^W_{ij}.
     \end{align*}
@@ -1512,9 +1620,9 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
             \left(
                 \mLambda_n
                 -
-                \mu
+                z_i
                 \mI_{p-k}
-            \right)
+            \right)^{-1}
             \mE_{n,12}^\trans
             -
             \gamma^{-1}
@@ -1529,11 +1637,12 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
                 \Bigg( 
                     \frac{1}{N}
                     \sum_{\alpha=1}^N
-                        \vW_{N,\alpha} \bullet \vY_{N,\alpha}
+                        \vW_{N,\alpha,i} \bullet \vtY_{N,\alpha}
                     -
-                        \vmu^W \bullet \vmu^Y
-                \Bigg)
+                        \vmu_i^W \bullet \vtmu_i^Y
+                \Bigg),
     \end{multline*}
+    (with $\vmu_i^W = \mu_i^W \vone$),
     and
     \(
         \gamma^{-1}
@@ -1544,17 +1653,17 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
 \end{proof}
 
 With Lemmas~\ref{L:eij-product-limits}~and~\ref{L:eij-product-scaled-limits},
-we can simplify $f_n(\mu, \vx_1)$.  For convenience, we will define
-$\mF_n (\mu)$ such that
+we can simplify $f_n(z, \vx)$.  For convenience, we will define
+$\mF_n (z)$ such that
 \[
     \frac{1}{n}
     \mE_{n,12}
     \left(
         \mLambda_n
         -
-        \mu
+        z
         \mI_{p-k}
-    \right)
+    \right)^{-1}
     \mE_{n,12}^\trans
         =
             \gamma^{-1}
@@ -1562,70 +1671,67 @@ $\mF_n (\mu)$ such that
             \mI_k
             +
             \frac{1}{\sqrt{n}}
-            \mF_n(\mu)
+            \mF_n(z)
             +
             \ohP\left(
                 \frac{1}{\sqrt{n}}
             \right)
 \]
-and $\mF_n(\mu) \tod \mF(\mu)$,
-with $\mG_n(\mu), \mH_n(\mu), \mK_n, \mL_{n,1},$ and $\mL_{n,2}$ defined similarly.
+and $\mF_n(z) \tod \mF(z)$,
+with $\mG_n(z), \mH_n(z), \mK_n, \mL_{n,1},$ and $\mL_{n,2}$ defined similarly.
 
 \begin{lemma}
-    If $\mu > (1 + \gamma^{-1/2})^2$, then
+    If $[u,v] \subset \big( b(\gamma), \, \infty \big)$, then
     \(
-        f_n( \mu, \vx_1 )
+        \mT_n( z )
             \toas
-                f_0( \mu, \vx_1),
+                \mT_0( z )
     \)
-    where
+    uniformly on $[u,v]$, where
     \[
-        f_0( \mu, \vx_1 )
+        \mT_0( z )
             =
-                \left[
-                    \frac{1}{ 1 + \gamma^{-1} m(\mu) }
-                    \mD^2 
-                    +
-                    \frac{1}{m(\mu)}
-                    \mI_k
-                \right] \vx_1.
+                \frac{1}{ 1 + \gamma^{-1} m(z) }
+                \mD^2 
+                +
+                \frac{1}{m(z)}
+                \mI_k.
     \]
 \end{lemma}
 
 \begin{lemma}
-    If $\mu_1, \mu_2, \ldots, \mu_l > (1 + \gamma^{-1/2})^2$ then jointly
-    for $\mu \in \{ \mu_1, \mu_2, \ldots, \mu_l \}$,
+    If $z > (1 + \gamma^{-1/2})^2$, then
     \[
-        f_n( \mu, \vx_1 ) 
+        \mT_n( z ) 
             = 
-                f_0( \mu, \vx_1 )
+                \mT_0( z )
                 +
                 \frac{1}{\sqrt{n}}
-                f_{n,1}( \mu, \vx_1 )
+                \mT_{n,1}( z )
                 +
                 \ohP\left( \frac{1}{\sqrt{n}} \right),
     \]
     where
     \begin{equation*}
         \begin{split}
-            f_{n,1}( \mu, \vx_1 ) 
-                &= \bigg[ \mL_{n,2}
+            \mT_{n,1}( z ) 
+                &= \mL_{n,2}
                 -
-                \big( 1 + \gamma^{-1} m(\mu) \big)^{-2}
+                \big( 1 + \gamma^{-1} m(z) \big)^{-2}
                     \cdot
-                    \mD \mF_n(\mu) \mD \\
+                    \mD \mF_n(z) \mD \\
                 &\quad\quad+ 
-                \big( 1 + \gamma^{-1} m(\mu) \big)^{-1} \\
+                \big( 1 + \gamma^{-1} m(z) \big)^{-1} \\
                     &\quad\quad\quad\cdot
                     \Big(
                         \sqrt{n} \left( \mD_n^2 - \mD^2 \right)
                         +
-                        \mD \big( \mE_{n,11} - \mG_n(\mu) \big)
+                        \mD \big( \mE_{n,11} - \mG_n(z) \big)
                         + 
-                        \big( \mE_{n,11} - \mG_n(\mu) \big)^\trans \mD
+                        \big( \mE_{n,11} - \mG_n(z) \big)^\trans \mD
                     \Big)  \\
                 &\quad\quad-
-                \mu \, \mH_n(\mu) \bigg] \, \vx_1.
+                z \, \mH_n(z).
         \end{split}
     \end{equation*}
 \end{lemma}
@@ -1658,309 +1764,241 @@ with $\mG_n(\mu), \mH_n(\mu), \mK_n, \mL_{n,1},$ and $\mL_{n,2}$ defined similar
             \frac{1}{n}
             \mE_{n,12}
             &\Big(
-                \mLambda_n - \mu \mI_{p-k}
+                \mLambda_n - z \mI_{p-k}
             \Big)^{-1}
             \mE_{n,12}^\trans
-        \Bigg) \\
+        \Bigg)^{-1} \\
             &=
                 \left(
                     \mI_k
                     +
                     \gamma^{-1}
-                    m( \mu )
+                    m( z )
                     \mI_k
                     +
                     \frac{1}{\sqrt{n}}
-                    \mF_n(\mu)
+                    \mF_n(z)
                     +
                     \ohP\Big( \frac{1}{\sqrt{n}} \Big)
                 \right)^{-1} 
         \end{split} \\
             &=
-                \big(1 + \gamma^{-1} m(\mu)\big)^{-1}
+                \big(1 + \gamma^{-1} m(z)\big)^{-1}
                 \left(
                     \mI_k
                     +
                     \frac{1}{\sqrt{n}}
-                    \big( 1 + \gamma^{-1} m(\mu) \big)^{-1}
-                    \mF_{n}(\mu)
+                    \big( 1 + \gamma^{-1} m(z) \big)^{-1}
+                    \mF_{n}(z)
                     +
                     \ohP\Big( \frac{1}{\sqrt{n}} \Big)
                 \right)^{-1} \\
             &=
-                \big( 1 + \gamma^{-1} m(\mu) \big)^{-1} \mI_k
+                \big( 1 + \gamma^{-1} m(z) \big)^{-1} \mI_k
                 -
                 \frac{1}{\sqrt{n}}
-                \big( 1 + \gamma^{-1} m(\mu) \big)^{-2}
-                \mF_{n}(\mu)
+                \big( 1 + \gamma^{-1} m(z) \big)^{-2}
+                \mF_{n}(z)
                 +
                 \ohP\Big( \frac{1}{\sqrt{n}} \Big).              
     \end{align*}
     Using this, after some simplification we get
     \[
         \begin{split}
-            \mS_{n,12} \Big( \mS_{n,22} &- \mu \mI_{p-k} \Big) \mS_{n,21} \\
+            \mS_{n,12} \Big( \mS_{n,22} &- z \mI_{p-k} \Big) \mS_{n,21} \\
                 &=
                 \gamma^{-1}
-                \big( 1 + \mu \, m(\mu) \big) \mI_k
+                \big( 1 + z \, m(z) \big) \mI_k
                 +
-                \frac{\gamma^{-1} m(\mu)}
-                     { 1 + \gamma^{-1} m(\mu)} \mD_n^2 \\
+                \frac{\gamma^{-1} m(z)}
+                     { 1 + \gamma^{-1} m(z)} \mD_n^2 \\
                 &\quad+
                 \frac{1}{\sqrt{n}} \Bigg\{
-                    \frac{1}{1 + \gamma^{-1} m(\mu)}
+                    \frac{1}{1 + \gamma^{-1} m(z)}
                         \left( 
-                            \mD \mG_n(\mu) 
-                            + \mG_n^\trans(\mu) \mD 
+                            \mD \mG_n(z) 
+                            + \mG_n^\trans(z) \mD 
                         \right) \\
                     &\quad\qquad\qquad+
-                    \frac{\gamma^{-1} m(\mu)}{1 + \gamma^{-1} m(\mu)}
+                    \frac{\gamma^{-1} m(z)}{1 + \gamma^{-1} m(z)}
                     \left( \mD \mE_{n,11} + \mE_{n,11}^\trans \mD \right) \\
                     &\quad\qquad\qquad+
                     \left(
-                        \frac{1}{1 + \gamma^{-1} m(\mu)}
+                        \frac{1}{1 + \gamma^{-1} m(z)}
                     \right)^2
-                    \mD \mF_n(\mu) \mD
+                    \mD \mF_n(z) \mD
                     +
                     \mL_{n,1}
                     +
-                    \mu \, \mH_n( \mu ) \Bigg\} \\
+                    z \, \mH_n( z ) \Bigg\} \\
                 &\quad+
                 \ohP\left( \frac{1}{\sqrt{n}} \right).
         \end{split}
     \]
-    The equations for $f_0$ and $f_{n,1}$ follow.  We use the identity
+    The equations for $\mT_0$ and $\mT_{n,1}$ follow.  We use the identity
     \[
-        \mu
+        z
         \cdot
         \Big(
             1
             +
-            \gamma^{-1} m(\mu)
+            \gamma^{-1} m(z)
         \Big)
         =
         -
-        \frac{1}{m(\mu)}
+        \frac{1}{m(z)}
         +
         (1 - \gamma^{-1})
     \]
-    to simplify the form of $f_0$.
+    to simplify the form of $\mT_0$.
 \end{proof}
 
-\clearpage
+\section{Solutions to the secular equation}
 
-
-
-
-\section{The resolvent}\label{S:resolvent}
-
-In this section we study the resolvent $R_t(z) = O^T (z I - \Lambda)^{-t} O$ 
-and its interaction with the matrices $\Psi_n$ and $U$.  Recall from equation
-{E:psi} that $\Psi_n = V D_n + (1/n^{\half}) E_1^T$.  We have that
-$O \Psi_n = O V D_n + (1/n^{\half}) \tilde E_1^T$, where $\tilde E_1 = E_1 O$.
-Due the the dependence between the rows of $O V$, it is inconvenient to
-deal with $O \Psi_n$ directly.  Let $Z$ be a $p \times k$ matrix of \iid standard normals.  Since $O V$ is uniformly distributed over the Steifel manifold, we have
-\begin{align}\label{E:OU}
-    O V
-        &\overset{d}{=} Z (Z^T Z)^{-T/2}  \notag \\
-        &= (1/p^\half) Z \big((1/p) Z^T Z\big)^{-T/2}.  
-\end{align}    
-We know that
-$(1/p) Z^T Z \toas I_k$.  Defining $G = (1/p) Z^T Z - I_k$ and using the
-delta method, it is not hard to see that $G = O_P(1/p^\half)$.  For the rest
-of the section, we will use the representation in \eqref{E:OU} for $OV$.  We
-define $\tilde V = (1/p^\half) Z$,
-$\tilde \Psi_n =  \tilde V D_n + (\gamma^{\half} / p^\half) \tilde E_1$,
-and $\tilde R_t (z) = (z I_M - \Lambda)^{-t}$.  We also let 
-$\tilde R_2(z_1, z_2) = \tilde R_1 (z_1) \tilde R_1 (z_2)$.
-
+We will now study the solutions to $f_{n}(z, \vx) = 0$.  If $(z, \vx)$
+is a solution, then so is $(z, \alpha \, \vx)$ for any scalar $\alpha$.  We restrict our attention to solutions with $\|\vx \|_2 = 1$.  We also impose a restriction on the sign of $\vx$, namely we require that the component with the largest magnitude is positive, i.e.
+\(
+    \max_i x_i = \max_i | x_i |.
+\)
 
 \subsection{Almost sure limits}
 
-We first demonstrate that $\tilde \Psi_n^T \tilde R_p(z) \tilde \Psi_n$ and 
-$\Psi_n^T R_p (z) \Psi_n$ are asymptotically almost surely
-equal. A similar result holds for the pairs 
-$(\tilde \Psi_n^T \tilde R_2(z_1, z_2) \tilde \Psi_n,
-  \Psi_n^T R_2(z_1, z_2) \Psi_n)$
-and $(\tilde V^T \tilde R_1(z) \tilde \Psi_n, V^T R_1(z) \Psi_n)$.
-To see this for $\Psi_n^T R_p(z) \Psi_n$, note that
-\begin{align*}
-    \begin{split}
-    \Psi_n^T R_t (z) \Psi_n
-    &=
-    \tilde \Psi_n^T \tilde R_t(z) \tilde \Psi_n \\
-        &+ \frac{1}{p} \Big\{
-        G^T D_n^T Z^T \tilde R_p(z) ( Z D_n + \gamma^\half \tilde E_1) \\
-        &\qquad \qquad +
-        ( Z D_n + \gamma^\half \tilde E_1)^T \tilde R_p(z) Z D_n G \\
-        &\qquad \qquad +
-        G^T D_n^T Z^T \tilde R_p(z) Z D_n G
-        \Big\}.
-    \end{split}
-\end{align*}
-The remainder terms all go to $0$ almost surely.
-Proposition~\ref{P:weighted-slln}, a strong law of large numbers for weigted sums,
-makes this more rigorous.  The term 
-$\tilde \Psi_n^T \tilde R_t(z) \tilde \Psi_n$ is a sum of the form
-\[
-    \tilde \Psi_n^T \tilde R_t(z) \tilde \Psi_n 
-    =
-    \sum_{\alpha=1}^p
-        \frac{\tilde \vpsi_\alpha \tilde \vpsi^T_\alpha }
-             {(z - \lambda_\alpha)^t},
-\]
-where $\tilde \vpsi_1, \ldots, \tilde \vpsi_p$ are the rows of $\tilde \Psi_n$.
-Since the $\tilde \vpsi_\alpha$ are i.i.d, it is quite plausible that the sum
-converges to $r_1(z) \E[ \tilde \Psi_n^T \tilde \Psi_n ]$.  Indeed, the strong
-law of Proposition~\ref{P:weighted-slln} proves exactly this.  With the additional
-help of Lemma {L:wishart-lln}, we can prove:
+First we look at the solutions of $f_0(z, \vx)$.  
 
-\begin{lemma}\label{L:Sbar}
-    For $z > \bar b$, 
-    \begin{align*}
-        S_{n,1}(z) &\toas r_1(z) \left( D^2 + \gamma I_k \right), \\
-        S_{n,2}(z) &\toas r_2(z) \left( D^2 + \gamma I_k \right), \\
-    \intertext{and}
-        T_n(z) &\toas r_1(z) D.
-    \end{align*}
+\begin{lemma}
+    Letting $\bar k = \max \{ i : \mu_i > \gamma^{-1/2} \}$, there are exactly
+    $\bar k$ solutions to the equation $f_0( z, \vx ) = 0$.  They are given
+    by
+    \[
+        ( \tmu_i, \ve_i ), \quad \text{$i = 1, \ldots, \bar k$},
+    \]
+    where $\tmu_i$ is the unique solution
+    \[
+        m( \tmu_i ) = \frac{1}{\mu_i + \gamma^{-1}},
+    \]
+    and $\ve_i$ is the $i$th standard basis vector.
+\end{lemma}
+\begin{proof}
+    We have that 
+    \[
+        \mT_0(z) 
+        = 
+        \frac{1}{1 + \gamma^{-1} m(z)} \mD^2 
+        + 
+        \frac{1}{m(z)} \mI_k.
+    \]
+    Since this is diagonal, the equation $f_0(z, \vx) = 0$ holds iff the 
+    $i$the diagonal element of $\mT_0(z)$ is zero and $\vx = \ve_i$.  The 
+    $i$th diagonal is zero when 
+    \[
+        \frac{\mu_i}{1 + \gamma^{-1} m(z)} + \frac{1}{m(z)} = 0,
+    \]
+    equivalently
+    \[
+        m(z) = - \frac{1}{\mu_i + \gamma^{-1}}.
+    \]
+    Note that $m(z) > - \left( \gamma^{-1/2} + \gamma^{-1} \right)^{-1}$ and
+    $m'(z) > 0$ on $\big( b(\gamma), \infty \big)$.  Hence, a unique solution
+    only exists when $\mu_i > \gamma^{-1/2}$.
+\end{proof}
+
+Given a solution of $f_0(z, \vx) = 0$, it is not hard to believe that there is a sequence of solutions $(z_n, \vx_n)$ converging to $z$ and $\vx$.  We make this precise now.
+
+\begin{lemma}\label{L:zn-sequence-exists}
+    If $\mu > \gamma^{-1/2}$ occurs $l$ times on the diagonal of $\mD^2$, then
+    with probability one there exist sequences $z_{n,1}, 
+    \ldots, z_{n,l}$ such that for $n$ large enough:
+    \begin{enumerate}
+        \item $z_{n,i} \neq z_{n,j}$ for $i \neq j$
+        \item $\det \mT_n(z_{n,i}) = 0$ for $i = 1, \ldots, l$.
+        \item $z_{n,i} \to 
+                z_0 
+                = 
+                m^{-1} \left( \frac{1}{\mu + \gamma^{-1}} \right)$.
+    \end{enumerate}
 \end{lemma}
 
-For convenience, we define
-\begin{align*}
-    \bar S_1(z) &= r_1(z) \left( D^2 + \gamma I_k \right), \\
-    \bar S_2(z) &= r_2(z) \left( D^2 + \gamma I_k \right), \\
-\intertext{and}
-    \bar T(z) &= r_1(z) D.
-\end{align*}
+The proof involves a technical lemma, which we state and prove now.
 
-\subsection{Asymptotic normality}
+\begin{lemma}\label{L:uniform-converge-same-roots}
+    Let $g_n(z)$ be a sequence of continuous real-valued functions that 
+    converge uniformly on $(u,v)$ to $g_0(z)$.  If $g_0(z)$ is analytic
+    on $(u,v)$, then for $n$ large enough, $g_n(z)$ and $g_0(z)$ have the
+    same number of zeros in $(u,v)$ (counting multiplicity).
+\end{lemma}
+\begin{proof}
+    Since $|g_0(z)|$ is bounded away from zero outside of the neighborhoods
+    of its zeros, it suffices to show that if $g_0(z)$ has a zero 
+    $z_0 \in (u,v)$ of multiplicity $l$, then for $n$ large enough, 
+    $g_n(z)$ has $l$ zeros in $(u,v)$.  Define
+    \(
+        \tg_n(z) = \frac{g_n(z)}{|z - z_0|^{l-1}}.
+    \)
+    The function $\tg_0(z)$ is bounded and continuous, and has a 
+    simple zero at $z_0$.  For $r$ small enough, $\tg_0(z_0 + r)$ and
+    $\tg_0(z_0 - r)$ have differing signs.  Without loss of generality,
+    say that the first is positive.  
+    
+    The sequence $\tg_n(z)$ converges uniformly to $\tg_0(z)$ outside of
+    a neighborhood of $z_0$.  Thus, for $n$ large enough, $\tg_n(z-r) < 0$
+    and $\tg_n(z+r) > 0$.  Also, either $g_n(z)$ has a zero at $z_0$, or else 
+    for a small enough neighborhood abound $z_0$, $\sgn \tg_n(z)$ is constant.
+    Since $\tg_n(z)$ is continuous outside of a neighborhood of $z_0$, 
+    $\tg_n(z)$ and $g_n(z)$ must have a zero
+    in $(z_0-r,z_0+r) \subset (u,v)$.  Call this zero $z_{n,1}$.  Since
+    $r$ is arbitrary, $z_{n,1} \to z_0$, and
+    $\frac{g_n(z)}{z - z_{n,1}} \to \frac{g_0(z)}{z - z_0}$ uniformly on
+    $(u,v)$.  We can now proceed inductively, since $\frac{g_0(z)}{z - z_0}$
+    has a zero of multiplicity $l-1$ at $z_0$.
+\end{proof}
 
-It is slightly trickier but still tractable is to get the asymptotic distributions
-of $\sqrt{n} \big( S_{n,1}(z) - \bar S_1 (z) \big)$ and the other similar expressions.
-Assume that there exist random matrix-valued functions 
-$S_1(z)$, $S_2(z)$, and $T(z)$ defined on some probability space
-such that for some finite set $\{ z_j \}_{j=1}^J$ with $z_j > b$ for all $j$, 
-the matrices
-\begin{equation*}
-    \left\{ 
-        \sqrt{n} \big( S_{n,1}(z_j) - \bar S_1 (z_j) \big), \quad
-        \sqrt{n} \big( S_{n,2}(z_j) - \bar S_2 (z_j) \big), \quad
-        \sqrt{n} \big( T_n(z_j) - \bar T (z_j) \big) 
-    \right\}_{j=1}^{J}
-\end{equation*}
-converge jointly in distribution to
-\[
-    \Big\{
-        S_1(z_j), S_2(z_j), T(z_j)
-    \Big\}_{j=1}^{J}.
-\]
-The purpose of this section is to prove that such an assumption is justified
-and to describe explicitly this limiting distribution. 
+\begin{proof}[Proof of Lemma~\ref{L:zn-sequence-exists}]
+    Let $z_0$ be the unique solution of $m(z_0) = (\mu + \gamma^{-1})^{-1}$.
+    Define $g_n(z) = \det \mT_n(z)$.  Since $\det$ is a continuous function, 
+    $g_n(z)$ converges uniformly to $g_0(z)$ in 
+    any neighborhood of $z_0$.  Noting that $g_0(z)$ has a zero of 
+    multiplicity 
+    $l$ at $z_0$, by Lemma~\ref{L:uniform-converge-same-roots} we get that for large enough $n$, $g_n(z)$ has $l$ zeros
+    in a neighborhood of $z_0$.  By a Lemma of Okamoto~\cite{okamoto1973deq}, 
+    the zeros of $g_n(z)$ are almost surely simple.
+\end{proof}
 
-We first start with $S_{n,1}$.  We have that
-\begin{align*}
-    \sqrt{n} \big( S_{n,1} (z) &- \bar S_1 (z) \big) = \\
-        \gamma^{-\half} \sqrt{p} &\Bigg\{
-            D_n 
-            \left( \frac{1}{p} Z^T Z \right)^{-\half}
-            \left(
-                \frac{1}{p} Z^T (z I_p - \Lambda)^{-1} Z
-                -
-                r_1(z) I_k
-            \right)
-            \left( \frac{1}{p} Z^T Z \right)^{-\Thalf}
-            D_n \\
-            &-{}
-            r_1(z)
-            D_n 
-            \left( \frac{1}{p} Z^T Z \right)^{-\half}
-            \left(
-                \frac{1}{p} Z^T Z - I_k
-            \right)
-            \left( \frac{1}{p} Z^T Z \right)^{-\Thalf}
-            D_n \\
-            &+{}
-            r_1(z) \left( D_n^2 - D^2 \right) \\
-            &+{}
-            \gamma^\half
-            D_n 
-            \left( \frac{1}{p} Z^T Z \right)^{-\half}
-            \left(
-                \frac{1}{p} Z^T (z I_p - \Lambda)^{-1} \tilde E_1
-            \right) \\
-            &+{}
-            \gamma^\half
-            \left(
-                \frac{1}{p} \tilde E_1^T (z I_p - \Lambda)^{-1} Z
-            \right)
-            \left( \frac{1}{p} Z^T Z \right)^{-\Thalf}
-            D_n \\
-            &+{}
-            \gamma
-            \left(
-                \frac{1}{p} \tilde E_1^T (z I_p - \Lambda)^{-1} \tilde E_1
-                -
-                r_1(z) I_k
-            \right)
-        \Bigg\}.
-\end{align*}
-Employing Slutzky's theorem, this has the same limiting distribution as
-\begin{align*}
-    S_{n,1}^{(1)}(z) \equiv 
-        \gamma^{-\half} \sqrt{p} &\Bigg\{
-            D
-            \left(
-                \frac{1}{p} Z^T (z I_p - \Lambda)^{-1} Z
-                -
-                r_1(z) I_k
-            \right)
-            D \\
-            &-{}
-            r_1(z)
-            D
-            \left(
-                \frac{1}{p} Z^T Z - I_k
-            \right)
-            D \\
-            &+{}
-            r_1(z) \left( D_n^2 - D^2 \right) \\
-            &+{}
-            \gamma^\half
-            D 
-            \left(
-                \frac{1}{p} Z^T (z I_p - \Lambda)^{-1} \tilde E_1
-            \right) \\
-            &+{}
-            \gamma^\half
-            \left(
-                \frac{1}{p} \tilde E_1^T (z I_p - \Lambda)^{-1} Z
-            \right)
-            D \\
-            &+{}
-            \gamma
-            \left(
-                \frac{1}{p} \tilde E_1^T (z I_p - \Lambda)^{-1} \tilde E_1
-                -
-                r_1(z) I_k
-            \right)
-        \Bigg\}.
-\end{align*}
-Combining Lemmas {L:wishart-lln}, {L:wishart-clt}, and Proposition {P:weighted-clt}, we can see that $S_1(z)$, the limiting distribution of
-$S_{n,1}^{(1)}(z)$ has elements above and along the main diagonal converging
-to a multivariate normal with
-\begin{align}
-    \cov[ (S_1(z_1))_{ij}, (S_1(z_2))_{ij} ]
-    &= \gamma^{-1} (1 + \delta_{ij}) \mu_i \mu_j 
-                 \big( r_2 (z_1, z_2) - r_1(z_1) r_1 (z_2) \big) \notag \\
-      &+ (1 + \delta_{ij}) (\mu_i + \mu_j + \gamma) r_2(z_1, z_2) \notag \\
-      &+ \delta_{ij} \sigma_{ii} r_1(z_1) r_1(z_2), \label{E:cov-S1-1}
-\end{align}
-and for $i \neq j$,
-\begin{align}
-    \cov[ (S_1(z_1))_{ii}, (S_1(z_2))_{jj} ]
-    &= \sigma_{ij} r_1(z_1) r_1(z_2). \label{E:cov-S1-2}
-\end{align}
-All other correlations are $0$.
+It turns out that eventually, the points described in Lemma~\ref{L:zn-sequence-exists} are the only zeros of $\det T_n(z)$.
+
+\begin{lemma}
+    For $n$ large enough, almost surely
+    the equation $\det \mT_n(z) = 0$ has exactly 
+    $\bar k$ solutions in  $\big( b(\gamma), \infty \big)$
+    (namely, the $\bar k$  points described in 
+    Lemma~\ref{L:zn-sequence-exists}).
+\end{lemma}
+\begin{proof}
+    By Lemma~\ref{L:uniform-converge-same-roots}, for $n$ large enough
+    $\det \mT_n(z)$ and $\det \mT_0(z)$ have the same number of solutions in 
+    $(u,v) \subset \big( b(\gamma), \infty \big)$.  Thus, we only need to
+    show that the solutions of $\det \mT_n(z)$ are bounded.  Since every
+    solution is an eigenvalue of $\mS_n$, this amounts to showing that the
+    eigenvalues of $\mS_n$ are bounded.  Using the Courant-Fischer 
+    min-max characterization of eigenvalues \cite{golub1996mc}, we have
+    \begin{align*}
+        \| \mS_n \|_2
+            &= \frac{1}{\sqrt{n}} \| \mX_n \|_2^2 \\
+            &\leq 
+                \left(
+                    \| \mU_n \mD_n \mV_n^\trans \|_2
+                    +
+                    \frac{1}{\sqrt{n}}
+                    \| \mE_n \|_2
+                \right)^2 \\
+            &\toas
+                \left( \sqrt{\mu_1} + \sqrt{b(\gamma)} \right)^2.
+    \end{align*}
+    Thus, the solutions of $\mT_n(z)$ are almost-surely bounded.
+\end{proof}
+
+
+\clearpage
+
 
 \section{Limits of singular values}
 
@@ -2081,7 +2119,7 @@ Putting $i = j$, we have that
 \)
 The previous section shows that jointly the unique elements
 of $\{ S_1(\tilde \mu_i) \}_{i=1}^{\bar K}$ have a multivariate normal distribution.
-Equations~\eqref{E:cov-S1-1}~and~\eqref{E:cov-S1-2} give
+Equations~{E:cov-S1-1}~and~{E:cov-S1-2} give
 \begin{align*}
     \var [ (S_1(\tilde \mu_i))_{ii} ]
         &= \frac{1}{(\mu_i + \gamma)^2}
@@ -2155,7 +2193,7 @@ First suppose that $i \leq \bar k$.  Then $\hat \mu_i \toas \tilde \mu_i$ and
 $S_{n,1}(\hat \mu_i) \toas \bar S_1 (\tilde \mu_i)$.  The $i$th eigenvalue
 of $S_{n,1} (\hat \mu_i)$ converges almost surely to $1$ and the $i$th
 eigenvector converges almost surely to $\be_i$.  This fact, 
-Lemmas {L:secular}, Lemma~\ref{L:Sbar}, and equation {E:normY} 
+Lemmas {L:secular}, Lemma {L:Sbar}, and equation {E:normY} 
 tell us that $\hat \bv_i$, the normalized $i$th eigenvector of
 $(1/n) X_n^T X_n$ almost surely has the same limit as
 \[
@@ -2176,137 +2214,6 @@ Combining this result with equation {E:corrY}, we get that
 
 Next say that $\bar k < i \leq k$.  In this case, since 
 $\lim_{z \to b^+} r_2(z) = \infty$ and $\lim_{z \to b^+} r_1(z) < \infty$, we must have that  $V^T \hat v_i \toas 0$.
-
-\section*{Appendix B: Low-rank perturbations of diagonal matrices}
-
-Our aim in this section is to prove the following lemma:
-
-\begin{lemma}\label{L:lowrank-perturb}
-    Let $A$ be a random $n\times n$ symmetric matrix with rank $k$, and
-    $0 < k < n$.  Suppose that $A$ is orthogonally-invariant, in the sense that 
-    $O^T A O \eqd A$ for all orthogonal $O$ independent of $A$.  Let
-    $D = \diag(d_1, d_2, \ldots, d_n)$ be a diagonal matrix.  Then, if
-    $\#\{ i : d_i = d \} \leq k$, then almost surely $A + D$ has no eigenvalue
-    equal to $d$.
-\end{lemma}
-
-\noindent Do to so, we will need two lemmas, which we state and prove now.
-
-\begin{lemma}
-    Let $A$ be as above.  Partition $A$ as 
-    \[
-        A
-        =
-        \left(
-        \begin{matrix}
-            a_{11}   & \ba_{12}^T \\
-            \ba_{21} & A_{22}
-        \end{matrix}
-        \right)
-    \]
-    and define $A_2 = A_{22} - a_{11}^{-1} \ba_{21} \ba_{12}^T$.  Then:
-    \begin{enumerate}[(i)]
-        \item $a_{11}$ has a continuous density,
-        \item $A_2$ almost surely has rank $k-1$,
-        \item $A_2$ is orthogonally-invariant.
-    \end{enumerate}
-\end{lemma}
-\begin{proof}
-    The matrix $A$ is equal in distribution to $U \Lambda U^T$ for a
-    Haar-distributed $U$ and some diagonal $\Lambda$ independent of $U$.  
-    Without loss of generality, say the nonzero entries of $\Lambda$ are
-    $\lambda_{1}, \ldots, \lambda_k$.  Then 
-    $a_{11} \eqd \sum_{i=1}^k \lambda_i (U)_{1i}^2$.  Since $0 < k < n$, 
-    and $((U)_{11}, \ldots, (U)_{1(n-1)})$ has a continuous density, this is a
-    random variable with continuous density as well.
-    
-    Since $a_{11}$ has a continuous density, $a_{11} \neq 0$ almost surely.
-    Since $A$ can be transformed to
-    \(
-        \left(
-        \begin{matrix}
-            a_{11} & \ba_{12}^T \\
-            0      & A_2
-        \end{matrix}
-        \right)
-    \)
-    via row operations, $A_2$ must have rank one less than $A$.
-    
-    Letting $O_2$ be any $(n-1)\times(n-1)$ orthogonal matrix, we have
-    that
-    \[
-        \left(
-        \begin{matrix}
-            1 & 0 \\
-            0 & O_2^T
-        \end{matrix}
-        \right)
-        A
-        \left(
-        \begin{matrix}
-            1 & 0 \\
-            0 & O_2
-        \end{matrix}
-        \right)
-        =
-        \left(
-        \begin{matrix}
-            a_{11}   & \ba_{12}^T O_2 \\
-            O_2^T \ba_{21} & O_2^T A_{22} O_2
-        \end{matrix}
-        \right).
-    \]
-    Since $A$ is orthogonally invariant, this implies that $A_2$ is
-    as well.
-\end{proof}
-
-\begin{lemma}
-    Let $A$ be as above except with rank $k$ possibly equal to $0$.  
-    Let $D = \diag(d_1, d_2, \ldots, d_n)$ be a diagonal matrix independent of
-    $A$ with rank greater than or equal to $n-k$ almost surely.  Then
-    $A + D$ almost surely has full rank.
-\end{lemma}
-\begin{proof}
-    If $k = 0$, the result is trivial.  Otherwise,
-    without loss of generality, assume that either $D$ is of full rank
-    or $d_1 = 0$.  Partition $A$ as in the previous lemma and let 
-    \(
-        D_2 = \diag(d_2, \ldots, d_n).
-    \)
-    The determinant of $A + D$ is equal to
-    \begin{align*}
-        \det ( A + D )
-            &= \left|
-               \begin{matrix}
-                   a_{11} + d_1 & \ba_{12}^T \\
-                   \ba_{21}     & A_{22} + D_2
-               \end{matrix}
-               \right| \\
-            &= \left|
-               \begin{matrix}
-                   a_{11} + d_1 & \ba_{12}^T \\
-                   0            & A_{22} - a_{11}^{-1} \ba_{21} \ba_{12}^T + D_2
-               \end{matrix}
-               \right| \\
-            &= (a_{11} + d_1) \det (A_2 + D_2),
-    \end{align*}
-    We note that $D_2$ is of rank at least $(n-1) - (k-1)$. 
-    By the previous lemma, $A_2$ has rank $k - 1 < n - 1$ and is
-    orthogonally-invariant.  Since $a_{11}$ has a continuous density and
-    is independent of $d_{1}$, $a_{11} + d_1 \neq 0$.  By induction,
-    $\det (A_2 + D_2 \neq 0)$ and the result follows.
-\end{proof}
-
-Now, Lemma~\ref{L:lowrank-perturb} is an easy corollary:
-
-\begin{proof}[Proof of Lemma~\ref{L:lowrank-perturb}]
-    Say $A + D$ has an eigenvalue equal to $d$, with
-    $\#\{ i : d_i = d \} \leq k$.  Then $A + D - d I_n$ is not
-    of full rank.  Since $D - d I_n$ has at least $n-k$ nonzero entries,
-    this contradicts the previous lemma.
-\end{proof}    
-
-
 
 
 %\section*{Acknowledgements}
