@@ -1902,12 +1902,12 @@ First we look at the solutions of $f_0(z, \vx)$.
     only exists when $\mu_i > \gamma^{-1/2}$.
 \end{proof}
 
-Given a solution of $f_0(z, \vx) = 0$, it is not hard to believe that there is a sequence of solutions $(z_n, \vx_n)$ converging to $z$ and $\vx$.  We make this precise in two lemmas below.
+Given a solution of $f_0(z, \vx) = 0$, it is not hard to believe that there is a sequence of solutions $(z_n, \vx_n)$ converging to $z$ and $\vx$.  We make this precise now.
 
 \begin{lemma}\label{L:zn-sequence-exists}
-    If $\mu > b(\gamma)$ occurs $l$ times on the diagonal of $\mD^2$, then
-    with probability one there exist sequences $z_{n,1}, \ldots, z_{n,l}$
-    with 
+    If $\mu > \gamma^{-1/2}$ occurs $l$ times on the diagonal of $\mD^2$, then
+    with probability one there exist sequences $z_{n,1}, 
+    \ldots, z_{n,l}$ such that for $n$ large enough:
     \begin{enumerate}
         \item $z_{n,i} \neq z_{n,j}$ for $i \neq j$
         \item $\det \mT_n(z_{n,i}) = 0$ for $i = 1, \ldots, l$.
@@ -1920,7 +1920,7 @@ Given a solution of $f_0(z, \vx) = 0$, it is not hard to believe that there is a
 
 The proof involves a technical lemma, which we state and prove now.
 
-\begin{lemma}
+\begin{lemma}\label{L:uniform-converge-same-roots}
     Let $g_n(z)$ be a sequence of continuous real-valued functions that 
     converge uniformly on $(u,v)$ to $g_0(z)$.  If $g_0(z)$ is analytic
     on $(u,v)$, then for $n$ large enough, $g_n(z)$ and $g_0(z)$ have the
@@ -1941,7 +1941,10 @@ The proof involves a technical lemma, which we state and prove now.
     
     The sequence $\tg_n(z)$ converges uniformly to $\tg_0(z)$ outside of
     a neighborhood of $z_0$.  Thus, for $n$ large enough, $\tg_n(z-r) < 0$
-    and $\tg_n(z+r) > 0$, so that $\tg_n(z)$ and $g_n(z)$ have a zero
+    and $\tg_n(z+r) > 0$.  Also, either $g_n(z)$ has a zero at $z_0$, or else 
+    for a small enough neighborhood abound $z_0$, $\sgn \tg_n(z)$ is constant.
+    Since $\tg_n(z)$ is continuous outside of a neighborhood of $z_0$, 
+    $\tg_n(z)$ and $g_n(z)$ must have a zero
     in $(z_0-r,z_0+r) \subset (u,v)$.  Call this zero $z_{n,1}$.  Since
     $r$ is arbitrary, $z_{n,1} \to z_0$, and
     $\frac{g_n(z)}{z - z_{n,1}} \to \frac{g_0(z)}{z - z_0}$ uniformly on
@@ -1950,31 +1953,48 @@ The proof involves a technical lemma, which we state and prove now.
 \end{proof}
 
 \begin{proof}[Proof of Lemma~\ref{L:zn-sequence-exists}]
-    Let $z_0$ be the unique solution of 
-    $m(z_0) = (\mu + \gamma^{-1})^{-1}$.  The function
-    $\phi_0(z) = \det \mT_0(z)$ has a zero of multiplicity $l$ at $z_0$.  Let
-    $\mathcal{D} \subset (b(\gamma), \infty)$ be a neighborhood of
-    $z_0$ containing no other zeros of $\phi_0(z)$ such that 
-    $\phi_0(z) > \epsilon > 0$ on $\partial \mathcal{D}$.
-    
-    Define $\phi_n(z) = \det \mT_n(z)$ and 
-    $\eta_n(z) = \phi_n(z) - \phi_0(z)$.  Since $\det$ is a continuous 
-    function, from Lemma~\ref{L:eij-product-limits-uniform} 
-    we have that $\eta_n(z) \toas 0$ uniformly on $\partial \mathcal{D}$.
-    Choose $n$ large enough such that $\phi_n(z)$ 
-    and $\phi_0(z)$ are both analytic on $\mathcal{D}$ and
-    $|\epsilon_n(z) | < \epsilon < |\phi_0(z) |$ on $\partial \mathcal{D}$.
-    Applying Lemma~\ref{L:rouche}, we have that $\phi_n(z)$ has $l$ zeros
-    in $\mathcal{D}$, call them $z_{n,1}, \ldots, z_{n,l}$.  Since the
-    zeros of $\det \mT_n(z)$ are eigenvalues of $\mS_n$, the $z_{n,i}$ must
-    almost-surely be unique.  Letting $r$ be the radius of $\mathcal{D}$, for
-    each $i$ we have that
-    \[
-        \limsup_{n \to \infty} | z_{n,i} - z_0 | \leq r.
-    \]
-    Letting $r \to 0$, we get $z_{n,i} \to z_0$.
+    Let $z_0$ be the unique solution of $m(z_0) = (\mu + \gamma^{-1})^{-1}$.
+    Define $g_n(z) = \det \mT_n(z)$.  Since $\det$ is a continuous function, 
+    $g_n(z)$ converges uniformly to $g_0(z)$ in 
+    any neighborhood of $z_0$.  Noting that $g_0(z)$ has a zero of 
+    multiplicity 
+    $l$ at $z_0$, by Lemma~\ref{L:uniform-converge-same-roots} we get that for large enough $n$, $g_n(z)$ has $l$ zeros
+    in a neighborhood of $z_0$.  By a Lemma of Okamoto~\cite{okamoto1973deq}, 
+    the zeros of $g_n(z)$ are almost surely simple.
 \end{proof}
 
+It turns out that eventually, the points described in Lemma~\ref{L:zn-sequence-exists} are the only zeros of $\det T_n(z)$.
+
+\begin{lemma}
+    For $n$ large enough, almost surely
+    the equation $\det \mT_n(z) = 0$ has exactly 
+    $\bar k$ solutions in  $\big( b(\gamma), \infty \big)$
+    (namely, the $\bar k$  points described in 
+    Lemma~\ref{L:zn-sequence-exists}).
+\end{lemma}
+\begin{proof}
+    By Lemma~\ref{L:uniform-converge-same-roots}, for $n$ large enough
+    $\det \mT_n(z)$ and $\det \mT_0(z)$ have the same number of solutions in 
+    $(u,v) \subset \big( b(\gamma), \infty \big)$.  Thus, we only need to
+    show that the solutions of $\det \mT_n(z)$ are bounded.  Since every
+    solution is an eigenvalue of $\mS_n$, this amounts to showing that the
+    eigenvalues of $\mS_n$ are bounded.  Using the Courant-Fischer 
+    min-max characterization of eigenvalues \cite{golub1996mc}, we have
+    \begin{align*}
+        \| \mS_n \|_2
+            &= \frac{1}{\sqrt{n}} \| \mX_n \|_2^2 \\
+            &\leq 
+                \left(
+                    \| \mU_n \mD_n \mV_n^\trans \|_2
+                    +
+                    \frac{1}{\sqrt{n}}
+                    \| \mE_n \|_2
+                \right)^2 \\
+            &\toas
+                \left( \sqrt{\mu_1} + \sqrt{b(\gamma)} \right)^2.
+    \end{align*}
+    Thus, the solutions of $\mT_n(z)$ are almost-surely bounded.
+\end{proof}
 
 
 \clearpage
