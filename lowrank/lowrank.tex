@@ -65,7 +65,7 @@ gotten from truncating the singular value decomposition (SVD)
 of the SVD when $n$ and $p$ both tend to infinity, with their ratio tending to
 a nonzero constant.
 
-In an upcoming paper, Onatski~\cite{onatski} gives a very thorough treatment
+In an upcoming paper, Onatski~\cite{onatski2009} gives a very thorough treatment
 of these models. He assumes that the elements of $E$ are \iid Gaussians, that
 $\sqrt{n} ( \mU^\trans \mU - \mI_k) $ tends to a multivariate Gaussian
 distribution, and that $\mV$ and $\mD$ are both nonrandom.
@@ -267,7 +267,7 @@ where $\mTheta$ is an $p \times k$ matrix of factors and $\mZ$ is an $n\times k$
 There is a sign-indeterminancy in the sample and population singular vectors. Since we only give results for the squares $\mR_n^\trans \mR$ the signs do not matter and we choose them arbitrarily.
 
 \item 
-Most of the results in Theorems~\ref{T:values}~and~\ref{T:vectors} can be gotten from Onatski's results \cite{onatski}.   However, Onatski does not show that $\sqrt{n} (\hat \mu_i - \tilde \mu_i) \toP 0$ when $\mu_i$ is below the critical threshold.  Furthermore, Onatski proves convergence in probability, not almost sure convergence.
+Most of the results in Theorems~\ref{T:values}~and~\ref{T:vectors} can be gotten from Onatski's results \cite{onatski2009}.   However, Onatski does not show that $\sqrt{n} (\hat \mu_i - \tilde \mu_i) \toP 0$ when $\mu_i$ is below the critical threshold.  Furthermore, Onatski proves convergence in probability, not almost sure convergence.
 
 \end{enumerate}
 
@@ -446,9 +446,9 @@ We have gotten to $\mtX_n$ via an orthogonal change of basis applied to $\mX_n$.
         Similarly, $\mV_n^\trans \mhV_n = \mtV_{n,1}$.
 \end{enumerate}
 
-\subsection{The secular equation}
+\section{The secular equation}
 
-We set $\mS_n = \frac{1}{n} = \mtX_n^\trans \mtX_n$.  The eigenvalues and eigenvectors of $\mS_n$ are the squares of the singular values of $\mtX_n$ and its right singular vectors, respectively.  In block form, we have
+We set $\mS_n = \frac{1}{n} = \mtX_n^\trans \mtX_n$.  The eigenvalues and eigenvectors of $\mS_n$ are the squares of the singular values of $\frac{1}{\sqrt{n}} \mtX_n$ and its right singular vectors, respectively.  In block form, we have
 \[
     \mS_n
     =
@@ -510,12 +510,12 @@ where
 
 Now we study the eigendecomposition of $\mS_n$.  If 
 \(
-    \vx
+    \vv
     = 
     \left( 
     \begin{matrix}
-        \vx_{1} \\
-        \vx_{2}
+        \vv_{1} \\
+        \vv_{2}
     \end{matrix}
     \right)
 \)
@@ -529,23 +529,23 @@ is an eigenvector of $\mS_n$ with eigenvalue $\mu$, then
     \right)
     \left( 
     \begin{matrix}
-        \vx_{1} \\
-        \vx_{2}
+        \vv_{1} \\
+        \vv_{2}
     \end{matrix}
     \right)
     =
     \mu
     \left( 
     \begin{matrix}
-        \vx_{1} \\
-        \vx_{2}
+        \vv_{1} \\
+        \vv_{2}
     \end{matrix}
     \right).
 \]
 If $\mu$ is not an eigenvalue of $\mS_{n,22}$, then we get
 \begin{subequations}
-\begin{equation}\label{E:x2-from-x1}
-    \vx_2
+\begin{equation}\label{E:v2-from-v1}
+    \vv_2
     =
     -
     \left(
@@ -555,7 +555,7 @@ If $\mu$ is not an eigenvalue of $\mS_{n,22}$, then we get
         \mI_{p-k}
     \right)^{-1}
     \mS_{n,21} \,
-    \vx_1
+    \vv_1
 \end{equation}
 and
 \begin{equation}\label{E:secular-nof}
@@ -574,19 +574,19 @@ and
         \right)^{-1}
         \mS_{n,21}
     \right)
-    \vx_1
+    \vv_1
     =
     0.
 \end{equation}
 \end{subequations}
-Conversely, if $(\mu, \vx_1)$ is a pair that solves~\eqref{E:secular-nof}
-and $\vx_1 \neq 0$, then
-\begin{equation}\label{E:x-from-x1}
-    \vx
+Conversely, if $(\mu, \vv_1)$ is a pair that solves~\eqref{E:secular-nof}
+and $\vv_1 \neq 0$, then
+\begin{equation}\label{E:v-from-v1}
+    \vv
     =
     \left(
     \begin{matrix}
-        \vx_1 \\
+        \vv_1 \\
         -
         \left(
             \mS_{n,22}
@@ -595,7 +595,7 @@ and $\vx_1 \neq 0$, then
             \mI_{p-k}
         \right)^{-1}
         \mS_{n,21} \,
-        \vx_1
+        \vv_1
     \end{matrix}
     \right)
 \end{equation}
@@ -662,7 +662,7 @@ Otherwise, the solution is
             \ohP\left( \frac{1}{\sqrt{n}} \right).
 \end{align*}
 Once we have a solution to the secular equation, we can construct an
-eigenvector of $\mS_n$ using equation~\eqref{E:x-from-x1}.  Finally, we will derive the left singular vectors from the right by multiplying by $\mtX_n$.
+eigenvector of $\mS_n$ using equation~\eqref{E:v-from-v1}.  Finally, we will derive the left singular vectors from the right by multiplying by $\mtX_n$.
 
 \section{Analysis of the secular equation}
 
@@ -1283,10 +1283,9 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
         \right)
             &\tod \mL_2,
     \end{align*}
-    where $\mF(z)$, $\mG(z)$, $\mH(z)$, $\mK$, $\mL_1$ and $\mL_2$ are 
-    defined on the same probability space.  
-    All but $\mG(z)$ are symmetric. Jointly, their elements are
-    distributed as a multivariate normal.  If we define
+    where the elements of $\mF(z)$, $\mG(z)$, $\mH(z)$, $\mK$, $\mL_1$ and 
+    $\mL_2$ jointly define a multivariate Gaussian process indexed by $z$. 
+    All but $\mG(z)$ are symmetric.  If we define
     \[
         \mathcal{M}
         =
@@ -1652,6 +1651,10 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
     \)
 \end{proof}
 
+\begin{remark}
+    It is possible to show that the sequences in Lemma~\ref{L:eij-product-scaled-limits} are tight by an argument similar to the one used in \cite{onatski2009}.  This implies that the convergence is uniform in $z$.  We actually only need that the finite-dimensional distributions converge.
+\end{remark}
+
 With Lemmas~\ref{L:eij-product-limits}~and~\ref{L:eij-product-scaled-limits},
 we can simplify $f_n(z, \vx)$.  For convenience, we will define
 $\mF_n (z)$ such that
@@ -1857,16 +1860,17 @@ with $\mG_n(z), \mH_n(z), \mK_n, \mL_{n,1},$ and $\mL_{n,2}$ defined similarly.
 
 We will now study the solutions to $f_{n}(z, \vx) = 0$.  If $(z, \vx)$
 is a solution, then so is $(z, \alpha \, \vx)$ for any scalar $\alpha$.  We restrict our attention to solutions with $\|\vx \|_2 = 1$.  We also impose a restriction on the sign of $\vx$, namely we require that the component with the largest magnitude is positive, i.e.
-\(
+\begin{equation}\label{E:x-identifiability}
     \max_i x_i = \max_i | x_i |.
-\)
+\end{equation}
 
 \subsection{Almost sure limits}
 
 First we look at the solutions of $f_0(z, \vx)$.  
 
 \begin{lemma}
-    Letting $\bar k = \max \{ i : \mu_i > \gamma^{-1/2} \}$, there are exactly
+    Letting $\bar k = \max \{ i : \mu_i > \gamma^{-1/2} \}$, if $\mu_1, \mu_2, 
+    \ldots, \mu_k$ are all distinct, then there are exactly
     $\bar k$ solutions to the equation $f_0( z, \vx ) = 0$.  They are given
     by
     \[
@@ -1902,7 +1906,7 @@ First we look at the solutions of $f_0(z, \vx)$.
     only exists when $\mu_i > \gamma^{-1/2}$.
 \end{proof}
 
-Given a solution of $f_0(z, \vx) = 0$, it is not hard to believe that there is a sequence of solutions $(z_n, \vx_n)$ converging to $z$ and $\vx$.  We make this precise now.
+Given a solution of $f_0(z, \vx) = 0$, it is not hard to believe that there is a sequence of solutions $(z_n, \vx_n)$ converging to $z$ and $\vx$.  We dedicate the rest of this section to making this statement precise.  
 
 \begin{lemma}\label{L:zn-sequence-exists}
     If $\mu > \gamma^{-1/2}$ occurs $l$ times on the diagonal of $\mD^2$, then
@@ -1927,7 +1931,7 @@ The proof involves a technical lemma, which we state and prove now.
     same number of zeros in $(u,v)$ (counting multiplicity).
 \end{lemma}
 \begin{proof}
-    Since $|g_0(z)|$ is bounded away from zero outside of the neighborhoods
+    Since $|g_0(z)|$ is bounded away from zero outside the neighborhoods
     of its zeros, it suffices to show that if $g_0(z)$ has a zero 
     $z_0 \in (u,v)$ of multiplicity $l$, then for $n$ large enough, 
     $g_n(z)$ has $l$ zeros in $(u,v)$.  Define
@@ -1963,7 +1967,79 @@ The proof involves a technical lemma, which we state and prove now.
     the zeros of $g_n(z)$ are almost surely simple.
 \end{proof}
 
-It turns out that eventually, the points described in Lemma~\ref{L:zn-sequence-exists} are the only zeros of $\det T_n(z)$.
+The last thing we need to do is show that for each sequence
+$z_{n,i}$ solving $\det \mT_n(z_{n,i})$, there is a corresponding sequence
+of vectors $\vx_{n,i}$ with $f_n(z_{n,i}, \vx_{n,i}) = 0$.  Since $\det \mT_n (z_{n,i}) = 0$, there exists an $\vx_{n,i}$ with 
+$\mT_{n} (z_{n,i}) \, \vx_{n,i} = 0$.  We need to show that the sequence of vectors has a limit.
+
+Every solution pair $(z_{n,i}, \vx_{n,i})$ determines a unique
+eigenvalue-eigenvector pair through equation~\eqref{E:v-from-v1}.  Since the eigenvalues of $\mS_n$ are almost-surely unique, with
+the identifiability restriction of \eqref{E:x-identifiability} we must have that $z_{n,i}$ uniquely determines $\vx_{n,i}$.  Suppose that $z_{n,i}$ is the $i$th largest solution of $\det \mT_n(z) = 0$, and that $f_n( z_{n,i}, \vx_{n,i}) = 0$.  We will now show that $\vx_{n,i} \toas \ve_i$.
+
+\begin{lemma}\label{L:xn-converges}
+    Suppose that $f_n(z_{n,i}, \vx_{n,i}) = 0$, that $\vx_{n,i}$ satisfies the 
+    identifiability restriction \eqref{E:x-identifiability}, and that
+    $z_{n,i} \toas \tmu_i$.
+    If $\mu_i \neq \mu_j$ for all $j \neq i$, then $\vx_{n,i} \toas \ve_i$.
+\end{lemma}
+
+We will use a perturbation lemma, which follows from the $\sin \Theta$ theorem (see Stewart and Sun~\cite{stewart1990mpt}[p. 258]).
+
+\begin{lemma}\label{L:approx-eigenpair}
+    Let $(z,\vx)$ be an approximate eigenpair of the $k\times k$
+    matrix $\mA$ with $\| \vx \|_2 = 1$.  Let $\vr = \mA \vx - z \vx$.
+    Suppose that there is a set $\mathcal{L}$ of $k-1$ eigenvalues of $\mA$ 
+    such that
+    \[
+        \delta = \min_{l \in \mathcal{L}} | l - z | > 0.
+    \]
+    Then there is an eigenpiar $(z_0, \vx_0)$ of $\mA$ with 
+    $\| \vx_0 \|_2 = 1$ satisfying
+    \[
+        \vx^\trans \vx_0
+            \geq
+                \sqrt{ 1 - \frac{\|\vr\|_2^2}{ \delta^2 } }
+    \]
+    and
+    \[
+        | z - z_0 |
+            \leq \| \vr \|_2.
+    \]
+\end{lemma}
+
+\begin{proof}[Proof of Lemma~\ref{L:xn-converges}]
+    We have that $z_{n,i} \toas \tmu_i$ and 
+    $\mT_n(z_{n,i}) \vx_{n,i} = 0$.  Since
+    $\mT_n(z_{n,i}) \toas \mT_0(\tmu_i)$, we get
+    \begin{align*}
+        \| \mT_0(\tmu_i) \vx_{n,i} \|_2
+            &= \| \big(\mT_n(z_{n,i} - \mT_0(\tmu_i) \big) \vx_{n,i} \|_2 \\
+            &\leq \| \mT_n(z_{n,i} - \mT_0(\tmu_i) \|_F \\
+            &\toas 0.
+    \end{align*}
+    Since $\mu_i$ is distinct, $0$ is a simple eigenvalue of $\mT_0(\tmu_i)$.
+    Thus, all other eigenvalues have magnitude at least $\delta > 0$ for some 
+    $\delta$.
+    Define $\vr_n = \mT_0(\tmu_i) \vx_{n,i}$.  By 
+    Lemma~\ref{L:approx-eigenpair}, there exists an eigenpair $(z_0, \vx_0)$
+    of $\mT_0(\tmu_i)$ with $| z_0 | \leq \| \vr_n \|_2$ and
+    $ \vx_{n,i}^\trans \, \vx_0 \geq
+        \sqrt{ 1 - \frac{\|\vr\|_2^2}{ \delta^2 } }$.  Since 
+    $\|\vr_n\| \toas 0$, for $n$ large enough we must have $z_0 = 0$ and
+    $\vx_0 = \ve_i$ or $-\ve_i$.  Lastly, noting that $\vx_0$ and $\vx_{n,i}$
+    are both unit vectors, we get
+    \begin{align*}
+        \| \vx_{n,i} - \vx_0 \|_2^2
+            &= 2 - 2 \vx_{n,i}^\trans \, \vx_0 \\
+            &\toas 0.
+    \end{align*}
+    With the identifiability restriction, this forces $\vx_{n,i} \toas \ve_i$.
+\end{proof}
+
+Finally, we show that eventually the points described in Lemma~\ref{L:zn-sequence-exists} are the only zeros of $f_n(z, \vx)$ having
+$z > \big( b(\gamma) \big)$.  Since $f_n(z, \vx) = 0$ implies 
+$\det \mT_n(z) = 0$, it suffices to show that $\mT_n(z)$ has no other
+zeros.
 
 \begin{lemma}
     For $n$ large enough, almost surely
@@ -1995,6 +2071,7 @@ It turns out that eventually, the points described in Lemma~\ref{L:zn-sequence-e
     \end{align*}
     Thus, the solutions of $\mT_n(z)$ are almost-surely bounded.
 \end{proof}
+
 
 
 \clearpage
