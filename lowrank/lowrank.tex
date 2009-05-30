@@ -1024,7 +1024,7 @@ Letting $b(\gamma) = \left( 1 + \gamma^{-1/2} \right)^2$, the function
 is bounded and continuous.  Moreover, since $\lambda_{n,1} \toas b(\gamma)$, with probability one $g(\lambda_{n,\alpha})$ is eventually equal to $W_{N,\alpha}$ for all $\alpha$.  The Wishart LLN (Corollary~\ref{C:wishart-lln}) gives us that
 \[
     \frac{1}{N}
-    \sum_{i=\alpha}^N W_{N,\alpha}
+    \sum_{\alpha=1}^N W_{N,\alpha}
         \toas
             \int
                 \frac{1}{t - z} d\FMP_\gamma(t).
@@ -1689,9 +1689,7 @@ with $\mG_n(z), \mH_n(z), \mK_n, \mL_{n,1},$ and $\mL_{n,2}$ defined similarly.
                 \mT_0( z )
                 +
                 \frac{1}{\sqrt{n}}
-                \mT_{n,1}( z )
-                +
-                \ohP\left( \frac{1}{\sqrt{n}} \right),
+                \mT_{n,1}( z ),
     \]
     where
     \begin{equation*}
@@ -1713,7 +1711,9 @@ with $\mG_n(z), \mH_n(z), \mK_n, \mL_{n,1},$ and $\mL_{n,2}$ defined similarly.
                         \big( \mE_{n,11} - \mG_n(z) \big)^\trans \mD
                     \Big)  \\
                 &\quad\quad-
-                z \, \mH_n(z).
+                z \, \mH_n(z)
+                +
+                \ohP\left( 1 \right).
         \end{split}
     \end{equation*}
 \end{lemma}
@@ -2052,9 +2052,171 @@ zeros.
 \end{proof}
 
 
-%\section*{Acknowledgements}
+\subsection{Second-order behavior}
 
-%I would like to thank Persi Diaconis, Zongming Ma, Alexei Onatski, and
-% Debashis Paul for their helpful communications and discussions. I would
-% also like to thank Art Owen, my thesis advisor, for his support and 
-% encouragement.
+To find the second-order behavior of the solutions to the secular equation, we use a Taylor-series expansion of $f_n(z,\vx)$ around the limit points.  That is, if $(z_n, \vx_n) \to (z_0, \vx_0)$, we let $D f_n$ be the derivative of $f_n$ and write
+\[
+    0
+    =
+    f_n (z_n, \vx_n)
+        \approx
+        f_n( z_0, \vx_0 )
+        + 
+        D f_n(z_0, \vx_0)
+        \left(
+        \begin{matrix}
+            z_n   - z_0 \\
+            \vx_n - \vx_0
+        \end{matrix}
+        \right).
+\]
+We now want to solve for $z_n - z_0$ and $\vx_n - \vx_0$.  Without the identifiability constraint, there are $k$ equations and $k+1$ unknowns, but as soon as we impose the condition $\| \vx_n \|_2 = \| \vx_0 \|_2 = 1$, the
+system becomes well-determined.
+
+To make this precise, we first compute
+\begin{equation}
+    D f_n(z, \vx)
+    =
+    \left(
+    \begin{matrix}
+        \mT_0'(z) \vx & \mT_0(z)
+    \end{matrix}
+    \right)
+    +
+    \OhP\left( \frac{1}{\sqrt{n}} \right),
+\end{equation}
+with pointwise convergence in $z$.  Then, we write
+\[
+    f_n( z_n, \vx_n)
+        = 
+        f_n (z_0, \vx_0)
+        +
+        D f_n( z_0, \vx_0 )
+        \left(
+        \begin{matrix}
+            z_n - z_0 \\
+            \vx_n - \vx_0
+        \end{matrix}
+        \right)
+        +
+        \OhP \left(
+            (z_n - z_0)^2
+            +
+            \| \vx_n - \vx_0 \|_2^2
+        \right).
+\]
+If $f_n(z_n, \vx_n) = 0$ and $f_0(z_0, \vx_0) = 0$, then we get
+\[
+    0
+    =
+    \frac{1}{\sqrt{n}} f_{n,1} (z_0, \vx_0)
+        +
+        D f_n( z_0, \vx_0 )
+        \left(
+        \begin{matrix}
+            z_n - z_0 \\
+            \vx_n - \vx_0
+        \end{matrix}
+        \right)
+        +
+        \OhP \left(
+            (z_n - z_0)^2
+            +
+            \| \vx_n - \vx_0 \|_2^2
+        \right).
+\]
+If $(z_n, \vx_n) \toas (z_0, \vx_0)$, then 
+the differences $z_n - z_0$ and $\vx_n - \vx_0$ must be of size
+$\OhP\left( \frac{1}{\sqrt{n}} \right)$ and the error term in the Taylor
+expanson is size $\OhP\left( \frac{1}{n} \right)$.  The final simplification
+we can make is from the length constraint on $\vx_n$ and $\vx_0$.  We have
+\begin{align*}
+    1 &= \vx_n^\trans \vx_n \\
+      &= \big( \vx_0 + (\vx_n - \vx_0) \big)^\trans
+         \big( \vx_0 + (\vx_n - \vx_0) \big) \\
+      &= 1 + 2 \vx_0^\trans ( \vx_n - \vx_0 ) + \| \vx_n - \vx_0 \|_2^2,
+\end{align*}
+so that $\vx_0^\trans ( \vx_n - \vx_0 ) = \OhP\left( \frac{1}{n} \right)$.  With a little more effort, we can solve for $z_n - z_0$ and $\vx_n - \vx_0$.
+
+\begin{lemma}
+    If $(z_n, \vx_n)$ is a sequence converging almost surely to 
+    $(\tmu_i, \ve_i)$, such that $f_n(z_n, \vx_n) = 0$ and $\mu_i \neq \mu_j$
+    for $i \neq j$, then:
+    \begin{enumerate}[(i)]
+        \item \[
+                  \sqrt{n} ( z_n - \tmu_i) 
+                  = 
+                  -
+                  \frac{\left(\mT_{n,1}(\tmu_i) \right)_{ii}}
+                       {\left(\mT_0'(\tmu_i) \right)_{ii}}
+                  +
+                  \ohP(1).
+              \]
+        \item \[
+                   \sqrt{n} \left( x_{n,i} - 1 \right)
+                   =
+                   \ohP\left( 1 \right).
+              \]
+        \item \[
+                  \sqrt{n} \, x_{n,j}
+                  = 
+                  -
+                  \frac{\left(\mT_{n,1}(\tmu_i) \right)_{ji}}
+                       {\left(\mT_0(\tmu_i) \right)_{jj}}
+                  +
+                  \ohP(1)
+                  \quad
+                  \text{for $i \neq j$.}
+              \]
+    \end{enumerate}
+    \begin{proof}
+        We have done most of the work in the exposition above.  In particular,
+        we already know that ($ii$) holds.  Using the Taylor expansion, we 
+        have
+        \[
+            0
+            =
+            \frac{1}{\sqrt{n}}
+            \mT_{n,1}(\tmu_i) \, \ve_i
+            +
+            \left(
+            \begin{matrix}
+                \mT_0'(\tmu_i) \, \ve_i & \mT_0(\tmu_i)
+            \end{matrix}
+            \right)
+            \left(
+            \begin{matrix}
+                z_n - \tmu_i \\
+                \vx_n - \ve_i
+            \end{matrix}
+            \right)
+            +
+            \ohP\left( \frac{1}{\sqrt{n}} \right).
+        \]
+        Since $\mT_0$ and $\mT_0'$ are diagonal, using ($ii$) we get
+        \begin{align*}
+            0
+                &=
+                \frac{1}{\sqrt{n}}
+                \left(\mT_{n,1}(\tmu_i) \right)_{ii}
+                +
+                \left(\mT_0'(\tmu_i) \right)_{ii} ( z_n - \tmu_i )
+                +
+                \ohP\left( \frac{1}{\sqrt{n}} \right), \\
+            0
+                &=
+                \frac{1}{\sqrt{n}}            
+                \left(\mT_{n,1}(\tmu_i) \right)_{ji}
+                +
+                \left(\mT_0(\tmu_i) \right)_{jj}
+                x_{n,j} 
+                +
+                \ohP\left( \frac{1}{\sqrt{n}} \right)
+                \quad \text{for $i \neq j$.}
+        \end{align*}
+        Therefore, ($i$) and ($iii$) follow.
+    \end{proof}
+\end{lemma}
+
+At this point, it behooves us to do some simplification.
+
