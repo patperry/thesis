@@ -94,9 +94,8 @@ assumptions concern the signal part:
     The factors $\mU_n$ and $\mV_n$ are random matrices of dimensions
     $n \times k$ and $p \times k$, respectively.  The number of factors, $k$,
     is a fixed constant.  The factors are normalized so that
-    $\mU_n^\trans \mU_n =  \mV_n^\trans \mV_n = \mI_k$, where $\mI_k$ denotes 
-    the $k \times k$ identity matrix.  The ratio $p/n = \gamma$ is a fixed 
-    nonzero scalar in the range $(0,\infty)$.
+    $\mU_n^\trans \mU_n =  \mV_n^\trans \mV_n = \mI_k$.  The ratio 
+    $n/p = \gamma$ is a fixed nonzero scalar in the range $(0,\infty)$.
 \end{assumption}
 \noindent
 
@@ -131,16 +130,16 @@ The next assumption concerns the noise part:
 \noindent
 
 We need to introduce some more notation. We denote the columns of $\mU_n$ and
-$\mV_n$ by $\vU_{n,1}, \vU_{n,2}, \ldots, \vU_{n,k}$ and $\vV_{n,1},
-\vV_{n,2}, \ldots, \vV_{n,k}$, respectively. We let 
+$\mV_n$ by $\vu_{n,1}, \vu_{n,2}, \ldots, \vu_{n,k}$ and $\vv_{n,1},
+\vv_{n,2}, \ldots, \vv_{n,k}$, respectively. We let 
 \[
     \mX_n \approx \sqrt{n} \mhU_n \mhD_n \mhV_n^\trans
 \]
 be the singular value decomposition of
 $\mX_n$ truncated to $k$ terms, where $\mhD_n = \diag( \hat \mu_{n,1}^{1/2},
 \hat \mu_{n,2}^{1/2}, \ldots, \hat \mu_{n,k}^{1/2})$ and the columns of $\mhU$ and $\mhV$ are given
-by $\vhU_{n,1}, \vhU_{n,2} \ldots, \vhU_{n,k}$ and $\vhV_{n,1}, \vhV_{n,2},
-\ldots, \vhV_{n,k}$, respectively.
+by $\vhu_{n,1}, \vhu_{n,2} \ldots, \vhu_{n,k}$ and $\vhv_{n,1}, \vhv_{n,2},
+\ldots, \vhv_{n,k}$, respectively.
 
 
 \subsection{Main results}
@@ -151,38 +150,38 @@ the sample singular vectors.  First we give the result about the singular
 values.
 \begin{theorem}\label{T:values}
     Under Assumptions~\ref{A:factors}~--~\ref{A:noise},
-    the vector $\hat \vmu = (\hat \mu_1, \hat \mu_2, \ldots, \hat \mu_k)$
+    the vector $\hat \vmu_n = (\hmu_{n,1}, \hmu_{n,2}, \ldots, \hmu_{n,k})$
     converges almost surely to 
-    $\tilde \vmu = (\tilde \mu_1, \tilde \mu_2, \ldots, \tilde \mu_k)$,
+    $\vbmu = (\bmu_1, \bmu_2, \ldots, \bmu_k)$,
     where
     \[
-        \tilde \mu_k
+        \bmu_k
         =
         \begin{cases}
             \left( \mu_i + \sigma^2 \right)
-            \left( 1 + \gamma \sigma^2 / \mu_i \right)
-                &\text{when $\mu_i > \sqrt{\gamma} \sigma^2$}, \\
-            \sigma^2 \left( 1 + \sqrt{\gamma} \right)^2
+            \left( 1 + \frac{\sigma^2}{\gamma \mu_i} \right)
+                &\text{when $\mu_i > \frac{\sigma^2}{\sqrt{\gamma}}$}, \\
+            \sigma^2 \left( 1 + \frac{1}{\sqrt{\gamma}} \right)^2
                 &\text{otherwise.}
         \end{cases}
     \]
     Moveover, 
     \(
-        \sqrt{n} (\hat \vmu - \tilde \vmu)
+        \sqrt{n} (\vhmu - \vbmu)
     \)
     converges in distribution to a (possibly degenerate) multivariate normal
-    with covariance matrix $\mtSigma$ whose $ij$ element is given by
+    with covariance matrix $\mbSigma$ whose $ij$ element is given by
     \[
-        \tilde \sigma_{ij}
+        \bsigma_{ij}
         \equiv
         \begin{cases}
             \begin{aligned}
                 \sigma_{ij}
                 &\left(
-                    1 - \gamma \sigma^4 / \mu_i^2
+                    1 - \frac{\sigma^4}{\gamma \mu_i^2}
                 \right)
                 \left(
-                    1 - \gamma \sigma^4 / \mu_j^2
+                    1 - \frac{\sigma^4}{\gamma \mu_j^2}
                 \right)
                 \\
                 &+ \delta_{ij}
@@ -192,21 +191,23 @@ values.
                     2 \mu_i + \sigma^2 + \gamma \sigma^2
                 \right)
                 \left(
-                    1 - \gamma \sigma^4 / \mu_i^2
+                    1 - \frac{ \sigma^4 }{ \gamma  \mu_i^2 }
                 \right)
             \end{aligned}
-                &\text{when $\mu_i, \, \mu_j > \gamma^{1/2} \sigma^2$,} \\
+                &\text{when $\mu_i, \, \mu_j >
+                           \frac{\sigma^2}{\sqrt{\gamma}}$,} \\
             0
                 &\text{otherwise.}
         \end{cases}
     \]
     When $\sigma_{ii} = 2 \mu_i^2$, 
-    and $\mu_i > \sqrt{\gamma} \sigma^2$, the variance of the $i$th
+    and $\mu_i > \frac{\sigma^2}{\sqrt{\gamma}}$, the variance of the $i$th
     component simplifies to
     \(
-        \tilde \sigma_{ii} 
+        \bsigma_{ii} 
         = 
-        2 (\mu_i + \sigma^2)^2 \left( 1 - \gamma \sigma^4 / \mu_i^2 \right).
+        2 (\mu_i + \sigma^2)^2 
+        \left( 1 - \frac{\sigma^4}{\gamma \mu_i^2} \right).
     \)
 \end{theorem}
 
@@ -216,12 +217,12 @@ Next, we give the result for the singular vectors:
     $k\times k$ matrix $\mR_n \equiv \mV_n^\trans \mhV_n$ converges almost 
     surely to a matrix $\mR = \diag(r_1, r_2, \ldots, r_k)$, where
     \begin{equation}
-        |r_i|^2
+        r_i^2
         =
         \begin{cases}
-            \frac{ 1 - \gamma \sigma^4 / \mu_i^2 }
-                 { 1 + \gamma \sigma^2 / \mu_i  }
-            &\text{when $\mu_i > \sqrt{\gamma} \sigma^2$,} \\
+            \left( 1 - \frac{\sigma^4}{ \gamma \mu_i^2} \right)
+            \left( 1 + \frac{\sigma^2}{ \gamma \mu_i  } \right)^{-1}
+            &\text{when $\mu_i > \frac{\sigma^2}{\sqrt{\gamma}}$,} \\
             0
             &\text{otherwise.}
         \end{cases}
@@ -246,7 +247,7 @@ where $\mTheta$ is an $p \times k$ matrix of factors and $\mZ$ is an $n\times k$
 There is a sign-indeterminancy in the sample and population singular vectors. Since we only give results for the squares $\mR_n^\trans \mR$ the signs do not matter and we choose them arbitrarily.
 
 \item 
-Most of the results in Theorems~\ref{T:values}~and~\ref{T:vectors} can be gotten from Onatski's results \cite{onatski2009}.   However, Onatski does not show that $\sqrt{n} (\hat \mu_i - \tilde \mu_i) \toP 0$ when $\mu_i$ is below the critical threshold.  Furthermore, Onatski proves convergence in probability, not almost sure convergence.
+Most of the results in Theorems~\ref{T:values}~and~\ref{T:vectors} can be gotten from Onatski's results \cite{onatski2009}.   However, Onatski does not show that $\sqrt{n} (\hmu_i - \bmu_i) \toP 0$ when $\mu_i$ is below the critical threshold.  Furthermore, Onatski proves convergence in probability, not almost sure convergence.
 
 \end{enumerate}
 
@@ -1853,11 +1854,11 @@ First we look at the solutions of $f_0(z, \vx)$.
     $\bar k$ solutions to the equation $f_0( z, \vx ) = 0$.  They are given
     by
     \[
-        ( \tmu_i, \ve_i ), \quad \text{$i = 1, \ldots, \bar k$},
+        ( \bmu_i, \ve_i ), \quad \text{$i = 1, \ldots, \bar k$},
     \]
-    where $\tmu_i$ is the unique solution
+    where $\bmu_i$ is the unique solution
     \[
-        m( \tmu_i ) = \frac{1}{\mu_i + \gamma^{-1}},
+        m( \bmu_i ) = \frac{1}{\mu_i + \gamma^{-1}},
     \]
     and $\ve_i$ is the $i$th standard basis vector.
 \end{lemma}
@@ -1958,7 +1959,7 @@ the identifiability restriction of \eqref{E:x-identifiability} we must have that
 \begin{lemma}\label{L:xn-converges}
     Suppose that $f_n(z_{n,i}, \vx_{n,i}) = 0$, that $\vx_{n,i}$ satisfies the 
     identifiability restriction \eqref{E:x-identifiability}, and that
-    $z_{n,i} \toas \tmu_i$.
+    $z_{n,i} \toas \bmu_i$.
     If $\mu_i \neq \mu_j$ for all $j \neq i$, then $\vx_{n,i} \toas \ve_i$.
 \end{lemma}
 
@@ -1987,21 +1988,21 @@ We will use a perturbation lemma, which follows from the $\sin \Theta$ theorem (
 \end{lemma}
 
 \begin{proof}[Proof of Lemma~\ref{L:xn-converges}]
-    We have that $z_{n,i} \toas \tmu_i$ and 
+    We have that $z_{n,i} \toas \bmu_i$ and 
     $\mT_n(z_{n,i}) \vx_{n,i} = 0$.  Since
-    $\mT_n(z_{n,i}) \toas \mT_0(\tmu_i)$, we get
+    $\mT_n(z_{n,i}) \toas \mT_0(\bmu_i)$, we get
     \begin{align*}
-        \| \mT_0(\tmu_i) \vx_{n,i} \|_2
-            &= \| \big(\mT_n(z_{n,i} - \mT_0(\tmu_i) \big) \vx_{n,i} \|_2 \\
-            &\leq \| \mT_n(z_{n,i} - \mT_0(\tmu_i) \|_F \\
+        \| \mT_0(\bmu_i) \vx_{n,i} \|_2
+            &= \| \big(\mT_n(z_{n,i} - \mT_0(\bmu_i) \big) \vx_{n,i} \|_2 \\
+            &\leq \| \mT_n(z_{n,i} - \mT_0(\bmu_i) \|_F \\
             &\toas 0.
     \end{align*}
-    Since $\mu_i$ is distinct, $0$ is a simple eigenvalue of $\mT_0(\tmu_i)$.
+    Since $\mu_i$ is distinct, $0$ is a simple eigenvalue of $\mT_0(\bmu_i)$.
     Thus, all other eigenvalues have magnitude at least $\delta > 0$ for some 
     $\delta$.
-    Define $\vr_n = \mT_0(\tmu_i) \vx_{n,i}$.  By 
+    Define $\vr_n = \mT_0(\bmu_i) \vx_{n,i}$.  By 
     Lemma~\ref{L:approx-eigenpair}, there exists an eigenpair $(z_0, \vx_0)$
-    of $\mT_0(\tmu_i)$ with $| z_0 | \leq \| \vr_n \|_2$ and
+    of $\mT_0(\bmu_i)$ with $| z_0 | \leq \| \vr_n \|_2$ and
     $ \vx_{n,i}^\trans \, \vx_0 \geq
         \sqrt{ 1 - \frac{\|\vr\|_2^2}{ \delta^2 } }$.  Since 
     $\|\vr_n\| \toas 0$, for $n$ large enough we must have $z_0 = 0$ and
@@ -2140,15 +2141,15 @@ so that $\vx_0^\trans ( \vx_n - \vx_0 ) = \OhP\left( \frac{1}{n} \right)$.  With
 
 \begin{lemma}
     If $(z_n, \vx_n)$ is a sequence converging almost surely to 
-    $(\tmu_i, \ve_i)$, such that $f_n(z_n, \vx_n) = 0$ and $\mu_i \neq \mu_j$
+    $(\bmu_i, \ve_i)$, such that $f_n(z_n, \vx_n) = 0$ and $\mu_i \neq \mu_j$
     for $i \neq j$, then:
     \begin{enumerate}[(i)]
         \item \[
-                  \sqrt{n} ( z_n - \tmu_i) 
+                  \sqrt{n} ( z_n - \bmu_i) 
                   = 
                   -
-                  \frac{\left(\mT_{n,1}(\tmu_i) \right)_{ii}}
-                       {\left(\mT_0'(\tmu_i) \right)_{ii}}
+                  \frac{\big(\mT_{n,1}(\bmu_i) \big)_{ii}}
+                       {\big(\mT_0'(\bmu_i) \big)_{ii}}
                   +
                   \ohP(1).
               \]
@@ -2161,8 +2162,8 @@ so that $\vx_0^\trans ( \vx_n - \vx_0 ) = \OhP\left( \frac{1}{n} \right)$.  With
                   \sqrt{n} \, x_{n,j}
                   = 
                   -
-                  \frac{\left(\mT_{n,1}(\tmu_i) \right)_{ji}}
-                       {\left(\mT_0(\tmu_i) \right)_{jj}}
+                  \frac{\big(\mT_{n,1}(\bmu_i) \big)_{ji}}
+                       {\big(\mT_0(\bmu_i) \big)_{jj}}
                   +
                   \ohP(1)
                   \quad
@@ -2177,16 +2178,16 @@ so that $\vx_0^\trans ( \vx_n - \vx_0 ) = \OhP\left( \frac{1}{n} \right)$.  With
             0
             =
             \frac{1}{\sqrt{n}}
-            \mT_{n,1}(\tmu_i) \, \ve_i
+            \mT_{n,1}(\bmu_i) \, \ve_i
             +
             \left(
             \begin{matrix}
-                \mT_0'(\tmu_i) \, \ve_i & \mT_0(\tmu_i)
+                \mT_0'(\bmu_i) \, \ve_i & \mT_0(\bmu_i)
             \end{matrix}
             \right)
             \left(
             \begin{matrix}
-                z_n - \tmu_i \\
+                z_n - \bmu_i \\
                 \vx_n - \ve_i
             \end{matrix}
             \right)
@@ -2198,17 +2199,17 @@ so that $\vx_0^\trans ( \vx_n - \vx_0 ) = \OhP\left( \frac{1}{n} \right)$.  With
             0
                 &=
                 \frac{1}{\sqrt{n}}
-                \left(\mT_{n,1}(\tmu_i) \right)_{ii}
+                \big(\mT_{n,1}(\bmu_i) \big)_{ii}
                 +
-                \left(\mT_0'(\tmu_i) \right)_{ii} ( z_n - \tmu_i )
+                \big(\mT_0'(\bmu_i) \big)_{ii} ( z_n - \bmu_i )
                 +
                 \ohP\left( \frac{1}{\sqrt{n}} \right), \\
             0
                 &=
                 \frac{1}{\sqrt{n}}            
-                \left(\mT_{n,1}(\tmu_i) \right)_{ji}
+                \big(\mT_{n,1}(\bmu_i) \big)_{ji}
                 +
-                \left(\mT_0(\tmu_i) \right)_{jj}
+                \big(\mT_0(\bmu_i) \big)_{\!jj} \,
                 x_{n,j} 
                 +
                 \ohP\left( \frac{1}{\sqrt{n}} \right)
