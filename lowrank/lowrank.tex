@@ -148,7 +148,7 @@ We are now in a position to say what the results are.  There are two main
 theorems, one concerning the sample singular values and the other concerning
 the sample singular vectors.  First we give the result about the singular
 values.
-\begin{theorem}\label{T:values}
+\begin{theorem}\label{T:spiked-eigenvalue-limits}
     Under Assumptions~\ref{A:factors}~--~\ref{A:noise},
     the vector $\hat \vmu_n = (\hmu_{n,1}, \hmu_{n,2}, \ldots, \hmu_{n,k})$
     converges almost surely to 
@@ -186,13 +186,13 @@ values.
                 \\
                 &+ \delta_{ij}
                 2
-                \sigma^2
-                \left(
-                    2 \mu_i + \sigma^2 + \gamma \sigma^2
-                \right)
-                \left(
+                \sigma^2 \,
+                \bigg(
+                    2 \mu_i + (1 + \gamma^{-1}) \, \sigma^2
+                \bigg)
+                \bigg(
                     1 - \frac{ \sigma^4 }{ \gamma  \mu_i^2 }
-                \right)
+                \bigg)
             \end{aligned}
                 &\text{when $\mu_i, \, \mu_j >
                            \frac{\sigma^2}{\sqrt{\gamma}}$,} \\
@@ -241,13 +241,13 @@ Assumptions~\ref{A:factors}~and~\ref{A:sizes} are simpler than the assumptions g
 \[
     \mX = \mZ \mTheta^\trans + \mE,
 \]
-where $\mTheta$ is an $p \times k$ matrix of factors and $\mZ$ is an $n\times k$ matrix of factor loadings whose rows are \iid multivariate $\Normal(0,\, \mC)$ random variables for covariance matrx $\mC$ having eigen-decomposition $\mC = \mQ \mLambda \mQ^\trans$.  Letting $\mZ = \sqrt{n} \mhP \mhLambda \mhQ^\trans$ be the SVD of $\mZ$, Anderson's results \cite{anderson1963atp} give us that $\mhLambda$ and $\mhQ$ converge almost surely to $\mLambda$ and $\mQ$, respectively, and that the diagonal elements of $\sqrt{n} (\mhLambda - \mLambda)$ converge to a mean-zero multivariate normal whenever $\mC$ has no repeated eigenvalues.  If we define $\mU = \mhP$, $\mD = \mhLambda^\half$, and $\mV = \mTheta \mhQ$, then $\mX = \sqrt{n} \mU \mD \mV^\trans + \mE$, where the factors satisfy Assumptions~\ref{A:factors}~and~\ref{A:sizes}.  Dropping the normality assumption on the rows of $\mZ$ poses no problem.  Moreover, we can suppose instead of \iid that the rows of $\mZ$ be a martingale difference array with well-behaved low-order moments and still perform a transformation of the variables to get factors of the form we need for Theorems~\ref{T:values}~and~\ref{T:vectors}.
+where $\mTheta$ is an $p \times k$ matrix of factors and $\mZ$ is an $n\times k$ matrix of factor loadings whose rows are \iid multivariate $\Normal(0,\, \mC)$ random variables for covariance matrx $\mC$ having eigen-decomposition $\mC = \mQ \mLambda \mQ^\trans$.  Letting $\mZ = \sqrt{n} \mhP \mhLambda \mhQ^\trans$ be the SVD of $\mZ$, Anderson's results \cite{anderson1963atp} give us that $\mhLambda$ and $\mhQ$ converge almost surely to $\mLambda$ and $\mQ$, respectively, and that the diagonal elements of $\sqrt{n} (\mhLambda - \mLambda)$ converge to a mean-zero multivariate normal whenever $\mC$ has no repeated eigenvalues.  If we define $\mU = \mhP$, $\mD = \mhLambda^\half$, and $\mV = \mTheta \mhQ$, then $\mX = \sqrt{n} \mU \mD \mV^\trans + \mE$, where the factors satisfy Assumptions~\ref{A:factors}~and~\ref{A:sizes}.  Dropping the normality assumption on the rows of $\mZ$ poses no problem.  Moreover, we can suppose instead of \iid that the rows of $\mZ$ be a martingale difference array with well-behaved low-order moments and still perform a transformation of the variables to get factors of the form we need for Theorems~\ref{T:spiked-eigenvalue-limits}~and~\ref{T:vectors}.
 
 \item
 There is a sign-indeterminancy in the sample and population singular vectors. Since we only give results for the squares $\mR_n^\trans \mR$ the signs do not matter and we choose them arbitrarily.
 
 \item 
-Most of the results in Theorems~\ref{T:values}~and~\ref{T:vectors} can be gotten from Onatski's results \cite{onatski2009}.   However, Onatski does not show that $\sqrt{n} (\hmu_i - \bmu_i) \toP 0$ when $\mu_i$ is below the critical threshold.  Furthermore, Onatski proves convergence in probability, not almost sure convergence.
+Most of the results in Theorems~\ref{T:spiked-eigenvalue-limits}~and~\ref{T:vectors} can be gotten from Onatski's results \cite{onatski2009}.   However, Onatski does not show that $\sqrt{n} (\hmu_i - \bmu_i) \toP 0$ when $\mu_i$ is below the critical threshold.  Furthermore, Onatski proves convergence in probability, not almost sure convergence.
 
 \end{enumerate}
 
@@ -1068,7 +1068,7 @@ is the Stieltjes transform of $\FMP_\gamma$, where
 \end{align}
 \end{subequations}
 When restricted to the complement of the support of $\FMP_\gamma$, it has a well-defined inverse
-\begin{equation}
+\begin{equation}\label{E:stieltjes-inverse}
     z(m)
         = 
             -
@@ -1172,10 +1172,10 @@ When restricted to the complement of the support of $\FMP_\gamma$, it has a well
     Since 
     \[
         \frac{d}{dz} \left[
-            \frac{1}{(\lambda - z)^k}
+            \frac{1}{\lambda - z}
         \right]
             =
-            \frac{-k}{(\lambda - z)^{k+1}},
+            -\frac{1}{(\lambda - z)^{2}},
     \]
     which is monotone for $z > \lambda$, the same argument applies to show
     that the derivatives converge uniformly.
@@ -2213,11 +2213,202 @@ so that $\vx_0^\trans ( \vx_n - \vx_0 ) = \OhP\left( \frac{1}{n} \right)$.  With
                 x_{n,j} 
                 +
                 \ohP\left( \frac{1}{\sqrt{n}} \right)
-                \quad \text{for $i \neq j$.}
+                \qquad \text{for $i \neq j$.}
         \end{align*}
         Therefore, ($i$) and ($iii$) follow.
     \end{proof}
 \end{lemma}
 
-At this point, it behooves us to do some simplification.
+At this point, it behooves us to do some simplification.  For $\mu_i > \gamma^{-1/2}$, we have
+\[
+    m(\bmu_i) = - \frac{1}{\mu_i + \gamma^{-1}}.
+\]
+Using \eqref{E:stieltjes-inverse}, this implies
+\begin{align*}
+    \bmu_i
+        &= \mu_i + 1 + \gamma^{-1} + \frac{ \gamma^{-1} }{ \mu_i } \\
+        &= \Big( \mu_i + 1 \Big)
+           \left( \frac{ \mu_i + \gamma^{-1} }{ \mu_i } \right).
+\end{align*}
+Note that this agrees with the definition of $\bmu_i$ in Theorem~\ref{T:spiked-eigenvalue-limits}.  Now,
+\[
+    \frac{ m(\bmu_i) - m(\bmu_j) }
+         { \bmu_i - \bmu_j }
+    =
+    \frac{1}{ ( \mu_i + \gamma^{-1} ) ( \mu_j + \gamma^{-1} ) }
+    \cdot
+    \frac{ \mu_i \mu_j }{ \mu_i \mu_j - \gamma^{-1} },
+\]
+so that
+\[
+    m'(\bmu_i)
+    =
+    \frac{ 1 }{ ( \mu_i + \gamma^{-1} )^2 }
+    \cdot
+    \frac{ \mu_i^2 }{ \mu_i^2 - \gamma^{-1} }.
+\]
+Also,
+\[
+    \frac{ \bmu_i \, m( \bmu_i ) - \bmu_j \, m( \bmu_j ) }
+         { \bmu_i - \bmu_j }
+        =
+            \frac{1}{\mu_i \, \mu_j - \gamma^{-1}}.
+\]
+We can compute
+\begin{align*}
+    \big( \mT_0(\bmu_i) \big)_{jj}
+        &=
+            ( \mu_i - \mu_j )
+            \left( \frac{ \mu_i + \gamma^{-1} }{ \mu_i } \right) 
+                \qquad\text{ for $j \neq i$,} \\
+    \big( \mT_0'(\bmu_i) \big)_{ii}
+        &=
+            -
+            \left(
+                \frac{ \mu_i^2 }{ \mu_i^2 - \gamma^{-1} }
+            \right)
+            \left(
+                \frac{\mu_i + \gamma^{-1}}{ \mu_i }
+            \right).
+\end{align*}
+Since
+\(
+    \big( 1 + \gamma^{-1} m( \bmu_i ) \big)^{-1}
+        = \frac{ \mu_i + \gamma^{-1} }{ \mu_i },
+\)
+we get
+\[
+    \begin{split}
+        \mT_{n,1}(\bmu_i)
+           &=
+                \mL_{n,2}
+                -
+                \left(
+                    \frac{\mu_i + \gamma^{-1}}{\mu_i}
+                \right)^2
+                \mD \mF_n (\bmu_i ) \mD \\
+            &
+                \begin{split}
+                \quad+
+                \left(
+                    \frac{\mu_i + \gamma^{-1}}{\mu_i}
+                \right)
+                \Big(
+                    \sqrt{n} ( \mD_n^2 - \mD )
+                    &+
+                    \mD
+                    \big( \mE_{n,11} - \mG_{n} (\bmu_i) \big) \\
+                    &+
+                    \big( \mE_{n,11} - \mG_{n} (\bmu_i) \big)^\trans                    
+                    \mD
+                \Big) 
+                \end{split}\\
+            &\quad-
+                (\mu_i + 1)
+                \left(
+                    \frac{\mu_i + \gamma^{-1}}{\mu_i}
+                \right)
+                \mH_n(\bmu_i).
+    \end{split}
+\]
+We have
+\begin{align*}
+    \cov\big( F_{ij} ( \bmu_1 ), F_{ij} ( \bmu_2 ) \big)
+        &= 
+        \gamma^{-1} ( 1 + \delta_{ij} )
+        \cdot
+        \frac{1}{ ( \mu_1 + \gamma^{-1} ) ( \mu_2 + \gamma^{-1} ) }
+        \cdot
+        \frac{ \mu_1 \mu_2 }{ \mu_1 \mu_2 - \gamma^{-1} }, \\
+    \cov\big( G_{ij} ( \bmu_1 ), G_{ij} ( \bmu_2 ) \big)
+        &= 
+        \gamma^{-1} 
+        \cdot
+        \frac{1}{ \mu_1 \mu_2 - \gamma^{-1} }, \\
+    \cov\big( H_{ij} ( \bmu_1 ), H_{ij} ( \bmu_2 ) \big)
+        &= 
+        \gamma^{-1} ( 1 + \delta_{ij} )
+        \cdot
+        \frac{1}{ ( \mu_1 + \gamma^{-1} ) ( \mu_2 + \gamma^{-1} ) }
+        \cdot
+        \frac{ \mu_1 \mu_2 }{ \mu_1 \mu_2 - \gamma^{-1} }, \\
+    \cov\big( L_{2,ij}, L_{2,ij} \big)
+        &=
+        (1 - \gamma^{-1}) (1 + \delta_{ij}).
+\end{align*}
+Therefore, for $j \neq i$ we have
+\begin{align*}
+    \begin{split}
+    \var \left(
+        \big(
+            \mT_{n,1}( \bmu_i ) \,
+            \ve_i
+        \big)_i
+    \right)
+        &= 
+        \sigma_{ii}
+        \cdot
+        \left(
+            \frac{\mu_i + \gamma^{-1}}{\mu_i}
+        \right)^2 \\
+        &\quad+
+        2
+        \left(
+            2 \mu_i + 1 + \gamma^{-1}
+        \right)
+        \frac{ (\mu_i + \gamma^{-1})^2 }
+             { \mu_i^2 - \gamma^{-1} } + \oh(1)
+    \end{split} \\
+    \var \left(
+        \big(
+            \mT_{n,1}( \bmu_i ) \,
+            \ve_i
+        \big)_j
+    \right)
+        &=
+        \left(
+            2 \mu_i + 1 + \gamma^{-1}
+        \right)
+        \frac{ (\mu_i + \gamma^{-1})^2 }
+             { \mu_i^2 - \gamma^{-1} } + \oh(1), \\
+    \cov \left( 
+        \big(
+            \mT_{n,1}( \bmu_i ) \,
+            \ve_i
+        \big)_i, \,
+        \big(
+            \mT_{n,1}( \bmu_j ) \,
+            \ve_j
+        \big)_j
+    \right)
+        &=
+        \sigma_{ij}
+        \cdot
+        \frac{\mu_i + \gamma^{-1}}{ \mu_i }
+        \cdot
+        \frac{\mu_j + \gamma^{-1}}{ \mu_j }, \\
+    \begin{split}
+    \cov \left(
+        \big(
+            \mT_{n,1}( \bmu_i ) \,
+            \ve_i
+        \big)_j, \,
+        \big(
+            \mT_{n,1}( \bmu_j ) \,
+            \ve_j
+        \big)_i    
+    \right)
+        &=
+        \left(
+            \mu_i + \mu_j + 1 + \gamma^{-1}
+        \right) \\
+        &\qquad \cdot
+            \frac{ ( \mu_i + \gamma^{-1} )( \mu_j + \gamma^{-1} ) }
+                 { \mu_i \mu_j - \gamma^{-1} }
+        + \oh(1),
+    \end{split}
+\end{align*}
+and all other covariances between the elements of
+$\mT_{n,1}(\bmu_i) \, \ve_i$ and $\mT_{n,1}(\bmu_j) \, \ve_j$ are zero.
+        
 
