@@ -2,6 +2,7 @@
 \ProvidesPackage{perry-thesis-macros}
 
 \RequirePackage{amsmath}
+\RequirePackage{accents} % underline
 \RequirePackage{amssymb}
 \RequirePackage{amsthm}
 \usepackage{url}
@@ -37,11 +38,17 @@
 \newcommand{\define}{\equiv}
 
 
-\newcommand{\vectorsymbol}{\underline}
+\newcommand{\vectorsymbol}[1]{\underaccent{\bar}{#1}}
+%\newcommand{\vectorsymbol}{\underline}
 \newcommand{\matrixsymbol}{\boldsymbol}
 
 \newcommand{\tg}{\tilde g}
+\newcommand{\bmu}{\bar \mu}
+\newcommand{\hmu}{\hat \mu}
 \newcommand{\tmu}{\tilde \mu}
+\newcommand{\bsigma}{\bar \sigma}
+\newcommand{\hsigma}{\hat \sigma}
+\newcommand{\tsigma}{\tilde \sigma}
 \newcommand{\bW}{\bar W}
 
 \newcommand{\vzero}{\vectorsymbol{0}}
@@ -53,10 +60,14 @@
 \newcommand{\ve}{\vectorsymbol{e}}
 \newcommand{\vr}{\vectorsymbol{r}}
 \newcommand{\vu}{\vectorsymbol{u}}
+\newcommand{\vhu}{\vectorsymbol{\hat u}}
 \newcommand{\vv}{\vectorsymbol{v}}
+\newcommand{\vhv}{\vectorsymbol{\hat v}}
 \newcommand{\vx}{\vectorsymbol{x}}
 
 \newcommand{\vmu}{\vectorsymbol{\mu}}
+\newcommand{\vbmu}{\vectorsymbol{\bar \mu}}
+\newcommand{\vhmu}{\vectorsymbol{\hat \mu}}
 \newcommand{\vtmu}{\vectorsymbol{\tilde \mu}}
 \newcommand{\vpsi}{\vectorsymbol{\psi}}
 \newcommand{\vtheta}{\vectorsymbol{\theta}}
@@ -122,6 +133,7 @@
 \newcommand{\mhLambda}{\matrixsymbol{\hat \Lambda}}
 \newcommand{\mPhi}{\matrixsymbol{\Phi}}
 \newcommand{\mSigma}{\matrixsymbol{\Sigma}}
+\newcommand{\mbSigma}{\matrixsymbol{\bar \Sigma}}
 \newcommand{\mhSigma}{\matrixsymbol{\hat \Sigma}}
 \newcommand{\mtSigma}{\matrixsymbol{\tilde \Sigma}}
 \newcommand{\mTheta}{\matrixsymbol{\Theta}}
@@ -173,6 +185,7 @@
 
 \DeclareMathOperator*{\argmin}{argmin}
 \renewcommand{\liminf}{\varliminf}
+\renewcommand{\limsup}{\varlimsup}
 \renewcommand{\epsilon}{\varepsilon}
 
 
