@@ -1836,7 +1836,7 @@ with $\mG_n(z), \mH_n(z), \mK_n, \mL_{n,1},$ and $\mL_{n,2}$ defined similarly.
     to simplify the form of $\mT_0$.
 \end{proof}
 
-\section{Solutions to the secular equation}
+\section{Solutions to the secular equation}\label{S:solutions-to-secular-eq}
 
 We will now study the solutions to $f_{n}(z, \vx) = 0$.  If $(z, \vx)$
 is a solution, then so is $(z, \alpha \, \vx)$ for any scalar $\alpha$.  We restrict our attention to solutions with $\|\vx \|_2 = 1$.  We also impose a restriction on the sign of $\vx$, namely we require that the component with the largest magnitude is positive, i.e.
@@ -2021,7 +2021,7 @@ $z > \big( b(\gamma) \big)$.  Since $f_n(z, \vx) = 0$ implies
 $\det \mT_n(z) = 0$, it suffices to show that $\mT_n(z)$ has no other
 zeros.
 
-\begin{lemma}
+\begin{lemma}\label{L:detT-solution-upper-bound}
     For $n$ large enough, almost surely
     the equation $\det \mT_n(z) = 0$ has exactly 
     $\bar k$ solutions in  $\big( b(\gamma), \infty \big)$
@@ -2219,7 +2219,7 @@ so that $\vx_0^\trans ( \vx_n - \vx_0 ) = \OhP\left( \frac{1}{n} \right)$.  With
     \end{proof}
 \end{lemma}
 
-At this point, it behooves us to do some simplification.  For $\mu_i > \gamma^{-1/2}$, we have
+At this point, it behooves us to do some simplification.  For $\mu_i, \mu_j > \gamma^{-1/2}$, we have
 \[
     m(\bmu_i) = - \frac{1}{\mu_i + \gamma^{-1}}.
 \]
@@ -2351,7 +2351,7 @@ Therefore, for $j \neq i$ we have
         \left(
             \frac{\mu_i + \gamma^{-1}}{\mu_i}
         \right)^2 \\
-        &\quad+
+        &\qquad+
         2
         \left(
             2 \mu_i + 1 + \gamma^{-1}
@@ -2386,7 +2386,7 @@ Therefore, for $j \neq i$ we have
         \cdot
         \frac{\mu_i + \gamma^{-1}}{ \mu_i }
         \cdot
-        \frac{\mu_j + \gamma^{-1}}{ \mu_j }, \\
+        \frac{\mu_j + \gamma^{-1}}{ \mu_j } + \oh(1), \\
     \begin{split}
     \cov \left(
         \big(
@@ -2410,5 +2410,197 @@ Therefore, for $j \neq i$ we have
 \end{align*}
 and all other covariances between the elements of
 $\mT_{n,1}(\bmu_i) \, \ve_i$ and $\mT_{n,1}(\bmu_j) \, \ve_j$ are zero.
-        
 
+\section{Singular values and right singular vectors}
+
+The results about solutions to the secular equation translate directly
+to results about the singular values and right singular vectors of
+$\frac{1}{\sqrt{n}} \mtX_n$.
+
+\subsection{Singular values}
+
+Every value $z$ with $f_n(z, \vx)$ for some $\vx$ is the square of a
+singular value of $\frac{1}{\sqrt{n}} \mtX_n$.  Therefore,  Section~\ref{E:x-identifiability} describes the behavior of the top $\bar k$ singular values.  To complete the proof of Theorem~\ref{T:spiked-eigenvalue-limits} for $\gamma \geq 1$, we only need to describe what happens to the singular values corresponding to the indices $i$ with $\mu_i \leq \gamma^{-1/2}$.
+
+\begin{lemma}\label{L:eigenvalue-below-threshold-limit}
+    If $\mu_i \leq \gamma^{-1/2}$ then the $i$th eigenvalue of
+    $\mS_n$, converges almost surely to $b(\gamma)$.
+\end{lemma}
+\begin{proof}
+From Lemma~\ref{L:detT-solution-upper-bound}, we know that for $n$ large
+enough and $\epsilon$ small, there are exactly
+$\bar k = \max \{ i : \mu_ > \gamma^{-1/2} \}$ eigenvalues of $\mS_n$
+in $\big( b(\gamma) + \epsilon, \infty)$.  From the eigenvalue interleaving
+inequalities, we know that the $i$th eigenvalue of $\mS_n$ is at least as
+big as the $i$th eigenvalue of $\mS_{n,22}$.  
+
+Denote by $\hmu_{n,i}$ the $i$th-largest eigenvalue of $\mS_n$, with
+$\bar k < i \leq k$.  Then almost surely,
+\[
+    \lim_{n\to\infty} \lambda_{n,i} 
+        \leq
+        \liminf_{n\to\infty} \hmu_{n,i}
+        \leq
+        \limsup_{n\to\infty} \hmu_{n,i}        
+        \leq
+        b(\gamma) + \epsilon.
+\]
+Since $\lambda_{n,i} \toas b(\gamma)$ and $\epsilon$ is arbitrary, this
+forces $\hmu_{n,i} \toas b(\gamma)$.
+\end{proof}
+
+\begin{lemma}
+    If $\mu_i \leq \gamma^{-1/2}$, then
+    \(
+        \sqrt{n} ( \hmu_i - \mu_i ) \toP 0,
+    \)
+    where $\hmu_i$ is the $i$th eigenvalue of $\mS_n$.
+\end{lemma}
+\begin{proof}
+We use the same notation as in Lemma~\ref{L:eigenvalue-below-threshold-limit}.
+Since $\lambda_{n,i} = b(\gamma) + \OhP(n^{-2/3})$, we have that
+\[
+    \sqrt{n} \big( \lambda_{n,i} - b(\gamma) \big) \toP 0.
+\]
+This means that
+\[
+    \liminf_{n\to\infty} \sqrt{n} \big( \hmu_{n,i} - b(\gamma) \big)
+        \geq \ohP(1).
+\]
+The upper bound is a little more delicate.  By the Courant-Fischer min-max
+characterization, $\hmu_i^{1/2}$ is bounded above by $\tmu_i^{1/2}$, the 
+$i$th singular value of
+\[
+    \frac{1}{\sqrt{n}} \mX_n 
+    + 
+    \sqrt{n} \big( (\gamma^{-1/2} + \epsilon)^{1/2} - \mu_i^{1/2} \big)
+    \vu_{n,i} \vv_{n,i}^\trans
+\]
+for any $\epsilon > 0$.  From the work in  Section~\ref{S:solutions-to-secular-eq}, we know that
+\begin{align*}
+    \tmu_i
+        &=
+            \left(
+                1 + \gamma^{-1/2} + \epsilon
+            \right)
+            \left(
+                1
+                +
+                \frac{ 1 }
+                     { \gamma^{1/2} + \gamma \epsilon }
+            \right)
+            +
+            \OhP \left(
+                \frac{\tsigma_i}{ \sqrt{n} }
+            \right) \\
+        &=
+            b(\gamma)
+            +
+            \epsilon^2
+            \frac{ \gamma^{1/2} - 1 }{ 1 + \gamma^{1/2} \epsilon }
+            +
+            \OhP \left(
+                \frac{\tsigma_i}{ \sqrt{n} }
+            \right),
+\end{align*}
+where
+\begin{align*}
+    \begin{split}
+    \tsigma_i^2
+    &=
+    \sigma_{ii}
+    \left(
+        1 - \frac{1}{1 + 2 \gamma^{1/2} \epsilon + \gamma \epsilon^2}
+    \right)^2 \\
+    &\quad+
+    2\big( 2 (\gamma^{-1/2} + \epsilon)  + 1 + \gamma^{-1} \big)
+    \left(
+        1 - \frac{1}{1 + 2 \gamma^{1/2} \epsilon + \gamma \epsilon^2}    
+    \right)
+    \end{split} \\
+    &= \Oh( \epsilon ).
+\end{align*}
+Therefore, for all $0 < \epsilon < 1$, we have
+\[
+    \sqrt{n}
+    \left(
+        \hmu_{n,i}
+        - 
+        b(\gamma) 
+        - \epsilon^2
+        \frac{ \gamma^{1/2} - 1 }{ 1 + \gamma^{1/2} \epsilon }
+    \right)
+    =
+    \OhP \left( \epsilon^{1/2} \right).
+\]
+Letting $\epsilon \to 0$, we get
+\[
+    \limsup_{n\to\infty} 
+        \sqrt{n}
+        \big(
+            \hmu_{n,i}
+            -
+            b(\gamma)
+        \big)
+        =
+        \ohP(1).
+\]
+Together with the lower bound, this implies
+\(
+    \sqrt{n}
+    \big(
+        \hmu_{n,i}
+        -
+        b(\gamma)
+    \big)
+    \toP
+    0.
+\)
+\end{proof}
+
+\section{Left singular vectors}
+
+If we define
+\[
+    \mR_n(z)
+    =
+    \mD_n 
+    + 
+    \frac{1}{\sqrt{n}}
+    \mE_{n,11}
+    - 
+    \frac{1}{\sqrt{n}}
+    \mE_{n,12}
+    \left( \mS_{n,22} - z \mI_{p-k} \right)^{-1}
+    \mS_{n,21},
+\]
+then as before we have
+\(
+    \mR_n(z) \toas \mR_0(z),
+\)
+uniformly for $z > b(\gamma)$, and
+\(
+    \mR_n(z) = \mR_0(z) + \frac{1}{\sqrt{n}} \mR_{n,1}(z) + \ohP(1)
+\)
+pointwise for $z > b(\gamma)$.  Here,
+\[
+    \mR_0(z) = \frac{1}{ 1 + \gamma^{-1} m(z) } \mD,
+\]
+and
+\[
+    \begin{split}
+    \mR_{n,1}(z)
+    &=
+    \big( 1 + \gamma^{-1} m(z) \big)^{-1}
+    \Big(
+        \sqrt{n} \left( \mD_n  - \mD \right)
+        +
+        \mE_{n,11}
+    \Big) \\
+    &\quad- 
+    \big( 1 + \gamma^{-1} m(z) \big)^{-2}
+    \mF_{n}(z) \mD
+    - 
+    \mG_n(z).
+    \end{split}
+\]
