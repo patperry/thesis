@@ -241,7 +241,7 @@ Assumptions~\ref{A:factors}~and~\ref{A:sizes} are simpler than the assumptions g
 \[
     \mX = \mZ \mTheta^\trans + \mE,
 \]
-where $\mTheta$ is an $p \times k$ matrix of factors and $\mZ$ is an $n\times k$ matrix of factor loadings whose rows are \iid multivariate $\Normal(0,\, \mC)$ random variables for covariance matrx $\mC$ having eigen-decomposition $\mC = \mQ \mLambda \mQ^\trans$.  Letting $\mZ = \sqrt{n} \mhP \mhLambda \mhQ^\trans$ be the SVD of $\mZ$, Anderson's results \cite{anderson1963atp} give us that $\mhLambda$ and $\mhQ$ converge almost surely to $\mLambda$ and $\mQ$, respectively, and that the diagonal elements of $\sqrt{n} (\mhLambda - \mLambda)$ converge to a mean-zero multivariate normal whenever $\mC$ has no repeated eigenvalues.  If we define $\mU = \mhP$, $\mD = \mhLambda^\half$, and $\mV = \mTheta \mhQ$, then $\mX = \sqrt{n} \mU \mD \mV^\trans + \mE$, where the factors satisfy Assumptions~\ref{A:factors}~and~\ref{A:sizes}.  Dropping the normality assumption on the rows of $\mZ$ poses no problem.  Moreover, we can suppose instead of \iid that the rows of $\mZ$ be a martingale difference array with well-behaved low-order moments and still perform a transformation of the variables to get factors of the form we need for Theorems~\ref{T:spiked-eigenvalue-limits}~and~\ref{T:vectors}.
+where $\mTheta$ is an $p \times k$ matrix of factors and $\mZ$ is an $n\times k$ matrix of factor loadings whose rows are \iid multivariate $\Normal(0,\, \mC)$ random variables for covariance matrx $\mC$ having eigen-decomposition $\mC = \mQ \mLambda \mQ^\trans$.  Letting $\mZ = \sqrt{n} \mhP \mhLambda \mhQ^\trans$ be the SVD of $\mZ$, Anderson's results \cite{anderson1963atp} give us that $\mhLambda$ and $\mhQ$ converge almost surely to $\mLambda$ and $\mQ$, respectively, and that the diagonal elements of $\sqrt{n} (\mhLambda - \mLambda)$ converge to a mean-zero multivariate normal whenever $\mC$ has no repeated eigenvalues.  If we define $\mU = \mhP$, $\mD = \mhLambda^{1/2}$, and $\mV = \mTheta \mhQ$, then $\mX = \sqrt{n} \mU \mD \mV^\trans + \mE$, where the factors satisfy Assumptions~\ref{A:factors}~and~\ref{A:sizes}.  Dropping the normality assumption on the rows of $\mZ$ poses no problem.  Moreover, we can suppose instead of \iid that the rows of $\mZ$ be a martingale difference array with well-behaved low-order moments and still perform a transformation of the variables to get factors of the form we need for Theorems~\ref{T:spiked-eigenvalue-limits}~and~\ref{T:vectors}.
 
 \item
 There is a sign-indeterminancy in the sample and population singular vectors. Since we only give results for the squares $\mR_n^\trans \mR$ the signs do not matter and we choose them arbitrarily.
@@ -1788,7 +1788,9 @@ with $\mG_n(z), \mH_n(z), \mK_n, \mL_{n,1},$ and $\mL_{n,2}$ defined similarly.
     Using this, after some simplification we get
     \[
         \begin{split}
-            \mS_{n,12} \Big( \mS_{n,22} &- z \mI_{p-k} \Big) \mS_{n,21} \\
+            \mS_{n,12} 
+            \Big( \mS_{n,22} &- z \mI_{p-k} \Big)^{-1} 
+            \mS_{n,21} \\
                 &=
                 \gamma^{-1}
                 \big( 1 + z \, m(z) \big) \mI_k
@@ -2530,7 +2532,7 @@ Therefore, for all $0 < \epsilon < 1$, we have
         - \epsilon^2
         \frac{ \gamma^{1/2} - 1 }{ 1 + \gamma^{1/2} \epsilon }
     \right)
-    =
+    \leq
     \OhP \left( \epsilon^{1/2} \right).
 \]
 Letting $\epsilon \to 0$, we get
@@ -2542,7 +2544,7 @@ Letting $\epsilon \to 0$, we get
             -
             b(\gamma)
         \big)
-        =
+        \leq
         \ohP(1).
 \]
 Together with the lower bound, this implies
@@ -2557,6 +2559,157 @@ Together with the lower bound, this implies
     0.
 \)
 \end{proof}
+
+\subsection{Right singular vectors}
+
+For $\mu_i > \gamma^{-1/2}$, we can get a right singular vector of $\frac{1}{\sqrt{n}} \mtX_n$ from the sequence of solution pairs 
+$(z_{n,i}, \vx_{n,i})$ satisfiying 
+$f_n(z_{n,i}, \vx_{n,i}) = 0$ and $z_{n,i} \toas \bmu_i$.  The vector
+is parallel to
+\[
+    \vtx_{n,i}
+    =
+    \left(
+    \begin{matrix}
+        \vx_n \\
+        - ( \mS_{n,22} - z_n \mI_{p-k} )^{-1} \mS_{n,21} \, \vx_n
+    \end{matrix}
+    \right).
+\]
+We just need to normalize this vector to have unit length.  The lengh
+of $\vtx_n$ is given by
+\[
+    \| \vtx_n \|_2^2
+        =
+        \vx_n^\trans
+        \left(
+            \mI_{k}
+            +
+            \mS_{n,12}
+            ( \mS_{n,22} - z_n \mI_{p-k} )^{-2} 
+            \mS_{n,21}
+        \right)
+        \vx_n.
+\]
+It is straightforward to show that for $z > b(\gamma)$,
+\begin{align*}
+    \mI_{k}
+    +
+    \mS_{n,12}
+    ( \mS_{n,22} - z \mI_{p-k} )^{-2} 
+    \mS_{n,21}
+        &\toas
+            -\mT_0'(z) \\
+        &= \frac{ \gamma^{-1} m'(z) }
+                { \big( 1 + \gamma^{-1} m(z) \big)^2 }
+           \mD^2
+           +
+           \frac{ m'(z) }{ \big( m(z) \big)^2 }
+           \mI_k
+\end{align*}
+uniformly for $z$ in any compact subset of $\big( b(\gamma), \infty \big)$.
+It is also not hard to compute for $\mu_i > \gamma^{-1/2}$ that
+\[
+    -\mT_0'( \bmu_i )
+        =
+            \frac{ \gamma^{-1} }{ \mu_i^2 - \gamma^{-1} }
+            \mD^2
+            +
+            \frac{ \mu_i^2 }{ \mu_i^2 - \gamma^{-1} }
+            \mI_k.
+\]
+Therefore, if $\mu_i > \gamma^{-1/2}$ and 
+$(z_{n,i}, \vx_{n,i}) \toas (\bmu_i, \ve_i)$, then
+\begin{align*}
+    \| \vtx_{n,i} \|_2^2
+        &\toas
+            \frac{ \mu_i ( \mu_i + \gamma^{-1} ) }
+                 { \mu_i^2 - \gamma^{-1} } \\
+        &=
+            \frac{ 1 + \tfrac{1}{ \gamma \mu_i} }
+                 { 1 - \tfrac{1}{ \gamma \mu^2} }.
+\end{align*}
+
+The behavior of the right singular vectors when $\mu_i \leq \gamma^{1/2}$ is
+a little more difficult to get at.  We will use a variant of an argument from Paul~\cite{paul2007ase} to show that $\| \vtx \|_2 \toas \infty$, which implies that $\frac{ \vx_{n,i} }{ \| \vtx_{n,i} \|_2 } \toas 0$.  We can
+do this by showing the the smallest eigenvalue of 
+\(
+    \mS_{n,12}
+    ( \mS_{n,22} - z_{n,i} \mI_{p-k} )^{-2} 
+    \mS_{n,21}
+\)
+goes to $\infty$.
+
+Write
+\[
+    \mS_{n,12}
+    ( \mS_{n,22} - z_{n,i} \mI_{p-k} )^{-2} 
+    \mS_{n,21}
+        =
+        \sum_{\alpha=1}^{p-k}
+            \frac{ \vs_{n,\alpha} \, \vs_{n,\alpha}^\trans }
+                 { ( \tlambda_{n,\alpha} - z_{n,i} )^2 },
+\]
+where $\vs_{n,1}, \vs_{n,2}, \ldots, \vs_{n,p-k}$ are the 
+columns of $\mS_{n,12}$, and
+$\tlambda_{n,1}, \tlambda_{n,2}, \ldots, \tlambda_{n,p-k}$ are the eigenvalues
+of $\mS_{n,22}$.  For $\epsilon > 0$, define the event 
+\(
+    J_{n}(\epsilon)
+    =
+    \left\{
+        z_{n,i} < b(\gamma) + \epsilon
+    \right\}.
+\)
+From the interleaving inequality, we have $z_{n,i} \geq \tlambda_{n,i}$.
+With respect to the ordering on positive-definite matrices, we have
+\begin{align*}
+    \sum_{\alpha=1}^{p-k}
+            \frac{ \vs_{n,\alpha} \, \vs_{n,\alpha}^\trans }
+                 { ( \tlambda_{n,\alpha} - z_{n,i} )^2 }
+        &\succeq
+            \sum_{\alpha=i}^{p-k}
+                    \frac{ \vs_{n,\alpha} \, \vs_{n,\alpha}^\trans }
+                         { ( \tlambda_{n,\alpha} - z_{n,i} )^2 } \\
+        &\succeq
+            \sum_{\alpha=i}^{p-k}
+                    \frac{ \vs_{n,\alpha} \, \vs_{n,\alpha}^\trans }
+                         { ( b(\gamma) + \epsilon - z_{n,i} )^2 }
+            \qquad\text{on $J_n(\epsilon)$.}
+\end{align*}
+It is not hard to show that
+\(
+    \left\|
+        \sum_{\alpha=1}^{i-1}
+                \frac{ \vs_{n,\alpha} \, \vs_{n,\alpha}^\trans }
+                     { ( b(\gamma) + \epsilon - z_{n,i} )^2 }
+    \right\|
+        \toas 0.
+\)
+Therefore,
+\[
+    \sum_{\alpha=i}^{p-k}
+            \frac{ \vs_{n,\alpha} \, \vs_{n,\alpha}^\trans }
+                 { ( b(\gamma) + \epsilon - z_{n,i} )^2 }
+        \toas
+        \frac{ \gamma^{-1} m'\big( b(\gamma) + \epsilon \big) }
+             { 1 + \gamma^{-1} m\big( b(\gamma) + \epsilon \big)}
+        \mD^2
+        +
+        \frac{ m'\big( b(\gamma) + \epsilon \big) }
+             { \left[ m\big( b(\gamma) + \epsilon \big) \right]^2}
+        \mI_k.
+\]
+As $n\to\infty$, we have $\Prob\big( J_n(\epsilon) \big) \to 1$.  So,
+since $m'\big( b(\gamma) + \epsilon \big) \geq \frac{C}{\sqrt{\epsilon}}$
+for some constant $C$, 
+letting $\epsilon \to 0$ we must have that the smallest eigenvalue of
+\(
+    \mS_{n,12}
+    ( \mS_{n,22} - z_{n,i} \mI_{p-k} )^{-2} 
+    \mS_{n,21}
+\)
+goes to $\infty$.
 
 \section{Left singular vectors}
 
