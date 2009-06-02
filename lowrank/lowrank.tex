@@ -2811,3 +2811,51 @@ A straightforward calculation shows the following:
         \vy_{n,i} \toas 0.
     \]
 \end{lemma}
+
+\section{Results for $\gamma \in (0,1)$}
+
+Remarkably the formulas for the limiting quantities still hold when $\gamma < 1$.  To see this, we can get the behavior for $\gamma < 1$ by taking the transpose of $\mX_n$ and applying the theorem for $\gamma \geq 1$.  We switch the roles of $n$ and $p$, replace $\mu_i$ by $\mu_i' = \gamma \mu_i$ replace $\gamma$ by $\gamma' = \gamma^{-1}$.  Then, for instance, the critical cutoff becomes
+\begin{align*}
+    \mu_i' &> \frac{1}{\sqrt{\gamma'}}, \quad\text{i.e.} \\
+    \gamma \mu_i &> \gamma^{1/2},
+\end{align*}
+which is the same formula for $\gamma \geq 1$.  The almost-sure limit of
+the square of the $i$th eigenvalue of $\frac{1}{p} \mX_n \mX_n^T$ becomes
+\begin{align*}
+    \bmu_i'
+        &= ( \gamma \mu_i + 1 )
+           \left( 1 + \frac{\gamma}{ \gamma \mu_i } \right) \\
+        &= \gamma ( \mu_i + 1 ) \left( 1 + \frac{1}{\gamma \mu} \right) \\
+        &= \gamma \bmu_i.
+\end{align*}
+The formulas for the other quantities also still remain true.
+
+\section{Related work, extensions, and future work}
+
+\subsection{Related work}
+
+When Johnstone~\cite{johnstone2001dle} worked out the distribution of the largest eigenvalue in the null (no signal) case, he proposed studying ``spiked'' alternative models.  Spiked data consists of vector-valued observations with population covariance of the form
+\[
+    \Sigma = \diag( \mu_1, \mu_2, \ldots, \mu_k, 1, \ldots, 1 ).
+\]
+Work on the spiked model started with Baik et al.~\cite{baik2005ptl}, 
+Baik \& Silverstein~\cite{baik2006els}, and Paul~\cite{paul2007ase}.  Baik et al. showed that for complex gaussian data, a phase transition phenomenon exists, depending on the relative magnitude of the spike.  Baik \& Silverstein gave the almost-sure limits of the eigenvalues from the sample covariance matrix without assuming gaussianity.  Paul worked with real gaussian data and gave the limiting distributions when $\gamma > 1$.  Paul also gives some results about the eigenvectors.
+
+After this initial work, Bai \& Yao~\cite{bai2008clt}~\cite{bai2008lts} derived the almost-sure limits and prove a central limit theorem for eigenvalues for a general class of data that includes colored noise and non-gaussianity.  Chen et al~\cite{chen2009ppc} consider another type of spiked model with correlation.  Nadler~\cite{nadler2008fsa} derived the behavior of the first eigenvector in a spiked model with one spike.
+
+The above authors all consider data of the form $\mX = \mZ \mSigma^{1/2}$.
+Onatski~\cite{onatski2009}, like us, examines data of the form 
+$\mX = \mU \mD \mV^T + \mE$.  With slightly different assumptions than ours, he is able to give the probability limits of the top eigenvalues, along with the marginal distributions of the scaled eigenvalues and singular vectors.  However, Onatski does not work in a ``transpose-invariant'' framework like we do, so his methods will not allow getting at the joint distribution of the left and right singular vectors.
+
+\subsection{Extensions and future work}
+
+We have stopped short of computing the second-order behavior of the singular vectors, but no additional theory is required to get at these quantities.  Anyone patient enough can use our results to compute the joint distribution of 
+$\| \vtx_{n,i} \|_2$, $\vx_{n,i}$, and $\vy_{n,i}$.  This will give the joint behavior of the singular vectors.  
+
+Most of the proof remains unchanged for complex Gaussian noise, provided
+transpose ($^\trans$) is replaced by conjugate-transpose ($^\herm$).  The
+variance formulas need a small modification, since the fourth-moment of
+a real Gaussian is $2$ and that of a complex Gaussian is $1$.
+
+For colored or non-Gaussian noise, we no longer have orthogonal invariance, so the change of basis in Section~\ref{S:lowrank-preliminaries} is a little trickier.  It is likely that comparable results can still be gotten, perhaps using results on the eigenvectors of general sample covariance matrices from Bai et al. \cite{bai2007ael}.
+
