@@ -2711,9 +2711,38 @@ letting $\epsilon \to 0$ we must have that the smallest eigenvalue of
 \)
 goes to $\infty$.
 
-\section{Left singular vectors}
+\subsection{Left singular vectors}
 
-If we define
+We can get the left singular vectors from the right from multiplication
+by $\frac{1}{\sqrt{n}} \mtX_n$.  Specifically, if $\vtv_{n,i}$ is a right
+singular vector of $\frac{1}{\sqrt{n}} \mtX_n$ with singular value
+$z_{n,i}^{1/2}$, then $\vtu_{n,i}$, the corresponding left singular vector,
+is defined by
+\[
+    z_{n,i}^{1/2} \,
+    \vtu_{n,i}
+        = 
+        \frac{1}{\sqrt{n}}
+        \mtX_n \,
+        \vtv_{n,i}.
+\]
+We are only interested in the first $k$ components of $\vtu_{n,i}$.  If
+\[
+    \vtv_{n,i}
+    =
+    \frac{1}{\| \vtx_{n,i} \|_2 }
+    \left(
+    \begin{matrix}
+        \vx_{n,i} \\
+        -( \mS_{n,22} - z_{n,i} \mI_{p-k} )^{-1} \mS_{n,21} \, \vx_{n,i}
+    \end{matrix}
+    \right),
+\]
+then these are given by
+\(
+    \frac{1}{\| \vtx_{n,i} \|_2 } \mR_n(z_{n,i}) \, \vx_{n,i},
+\)
+where
 \[
     \mR_n(z)
     =
@@ -2725,15 +2754,21 @@ If we define
     \frac{1}{\sqrt{n}}
     \mE_{n,12}
     \left( \mS_{n,22} - z \mI_{p-k} \right)^{-1}
-    \mS_{n,21},
+    \mS_{n,21}.
 \]
-then as before we have
+It is not hard to show that
 \(
     \mR_n(z) \toas \mR_0(z),
 \)
 uniformly for $z > b(\gamma)$, and
 \(
-    \mR_n(z) = \mR_0(z) + \frac{1}{\sqrt{n}} \mR_{n,1}(z) + \ohP(1)
+    \mR_n(z) 
+        = 
+            \mR_0(z) 
+            + 
+            \frac{1}{\sqrt{n}} \mR_{n,1}(z) 
+            + 
+            \ohP\left( \frac{1}{\sqrt{n}} \right)
 \)
 pointwise for $z > b(\gamma)$.  Here,
 \[
@@ -2757,3 +2792,22 @@ and
     \mG_n(z).
     \end{split}
 \]
+Let $y_{n,i} = \frac{1}{\| \vtx_{n,i} \|_2 } \mR_n(z_{n,i}) \, \vx_{n,i}$.
+A straightforward calculation shows the following:
+
+\begin{lemma}
+    If $\mu_i > \gamma^{-1/2}$ and 
+    $(z_{n,i}, \vx_{n,i}) \toas (\bmu_i, \ve_i)$, then 
+    \[
+        \vy_{n,i}
+            \toas
+                \left(
+                \frac{1 - \tfrac{ 1 }{ \gamma \mu_i^2 } }
+                     { 1 + \tfrac{1}{\mu_i} } \right)^{1/2} \,
+                \ve_i .
+    \]
+    If $\mu_i \leq \gamma^{-1/2}$ and $z_{n,i} \toas b(\gamma)$, then
+    \[
+        \vy_{n,i} \toas 0.
+    \]
+\end{lemma}
