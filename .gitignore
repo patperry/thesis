@@ -5,3 +5,6 @@ suthesis
 *.bbl
 *.blg
 *.log
+*.lof
+*.lot
+*.toc
