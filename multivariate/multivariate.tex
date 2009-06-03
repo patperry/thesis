@@ -228,6 +228,7 @@ If $n \geq p$ and $\mSigma$ is positive-definite, then the elements of $\mA$ hav
            \Gamma_p \left( \frac{n}{2} \right) }
     \exp \left(
         -
+        \frac{1}{2}
         \tr \left(
             \mSigma^{-1} \mA
         \right)
@@ -409,7 +410,7 @@ To simplify matters, for the rest of the section we will mostly work in a settin
 To see that centering the variables does not change the theory in any essential way, we provide the following proposition.
 
 \begin{proposition}
-Let $\vX_1, \vX_2, \ldots, \vX_n$ be a sequence of random vectors in $\reals^p$ with mean $\vmu$ and covariance $\mSigma$.  Let
+Let $\vX_1, \vX_2, \ldots, \vX_n$ be a sequence of random observations in $\reals^p$ with mean vector $\vmu$ and covariance matrix $\mSigma$.  Let
 \(
     \vbX_n = \frac{1}{n} \sum_{i=1}^n \vX_i
 \)
@@ -1255,12 +1256,12 @@ conditions \cite{bai1988nle}.
     $n \to \infty$, and
     $\frac{n}{p} \to \gamma \in (0,\infty)$.  Let $\mS_n = \frac{1}{n} \mX_n^\trans \mX_n$ and 
     denote its eigenvalues by 
-    $l_{n,1} \leq l_{n,2} \leq \cdots \leq l_{n,p}$.  If the 
+    $l_{n,1} \geq l_{n,2} \geq \cdots \geq l_{n,p}$.  If the 
     elements of $\mX_n$ are 
     \iid with $\E X_{n,11} = 0$, $\E X_{n,11}^2 = 1$, and
     $\E X_{n,11}^4 < \infty$, then
     \[
-        l_{n,p} \toas \left( 1 + \gamma^{-1/2} \right)^2.
+        l_{n,1} \toas \left( 1 + \gamma^{-1/2} \right)^2.
     \]
 \end{theorem}
 
@@ -1272,7 +1273,7 @@ $X_{n,11} \sim \Normal\left( 0,\, 1 \right)$.  Bai and Yin~\cite{bai1993lse} pro
     Theorem~\ref{T:max-wishart-eig-limit}.  If $\E X_{n,11}^4 < \infty$ and
     $\gamma \geq 1$, then
     \[
-        l_{n,1} \toas \left( 1 - \gamma^{-1/2} \right)^2.
+        l_{n,p} \toas \left( 1 - \gamma^{-1/2} \right)^2.
     \]
     With the same moment assumption on $X_{n,11}$, if $0 < \gamma < 1$, then
     \[
@@ -1294,7 +1295,7 @@ limiting distribution for complex white Wishart matrices.  Johnstone~\cite{johns
     and $n \to \infty$ with $\frac{n}{p} \to \gamma \in (0, \infty)$.  Define
     $\mS_n = \frac{1}{n} \mX_n^\trans \mX_n$ and label its eigenvalues
     \(
-        l_{n,1} \leq l_{n,2} \leq \cdots \leq l_{n,p}.
+        l_{n,1} \geq l_{n,2} \geq \cdots \geq l_{n,p}.
     \)
     If the elements of $\mX_n$ are \iid with
     \(
@@ -1302,7 +1303,7 @@ limiting distribution for complex white Wishart matrices.  Johnstone~\cite{johns
     \)
     then
     \[
-        \frac{l_{n,p} - \mu_{n,p}}{\sigma_{n,p}}
+        \frac{l_{n,1} - \mu_{n,p}}{\sigma_{n,p}}
         \tod
         W_1
         \sim
@@ -1390,13 +1391,13 @@ The density of $\FTW_1$ is shown in Figure~\ref{F:tw-density}.
     \label{F:tw-density}
 \end{figure}
 
-A result like Theorem~\ref{T:tw-limit-largest} holds true for the smallest eigenvalue.  We define the \emph{Reflected Tracy-Widom Law} to have distribution function $\GTW_1(s) = 1 - \FTW_1(-s)$.  Then Paul~\cite{paul2006dse} showed the following:
+A result like Theorem~\ref{T:tw-limit-largest} holds true for the smallest eigenvalue.  We define the \emph{Reflected Tracy-Widom Law} to have distribution function $\GTW_1(s) = 1 - \FTW_1(-s)$.  Then we have 
 
 \begin{theorem}\label{T:tw-limit-smallest}
     With the same assumptions as in Theorem~\ref{T:tw-limit-largest}, if
     $\gamma \in (1,\infty)$ then
     \[
-        \frac{l_{n,1} - \mu_{n,p}^-}{\sigma_{n,p}^-}
+        \frac{l_{n,p} - \mu_{n,p}^-}{\sigma_{n,p}^-}
         \tod
         W_1
         \sim
@@ -1421,9 +1422,9 @@ A result like Theorem~\ref{T:tw-limit-largest} holds true for the smallest eigen
                 \sqrt{p - 1/2}
             \right)
             \left(
-                \frac{1}{\sqrt{n - 1/2}}
-                -
                 \frac{1}{\sqrt{p - 1/2}}
+                -
+                \frac{1}{\sqrt{n - 1/2}}
             \right)^{1/3}.
     \end{align*}
     If $\gamma \in (0, 1)$, then
@@ -1438,7 +1439,9 @@ A result like Theorem~\ref{T:tw-limit-largest} holds true for the smallest eigen
 
 \noindent
 We get the result for $\gamma \in (0,1)$ by reversing the role of $n$ and $p$.
-In practice, the distribution of $\log l_{n,p}$ converges faster than that of $l_{n,p}$.  When $\gamma > 1$, Ma~\cite{ma2008atw} recommends appropriate centering and scaling for $\log l_{n,p}$ to converge to a $\GTW_1$ random variable at rate of order $(n \wedge p)^{2/3}$.
+Baker et al~\cite{baker1998rme} proved the result for complex data.
+Paul~\cite{paul2006dse} extended the result to real data when $\gamma \to \infty$.  Ma~\cite{ma2008atw} gives convergence rates.  In practice,
+$\log l_{n,p}$ converges in distribution faster than $l_{n,p}$.  Ma recommends appropriate centering and scaling constants for $\log l_{n,p}$ to converge in distribution to a $\GTW$ random variable at rate $(n \wedge p)^{2/3}$.
 
 Theorem~\ref{T:tw-limit-smallest} does not apply when $\frac{n}{p} \to 1$.  Edelman~\cite{edelman1988ecn} derived the limiting distribution of the smallest eigenvalue when $n = p$.  It is not known if his result holds more generally when $\frac{n}{p} \to 1$.
 
@@ -1447,7 +1450,7 @@ Theorem~\ref{T:tw-limit-smallest} does not apply when $\frac{n}{p} \to 1$.  Edel
     Theorem~\ref{T:tw-limit-largest}.  If $p(n) = n$, then for $t \geq 0$,
     \[
         \Prob\left\{
-            n l_{n,1} \leq t
+            n l_{n,p} \leq t
         \right\}
         \to
         \int_0^t
@@ -1572,7 +1575,7 @@ Silverstein investigated second-order behavior of eigenvectors in \cite{silverst
             g_i(x) \, d\FMP_\gamma(x)
         \cdot
         \int
-            g_j(x) \, d\FMP_\gamma(x)
+            g_j(x) \, d\FMP_\gamma(x).
     \]
 \end{theorem}
 
