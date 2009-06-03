@@ -344,15 +344,18 @@ Then $\mO$ and $\mL$ are independent, with $\mO$ Haar-distributed over
 the group of $p \times p$ orthogonal matrices and the elements of $\mL$
 having density
 \begin{equation}\label{E:wishart-eig-density}
+    \left(
+        \frac{1}{2 \sigma^2 }
+    \right)^{np/2}
     \frac{ \pi^{p^2/2} }
-         { \left( 2 \sigma^2 \right)^{np/2}
-           \Gamma_p \left( \frac{n}{2} \right) 
+         { \Gamma_p \left( \frac{n}{2} \right) 
            \Gamma_p \left( \frac{p}{2} \right) }
     \prod_{i < j}^p
         \left| l_i - l_j \right|
     \prod_{i=1}^p
         l_i^{(n-p-1)/2}
-        e^{-l_i/(2 \sigma^2)}.
+        e^{-\tfrac{l_i}{2 \sigma^2}}
+        .
 \end{equation}    
 \end{proposition}
 \noindent
