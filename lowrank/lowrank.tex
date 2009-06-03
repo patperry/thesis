@@ -44,36 +44,20 @@ gotten from truncating the singular value decomposition (SVD)
 of the SVD when $n$ and $p$ both tend to infinity, with their ratio tending to
 a nonzero constant.
 
-In an upcoming paper, Onatski~\cite{onatski2009} gives a very thorough treatment
-of these models. He assumes that the elements of $E$ are \iid Gaussians, that
-$\sqrt{n} ( \mU^\trans \mU - \mI_k) $ tends to a multivariate Gaussian
-distribution, and that $\mV$ and $\mD$ are both nonrandom.
-
-Slight variations of the above model have been analyzed by
-Baik~\&~Silverstein~\cite{baik2006els}, and by Paul~\cite{paul2007ase}. These
-authors look at matrices of the form $\mX = \mT^{1/2} \mZ$, where $\mZ$ is a
-matrix with iid entries, and $\mT$ is a ``spiked'' covariance matrix, i.e. a
-positive-definite matrix with a few large eigenvalues. Baik \& Silverstein
-prove quite general results using the Stieltjes transform only assuming finite
-fourth moments, but they limit their study to the almost sure limits of the
-top singular values of $\mX$. Paul gives the limiting distributions of the
-sample singular values as well as the singular vectors, but he assumes that
-the elements of $\mZ$ are independent standard Gaussians. Later, Chen and
-coauthors \cite{chen2009ppc} generalized his results to allow for correlated
-Gaussian loadings of the factors.
-
-The contributions of this chapter are twofold. First, we work under a
+In an upcoming paper, Onatski~\cite{onatski2009} gives a very thorough
+treatment of these models. He assumes that the elements of $E$ are \iid
+Gaussians, that $\sqrt{n} ( \mU^\trans \mU - \mI_k) $ tends to a multivariate
+Gaussian distribution, and that $\mV$ and $\mD$ are both nonrandom. The
+contributions of this chapter are twofold. First, we work under a
 transpose-agnostic generative model that allows randomness in all three of
 $\mU$, $\mD$, and $\mV$. Second, we give a more complete picture of the
-almost-sure limits of the sample singular vectors, taking into account their
-projections onto the space orthogonal to the population singular vectors.
+almost-sure limits of the sample singular vectors, taking into account the
+signs of the dot products between the population and sample vectors.
 
-We describe the results in Section 2. The rest of the paper is dedicated to
-proving the two main theorems. We owe a substantial debt to Onatski's work.
-Although some significant details below are different, the general outline and
-the main points of the argument are the same.
+We describe the main results in Section~\ref{S:lowrank-assumptions-results}.
+Sections~\ref{S:lowrank-preliminaries}--\ref{S:lowrank-gamma-lt-1} are dedicated to proving the two main theorems.  Finaly, we discuss related work and extensions in Section~\ref{S:lowrank-related-extensions}.  We owe a substantial debt to Onatski's work.  Although most of the details below are different, the general outline and the main points of the argument are the same.
 
-\section{Assumptions, notation, and main results}
+\section{Assumptions, notation, and main results}\label{S:lowrank-assumptions-results}
 
 Here we make explicit what the model and assumptions are, and we present our
 main results.
@@ -92,9 +76,9 @@ assumptions concern the signal part:
 
 \begin{assumption}\label{A:factors}
     The factors $\mU_n$ and $\mV_n$ are random matrices of dimensions
-    $n \times k$ and $p \times k$, respectively.  The number of factors, $k$,
-    is a fixed constant.  The factors are normalized so that
-    $\mU_n^\trans \mU_n =  \mV_n^\trans \mV_n = \mI_k$.  The ratio 
+    $n \times k$ and $p \times k$, respectively, normalized so that
+    $\mU_n^\trans \mU_n =  \mV_n^\trans \mV_n = \mI_k$. 
+    The number of factors, $k$, is a fixed constant.  The ratio 
     $n/p = \gamma$ is a fixed nonzero scalar in the range $(0,\infty)$.
 \end{assumption}
 \noindent
@@ -214,10 +198,11 @@ values.
 Next, we give the result for the singular vectors:
 \begin{theorem}\label{T:vectors}
     Say Assumptions~\ref{A:factors}~--~\ref{A:noise} hold.  Then the
-    $k\times k$ matrix $\mR_n \equiv \mV_n^\trans \mhV_n$ converges almost 
-    surely to a matrix $\mR = \diag(r_1, r_2, \ldots, r_k)$, where
+    $k\times k$ matrix $\mTheta_n \equiv \mV_n^\trans \mhV_n$ converges almost 
+    surely to a matrix 
+    $\mTheta = \diag(\theta_1, \theta_2, \ldots, \theta_k)$, where
     \begin{equation}
-        r_i^2
+        \theta_i^2
         =
         \begin{cases}
             \left( 1 - \frac{\sigma^4}{ \gamma \mu_i^2} \right)
@@ -227,6 +212,22 @@ Next, we give the result for the singular vectors:
             &\text{otherwise.}
         \end{cases}
     \end{equation}
+    Also, the $k\times k$ matrix $\mPhi_n \equiv \mU_n^\trans \mhU_n$
+    converges almost surely to a matrix
+    $\mPhi = \diag(\varphi_1, \varphi_2, \ldots, \varphi_k)$, where    
+    \begin{equation}
+        \varphi_i^2
+        =
+        \begin{cases}
+            \left( 1 - \frac{\sigma^4}{ \gamma \mu_i^2} \right)
+            \left( 1 + \frac{\sigma^2}{ \mu_i  } \right)^{-1}
+            &\text{when $\mu_i > \frac{\sigma^2}{\sqrt{\gamma}}$,} \\
+            0
+            &\text{otherwise.}
+        \end{cases}
+    \end{equation}
+    Moreover, $\theta_i$ and $\varphi_i$ almost-surely have the same
+    sign.
 \end{theorem}
 
 
@@ -241,19 +242,19 @@ Assumptions~\ref{A:factors}~and~\ref{A:sizes} are simpler than the assumptions g
 \[
     \mX = \mZ \mTheta^\trans + \mE,
 \]
-where $\mTheta$ is an $p \times k$ matrix of factors and $\mZ$ is an $n\times k$ matrix of factor loadings whose rows are \iid multivariate $\Normal(0,\, \mC)$ random variables for covariance matrx $\mC$ having eigen-decomposition $\mC = \mQ \mLambda \mQ^\trans$.  Letting $\mZ = \sqrt{n} \mhP \mhLambda \mhQ^\trans$ be the SVD of $\mZ$, Anderson's results \cite{anderson1963atp} give us that $\mhLambda$ and $\mhQ$ converge almost surely to $\mLambda$ and $\mQ$, respectively, and that the diagonal elements of $\sqrt{n} (\mhLambda - \mLambda)$ converge to a mean-zero multivariate normal whenever $\mC$ has no repeated eigenvalues.  If we define $\mU = \mhP$, $\mD = \mhLambda^{1/2}$, and $\mV = \mTheta \mhQ$, then $\mX = \sqrt{n} \mU \mD \mV^\trans + \mE$, where the factors satisfy Assumptions~\ref{A:factors}~and~\ref{A:sizes}.  Dropping the normality assumption on the rows of $\mZ$ poses no problem.  Moreover, we can suppose instead of \iid that the rows of $\mZ$ be a martingale difference array with well-behaved low-order moments and still perform a transformation of the variables to get factors of the form we need for Theorems~\ref{T:spiked-eigenvalue-limits}~and~\ref{T:vectors}.
+where $\mTheta$ is an $p \times k$ matrix of factors and $\mZ$ is an $n\times k$ matrix of factor loadings whose rows are \iid multivariate $\Normal(0,\, \mC)$ random variables for covariance matrx $\mC$ having eigen-decomposition $\mC = \mQ \mLambda \mQ^\trans$.  Letting $\mZ = \sqrt{n} \mhP \mhLambda \mhQ^\trans$ be the SVD of $\mZ$, Anderson's results \cite{anderson1963atp} give us that $\mhLambda$ and $\mhQ$ converge almost surely to $\mLambda$ and $\mQ$, respectively, and that the diagonal elements of $\sqrt{n} (\mhLambda - \mLambda)$ converge to a mean-zero multivariate normal whenever $\mC$ has no repeated eigenvalues.  If we define $\mU = \mhP$, $\mD = \mhLambda^{1/2}$, and $\mV = \mTheta \mhQ$, then $\mX = \sqrt{n} \mU \mD \mV^\trans + \mE$, where the factors satisfy Assumptions~\ref{A:factors}~and~\ref{A:sizes}.  Dropping the normality assumption on the rows of $\mZ$ poses no problem.  Moreover, we can suppose instead of \iid that the rows of $\mZ$ are a martingale difference array with well-behaved low-order moments and still perform a transformation of the variables to get factors of the form we need for Theorems~\ref{T:spiked-eigenvalue-limits}~and~\ref{T:vectors}.
 
 \item
-There is a sign-indeterminancy in the sample and population singular vectors. Since we only give results for the squares $\mR_n^\trans \mR$ the signs do not matter and we choose them arbitrarily.
+There is a sign-indeterminancy in the sample and population singular vectors. We choose them arbitrarily.
 
 \item 
-Most of the results in Theorems~\ref{T:spiked-eigenvalue-limits}~and~\ref{T:vectors} can be gotten from Onatski's results \cite{onatski2009}.   However, Onatski does not show that $\sqrt{n} (\hmu_i - \bmu_i) \toP 0$ when $\mu_i$ is below the critical threshold.  Furthermore, Onatski proves convergence in probability, not almost sure convergence.
+Most of the results in Theorems~\ref{T:spiked-eigenvalue-limits}~and~\ref{T:vectors} can be gotten from Onatski's results \cite{onatski2009}.   However, Onatski does not show that $\sqrt{n} (\hmu_i - \bmu_i) \toP 0$ when $\mu_i$ is below the critical threshold.  Furthermore, Onatski proves convergence in probability, not almost sure convergence.  Lastly, Onatski does not get at the joint behavior between $\mTheta_n$ and $\mPhi_n$.
 
 \end{enumerate}
 
 \section{Preliminaries}\label{S:lowrank-preliminaries}
 
-Without loss of generality we will assume that $\sigma^2 = 1$.  For now, we will also assume that $\gamma \geq 1$.
+Without loss of generality we will assume that $\sigma^2 = 1$.  Until Section~\ref{S:lowrank-gamma-lt-1} , we will also assume that $\gamma \geq 1$.
 
 \subsection{Change of basis}
 
@@ -426,7 +427,7 @@ We have gotten to $\mtX_n$ via an orthogonal change of basis applied to $\mX_n$.
         Similarly, $\mV_n^\trans \mhV_n = \mtV_{n,1}$.
 \end{enumerate}
 
-\section{The secular equation}
+\section{The secular equation}\label{S:secular-equation}
 
 We set $\mS_n = \frac{1}{n} = \mtX_n^\trans \mtX_n$.  The eigenvalues and eigenvectors of $\mS_n$ are the squares of the singular values of $\frac{1}{\sqrt{n}} \mtX_n$ and its right singular vectors, respectively.  In block form, we have
 \[
@@ -583,33 +584,30 @@ is an eigenvector of $\mS_n$ with eigenvalue $\mu$.  We define
 \begin{gather}
     \mT_n(z)
         =
+            \mS_{n,11}
+            -
+            z
+            \mI_k
+            -
+            \mS_{n,12}
             \left(
-                \mS_{n,11}
+                \mS_{n,22}
                 -
                 z
-                \mI_k
-                -
-                \mS_{n,12}
-                \left(
-                    \mS_{n,22}
-                    -
-                    z
-                    \mI_{p-k}
-                \right)^{-1}
-                \mS_{n,21}
-            \right), \label{E:secular-T} \\
+                \mI_{p-k}
+            \right)^{-1}
+            \mS_{n,21}
+            \label{E:secular-T} \\
     f_n ( z, \vx )
-    =
-    \mT_n(z) \,
-    \vx, \label{E:secular-f}
+        =
+            \mT_n(z) \,
+            \vx, \label{E:secular-f}
 \end{gather}
 and refer to the equation $f_n(z, \vx) = 0$ as the \emph{secular equation}.
 
 \subsection{Outline of the proof}
 
-We first show that with probability one, $\mS_n$ and $\mS_{n,22}$ have no eigenvalues in common.  This implies that all of the eigenvalues of $\mS_n$ are solutions to the secular equation.  Next, we study the solutions of 
-$f_n(z, \vx) = 0$.  It turns out that these solutions are dramatically different depending on the size of $z$.  If $z > (1 + \gamma^{-1/2})^2$,
-then we can write
+With probability one, $\mS_n$ and $\mS_{n,22}$ have no eigenvalues in common.  This implies that all of the eigenvalues of $\mS_n$ are solutions to the secular equation.  First, we give a perturbation expansion for $f_n(z, \vx)$ in Section~\ref{S:secular-equation}.  Then, in Section~\ref{S:solutions-to-secular-eq} we study the solutions of  $f_n(z, \vx) = 0$.  It turns out that these solutions are dramatically different depending on the size of $z$.  If $z > (1 + \gamma^{-1/2})^2$, then we can write
 \begin{align*}
     z 
         &= 
@@ -628,25 +626,20 @@ then we can write
             + 
             \ohP\left( \frac{1}{\sqrt{n}} \right).
 \end{align*}
-Otherwise, the solution is
+Otherwise, the solution satisfies
 \begin{align*}
     z
         &=
             z^0
             + 
-            \ohP\left( \frac{1}{\sqrt{n}} \right), \\
-    \vx
-        &=
-            \vx^0
-            +
             \ohP\left( \frac{1}{\sqrt{n}} \right).
 \end{align*}
-Once we have a solution to the secular equation, we can construct an
-eigenvector of $\mS_n$ using equation~\eqref{E:v-from-v1}.  Finally, we will derive the left singular vectors from the right by multiplying by $\mtX_n$.
+In Section~\ref{S:singular-values-and-vectors} we get the singular values and singular vectors of $\frac{1}{\sqrt{n}} \mtX_n$ from the solutions of the secular equation.  From a solution pair $(z, \vx)$, we can construct an eigenvalue and an eigenvector of $\mS_n$ using equation~\eqref{E:v-from-v1}.  Then, we can get the corresponding left singular vectors through multiplying by $\mtX_n$.  Finally, in Section~\ref{S:lowrank-gamma-lt-1} we show that the results still hold when $\gamma < 1$.  For parts of the proof, we will need some limit theorems for weighted sums from Appendix~\ref{A:weighted-sums}.
 
 \section{Analysis of the secular equation}
 
-By making use of the Sherman-Morrison-Wordbury formula~\cite{golub1996mc}, we can simplify $\mT_n(z)$.  We first write
+We can simplify the equation for $\mT_n(z)$.  
+By making use of the Sherman-Morrison-Wordbury formula~\cite{golub1996mc}, we can write
 \begin{align*}
     \left(
         \mS_{n,22} - z \mI_{p-k}
@@ -1511,8 +1504,8 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
                 \int \frac{ d\FMP_\gamma(t) }
                           { (t - z_i)(t - z_j) } \\
             &=
-                \frac{ m( z_1 ) - m( z_2 ) }
-                     { z_1 - z_2 },
+                \frac{ m( z_i ) - m( z_j ) }
+                     { z_i - z_j },
     \end{align*}
     the Wishart LLN combined with the truncation argument of
     Lemma~\ref{L:eij-product-limits} gives us that
@@ -1636,7 +1629,7 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
 \end{remark}
 
 With Lemmas~\ref{L:eij-product-limits}~and~\ref{L:eij-product-scaled-limits},
-we can simplify $f_n(z, \vx)$.  For convenience, we will define
+we can simplify $\mT_n(z)$.  For convenience, we define
 $\mF_n (z)$ such that
 \[
     \frac{1}{n}
@@ -1655,13 +1648,9 @@ $\mF_n (z)$ such that
             +
             \frac{1}{\sqrt{n}}
             \mF_n(z)
-            +
-            \ohP\left(
-                \frac{1}{\sqrt{n}}
-            \right)
 \]
-and $\mF_n(z) \tod \mF(z)$,
-with $\mG_n(z), \mH_n(z), \mK_n, \mL_{n,1},$ and $\mL_{n,2}$ defined similarly.
+and $\mF_n(z) \tod \mF(z)$ pointwise in $z$,
+with $\mG_n(z), \mH_n(z), \mK_n, \mL_{n,1},$ and $\mL_{n,2}$ defined similarly.  We can now get at the first and second-order behavior of $\mT_n(z)$.
 
 \begin{lemma}
     If $[u,v] \subset \big( b(\gamma), \, \infty \big)$, then
@@ -1761,8 +1750,6 @@ with $\mG_n(z), \mH_n(z), \mK_n, \mL_{n,1},$ and $\mL_{n,2}$ defined similarly.
                     +
                     \frac{1}{\sqrt{n}}
                     \mF_n(z)
-                    +
-                    \ohP\Big( \frac{1}{\sqrt{n}} \Big)
                 \right)^{-1} 
         \end{split} \\
             &=
@@ -1773,8 +1760,6 @@ with $\mG_n(z), \mH_n(z), \mK_n, \mL_{n,1},$ and $\mL_{n,2}$ defined similarly.
                     \frac{1}{\sqrt{n}}
                     \big( 1 + \gamma^{-1} m(z) \big)^{-1}
                     \mF_{n}(z)
-                    +
-                    \ohP\Big( \frac{1}{\sqrt{n}} \Big)
                 \right)^{-1} \\
             &=
                 \big( 1 + \gamma^{-1} m(z) \big)^{-1} \mI_k
@@ -1783,7 +1768,7 @@ with $\mG_n(z), \mH_n(z), \mK_n, \mL_{n,1},$ and $\mL_{n,2}$ defined similarly.
                 \big( 1 + \gamma^{-1} m(z) \big)^{-2}
                 \mF_{n}(z)
                 +
-                \ohP\Big( \frac{1}{\sqrt{n}} \Big).              
+                \ohP\left( \frac{1}{\sqrt{n}} \right).              
     \end{align*}
     Using this, after some simplification we get
     \[
@@ -1892,7 +1877,7 @@ Given a solution of $f_0(z, \vx) = 0$, it is not hard to believe that there is a
 
 \begin{lemma}\label{L:zn-sequence-exists}
     If $\mu > \gamma^{-1/2}$ occurs $l$ times on the diagonal of $\mD^2$, then
-    with probability one there exist sequences $z_{n,1}, 
+    with probability one for $n$ large enough there exist sequences $z_{n,1}, 
     \ldots, z_{n,l}$ such that for $n$ large enough:
     \begin{enumerate}
         \item $z_{n,i} \neq z_{n,j}$ for $i \neq j$
@@ -1950,7 +1935,7 @@ The proof involves a technical lemma, which we state and prove now.
 \end{proof}
 
 The last thing we need to do is show that for each sequence
-$z_{n,i}$ solving $\det \mT_n(z_{n,i})$, there is a corresponding sequence
+$z_{n,i}$ solving the equation $\det \mT_n(z_{n,i}) = 0$, there is a corresponding sequence
 of vectors $\vx_{n,i}$ with $f_n(z_{n,i}, \vx_{n,i}) = 0$.  Since $\det \mT_n (z_{n,i}) = 0$, there exists an $\vx_{n,i}$ with 
 $\mT_{n} (z_{n,i}) \, \vx_{n,i} = 0$.  We need to show that the sequence of vectors has a limit.
 
@@ -2413,7 +2398,7 @@ Therefore, for $j \neq i$ we have
 and all other covariances between the elements of
 $\mT_{n,1}(\bmu_i) \, \ve_i$ and $\mT_{n,1}(\bmu_j) \, \ve_j$ are zero.
 
-\section{Singular values and right singular vectors}
+\section{Singular values and singular vectors}\label{S:singular-values-and-vectors}
 
 The results about solutions to the secular equation translate directly
 to results about the singular values and right singular vectors of
@@ -2812,7 +2797,7 @@ A straightforward calculation shows the following:
     \]
 \end{lemma}
 
-\section{Results for $\gamma \in (0,1)$}
+\section{Results for $\gamma \in (0,1)$}\label{S:lowrank-gamma-lt-1}
 
 Remarkably the formulas for the limiting quantities still hold when $\gamma < 1$.  To see this, we can get the behavior for $\gamma < 1$ by taking the transpose of $\mX_n$ and applying the theorem for $\gamma \geq 1$.  We switch the roles of $n$ and $p$, replace $\mu_i$ by $\mu_i' = \gamma \mu_i$ replace $\gamma$ by $\gamma' = \gamma^{-1}$.  Then, for instance, the critical cutoff becomes
 \begin{align*}
@@ -2830,7 +2815,7 @@ the square of the $i$th eigenvalue of $\frac{1}{p} \mX_n \mX_n^T$ becomes
 \end{align*}
 The formulas for the other quantities also still remain true.
 
-\section{Related work, extensions, and future work}
+\section{Related work, extensions, and future work}\label{S:lowrank-related-extensions}
 
 \subsection{Related work}
 
