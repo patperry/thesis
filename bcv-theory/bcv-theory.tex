@@ -2,123 +2,6 @@
 
 In this chapter we will determine the optimal leave out-size for bi-cross-validation (BCV), along with proving a weak form of consistency.  We start with a lengthy discussion of what exactly BCV is trying to estimate.  Once we have a well-defined criterion, we show how to choose BCV parameters to get optimal performance.  In our context, ``optimal'' will mean that the rank chosen by BCV agrees with a specified risk.
 
-\section{The latent factor model}
-
-Suppose that we have $n$ multivariate observations $\vx_{1}, \vx_{2}, \ldots, \vx_{n} \in \reals^p$.  In a microarray setting, we will have about $n=50$ arrays measuring the activations of around $p=5000$ genes.  Alternatively, for financial applications $\vx_i$ will measure the market value of around $p=1000$ assets on day $i$, and we may be looking at data from the last three years, so $n \approx 1000$.  In these situations and others like them, we can often convince ourselves that there aren't really $1000$ different things going on in the data.  Probably, there are a small number, $k$ of unobserved factors driving the dynamics of the data.  Typically, we think $k$ is on the order of around $5$ or $10$.
-
-For genetics applications, we don't really think that all $p=5000$ measured genes are behaving independently.  To the contrary, we think that there are a small number of biological processes that determine how much of each protein gets produced.  In finance, while it is true that the stock prices of individual companies have a certain degree of independence, often macroscopic effects like industry- and market-wide trends account for a substantial portion of the value.
-
-\subsection{The spiked model}
-
-One way to model latent effects is to assume that the $\vx_i$ are \iid and that their covariance is ``spiked''.  We think that $\vx_i$ is a weighted combination of $k$ latent factors corrupted by additive white noise.  In this case, $\vx_i$ can be decomposed as
-\begin{align}
-    \vx_i
-        &=
-        \sum_{j=1}^k
-            \va_j
-            s_{i,j}
-        +
-        \vepsilon_i \notag \\
-        &=
-        \mA \vs_i + \vepsilon_i,
-\end{align}
-where
-\(
-    \mA
-    =
-    \left(
-    \begin{matrix}
-        \va_1 & \va_2 & \cdots & \va_k
-    \end{matrix}
-    \right)
-\)
-is a $p \times k$ matrix of latent factors common to all observations and $\vs_i$ is a vector of loadings for the $i$th observation.  We assume that
-the noise vector $\vepsilon_i$ is distributed as $\Normal( 0, \, \sigma^2 \mI_p )$.  If the loadings have mean zero and covariance $\mSigma_\text{S} \in \reals^{k \times k}$, and if they are also independent of the noise, then $\vx_1$ has covariance
-\begin{equation}\label{E:spiked-cov-natural-form}
-    \mSigma
-        \define
-        \E \left[ \vx_1 \, \vx_1^\trans \right]
-            =
-                \mA \mSigma_\text{S} \mA^\trans
-                +
-                \sigma^2
-                \mI_p.
-\end{equation}
-The decomposition in \eqref{E:spiked-cov-natural-form} can be reparametrized
-as
-\begin{equation}\label{E:spiked-cov-identifiable-form}
-    \mSigma
-        =
-        \mQ \mLambda \mQ^\trans
-        +
-        \sigma^2
-        \mI_p,
-\end{equation}
-where $\mQ^\trans \mQ = \mI_k$ and
-\(
-    \mLambda
-        = 
-        \diag \left( \lambda_1, \lambda_2, \ldots, \lambda_k \right),
-\)
-with $\lambda_1 \geq \lambda_2 \geq \cdots \geq \lambda_k \geq 0$.  
-Equation~\eqref{E:spiked-cov-identifiable-form} makes it apparent that $\mSigma$ is ``spiked'', in the sense that most of its eigenvalues are equal, but $k$ eigenvalues stand out above the bulk.  The first $k$ eigenvalues
-are $\lambda_1 + \sigma^2, \lambda_2 + \sigma^2, \ldots, \lambda_k + \sigma^2$, and the remaining $p-k$ eigenvalues are equal to $\sigma^2$.
-
-\subsection{More general matrix models}
-
-We can introduce a model more general than the spiked one by specifying
-a distribution for the $n\times p$ data matrix 
-\(
-    \mX
-    =
-    \left(
-    \begin{matrix}
-        \vx_1 &
-        \vx_2 &
-        \cdots &
-        \vx_n
-    \end{matrix}
-    \right)^\trans
-\)
-that includes dependence between the rows.  In the spiked model, the
-distribution of $\mX$ can be described as
-\begin{equation}\label{E:data-matrix-spiked}
-    \mX
-        \eqd
-        \mZ
-        \mLambda^{1/2}
-        \mQ^\trans
-        +
-        \mE,
-\end{equation}
-where 
-\(
-    \mE 
-        = 
-        \left(
-        \begin{matrix}
-            \vepsilon_1 & \vepsilon_2 & \cdots \vepsilon_n
-        \end{matrix}
-        \right)^\trans
-\)
-and $\mZ$ is an $n \times k$ matrix of independent 
-$\Normal \left( 0, \, 1 \right)$ elements.  More generally, we can consider
-data of the form
-\begin{equation}\label{E:data-matrix-general}
-    \mX
-        \eqd
-            \sqrt{n} \,
-            \mU
-            \mD
-            \mV^\trans
-            +
-            \mE,
-\end{equation}
-where $\mU^\trans \mU = \mV^\trans \mV = \mI_k$, and 
-$\mD = \diag( d_1, d_2, \ldots, d_k )$ with 
-$d_1 \geq d_2 \geq \cdots \geq d_k \geq 0$.  
-We can get \eqref{E:data-matrix-general}  from \eqref{E:data-matrix-spiked} by letting $\mZ \mLambda^{1/2} = \sqrt{n} \, \mU \mD \mC^\trans$ be the SVD of $\mZ \mLambda^{1/2}$ and defining $\mV = \mQ \mC$.  Unlike the spiked model, \eqref{E:data-matrix-general} can model dependence between variables as well as dependence between observations.
-
 \subsection{An asymptotic framework}
 
 From a theoretical standpoint, it is more natural to work with a sequence
@@ -133,4 +16,7 @@ where $\mU_n^\trans \mU_n = \mV_n^\trans \mV_n^\trans = \mI_k$ and
 $\mD_n = \diag( d_{n,1}, d_{n,2}, \ldots, d_{n,k})$.  We label the columns
 of $\mU_n$ and $\mV_n$ as $\vu_{n,1}, \vu_{n,2}, \ldots, \vu_{n,k}$ and
 $\vv_{n,1}, \vv_{n,2}, \ldots, \vv_{n,k}$, respectively.
+
+
+\section{Choosing a loss function}
 
