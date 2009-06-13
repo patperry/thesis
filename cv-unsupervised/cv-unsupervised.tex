@@ -195,8 +195,8 @@ we think of $\sqrt{n} \, \mU \mD \mV^\trans$ as ``signal'' and $\mE$ as ``noise'
     \(
         \mX = \sqrt{n} \, \mU \mD \mV^\trans + \mE,
     \)
-    where $\mU^\trans \mU = \mV^\trans \mV = \mI_k$, $\mD$ is a
-    $k \times k$ diagonal matrix with positive diagonal entries, and $\mE$
+    where $\mU^\trans \mU = \mV^\trans \mV = \mI_{k_0}$, $\mD$ is a
+    $k_0 \times k_0$ diagonal matrix with positive diagonal entries, and $\mE$
     is a noise matrix independent of the signal term whose elements are
     \iid $\Normal( 0, \, \sigma^2 )$, then
     we denote by $k$ the \emph{generative rank} of $\mX$.
@@ -236,18 +236,18 @@ and
 \)
 If we let
 \(
-    \mhD(l)
+    \mhD(k)
     =
     \diag \left(
-        \hd_1, \hd_2, \ldots, \hd_l, 0, 0, \ldots, 0
+        \hd_1, \hd_2, \ldots, \hd_k, 0, 0, \ldots, 0
     \right),
 \)
-then the SVD truncated to $l$ terms is
+then the SVD truncated to $k$ terms is
 \(
-    \mhX(l)
+    \mhX(k)
     =
     \sqrt{n} \,
-    \mhU \mhD(l) \mhV^\trans.
+    \mhU \mhD(k) \mhV^\trans.
 \)
 We are now in a position to define effective rank
 
@@ -260,7 +260,10 @@ We are now in a position to define effective rank
     \[
         k^\ast
         \define
-        \argmin_l \, L \left( \sqrt{n} \mU \mD \mV^\trans\!, \, \mhX(l) \right).
+        \argmin_k \, 
+            L \left( 
+                \sqrt{n} \mU \mD \mV^\trans\!, \, \mhX(k) 
+            \right).
     \]
 \end{definition}
 
