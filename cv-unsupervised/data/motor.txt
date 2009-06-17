@@ -1,0 +1,67 @@
+
+Simplified Explanation
+======================
+
+Neural response data from 27 conditions.  Data are given from 49 different
+neurons at 422 time points, spaced 5ms apart.
+
+For a particular neuron and condition, the experiment is as follows:
+
+1. At time t=0ms, start recording neural activity in the monkey.
+2. At time t=400ms (`TARGET-ON`), show the monkey a target.  The monkey is not
+     allowed to move at this point.
+3. At a random time between time t=400ms and time t=1560ms, allow the monkey 
+     to move.
+4. At time t=1560ms (`MOVEMENT`), the monkey starts to move and point at the 
+     target.
+5. Record activity up to but not including time t=2110ms. 
+
+Each condition includes a target position and a configuration of obstacles. 
+The same monkey is used for every trial.
+
+
+Caveats
+-------
+
+1. In reality, neural activity is binary `ON`/`OFF`. The `ON` spikes are 
+   modeled as a point process with time-varying intensity. To estimate this 
+   intensity, each condition is repeated about 20 times. The spike trains get 
+   convolved with a Gaussian kernel and then averaged.  The bandwidth of
+   the kernel is hand-selected.
+
+2. The `TARGET-ON` and `MOVEMENT` times are randomized across conditions.  To 
+   register the events at t=400ms and t=1560ms, the neural activity
+   time series get manually cut up into three segments and then interpolated.
+   
+3. The response from each neuron gets scaled so that the range of the response
+   values across all conditions is 1.0.  Each neuron has a different scaling, 
+   but the same scaling gets used for each condition.
+
+
+Column Descriptions
+===================
+
+The data is stored in the file "motor.csv".  This can be read into R
+using the command `read.csv("motor.csv")`.  The columns are as follows:
+
+* neuron    - the integer id of the neuron (1 - 49).
+
+* condition - the integer id of the condition (1 - 27).
+
+* time      - the time point, in ms.  The values are evenly spaced in the
+              range [0,2110), with a gap of 5ms between each time point.
+              The values are { 0, 5, 10, ..., 2100, 2105 }.
+
+* response  - the neural response.  In theory, these values should all be 
+              non-negative.  The negative values are presumably from round-off 
+              errors in the initial data-processing phase.
+
+There are 49 * 27 * 422 = 558306 total rows.
+
+
+Ownership
+=========
+
+The data belongs to Mark Churchland (church@stanford.edu) and the Neural 
+Prosthetic Systems Laboratory.  Please get permission from Mark before 
+publishing research based on this data.
