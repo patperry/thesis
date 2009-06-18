@@ -1,0 +1,563 @@
+
+\chapter{Properties of random projections}
+
+We use this section to present some results about random projection
+matrices.  We call a symmetric $n\times n$ matrix $\mP$ a projection 
+if its eigenvalues are in the set $\{ 0, 1 \}$.  Any projection matrix of rank
+$k$ can be decomposed as $\mP = \mV \mV^\trans$ for some $\mV$
+satisfying $\mV^\trans \mV = \mI_k$.  We call the set 
+\[
+    \stiefel_{k}\left( \reals^n \right)
+        =
+        \left\{
+            \mV \in \reals^{n \times k}
+            :
+            \mV^\trans \mV = \mI_k
+        \right\}
+        \subseteq
+        \reals^{n \times k}
+\]
+the \emph{rank-$k$ Stiefel manifold of $\reals^n$}.  It is the set
+of orthonormal $k$-frames in $\reals^n$.  Similarly, we call 
+the set
+\[
+    \grassmann_k\left( \reals^n \right)
+        =
+        \left\{
+            \mV \mV^\trans
+            :
+            \mV \in \stiefel_k \left( \reals^n \right)
+        \right\}
+        \subseteq
+        \reals^{n \times n}
+\]
+the \emph{rank-$k$ Grassmannian of $\reals^n$}; this is the set of
+rank $k$ projection matrices.  If
+\(
+    \left(
+    \begin{matrix}
+        \mV & \mbV
+    \end{matrix}
+    \right)
+\)
+is an $n\times n$ Haar-distributed orthogonal matrix and $\mV$ is
+$n \times k$, then we say that $\mV$ is uniformly distributed
+over $\stiefel_k( \reals^n )$ and that $\mV \mV^\trans$ is uniformly
+distributed over $\grassmann_k(\reals^n)$.
+
+
+\section{Uniformly distributed orthonormal $k$-frames}
+
+We first present some results about a matrix $\mV$ distributed uniformly
+over $\stiefel_k(\reals^n)$.  We denote this distribution by
+\(
+    \mV 
+        \sim
+            \Unif \big(
+                \stiefel_k(\reals^n)
+            \big).
+\)
+
+\subsection{Generating random elements}
+
+The easiest way to generate a random element of $\stiefel_k(\reals^n)$ is
+to let $\mZ$ to be an $n \times k$ matrix of \iid $\Normal( 0, \, 1)$
+random variables, take the $QR$ decomposition $\mZ = \mQ \mR$, and let
+$\mV$ be equal to the first $k$ columns of $\mQ$.  In practice, there is
+a bias in the way standard $QR$ implementations choose the signs of the
+columns of $\mQ$.  To get around this, we recommend using 
+Algorithm~\ref{A:random-steifel}, below.
+
+\begin{algorithm}
+    \caption{\label{A:random-steifel}Generate a random orthonormal $k$-frame}
+    \begin{enumerate}
+        \item Draw $\mZ$, a random $n \times k$ matrix whose elements are 
+              \iid $\Normal( 0, \, 1 )$ random variables.
+              
+        \item Compute $\mZ = \mQ \mR$, the $QR$-decomposition of $\mZ$.
+              Set $\mQ_1$ to be the $n \times k$ matrix containing the
+              first $k$ columns of $\mQ$.
+
+        \item Draw $\mS$, a random $k \times k$ diagonal matrix with \iid 
+              diagonal entries such that 
+              \(
+                  \Prob\left\{ S_{11} = -1 \right\}
+                  =
+                  \Prob\left\{ S_{11} = +1 \right\}
+                  =
+                  \frac{1}{2}.
+              \)
+        \item Return $\mV = \mQ_1 \mS$.
+    \end{enumerate}
+\end{algorithm}
+
+\noindent 
+This algorithm has a time complexity of $\Oh\left( n k^2 \right)$. Diaconis
+and Shahshahani~\cite{diaconis1987sag} present an alternative approach called
+the subgroup algorithm which can be used to generate $\mV$ as a product of 
+$k$ Householder reflections.  Their algorithm has time complexity 
+$\Oh\left( n k \right)$.  Mezzadri~\cite{mezzadri2007grm} gives a readable 
+description of the subgroup algorithm.
+
+
+\subsection{Mixed moments}
+
+Since we can flip the sign of any row or column of $\mV$ and not change
+its distribution, the mixed moments of the elements of $\mV$ vanish unless 
+the number of elements from any row or column is even (counting multiplicity).  For example, $\E \left[ V_{11}^2 V_{21} \right] = 0$ since we can flip the sign of the second row of $\mV$ to get
+\[
+    V_{11}^2 V_{21} 
+    \eqd
+    V_{11}^2 (- V_{21})
+    =
+    -V_{11}^2 V_{21}.
+\]
+This argument does not apply to $V_{11} V_{12} V_{22} V_{21}$ or
+$V_{11}^2 V_{22}^2$.
+
+
+In the special case when $k = 1$, the vector
+\(
+    \left(
+        V_{11}^2, V_{21}^2, \ldots, V_{n1}^2
+    \right)
+\)
+is distributed as 
+\(
+    \Dirichlet\left( \frac{1}{2}, \frac{1}{2}, \ldots, \frac{1}{2} \right).
+\)
+This follows from the fact that if $Y_1, Y_2, \ldots, Y_n$ are independently distributed gamma random variables such that $Y_i$ has shape
+$a_i$ and scale $s$, then defining $S = \sum_{i=1}^n Y_i$, the vector
+\(
+    \left(
+        \frac{Y_1}{S},
+        \frac{Y_2}{S},
+        \ldots
+        \frac{Y_n}{S}
+    \right)
+\)
+is distributed $\Dirichlet\left( a_1, a_2, \ldots, a_n \right)$.  Using
+the standard formulas for Dirichlet variances and covariances, we get
+the mixed moments up to fourth order.  They are summarized in the next
+lemma.
+
+\begin{lemma}\label{L:stiefel-1-moments}
+    If $\mV \sim \Unif\big( \stiefel_1(\reals^n) \big)$, then
+    \begin{subequations}
+    \begin{align*}
+        \E \left[ V_{11}^2 \right] 
+            &= \frac{1}{n}, \\
+        \E \left[ V_{11} V_{21} \right] 
+            &= 0, \\
+        \E \left[ V_{11}^4 \right] 
+            &= \frac{3}{n (n + 2)}, \\
+        \E \left[ V_{11}^2 V_{21}^2 \right] 
+            &= \frac{1}{n (n + 2)}.
+    \end{align*}
+    \end{subequations}
+    The odd mixed moments are all equal to zero.
+\end{lemma}
+
+Using Theorem~4 from Diaconis and Shahshahani~\cite{diaconis1994erm},
+which gives the moments of the traces of Haar-distributed orthogonal
+matrices, we can compute the mixed moments of $\mV$ for more general $k$.
+Meckes~\cite{meckes2006ivs} gives an alternative derivation of these
+results.
+
+\begin{lemma}\label{L:stiefel-k-moments}
+    If $\mV \sim \Unif\big( \stiefel_k(\reals^n) \big)$ and $k > 1$, then the
+    nonzero mixed moments of the elements $\mV$ up to fourth order
+    are defined by
+    \begin{subequations}
+    \begin{align*}
+        \E \left[ V_{11}^2 \right] 
+            &= 
+                \frac{1}{ n }, \\
+        \E \left[ V_{11}^4 \right] 
+            &=
+                \frac{3}{ n (n+2) }, \\
+        \E \left[ V_{11}^2 V_{21}^2 \right] 
+            &= 
+                \frac{1}{ n (n+2) }, \\
+        \E \left[ V_{11}^2 V_{22}^2 \right]
+            &= 
+                \frac{n+1}{ n (n-1) (n+2) }, \\
+        \E \left[ V_{11} V_{12} V_{22} V_{21} \right] 
+            &= 
+                \frac{ -1 }{ n (n-1) (n+2) }.
+    \end{align*}
+    \end{subequations}
+\end{lemma}
+\begin{proof}
+    The first three equations follow directly from the previous lemma.
+    We can get the other moments from the moments of $\mO$, a Haar-distibuted
+    $n \times n$ orthogonal matrix. For the fourth equation, we use that 
+    \[
+        \E \left[ \tr( \mO ) \right]^4
+        =
+        \sum_{r,s,t,u} \E \left[ O_{rr} O_{ss} O_{tt} O_{uu} \right].
+    \]
+    Only the terms with even powers of $O_{ii}$ are nonzero.  Thus, we have
+    \begin{align*}
+        \E \left[ \tr( \mO ) \right]^4
+        &=   \binom{n}{1} \E \left[ O_{11}^4 \right]
+           + \binom{n}{2} \binom{4}{2} \E \left[ O_{11}^2 O_{22}^2 \right] \\
+        &=   n \E \left[ O_{11}^4 \right]
+           + 3n(n-1) \E \left[ O_{11}^2 O_{22}^2 \right].
+    \end{align*}
+    Theorem~4 of Diaconis and Shahshahani \cite{diaconis1994erm} gives that 
+    $\E \left[ \tr(\mO) \right]^4 = 3$.  Combined with
+    Lemma~\ref{L:stiefel-1-moments}, we get that
+    \begin{align*}
+        \E \left[ O_{11}^2 O_{22}^2 \right]
+        &= \frac{1}{3n(n-1)} 
+            \left\{
+                \E \left[ \tr(O) \right]^4
+                - n \E \left[ O_{11}^4 \right]
+            \right\} \\
+        &= \frac{1}{3n(n-1)} 
+           \left\{
+                3 - n \frac{3}{n(n+1)}
+           \right\} \\
+        &= \frac{n+1}{n(n-1)(n+2)}.
+    \end{align*}
+    
+    For the last equation, we use $\E\left[ \tr(\mO^4) \right]$.  We have that 
+    \[
+        (O^4)_{ij} = \sum_{r,s,t} O_{ir} O_{rs} O_{st} O_{tj}.
+    \]
+    We would like to compute $\E\left[ (O^4)_{11} \right]$.  Note that
+    unless $r=s=t=1$, there are only three situations when
+    $\E \left[ O_{1r} O_{rs} O_{st} O_{t1} \right] \neq 0$.   Two of them are 
+    demonstrated visually by the configurations
+    \[
+        \begin{matrix}
+            \phantom{0} &
+            \begin{matrix} 
+                1 & \phantom{\cdots} & s \phantom{\cdots}
+            \end{matrix} \\
+            \begin{matrix}
+                1 \\
+                \phantom{\vdots}  \\
+                s \\
+                \phantom{\vdots}
+            \end{matrix}&
+            \left(
+            \begin{matrix}
+                O_{1r} & \cdots & O_{rs} & \cdots \\
+                \vdots  & \ddots & \vdots  & \\
+                O_{t1} & \cdots & O_{st} & \cdots \\
+                \vdots  &        & \vdots  &
+            \end{matrix}
+            \right) \\
+            \phantom{0} &
+            r=1, s=t, s \neq 1
+        \end{matrix}
+        \quad\quad\text{and}\quad\quad
+        \begin{matrix}
+            \phantom{0} &
+            \begin{matrix} 
+                1 & \phantom{\cdots} & r \phantom{\cdots}
+            \end{matrix} \\
+            \begin{matrix}
+                1 \\
+                \phantom{\vdots}  \\
+                r \\
+                \phantom{\vdots}
+            \end{matrix}&
+            \left(
+            \begin{matrix}
+                O_{t1} & \cdots & O_{1r} & \cdots \\
+                \vdots  & \ddots & \vdots  & \\
+                O_{st} & \cdots & O_{rs} & \cdots \\
+                \vdots  &        & \vdots  &
+            \end{matrix}
+            \right) \\
+            \phantom{0} &
+            t=1, r=s, r \neq 1
+        \end{matrix}.
+    \]
+    The other nonzero term is when $s=1$, $r=t$, and $r\neq1$, so
+    that $O_{1r} O_{rs} O_{st} O_{t1} = O_{1r}^2 O_{r1}^2$.
+    In all other configurations there is a row or a column that only
+    contains one of $\{ O_{1r}, \, O_{rs}, \, O_{st}, \, O_{t1} \}$.  Since 
+    we can multiply a row or a column of $O$ by $-1$ and not change the
+    distribution of $O$, for this choice of $r$, $s$, and $t$ we must have
+    $O_{1r} O_{rs} O_{st} O_{t1} \overset{d}{=} -O_{1r} O_{rs} O_{st} O_{t1}$.
+    This in turn implies that 
+    $\E\left[O_{1r} O_{rs} O_{st} O_{t1} \right] = 0$.
+    With these combinatorics in mind, we have that
+    \begin{align*}
+        \E \left[ (O^4)_{11} \right]
+        &= 
+              \sum_{s \neq 1} \E \left[ O_{11} O_{1s} O_{ss} O_{s1} \right]
+            + \sum_{r \neq 1} \E \left[ O_{1r} O_{rr} O_{r1} O_{11} \right]
+            + \sum_{r \neq 1} \E \left[ O_{1r}^2 O_{r1}^2 \right]
+            + \E \left[ O_{11}^4 \right] \\
+        &=
+            2(n-1) \E \left[ O_{11} O_{12} O_{22} O_{21} \right]
+            + (n-1) \E \left[ O_{12}^2 O_{21}^2 \right]
+            + \E \left[ O_{11}^4 \right] \\
+        &=
+            2(n-1) \E \left[ O_{11} O_{12} O_{22} O_{21} \right]
+            + (n-1) \E \left[ O_{11}^2 O_{22}^2 \right]
+            + \E \left[ O_{11}^4 \right]
+    \end{align*}
+    Again applying Theorem~4 of \cite{diaconis1994erm}, we have that 
+    $\E \left[ \tr (\mO^4) \right] = 1$.  Combined with 
+    Lemma~\ref{L:stiefel-1-moments}, we
+    have
+    \begin{align*}
+        \E \left[ O_{11} O_{12} O_{22} O_{21} \right]
+        &= 
+        \frac{1}{2(n-1)}
+        \left\{
+            \frac{1}{n} \E \left[ \tr (\mO^4) \right]
+            - \E\left[ O_{11}^4 \right]
+            - (n-1) \E \left[ O_{11}^2 O_{22}^2 \right]
+        \right\} \\
+        &=
+        \frac{1}{2(n-1)}
+        \left\{
+            \frac{1}{n}
+            - \frac{3}{n(n+2)}
+            - (n-1) \frac{n+1}{n(n-1)(n+2)}
+        \right\} \\
+        &= 
+        \frac{-1}{n(n-1)(n+2)}. \qedhere
+    \end{align*} 
+\end{proof}
+
+
+\section{Uniformly distributed projections}
+
+We can now proceed to proving properties of random projections.  Recall that
+$\mathcal{P} = \left( \begin{smallmatrix} P_1 \\ P_2 \end{smallmatrix} \right)$ is a uniformly-distributed $M$-by-$M$ orthogonal matrix and that $P_1$ is
+$m$-by-$M$, the first $m$ rows of $\mathcal{P}$.
+
+\begin{lemma}\label{L:projection-m1}
+    In expectation, $P_1$ has orthogonal columns of length $\sqrt{m/M}$.
+    \begin{align*}
+        \E \left[ P_1' P_1 \right] &= \frac{m}{M} I_M.
+    \end{align*}
+\end{lemma}
+\begin{proof}
+    We have
+    \[
+        (P_1' P_1)_{ij} 
+        =
+        \sum_{\ell=1}^m (P_1)_{\ell i}^2 (P_1)_{\ell j}^2
+    \]
+    so
+    \[
+        \E \left[ (P_1' P_1)_{ij} \right] 
+        =
+        \begin{cases}
+            m \E \left[ (P_1)_{11}^2 \right], &\text{when $i = j$} \\
+            m \E \left[ (P_1)_{11} (P_1)_{12} \right], &\text{otherwise}
+        \end{cases}
+    \].
+    The result then follows from Lemma~\ref{L:stiefel-1-moments}.
+\end{proof}
+
+\begin{lemma}\label{L:projection-m2}
+    The covariances between of elements of $P_1' P_1$ are given by
+    \begin{multline*}
+        \cov \left[ (P_1' P_1)_{ij}, (P_1' P_1)_{kl} \right]
+        = \\
+        \shoveleft{\frac{1}{(M-1)(M+2)}
+            \left(
+                \frac{m}{M}
+            \right)
+            \left(
+                1 - \frac{m}{M}
+            \right)
+            \Bigg(
+                  M \delta_{(i,j) = (k,l)}
+                + M \delta_{(i,j) = (l,k)}
+                - 2 \delta_{(i,k) = (j,l)}
+            \Bigg)}.
+    \end{multline*}
+\end{lemma}
+\begin{proof}
+    We need to perform six computations.  Throughout the proof, $O$ will be a 
+    uniformly-distributed $M$-by-$M$ orthogonal matrix. We have
+    \begin{align*}
+        \E \left[ (P_1' P_1)_{11}^2 \right]
+        &= \E \left[ \left( 
+                         \sum_{l=1}^m (P_1)_{l1}^2
+                     \right)^2
+              \right] \\
+        &= \E \left[
+                  \sum_{l=1}^m (P_1)_{l1}^4
+                  + \sum_{k\neq l} (P_1)_{l1}^2 (P_1)_{k1}^2
+              \right] \\
+        &= m \E \left[ O_{11}^4 \right] 
+            + m(m-1) \E \left[ O_{11}^2 O_{22}^2 \right] \\
+        &= m \left( \frac{3}{M}{M+2}\right)
+           + m (m-1) \left( \frac{1}{M(M+2)} \right) \\
+        &= \frac{m(m+2)}{M(M+2)} \\
+        &= \frac{2}{M+2}
+           \left(\frac{m}{M}\right) \left( 1 - \frac{m}{M} \right)
+           + \left( \frac{m}{M} \right)^2,
+    \end{align*}
+    which gives us that 
+    \[
+        \var \left[ (P_1' P_1)_{11}^2 \right]
+        = \frac{2}{M+2}
+           \left(\frac{m}{M}\right) \left( 1 - \frac{m}{M} \right)
+    \]
+    Next,
+    \begin{align*}
+        \E \left[ (P_1' P_1)_{12}^2 \right]
+        &= \E \left[ \left( 
+                         \sum_{l=1}^m (P_1)_{l1} (P_1)_{l2}
+                     \right)^2
+              \right] \\
+        &= \E \left[ 
+                  \sum_{l=1}^m (P_1)_{l1}^2 (P_1)_{l2}^2
+                  + \sum_{k\neq l} 
+                        (P_1)_{k1} (P_1)_{k2} (P_1)_{l1} (P_1)_{l2}
+              \right] \\
+        &= m \E \left[ O_{11}^2] O_{12}^2 \right]
+           + m(m-1) \E \left[ O_{11} O_{12} O_{22} O_{21} \right] \\
+        &= m \left( \frac{1}{M(M+2)} \right)
+           + m(m-1) \left( \frac{-1}{M(M-1)(M+2)}\right) \\
+        &= \frac{M}{(M-1)(M+2)} 
+           \left(\frac{m}{M}\right) \left( 1 - \frac{m}{M} \right),
+    \end{align*}
+    so that
+    \[
+        \var \left[ (P_1' P_1)_{12}^2 \right]
+        = \frac{M}{(M-1)(M+2)} 
+           \left(\frac{m}{M}\right) \left( 1 - \frac{m}{M} \right).
+    \]
+    Also,
+    \begin{align*}
+        \E \left[ (P_1' P_1)_{11} (P_1' P_1)_{22} \right]
+        &= \E \left[
+                \left( \sum_{l=1}^m (P_1)_{l1}^2 \right)
+                \left( \sum_{k=1}^m (P_1)_{k2}^2 \right)
+              \right] \\
+        &= \E \left[
+                  \sum_{k,l} (P_1)_{l1}^2 (P_1)_{k2}^2
+              \right] \\
+        &= \E \left[
+                  \sum_{l=1}^m (P_1)_{l1}^2 (P_1)_{l2}^2
+                  + \sum_{l=1}^m
+                    \sum_{k\neq l} (P_1)_{k1}^2 (P_1)_{l2}^2
+              \right] \\
+        &= m \E\left[ O_{11}^2 O_{12}^2 \right]
+           + m(m-1) \E \left[ O_{11}^2 O_{22}^2 \right] \\
+        &= m \left( \frac{1}{M(M+2)} \right)
+           + m(m-1) \left( \frac{M+1}{M(M-1)(M+2)}\right) \\
+        &= \frac{m}{M(M+2)}
+           \left( 1 + (M+1) \frac{m-1}{M-1} \right) \\
+        &= \frac{-2}{(M-1)(M+2)}
+           \left(\frac{m}{M}\right) \left( 1 - \frac{m}{M} \right)
+           + \left( \frac{m}{M} \right)^2,
+    \end{align*}
+    so that
+    \[
+        \cov \left[ (P_1' P_1)_{11}, (P_1' P_1)_{22} \right]
+        = \frac{-2}{(M-1)(M+2)}
+           \left(\frac{m}{M}\right) \left( 1 - \frac{m}{M} \right).
+    \]
+    Since $(P_1' P_1)$ is symmetric, we have
+    \[
+        \cov \left[ (P_1' P_1)_{12}, (P_1' P_1)_{21} \right]
+        = \var \left[ (P_1' P_1)_{12} \right].
+    \]
+    The other covariances are all zero.  This is because
+    \begin{align*}
+        \E \left[ (P_1' P_1)_{11} (P_1' P_1)_{12} \right]
+        &= \E \left[ 
+                  \sum_{k,l} (P_1)_{l1}^2 (P_1)_{k1} (P_1)_{k2} 
+              \right], \\
+        \E \left[ (P_1' P_1)_{12} (P_1' P_1)_{23} \right]
+        &= \E \left[ 
+                \sum_{k,l} (P_1)_{k1} (P_1)_{k2} (P_1)_{l2} (P_1)_{l3}
+              \right], \\
+    \intertext{and}
+        \E \left[ (P_1' P_1)_{12} (P_1' P_1)_{34} \right]
+        &= \E \left[ 
+                \sum_{k,l} (P_1)_{k1} (P_1)_{k2} (P_1)_{l3} (P_1)_{l4}
+              \right].
+    \end{align*}
+    Each term in these sums has an element that appears only once in a column.
+    Thus, the expectations are all $0$.
+\end{proof}
+
+We can now prove the two Lemmas.  Recall that $U_1 = P_1 U$ and that 
+$V_1 = Q_q V$.  By symmetry, we only need to prove the two results for $U_1$.
+
+\begin{proof}[Proof of Lemma~\ref{L:proj-factor-m1}]
+    The expectation of $U_1' U_1$ is given by
+    \[
+        \E \left[ U_1' U_1 \right] 
+        = U' \E \left[ P_1' P_1 \right] U 
+        = (m/M) U' U 
+        = (m/M) I_K.  
+    \]
+\end{proof}
+    
+\begin{proof}[Proof of Lemma~\ref{L:proj-factor-m2}]
+    Let 
+    \(
+        \mathcal{U} 
+        = \left(U \ U^\perp \right)
+    \)
+    be $M$-by-$M$ and orthogonal.
+    Since $\mathcal{P}$ is uniformly distributed, we have that 
+    $\mathcal{P} \mathcal{U} \overset{d}{=} \mathcal{P}$ so that
+    $P_1 \mathcal{U} \overset{d}{=} P_1$, and therefore 
+    $P_1 U \overset{d}{=} P_1 I_{M\times K}$, where $I_{M \times K}$ is a
+    $M$-by-$K$ matrix with ones along the diagonal and zeroes everywhere else.
+    Hence, $U' (P_1' P_1) U$ has the same distribution as 
+    $I_{M\times K}' (P_1' P_1) I_{M \times K}$, 
+    That is, the distribution of $U_1' U_1$ is equal to the 
+    distribution of the $K$-by-$K$ upper-left submatrix of $P_1' P_1$.
+    
+    Now, 
+    \begin{align*}
+        \E \| &\sqrt{m} (U_1' U_1 - (m/M) I_K) \|_F^2 \\
+        &= m \sum_{i=1}^K \sum_{j=1}^{K} \var \left[ (P_1' P_1)_{ij} \right] \\
+        &= m \left\{ 
+                 K 
+                 \frac{2}{M+2}
+                 \left(\frac{m}{M}\right) \left( 1 - \frac{m}{M} \right)
+                 + 
+                 K (K-1)
+                 \frac{M}{(M-1)(M+2)}
+                 \left(\frac{m}{M}\right) \left( 1 - \frac{m}{M} \right)
+             \right\} \\
+        &\leq 2 K^2 \left(\frac{m}{M}\right)^2 \left( 1 - \frac{m}{M} \right) \\
+        &\leq K^2.
+    \end{align*}
+\end{proof}
+
+
+
+\begin{lemma}\label{L:proj-factor-m1}
+    In expectation, the factors $U_1$ and $V_1$ have orthogonal columns of
+    lengths $\sqrt{m/M}$ and $\sqrt{n/N}$, respectively.  That is,
+    \begin{align*}
+        \E \left[ U_1' U_1 \right] &= (m/M) I_K \quad \text{and} \\
+        \E \left[ V_1' V_1 \right] &= (n/N) I_K.
+    \end{align*}
+\end{lemma}
+
+\begin{lemma}\label{L:proj-factor-m2}
+    The departure from orthogonality for the factors $U_1$ and $V_1$ is of 
+    order $1/\sqrt{n}$.  Specifically,
+    \begin{align*}
+        \sup_{n} \E \left\| \sqrt{m}( U_1' U_1 - (m/M) I_K) \right\|_F^2 
+            &< \infty, \quad \text{and} \\
+        \sup_{n} \E \left\| \sqrt{n}( V_1' V_1 - (n/N) I_K ) \right\|_F^2
+            &< \infty.
+    \end{align*}
+\end{lemma}
+
+Here we prove Lemmas~\ref{L:proj-factor-m1}~and~\ref{L:proj-factor-m2}, the
+results about the random projections of the factors. We will need the following
+fact about random (Haar-distributed) unit vectors:

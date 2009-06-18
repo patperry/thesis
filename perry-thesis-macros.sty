@@ -5,8 +5,11 @@
 \RequirePackage{accents} % underline
 \RequirePackage{amssymb}
 \RequirePackage{amsthm}
-\usepackage{url}
-\usepackage{enumerate} % fancy enumerations
+\RequirePackage{url}
+\RequirePackage{enumerate} % fancy enumerations
+
+\RequirePackage{algorithm}
+\RequirePackage{algorithmic}
 
 
 %% Define a new 'leo' style for the package that will use a smaller font.
@@ -27,6 +30,7 @@
 \newtheorem{proposition}{Proposition}
 
 \numberwithin{equation}{chapter}
+\numberwithin{algorithm}{chapter}
 \numberwithin{assumption}{chapter}
 \numberwithin{corollary}{chapter}
 \numberwithin{definition}{chapter}
@@ -132,6 +136,7 @@
 \newcommand{\mhU}{\matrixsymbol{\hat U}}
 \newcommand{\mtU}{\matrixsymbol{\tilde U}}
 \newcommand{\mV}{\matrixsymbol{V}}
+\newcommand{\mbV}{\matrixsymbol{\bar V}}
 \newcommand{\mhV}{\matrixsymbol{\hat V}}
 \newcommand{\mtV}{\matrixsymbol{\tilde V}}
 \newcommand{\mW}{\matrixsymbol{W}}
@@ -164,6 +169,8 @@
 \newcommand{\toas}{\overset{\mathit{a.s.}}{\to}}
 \newcommand{\toP}{\overset{\mathit{P}}{\to}} 
 \newcommand{\tod}{\overset{\mathit{d}}{\to}} % convergence
+\newcommand{\Unif}{\mathrm{Unif}}
+\newcommand{\Dirichlet}{\mathrm{Dirichlet}}
 
 \newcommand{\Oh}{\mathcal{O}}
 \newcommand{\oh}{\mathit{o}}         
@@ -192,6 +199,8 @@
 \DeclareMathOperator*{\spanm}{span}
 \DeclareMathOperator*{\diag}{diag}
 \newcommand{\Frob}{\text{F}}
+\newcommand{\stiefel}{\mathcal{V}}
+\newcommand{\grassmann}{\mathcal{G}}
 
 \newcommand{\one}{1}
 \newcommand{\half}{1/2}
