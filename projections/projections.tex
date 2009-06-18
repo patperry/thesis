@@ -126,8 +126,8 @@ is distributed as
 \(
     \Dirichlet\left( \frac{1}{2}, \frac{1}{2}, \ldots, \frac{1}{2} \right).
 \)
-This follows from the fact that if $Y_1, Y_2, \ldots, Y_n$ are independently distributed gamma random variables such that $Y_i$ has shape
-$a_i$ and scale $s$, then defining $S = \sum_{i=1}^n Y_i$, the vector
+This follows from the fact that if $Y_1, Y_2, \ldots, Y_n$ are independently distributed Gamma random variables and $Y_i$ has shape
+$a_i$ and scale $s$, then with $S = \sum_{i=1}^n Y_i$, the vector
 \(
     \left(
         \frac{Y_1}{S},
@@ -212,7 +212,7 @@ results.
         \E \left[ O_{11}^2 O_{22}^2 \right]
         &= \frac{1}{3n(n-1)} 
             \left\{
-                \E \left[ \tr(O) \right]^4
+                \E \left[ \tr(\mO) \right]^4
                 - n \E \left[ O_{11}^4 \right]
             \right\} \\
         &= \frac{1}{3n(n-1)} 
@@ -224,9 +224,9 @@ results.
     
     For the last equation, we use $\E\left[ \tr(\mO^4) \right]$.  We have that 
     \[
-        (O^4)_{ij} = \sum_{r,s,t} O_{ir} O_{rs} O_{st} O_{tj}.
+        (\mO^4)_{ij} = \sum_{r,s,t} O_{ir} O_{rs} O_{st} O_{tj}.
     \]
-    We would like to compute $\E\left[ (O^4)_{11} \right]$.  Note that
+    We would like to compute $\E\left[ (\mO^4)_{11} \right]$.  Note that
     unless $r=s=t=1$, there are only three situations when
     $\E \left[ O_{1r} O_{rs} O_{st} O_{t1} \right] \neq 0$.   Two of them are 
     demonstrated visually by the configurations
@@ -281,19 +281,22 @@ results.
     that $O_{1r} O_{rs} O_{st} O_{t1} = O_{1r}^2 O_{r1}^2$.
     In all other configurations there is a row or a column that only
     contains one of $\{ O_{1r}, \, O_{rs}, \, O_{st}, \, O_{t1} \}$.  Since 
-    we can multiply a row or a column of $O$ by $-1$ and not change the
-    distribution of $O$, for this choice of $r$, $s$, and $t$ we must have
+    we can multiply a row or a column of $\mO$ by $-1$ and not change the
+    distribution of $\mO$, for this choice of $r$, $s$, and $t$ we must have
     $O_{1r} O_{rs} O_{st} O_{t1} \overset{d}{=} -O_{1r} O_{rs} O_{st} O_{t1}$.
     This in turn implies that 
     $\E\left[O_{1r} O_{rs} O_{st} O_{t1} \right] = 0$.
     With these combinatorics in mind, we have that
     \begin{align*}
-        \E \left[ (O^4)_{11} \right]
-        &= 
-              \sum_{s \neq 1} \E \left[ O_{11} O_{1s} O_{ss} O_{s1} \right]
-            + \sum_{r \neq 1} \E \left[ O_{1r} O_{rr} O_{r1} O_{11} \right]
-            + \sum_{r \neq 1} \E \left[ O_{1r}^2 O_{r1}^2 \right]
-            + \E \left[ O_{11}^4 \right] \\
+        \E \! \left[ (\mO^4)_{11} \right]
+        \!&=\!
+            \sum_{s \neq 1} \E \left[ O_{11} O_{1s} O_{ss} O_{s1} \right]
+            +
+            \sum_{r \neq 1} \E \left[ O_{1r} O_{rr} O_{r1} O_{11} \right]
+            +
+            \sum_{r \neq 1} \E \left[ O_{1r}^2 O_{r1}^2 \right]
+            + 
+            \E \left[ O_{11}^4 \right] \\
         &=
             2(n-1) \E \left[ O_{11} O_{12} O_{22} O_{21} \right]
             + (n-1) \E \left[ O_{12}^2 O_{21}^2 \right]
@@ -331,9 +334,8 @@ results.
 
 \section{Uniformly distributed projections}
 
-We can now proceed to proving properties of random projections.  Recall that
-$\mathcal{P} = \left( \begin{smallmatrix} P_1 \\ P_2 \end{smallmatrix} \right)$ is a uniformly-distributed $M$-by-$M$ orthogonal matrix and that $P_1$ is
-$m$-by-$M$, the first $m$ rows of $\mathcal{P}$.
+We can now proceed to proving properties of random projections.  
+
 
 \begin{lemma}\label{L:projection-m1}
     In expectation, $P_1$ has orthogonal columns of length $\sqrt{m/M}$.
