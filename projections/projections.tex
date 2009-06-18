@@ -505,3 +505,101 @@ random projection matrices.
     Thus, the expectations are all $0$.
 \end{proof}
 
+
+\section{The Johnson-Lindenstrauss lemma}
+
+As an application of the calculations in this section, we can derive the
+Johnson-Lindenstrauss lemma.
+
+\begin{lemma}
+    If $\vx, \vy \in \reals^n$ and 
+    \(
+        \mP \sim \Unif\big( \grassmann_k (\reals^n) \big),
+    \)
+    then
+    \[
+        \E \left[ \vx^\trans \mP \vy \right] 
+            = \frac{k}{n} \, \vx^\trans \vy,
+    \]
+    and
+    \[
+        \var \left[ \vx^\trans \mP \vy \right] 
+            =
+                \left( \frac{k}{n} \right)
+                \left( 1 - \frac{k}{n} \right)
+                \cdot 
+                \frac{ n \, ( \vx^\trans \vx )( \vy^\trans \vy )
+                       + (n-2) ( \vx^\trans \vy )^2 }
+                     { (n-1) (n+2) }.
+    \]
+    In particular, this implies that
+    \[
+        \E \left[ \vx^\trans \mP \vx \right] 
+        = 
+        \frac{k}{n} \vx^\trans \vx
+    \]
+    and
+    \[
+        \var \left[ \vx^\trans \mP \vx \right]
+        =
+        \frac{ 2 }{ n+2 }
+        \left( \frac{k}{n} \right)
+        \left( 1 - \frac{k}{n} \right)
+        \left( \vx^\trans \vx \right)^2.
+    \]
+\end{lemma}
+\begin{proof}
+    We have
+    \[
+        \vx^\trans \mP \vy
+            = \sum_{i,j} x_i \, P_{ij} \, y_j.
+    \]
+    This gives us that
+    \begin{align*}
+        \E \left[ \vx^\trans \mP \vy \right]
+            &= \sum_{i,j} \frac{k}{n} \, x_i \, y_j \, \delta_{ij} \\
+            &= \frac{k}{n} \, \vx^\trans \vy
+    \end{align*}
+    and
+    \begin{align*}
+        \begin{split}
+        \var \left[ \vx^\trans \mP \vy \right]
+            &= 
+               \sum_{i=1}^n
+                    x_i^2 y_i^2 \var \left[ P_{ii} \right]
+               +
+               \frac{1}{2}
+               \sum_{i \neq j} 
+                    (x_i y_j + x_j y_i)^2 
+                    \var \left[ P_{ij} \right] \\
+            &\qquad+
+               \sum_{i \neq j}
+                    x_i x_j y_i y_j
+                    \cov \left[ P_{ii}, P_{jj} \right]
+        \end{split} \\
+        \begin{split}
+            &=
+                \left( \frac{k}{n} \right)
+                \left( 1 - \frac{k}{n} \right)
+                \cdot \bigg\{
+                    \frac{2}{n+2}
+                    \sum_{i=1}^n x_i^2 y_i^2 \\
+            &\qquad\qquad\qquad\qquad\quad+
+                \frac{n}{ 2 \, (n-1) (n+2) }
+                \sum_{i\neq j} (x_i y_j + x_j y_i)^2 \\
+            &\qquad\qquad\qquad\qquad\quad+
+                \frac{-2}{ (n-1) (n+2) }
+                \sum_{i \neq j} x_i x_j y_i y_j \bigg\}
+        \end{split} \\
+        \begin{split}
+            &=
+                \left( \frac{k}{n} \right)
+                \left( 1 - \frac{k}{n} \right)
+                \cdot \bigg\{
+                    \frac{n}{ (n-1) (n+2) } 
+                    ( \vx^\trans \vx )( \vy^\trans \vy ) \\
+            &\qquad\qquad\qquad\qquad\quad+
+                \frac{n-2}{ (n-1) (n+2) } ( \vx^\trans \vy )^2 \bigg\}
+        \end{split}
+    \end{align*}
+\end{proof}
