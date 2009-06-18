@@ -2,36 +2,36 @@
 \chapter{Properties of random projections}
 
 We use this section to present some results about random projection
-matrices.  We call a symmetric $n\times n$ matrix $\mP$ a projection 
+matrices.  We call a symmetric $p \times p$ matrix $\mP$ a projection 
 if its eigenvalues are in the set $\{ 0, 1 \}$.  Any projection matrix of rank
 $k$ can be decomposed as $\mP = \mV \mV^\trans$ for some $\mV$
 satisfying $\mV^\trans \mV = \mI_k$.  We call the set 
 \[
-    \stiefel_{k}\left( \reals^n \right)
+    \stiefel_{k}\left( \reals^p \right)
         =
         \left\{
-            \mV \in \reals^{n \times k}
+            \mV \in \reals^{p \times k}
             :
             \mV^\trans \mV = \mI_k
         \right\}
         \subseteq
-        \reals^{n \times k}
+        \reals^{p \times k}
 \]
-the \emph{rank-$k$ Stiefel manifold of $\reals^n$}.  It is the set
-of orthonormal $k$-frames in $\reals^n$.  Similarly, we call 
+the \emph{rank-$k$ Stiefel manifold of $\reals^p$}.  It is the set
+of orthonormal $k$-frames in $\reals^p$.  Similarly, we call 
 the set
 \[
-    \grassmann_k\left( \reals^n \right)
+    \grassmann_k\left( \reals^p \right)
         =
         \left\{
             \mV \mV^\trans
             :
-            \mV \in \stiefel_k \left( \reals^n \right)
+            \mV \in \stiefel_k \left( \reals^p \right)
         \right\}
         \subseteq
-        \reals^{n \times n}
+        \reals^{p \times p}
 \]
-the \emph{rank-$k$ Grassmannian of $\reals^n$}; this is the set of
+the \emph{rank-$k$ Grassmannian of $\reals^p$}; this is the set of
 rank $k$ projection matrices.  If
 \(
     \left(
@@ -40,28 +40,28 @@ rank $k$ projection matrices.  If
     \end{matrix}
     \right)
 \)
-is an $n\times n$ Haar-distributed orthogonal matrix and $\mV$ is
-$n \times k$, then we say that $\mV$ is uniformly distributed
-over $\stiefel_k( \reals^n )$ and that $\mV \mV^\trans$ is uniformly
-distributed over $\grassmann_k(\reals^n)$.
+is an $p \times p$ Haar-distributed orthogonal matrix and $\mV$ is
+$p \times k$, then we say that $\mV$ is uniformly distributed
+over $\stiefel_k( \reals^p )$ and that $\mV \mV^\trans$ is uniformly
+distributed over $\grassmann_k(\reals^p)$.
 
 
 \section{Uniformly distributed orthonormal $k$-frames}
 
 We first present some results about a matrix $\mV$ distributed uniformly
-over $\stiefel_k(\reals^n)$.  We denote this distribution by
+over $\stiefel_k(\reals^p)$.  We denote this distribution by
 \(
     \mV 
         \sim
             \Unif \big(
-                \stiefel_k(\reals^n)
+                \stiefel_k(\reals^p)
             \big).
 \)
 
 \subsection{Generating random elements}
 
-The easiest way to generate a random element of $\stiefel_k(\reals^n)$ is
-to let $\mZ$ to be an $n \times k$ matrix of \iid $\Normal( 0, \, 1)$
+The easiest way to generate a random element of $\stiefel_k(\reals^p)$ is
+to let $\mZ$ to be an $p \times k$ matrix of \iid $\Normal( 0, \, 1)$
 random variables, take the $QR$ decomposition $\mZ = \mQ \mR$, and let
 $\mV$ be equal to the first $k$ columns of $\mQ$.  In practice, there is
 a bias in the way standard $QR$ implementations choose the signs of the
@@ -71,11 +71,11 @@ Algorithm~\ref{A:random-steifel}, below.
 \begin{algorithm}
     \caption{\label{A:random-steifel}Generate a random orthonormal $k$-frame}
     \begin{enumerate}
-        \item Draw $\mZ$, a random $n \times k$ matrix whose elements are 
+        \item Draw $\mZ$, a random $p \times k$ matrix whose elements are 
               \iid $\Normal( 0, \, 1 )$ random variables.
               
         \item Compute $\mZ = \mQ \mR$, the $QR$-decomposition of $\mZ$.
-              Set $\mQ_1$ to be the $n \times k$ matrix containing the
+              Set $\mQ_1$ to be the $p \times k$ matrix containing the
               first $k$ columns of $\mQ$.
 
         \item Draw $\mS$, a random $k \times k$ diagonal matrix with \iid 
@@ -92,11 +92,11 @@ Algorithm~\ref{A:random-steifel}, below.
 \end{algorithm}
 
 \noindent 
-This algorithm has a time complexity of $\Oh\left( n k^2 \right)$. Diaconis
+This algorithm has a time complexity of $\Oh\left( p k^2 \right)$. Diaconis
 and Shahshahani~\cite{diaconis1987sag} present an alternative approach called
 the subgroup algorithm which can be used to generate $\mV$ as a product of 
 $k$ Householder reflections.  Their algorithm has time complexity 
-$\Oh\left( n k \right)$.  Mezzadri~\cite{mezzadri2007grm} gives a readable 
+$\Oh\left( p k \right)$.  Mezzadri~\cite{mezzadri2007grm} gives a readable 
 description of the subgroup algorithm.
 
 
@@ -119,40 +119,40 @@ $V_{11}^2 V_{22}^2$.
 In the special case when $k = 1$, the vector
 \(
     \left(
-        V_{11}^2, V_{21}^2, \ldots, V_{n1}^2
+        V_{11}^2, V_{21}^2, \ldots, V_{p1}^2
     \right)
 \)
 is distributed as 
 \(
     \Dirichlet\left( \frac{1}{2}, \frac{1}{2}, \ldots, \frac{1}{2} \right).
 \)
-This follows from the fact that if $Y_1, Y_2, \ldots, Y_n$ are independently distributed Gamma random variables and $Y_i$ has shape
-$a_i$ and scale $s$, then with $S = \sum_{i=1}^n Y_i$, the vector
+This follows from the fact that if $Y_1, Y_2, \ldots, Y_p$ are independently distributed Gamma random variables and $Y_i$ has shape
+$a_i$ and scale $s$, then with $S = \sum_{i=1}^p Y_i$, the vector
 \(
     \left(
         \frac{Y_1}{S},
         \frac{Y_2}{S},
         \ldots
-        \frac{Y_n}{S}
+        \frac{Y_p}{S}
     \right)
 \)
-is distributed $\Dirichlet\left( a_1, a_2, \ldots, a_n \right)$.  Using
+is distributed $\Dirichlet\left( a_1, a_2, \ldots, a_p \right)$.  Using
 the standard formulas for Dirichlet variances and covariances, we get
 the mixed moments up to fourth order.  They are summarized in the next
 lemma.
 
 \begin{lemma}\label{L:stiefel-1-moments}
-    If $\mV \sim \Unif\big( \stiefel_1(\reals^n) \big)$, then
+    If $\mV \sim \Unif\big( \stiefel_1(\reals^p) \big)$, then
     \begin{subequations}
     \begin{align*}
         \E \left[ V_{11}^2 \right] 
-            &= \frac{1}{n}, \\
+            &= \frac{1}{p}, \\
         \E \left[ V_{11} V_{21} \right] 
             &= 0, \\
         \E \left[ V_{11}^4 \right] 
-            &= \frac{3}{n (n + 2)}, \\
+            &= \frac{3}{p \, (p + 2)}, \\
         \E \left[ V_{11}^2 V_{21}^2 \right] 
-            &= \frac{1}{n (n + 2)}.
+            &= \frac{1}{p \, (p + 2)}.
     \end{align*}
     \end{subequations}
     The odd mixed moments are all equal to zero.
@@ -165,33 +165,33 @@ Meckes~\cite{meckes2006ivs} gives an alternative derivation of these
 results.
 
 \begin{lemma}\label{L:stiefel-k-moments}
-    If $\mV \sim \Unif\big( \stiefel_k(\reals^n) \big)$ and $k > 1$, then the
+    If $\mV \sim \Unif\big( \stiefel_k(\reals^p) \big)$ and $k > 1$, then the
     nonzero mixed moments of the elements $\mV$ up to fourth order
     are defined by
     \begin{subequations}
     \begin{align*}
         \E \left[ V_{11}^2 \right] 
             &= 
-                \frac{1}{ n }, \\
+                \frac{1}{ p }, \\
         \E \left[ V_{11}^4 \right] 
             &=
-                \frac{3}{ n (n+2) }, \\
+                \frac{3}{ p \, (p+2) }, \\
         \E \left[ V_{11}^2 V_{21}^2 \right] 
             &= 
-                \frac{1}{ n (n+2) }, \\
+                \frac{1}{ p \, (p+2) }, \\
         \E \left[ V_{11}^2 V_{22}^2 \right]
             &= 
-                \frac{n+1}{ n (n-1) (n+2) }, \\
+                \frac{p+1}{ p \, (p-1) (p+2) }, \\
         \E \left[ V_{11} V_{12} V_{22} V_{21} \right] 
             &= 
-                \frac{ -1 }{ n (n-1) (n+2) }.
+                \frac{ -1 }{ p \, (p-1) (p+2) }.
     \end{align*}
     \end{subequations}
 \end{lemma}
 \begin{proof}
     The first three equations follow directly from the previous lemma.
     We can get the other moments from the moments of $\mO$, a Haar-distibuted
-    $n \times n$ orthogonal matrix. For the fourth equation, we use that 
+    $p \times p$ orthogonal matrix. For the fourth equation, we use that 
     \[
         \E \left[ \tr( \mO ) \right]^4
         =
@@ -200,26 +200,26 @@ results.
     Only the terms with even powers of $O_{ii}$ are nonzero.  Thus, we have
     \begin{align*}
         \E \left[ \tr( \mO ) \right]^4
-        &=   \binom{n}{1} \E \left[ O_{11}^4 \right]
-           + \binom{n}{2} \binom{4}{2} \E \left[ O_{11}^2 O_{22}^2 \right] \\
-        &=   n \E \left[ O_{11}^4 \right]
-           + 3n(n-1) \E \left[ O_{11}^2 O_{22}^2 \right].
+        &=   \binom{p}{1} \E \left[ O_{11}^4 \right]
+           + \binom{p}{2} \binom{4}{2} \E \left[ O_{11}^2 O_{22}^2 \right] \\
+        &=   p \, \E \left[ O_{11}^4 \right]
+           + 3p \, (p-1) \, \E \left[ O_{11}^2 O_{22}^2 \right].
     \end{align*}
     Theorem~4 of Diaconis and Shahshahani \cite{diaconis1994erm} gives that 
     $\E \left[ \tr(\mO) \right]^4 = 3$.  Combined with
     Lemma~\ref{L:stiefel-1-moments}, we get that
     \begin{align*}
         \E \left[ O_{11}^2 O_{22}^2 \right]
-        &= \frac{1}{3n(n-1)} 
+        &= \frac{1}{3p \, (p-1)} 
             \left\{
                 \E \left[ \tr(\mO) \right]^4
-                - n \E \left[ O_{11}^4 \right]
+                - p \, \E \left[ O_{11}^4 \right]
             \right\} \\
-        &= \frac{1}{3n(n-1)} 
+        &= \frac{1}{3p \, (p-1)} 
            \left\{
-                3 - n \frac{3}{n(n+1)}
+                3 - p \cdot \frac{3}{ p \, (p+1) }
            \right\} \\
-        &= \frac{n+1}{n(n-1)(n+2)}.
+        &= \frac{p+1}{ p \, (p-1) (p+2) }.
     \end{align*}
     
     For the last equation, we use $\E\left[ \tr(\mO^4) \right]$.  We have that 
@@ -298,12 +298,12 @@ results.
             + 
             \E \left[ O_{11}^4 \right] \\
         &=
-            2(n-1) \E \left[ O_{11} O_{12} O_{22} O_{21} \right]
-            + (n-1) \E \left[ O_{12}^2 O_{21}^2 \right]
+            2(p-1) \E \left[ O_{11} O_{12} O_{22} O_{21} \right]
+            + (p-1) \E \left[ O_{12}^2 O_{21}^2 \right]
             + \E \left[ O_{11}^4 \right] \\
         &=
-            2(n-1) \E \left[ O_{11} O_{12} O_{22} O_{21} \right]
-            + (n-1) \E \left[ O_{11}^2 O_{22}^2 \right]
+            2(p-1) \E \left[ O_{11} O_{12} O_{22} O_{21} \right]
+            + (p-1) \E \left[ O_{11}^2 O_{22}^2 \right]
             + \E \left[ O_{11}^4 \right]
     \end{align*}
     Again applying Theorem~4 of \cite{diaconis1994erm}, we have that 
@@ -313,33 +313,33 @@ results.
     \begin{align*}
         \E \left[ O_{11} O_{12} O_{22} O_{21} \right]
         &= 
-        \frac{1}{2(n-1)}
+        \frac{1}{2(p-1)}
         \left\{
-            \frac{1}{n} \E \left[ \tr (\mO^4) \right]
+            \frac{1}{p} \E \left[ \tr (\mO^4) \right]
             - \E\left[ O_{11}^4 \right]
-            - (n-1) \E \left[ O_{11}^2 O_{22}^2 \right]
+            - (p-1) \E \left[ O_{11}^2 O_{22}^2 \right]
         \right\} \\
         &=
-        \frac{1}{2(n-1)}
+        \frac{1}{2(p-1)}
         \left\{
-            \frac{1}{n}
-            - \frac{3}{n(n+2)}
-            - (n-1) \frac{n+1}{n(n-1)(n+2)}
+            \frac{1}{p}
+            - \frac{3}{ p \, (p+2) }
+            - (p-1) \frac{p+1}{ p \, (p-1) (p+2) }
         \right\} \\
         &= 
-        \frac{-1}{n(n-1)(n+2)}. \qedhere
+        \frac{-1}{ p \, (p-1) (p+2) }. \qedhere
     \end{align*} 
 \end{proof}
 
 
 \section{Uniformly distributed projections}
 
-When $\mP \in \reals^{n \times n}$ is chosen uniformly over the set of rank-$k$ $n\times n$ projection matrices, we say
+When $\mP \in \reals^{p \times p}$ is chosen uniformly over the set of rank-$k$ $p \times p$ projection matrices, we say
 \(
     \mP
         \sim
             \Unif \big(
-                \grassmann_k(\reals^n)
+                \grassmann_k(\reals^p)
             \big).
 \)
 With the results of the previous section, we can derive the moments of
@@ -347,17 +347,17 @@ random projection matrices.
 
 
 \begin{lemma}\label{L:grassman-moments-1}
-    If $\mP \sim \Unif \big( \grassmann_k(\reals^n) \big)$, then
+    If $\mP \sim \Unif \big( \grassmann_k(\reals^p) \big)$, then
     \begin{align*}
-        \E \left[ \mP \right] &= \frac{k}{n} \mI_n.
+        \E \left[ \mP \right] &= \frac{k}{p} \mI_p.
     \end{align*}
 \end{lemma}
 \begin{proof}
     Write $\mP = \mV \mV^\trans$, where 
     \(
-        \mV \sim \Unif \big( \stiefel_k( \reals^n ) \big)
+        \mV \sim \Unif \big( \stiefel_k( \reals^p ) \big)
     \).
-    For $1 \leq i,j \leq n$ we have
+    For $1 \leq i,j \leq p$ we have
     \[
         P_{ij}
             =
@@ -376,23 +376,23 @@ random projection matrices.
 \end{proof}
 
 \begin{lemma}\label{L:grassman-moments-2}
-    Let $\mP \sim \Unif \big( \grassmann_k(\reals^n) \big)$.  If
-    $1 \leq i,j,i',j' \leq n$, then
+    Let $\mP \sim \Unif \big( \grassmann_k(\reals^p) \big)$.  If
+    $1 \leq i,j,i',j' \leq p$, then
     \begin{equation*}
         \begin{split}
             \cov \big[ P_{ij}, P_{i'j'} \big]
                 &=
-                    \frac{1}{(n-1)(n+2)}
+                    \frac{1}{(p-1)(p+2)}
                     \left(
-                        \frac{k}{n}
+                        \frac{k}{p}
                     \right)
                     \left(
-                        1 - \frac{k}{n}
+                        1 - \frac{k}{p}
                     \right) \\
                 &\qquad\cdot
                     \Big(
-                          n \, \delta_{(i,j ) = (i',j')}
-                        + n \, \delta_{(i,j ) = (j',i')}
+                          p \, \delta_{(i,j ) = (i',j')}
+                        + p \, \delta_{(i,j ) = (j',i')}
                         - 2 \, \delta_{(i,i') = (j ,j')}
                     \Big).
         \end{split}
@@ -405,7 +405,7 @@ random projection matrices.
     We need to perform six computations.  As before, we use the representation
     $\mP = \mV \mV^\trans$, where 
     \(
-        \mV \sim \Unif\big( \stiefel_k(\reals^n) \big).
+        \mV \sim \Unif\big( \stiefel_k(\reals^p) \big).
     \)
     We have
     \begin{align*}
@@ -418,18 +418,18 @@ random projection matrices.
                   \sum_{i=1}^k V_{1i}^4
                   + \sum_{i\neq j} V_{1i}^2 V_{1j}^2
               \bigg] \\
-        &= k \cdot \frac{3}{ n \, (n+2) } 
-           + k \, (k-1) \cdot \frac{1}{ n \, (n+2) } \\
-        &= \frac{ k \, (k+2) }{ n \,(n+2) } \\
-        &= \frac{2}{ n+2}
-           \left(\frac{k}{n}\right) \left( 1 - \frac{k}{n} \right)
-           + \left( \frac{k}{n} \right)^2,
+        &= k \cdot \frac{3}{ p \, (p+2) } 
+           + k \, (k-1) \cdot \frac{1}{ n \, (p+2) } \\
+        &= \frac{ k \, (k+2) }{ p \,(p+2) } \\
+        &= \frac{2}{ p+2}
+           \left(\frac{k}{p}\right) \left( 1 - \frac{k}{p} \right)
+           + \left( \frac{k}{p} \right)^2,
     \end{align*}
     which gives us that 
     \[
         \var \left[ P_{11} \right]
-        = \frac{2}{ n+2 }
-           \left(\frac{k}{n}\right) \left( 1 - \frac{k}{n} \right).
+        = \frac{2}{ p+2 }
+           \left(\frac{k}{p}\right) \left( 1 - \frac{k}{p} \right).
     \]
     Next,
     \begin{align*}
@@ -443,16 +443,16 @@ random projection matrices.
                   + \sum_{i\neq j} 
                         V_{1i} V_{2i} V_{1j} V_{2j}
               \bigg] \\
-        &= k \cdot \frac{ 1 }{ n \, (n+2) }
-           + k \, (k-1) \cdot \frac{-1}{ n \, (n-1) (n+2) } \\
-        &= \frac{n}{ (n-1) (n+2) } 
-           \left(\frac{k}{n}\right) \left( 1 - \frac{k}{n} \right),
+        &= k \cdot \frac{ 1 }{ p \, (p+2) }
+           + k \, (k-1) \cdot \frac{-1}{ p \, (p-1) (p+2) } \\
+        &= \frac{p}{ (p-1) (p+2) } 
+           \left(\frac{k}{p}\right) \left( 1 - \frac{k}{p} \right),
     \end{align*}
     so that
     \[
         \var \left[ P_{12} \right]
-        = \frac{n}{ (n-1) (n+2) } 
-           \left(\frac{k}{n}\right) \left( 1 - \frac{k}{n} \right).
+        = \frac{p}{ (p-1) (p+2) } 
+           \left(\frac{k}{p}\right) \left( 1 - \frac{k}{p} \right).
     \]
     Also,
     \begin{align*}
@@ -466,19 +466,19 @@ random projection matrices.
                   + \sum_{i=1}^k
                     \sum_{j\neq i} V_{1i}^2 V_{2j}^2
               \bigg] \\
-        &= k \cdot \frac{1}{ n \, (n+2) }
-           + k \, (k-1) \cdot \frac{ n+1 }{ n \, (n-1) (n+2) } \\
-        &= \frac{k}{ n \, (n+2) }
-           \left( 1 + (n+1) \frac{k-1}{n-1} \right) \\
-        &= \frac{-2}{(n-1)(n+2)}
-           \left(\frac{k}{n}\right) \left( 1 - \frac{k}{n} \right)
-           + \left( \frac{k}{n} \right)^2,
+        &= k \cdot \frac{1}{ p \, (p+2) }
+           + k \, (k-1) \cdot \frac{ p+1 }{ p \, (p-1) (p+2) } \\
+        &= \frac{k}{ p \, (p+2) }
+           \left( 1 + (p+1) \frac{k-1}{p-1} \right) \\
+        &= \frac{-2}{(p-1)(p+2)}
+           \left(\frac{k}{p}\right) \left( 1 - \frac{k}{p} \right)
+           + \left( \frac{k}{p} \right)^2,
     \end{align*}
     so that
     \[
         \cov \left[ P_{11}, P_{22} \right]
-        = \frac{-2}{ (n-1) (n+2) }
-           \left(\frac{k}{n}\right) \left( 1 - \frac{k}{n} \right).
+        = \frac{-2}{ (p-1) (p+2) }
+           \left(\frac{k}{p}\right) \left( 1 - \frac{k}{p} \right).
     \]
     Since $\mP$ is symmetric, we have
     \[
@@ -512,39 +512,39 @@ As an application of the calculations in this section, we can derive the
 Johnson-Lindenstrauss lemma.
 
 \begin{lemma}
-    If $\vx, \vy \in \reals^n$ and 
+    If $\vx, \vy \in \reals^p$ and 
     \(
-        \mP \sim \Unif\big( \grassmann_k (\reals^n) \big),
+        \mP \sim \Unif\big( \grassmann_k (\reals^p) \big),
     \)
     then
     \[
         \E \left[ \vx^\trans \mP \vy \right] 
-            = \frac{k}{n} \, \vx^\trans \vy,
+            = \frac{k}{p} \, \vx^\trans \vy,
     \]
     and
     \[
         \var \left[ \vx^\trans \mP \vy \right] 
             =
-                \left( \frac{k}{n} \right)
-                \left( 1 - \frac{k}{n} \right)
+                \left( \frac{k}{p} \right)
+                \left( 1 - \frac{k}{p} \right)
                 \cdot 
-                \frac{ n \, ( \vx^\trans \vx )( \vy^\trans \vy )
-                       + (n-2) ( \vx^\trans \vy )^2 }
-                     { (n-1) (n+2) }.
+                \frac{ p \, ( \vx^\trans \vx )( \vy^\trans \vy )
+                       + (p-2) ( \vx^\trans \vy )^2 }
+                     { (p-1) (p+2) }.
     \]
     In particular, this implies that
     \[
         \E \left[ \vx^\trans \mP \vx \right] 
         = 
-        \frac{k}{n} \vx^\trans \vx
+        \frac{k}{p} \vx^\trans \vx
     \]
     and
     \[
         \var \left[ \vx^\trans \mP \vx \right]
         =
-        \frac{ 2 }{ n+2 }
-        \left( \frac{k}{n} \right)
-        \left( 1 - \frac{k}{n} \right)
+        \frac{ 2 }{ p+2 }
+        \left( \frac{k}{p} \right)
+        \left( 1 - \frac{k}{p} \right)
         \left( \vx^\trans \vx \right)^2.
     \]
 \end{lemma}
@@ -557,15 +557,15 @@ Johnson-Lindenstrauss lemma.
     This gives us that
     \begin{align*}
         \E \left[ \vx^\trans \mP \vy \right]
-            &= \sum_{i,j} \frac{k}{n} \, x_i \, y_j \, \delta_{ij} \\
-            &= \frac{k}{n} \, \vx^\trans \vy
+            &= \sum_{i,j} \frac{k}{p} \, x_i \, y_j \, \delta_{ij} \\
+            &= \frac{k}{p} \, \vx^\trans \vy
     \end{align*}
     and
     \begin{align*}
         \begin{split}
         \var \left[ \vx^\trans \mP \vy \right]
             &= 
-               \sum_{i=1}^n
+               \sum_{i=1}^p
                     x_i^2 y_i^2 \var \left[ P_{ii} \right]
                +
                \frac{1}{2}
@@ -579,27 +579,27 @@ Johnson-Lindenstrauss lemma.
         \end{split} \\
         \begin{split}
             &=
-                \left( \frac{k}{n} \right)
-                \left( 1 - \frac{k}{n} \right)
+                \left( \frac{k}{p} \right)
+                \left( 1 - \frac{k}{p} \right)
                 \cdot \bigg\{
-                    \frac{2}{n+2}
-                    \sum_{i=1}^n x_i^2 y_i^2 \\
+                    \frac{2}{p+2}
+                    \sum_{i=1}^p x_i^2 y_i^2 \\
             &\qquad\qquad\qquad\qquad\quad+
-                \frac{n}{ 2 \, (n-1) (n+2) }
+                \frac{p}{ 2 \, (p-1) (p+2) }
                 \sum_{i\neq j} (x_i y_j + x_j y_i)^2 \\
             &\qquad\qquad\qquad\qquad\quad+
-                \frac{-2}{ (n-1) (n+2) }
+                \frac{-2}{ (p-1) (p+2) }
                 \sum_{i \neq j} x_i x_j y_i y_j \bigg\}
         \end{split} \\
         \begin{split}
             &=
-                \left( \frac{k}{n} \right)
-                \left( 1 - \frac{k}{n} \right)
+                \left( \frac{k}{p} \right)
+                \left( 1 - \frac{k}{p} \right)
                 \cdot \bigg\{
-                    \frac{n}{ (n-1) (n+2) } 
+                    \frac{p}{ (p-1) (p+2) } 
                     ( \vx^\trans \vx )( \vy^\trans \vy ) \\
             &\qquad\qquad\qquad\qquad\quad+
-                \frac{n-2}{ (n-1) (n+2) } ( \vx^\trans \vy )^2 \bigg\}
+                \frac{p-2}{ (p-1) (p+2) } ( \vx^\trans \vy )^2 \bigg\}
         \end{split}
     \end{align*}
 \end{proof}
