@@ -334,159 +334,174 @@ results.
 
 \section{Uniformly distributed projections}
 
-We can now proceed to proving properties of random projections.  
+When $\mP \in \reals^{n \times n}$ is chosen uniformly over the set of rank-$k$ $n\times n$ projection matrices, we say
+\(
+    \mP
+        \sim
+            \Unif \big(
+                \grassmann_k(\reals^n)
+            \big).
+\)
+With the results of the previous section, we can derive the moments of
+random projection matrices.
 
 
-\begin{lemma}\label{L:projection-m1}
-    In expectation, $P_1$ has orthogonal columns of length $\sqrt{m/M}$.
+\begin{lemma}\label{L:grassman-moments-1}
+    If $\mP \sim \Unif \big( \grassmann_k(\reals^n) \big)$, then
     \begin{align*}
-        \E \left[ P_1' P_1 \right] &= \frac{m}{M} I_M.
+        \E \left[ \mP \right] &= \frac{k}{n} \mI_n.
     \end{align*}
 \end{lemma}
 \begin{proof}
-    We have
+    Write $\mP = \mV \mV^\trans$, where 
+    \(
+        \mV \sim \Unif \big( \stiefel_k( \reals^n ) \big)
+    \).
+    For $1 \leq i,j \leq n$ we have
     \[
-        (P_1' P_1)_{ij} 
-        =
-        \sum_{\ell=1}^m (P_1)_{\ell i}^2 (P_1)_{\ell j}^2
+        P_{ij}
+            =
+                \sum_{r=1}^k V_{ir} V_{jr},
     \]
     so
     \[
-        \E \left[ (P_1' P_1)_{ij} \right] 
+        \E \left[ P_{ij} \right] 
         =
         \begin{cases}
-            m \E \left[ (P_1)_{11}^2 \right], &\text{when $i = j$} \\
-            m \E \left[ (P_1)_{11} (P_1)_{12} \right], &\text{otherwise}
+            k \, \E \left[ V_{11}^2 \right], &\text{when $i = j$,} \\
+            k \, \E \left[ V_{11} V_{21} \right], &\text{otherwise.}
         \end{cases}
-    \].
-    The result then follows from Lemma~\ref{L:stiefel-1-moments}.
+    \]
+    The result now follows from Lemma~\ref{L:stiefel-1-moments}.
 \end{proof}
 
-\begin{lemma}\label{L:projection-m2}
-    The covariances between of elements of $P_1' P_1$ are given by
-    \begin{multline*}
-        \cov \left[ (P_1' P_1)_{ij}, (P_1' P_1)_{kl} \right]
-        = \\
-        \shoveleft{\frac{1}{(M-1)(M+2)}
-            \left(
-                \frac{m}{M}
-            \right)
-            \left(
-                1 - \frac{m}{M}
-            \right)
-            \Bigg(
-                  M \delta_{(i,j) = (k,l)}
-                + M \delta_{(i,j) = (l,k)}
-                - 2 \delta_{(i,k) = (j,l)}
-            \Bigg)}.
-    \end{multline*}
+\begin{lemma}\label{L:grassman-moments-2}
+    Let $\mP \sim \Unif \big( \grassmann_k(\reals^n) \big)$.  If
+    $1 \leq i,j,i',j' \leq n$, then
+    \begin{equation*}
+        \begin{split}
+            \cov \big[ P_{ij}, P_{i'j'} \big]
+                &=
+                    \frac{1}{(n-1)(n+2)}
+                    \left(
+                        \frac{k}{n}
+                    \right)
+                    \left(
+                        1 - \frac{k}{n}
+                    \right) \\
+                &\qquad\cdot
+                    \Big(
+                          n \, \delta_{(i,j ) = (i',j')}
+                        + n \, \delta_{(i,j ) = (j',i')}
+                        - 2 \, \delta_{(i,i') = (j ,j')}
+                    \Big).
+        \end{split}
+    \end{equation*}
+    This gives us that aside from the obvious symmetry ($P_{ij} = P_{ji}$), 
+    the off-diagonal elements of $\mP$ are uncorrelated with each other and 
+    with the diagonal elements.
 \end{lemma}
 \begin{proof}
-    We need to perform six computations.  Throughout the proof, $O$ will be a 
-    uniformly-distributed $M$-by-$M$ orthogonal matrix. We have
+    We need to perform six computations.  As before, we use the representation
+    $\mP = \mV \mV^\trans$, where 
+    \(
+        \mV \sim \Unif\big( \stiefel_k(\reals^n) \big).
+    \)
+    We have
     \begin{align*}
-        \E \left[ (P_1' P_1)_{11}^2 \right]
-        &= \E \left[ \left( 
-                         \sum_{l=1}^m (P_1)_{l1}^2
-                     \right)^2
-              \right] \\
-        &= \E \left[
-                  \sum_{l=1}^m (P_1)_{l1}^4
-                  + \sum_{k\neq l} (P_1)_{l1}^2 (P_1)_{k1}^2
-              \right] \\
-        &= m \E \left[ O_{11}^4 \right] 
-            + m(m-1) \E \left[ O_{11}^2 O_{22}^2 \right] \\
-        &= m \left( \frac{3}{M}{M+2}\right)
-           + m (m-1) \left( \frac{1}{M(M+2)} \right) \\
-        &= \frac{m(m+2)}{M(M+2)} \\
-        &= \frac{2}{M+2}
-           \left(\frac{m}{M}\right) \left( 1 - \frac{m}{M} \right)
-           + \left( \frac{m}{M} \right)^2,
+        \E \left[ P_{11}^2 \right]
+        &= \E \bigg[ \Big( 
+                         \sum_{i=1}^k V_{1i}^2
+                     \Big)^2
+              \bigg] \\
+        &= \E \bigg[
+                  \sum_{i=1}^k V_{1i}^4
+                  + \sum_{i\neq j} V_{1i}^2 V_{1j}^2
+              \bigg] \\
+        &= k \cdot \frac{3}{ n \, (n+2) } 
+           + k \, (k-1) \cdot \frac{1}{ n \, (n+2) } \\
+        &= \frac{ k \, (k+2) }{ n \,(n+2) } \\
+        &= \frac{2}{ n+2}
+           \left(\frac{k}{n}\right) \left( 1 - \frac{k}{n} \right)
+           + \left( \frac{k}{n} \right)^2,
     \end{align*}
     which gives us that 
     \[
-        \var \left[ (P_1' P_1)_{11}^2 \right]
-        = \frac{2}{M+2}
-           \left(\frac{m}{M}\right) \left( 1 - \frac{m}{M} \right)
+        \var \left[ P_{11} \right]
+        = \frac{2}{ n+2 }
+           \left(\frac{k}{n}\right) \left( 1 - \frac{k}{n} \right).
     \]
     Next,
     \begin{align*}
-        \E \left[ (P_1' P_1)_{12}^2 \right]
-        &= \E \left[ \left( 
-                         \sum_{l=1}^m (P_1)_{l1} (P_1)_{l2}
-                     \right)^2
-              \right] \\
-        &= \E \left[ 
-                  \sum_{l=1}^m (P_1)_{l1}^2 (P_1)_{l2}^2
-                  + \sum_{k\neq l} 
-                        (P_1)_{k1} (P_1)_{k2} (P_1)_{l1} (P_1)_{l2}
-              \right] \\
-        &= m \E \left[ O_{11}^2] O_{12}^2 \right]
-           + m(m-1) \E \left[ O_{11} O_{12} O_{22} O_{21} \right] \\
-        &= m \left( \frac{1}{M(M+2)} \right)
-           + m(m-1) \left( \frac{-1}{M(M-1)(M+2)}\right) \\
-        &= \frac{M}{(M-1)(M+2)} 
-           \left(\frac{m}{M}\right) \left( 1 - \frac{m}{M} \right),
+        \E \left[ P_{12}^2 \right]
+        &= \E \bigg[ \Big( 
+                         \sum_{i=1}^k V_{1i} V_{2i}
+                     \Big)^2
+              \bigg] \\
+        &= \E \bigg[ 
+                  \sum_{i=1}^k V_{1i}^2 V_{2i}^2
+                  + \sum_{i\neq j} 
+                        V_{1i} V_{2i} V_{1j} V_{2j}
+              \bigg] \\
+        &= k \cdot \frac{ 1 }{ n \, (n+2) }
+           + k \, (k-1) \cdot \frac{-1}{ n \, (n-1) (n+2) } \\
+        &= \frac{n}{ (n-1) (n+2) } 
+           \left(\frac{k}{n}\right) \left( 1 - \frac{k}{n} \right),
     \end{align*}
     so that
     \[
-        \var \left[ (P_1' P_1)_{12}^2 \right]
-        = \frac{M}{(M-1)(M+2)} 
-           \left(\frac{m}{M}\right) \left( 1 - \frac{m}{M} \right).
+        \var \left[ P_{12} \right]
+        = \frac{n}{ (n-1) (n+2) } 
+           \left(\frac{k}{n}\right) \left( 1 - \frac{k}{n} \right).
     \]
     Also,
     \begin{align*}
-        \E \left[ (P_1' P_1)_{11} (P_1' P_1)_{22} \right]
-        &= \E \left[
-                \left( \sum_{l=1}^m (P_1)_{l1}^2 \right)
-                \left( \sum_{k=1}^m (P_1)_{k2}^2 \right)
-              \right] \\
-        &= \E \left[
-                  \sum_{k,l} (P_1)_{l1}^2 (P_1)_{k2}^2
-              \right] \\
-        &= \E \left[
-                  \sum_{l=1}^m (P_1)_{l1}^2 (P_1)_{l2}^2
-                  + \sum_{l=1}^m
-                    \sum_{k\neq l} (P_1)_{k1}^2 (P_1)_{l2}^2
-              \right] \\
-        &= m \E\left[ O_{11}^2 O_{12}^2 \right]
-           + m(m-1) \E \left[ O_{11}^2 O_{22}^2 \right] \\
-        &= m \left( \frac{1}{M(M+2)} \right)
-           + m(m-1) \left( \frac{M+1}{M(M-1)(M+2)}\right) \\
-        &= \frac{m}{M(M+2)}
-           \left( 1 + (M+1) \frac{m-1}{M-1} \right) \\
-        &= \frac{-2}{(M-1)(M+2)}
-           \left(\frac{m}{M}\right) \left( 1 - \frac{m}{M} \right)
-           + \left( \frac{m}{M} \right)^2,
+        \E \left[ P_{11} P_{22} \right]
+        &= \E \bigg[
+                \Big( \sum_{i=1}^k V_{1i}^2 \Big)
+                \Big( \sum_{j=1}^k V_{2j}^2 \Big)
+              \bigg] \\
+        &= \E \bigg[
+                  \sum_{i=1}^k V_{1i}^2 V_{2i}^2
+                  + \sum_{i=1}^k
+                    \sum_{j\neq i} V_{1i}^2 V_{2j}^2
+              \bigg] \\
+        &= k \cdot \frac{1}{ n \, (n+2) }
+           + k \, (k-1) \cdot \frac{ n+1 }{ n \, (n-1) (n+2) } \\
+        &= \frac{k}{ n \, (n+2) }
+           \left( 1 + (n+1) \frac{k-1}{n-1} \right) \\
+        &= \frac{-2}{(n-1)(n+2)}
+           \left(\frac{k}{n}\right) \left( 1 - \frac{k}{n} \right)
+           + \left( \frac{k}{n} \right)^2,
     \end{align*}
     so that
     \[
-        \cov \left[ (P_1' P_1)_{11}, (P_1' P_1)_{22} \right]
-        = \frac{-2}{(M-1)(M+2)}
-           \left(\frac{m}{M}\right) \left( 1 - \frac{m}{M} \right).
+        \cov \left[ P_{11}, P_{22} \right]
+        = \frac{-2}{ (n-1) (n+2) }
+           \left(\frac{k}{n}\right) \left( 1 - \frac{k}{n} \right).
     \]
-    Since $(P_1' P_1)$ is symmetric, we have
+    Since $\mP$ is symmetric, we have
     \[
-        \cov \left[ (P_1' P_1)_{12}, (P_1' P_1)_{21} \right]
-        = \var \left[ (P_1' P_1)_{12} \right].
+        \cov \left[ P_{12}, P_{21} \right]
+        = \var \left[ P_{12} \right].
     \]
     The other covariances are all zero.  This is because
     \begin{align*}
-        \E \left[ (P_1' P_1)_{11} (P_1' P_1)_{12} \right]
-        &= \E \left[ 
-                  \sum_{k,l} (P_1)_{l1}^2 (P_1)_{k1} (P_1)_{k2} 
-              \right], \\
-        \E \left[ (P_1' P_1)_{12} (P_1' P_1)_{23} \right]
-        &= \E \left[ 
-                \sum_{k,l} (P_1)_{k1} (P_1)_{k2} (P_1)_{l2} (P_1)_{l3}
-              \right], \\
+        \E \left[ P_{11} P_{12} \right]
+        &= \E \bigg[ 
+                  \sum_{i,j} V_{1i}^2 \, V_{1j}  V_{2j} 
+              \bigg], \\
+        \E \left[ P_{12} P_{23} \right]
+        &= \E \bigg[ 
+                \sum_{i,j} V_{1i} V_{2i} V_{2j} V_{3j}
+              \bigg], \\
     \intertext{and}
-        \E \left[ (P_1' P_1)_{12} (P_1' P_1)_{34} \right]
-        &= \E \left[ 
-                \sum_{k,l} (P_1)_{k1} (P_1)_{k2} (P_1)_{l3} (P_1)_{l4}
-              \right].
+        \E \left[ P_{12} P_{34} \right]
+        &= \E \bigg[ 
+                \sum_{i,j} V_{1i} V_{2i} V_{3j} V_{4j}
+              \bigg].
     \end{align*}
-    Each term in these sums has an element that appears only once in a column.
+    Each term in these sums has an element that appears only once in a row.
     Thus, the expectations are all $0$.
 \end{proof}
 
