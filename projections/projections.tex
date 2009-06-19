@@ -4,7 +4,7 @@
 We use this section to present some results about random projection
 matrices.  We call a symmetric $p \times p$ matrix $\mP$ a projection 
 if its eigenvalues are in the set $\{ 0, 1 \}$.  Any projection matrix of rank
-$k$ can be decomposed as $\mP = \mV \mV^\trans$ for some $\mV$
+$k \leq p$ can be decomposed as $\mP = \mV \mV^\trans$ for some $\mV$
 satisfying $\mV^\trans \mV = \mI_k$.  We call the set 
 \[
     \stiefel_{k}\left( \reals^p \right)
@@ -58,7 +58,7 @@ over $\stiefel_k(\reals^p)$.  We denote this distribution by
             \big).
 \)
 In the special case of $k = 1$, the distribution is equivalent to drawing
-a random vector uniformly from the unit sphere in $\reals^p$.  We denote
+a random vector uniformly from the unit sphere in $\reals^p$.  We denote 
 this distribution by
 \(
     \vV
@@ -531,7 +531,8 @@ We can prove the following
 
 \begin{proposition}\label{P:project-kframe}
     Suppose $\mU \in \reals^{p \times k}$ satisfies $\mU^\trans \mU = \mI_k$.
-    Let $\mV \sim \Unif\big( \stiefel_q(\reals^p) \big)$ and set
+    Let $\mV \sim \Unif\big( \stiefel_q(\reals^p) \big)$ with 
+    $k \leq q \leq p$ and set
     \(
         \mtU = \sqrt{p/q} \mV^\trans \mU.
     \)
@@ -544,10 +545,15 @@ We can prove the following
     \[
         \E \| \mtU_1 \|_\Frob^2 
             \leq
-                \frac{1}{8} \,
-                k^2 \, (k + 1)
+                \frac{1}{2} \,
+                k \, (k + 1)
                 \left( \frac{q}{p} \right)^2
                 \left( 1 - \frac{q}{p} \right).
+    \]
+    In particular, this implies that
+    \[
+        \E \| \mtU_1 \|_\Frob^2 
+            \leq \frac{2}{27} \, k \, (k+1).
     \]
 \end{proposition}
 
@@ -556,7 +562,9 @@ The main ingredients of the proof are a perturbation lemma and a result about $\
 
 \begin{lemma}\label{L:project-kframe-dot-products}
     Suppose $\mU \in \reals^{p \times k}$ satisfies $\mU^\trans \mU = \mI_k$.
-    Let $\mV \sim \Unif\big( \stiefel_q(\reals^p) \big)$ and set
+    Let $\mV \sim \Unif\big( \stiefel_q(\reals^p) \big)$ with 
+    $k \leq q \leq p$
+    and set
     \(
         \mtU = \sqrt{p/q} \mV^\trans \mU.
     \)
@@ -660,18 +668,14 @@ We can now proceed to the rest of the proof.
     \[
         \sum_{i=1}^k 
             \big(
-                \sigma_k(\mtU^\trans \mtU) - 1
+                \sigma_i(\mtU^\trans \mtU) - 1
             \big)^2 
         \leq \| \mE \|_\Frob^2.
     \]
-    This implies that
-    \(
-        \max_i |\sigma_i( \mtU^\trans \mtU ) - 1 | \leq \| \mE \|_\Frob
-    \)
-    and there exist $\epsilon_i$ with 
+    Setting $\epsilon_i = \sigma_i(\mtU^\trans \mtU) - 1$, we have 
     $\sigma_i( \mtU ) = \sqrt{1 + \epsilon_i}$.  Note that 
     \(
-        \E \left[ q \, \epsilon_i^2 \right]
+        \E \left[ q \sum_i \epsilon_i^2 \right]
         \leq \E \| \sqrt{q} \, \mE \|_\Frob^2
         \leq C.
     \)
@@ -707,13 +711,90 @@ We can now proceed to the rest of the proof.
     \[
         \E \| \mtU_1 \|_\Frob^2 
             = \sum_{i=1}^k \E \left[ q \, \Delta_i^2 \right]
-            \leq \frac{1}{8} \sum_{i=1}^k \E \left[ q \, \epsilon_i^2 \right]
-            \leq \frac{k \, C}{8},
+            \leq \frac{1}{2} \sum_{i=1}^k \E \left[ q \, \epsilon_i^2 \right]
+            \leq \frac{C}{2},
     \]
     where we have used that
     \(
         \sqrt{1 + \epsilon_i} 
             \geq 
-                1 + \frac{1}{2} \epsilon_i - \frac{1}{8} \epsilon_i^2.
+                1 + \frac{1}{2} \epsilon_i - \frac{1}{2} \epsilon_i^2.
     \)
+\end{proof}
+
+
+\subsection{A probabilistic interpretation of the Frobenius norm}
+
+As another application of the results in this section, we give a probabilistic
+representation of the Frobenius norm of a matrix.  It is commonly known that 
+for any 
+$n \times p$ matrix $\mA$, 
+\[
+    \sup_{ \substack{
+                \| \vx \|_2 = 1, \\
+                \| \vy \|_2 = 1 } }
+        \big( \vx^\trans \mA \, \vy \big)^2
+        =
+        \| \mA \|_2^2,
+\]
+where $\| \cdot \|_2$ is the spectral norm, equal largest singular value.  The 
+function
+\(
+    f( \vx, \vy ) = \vx^\trans \mA \, \vy
+\)
+is a general bilinear form on $\reals^n \times \reals^p$.  The square of the
+spectral norm of $\mA$ gives the maximum value of $\big( f(\vx, \vy) \big)^2$
+when $\vx$ and $\vy$ are both unit vectors.
+It turns out that the Frobenius norm of $\mA$ is related to the
+\emph{average} value of $\big( f(\vX, \vY) \big)^2$ when $\vX$ and $\vY$ are
+random unit vectors.
+
+\begin{proposition}
+    If $\mA \in \reals^{n \times p}$, then
+    \[
+        \int\limits_{ \substack{
+                          \| \vx \|_2 = 1, \\
+                          \| \vy \|_2 = 1 } }
+            \!\!\!\!\!
+            \big(
+                \vx^\trans \mA \, \vy
+            \big)^2
+            \, d\vx \, d\vy
+        =
+        \frac{1}{np} \| \mA \|_F^2.
+    \]
+\end{proposition}
+\begin{proof}
+    There are two steps to the proof.  First, we show that if 
+    \(
+        \vX \sim \Unif\big( \sphere^{n-1} \big)
+    \)
+    and $\va$ is arbitrary, then
+    \[
+        \E \left[ \vX^\trans \va \right]^2 = \frac{1}{n} \| \va \|_2^2.
+    \]
+    Next, we show that if $\vY \sim \Unif\big( \sphere^{p-1} \big)$, then
+    \[
+        \E \| \mA \, \vY \|_2^2 = \frac{1}{p} \| \mA \|_\Frob^2.
+    \]
+    The result follows from these two facts.
+    To see the first part, since $\vX$ is orthogonally invariant we have
+    \[
+        \vX^\trans \va
+            \eqd 
+                \vX^\trans \left( \| \va \|_2 \, \ve_1 \right)
+            = \| \va \|_2 \, \vX_1.
+    \]
+    To see the second part, let $\mA = \mU \mSigma \mV^\trans$ be the
+    SVD of $\mA$ and write
+    \[
+        \| \mA \, \vY \|_2^2
+            =
+                \| \mSigma \mV^\trans \vY \|_2^2
+            \eqd
+                \| \mSigma \vY \|_2^2
+            =
+                \sum_{i=1}^{n \wedge p} \sigma_i^2( \mA ) \, Y_i^2.
+        \qedhere
+    \]
 \end{proof}
