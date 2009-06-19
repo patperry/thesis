@@ -504,3 +504,205 @@ random projection matrices.
     Each term in these sums has an element that appears only once in a row.
     Thus, the expectations are all $0$.
 \end{proof}
+
+
+\section{Applications}
+
+We now present two applications of the results in this section.
+
+\subsection{Projections of orthonormal $k$-frames}
+
+Suppose we have $\mU \in \reals^{p \times k}$, an orthonormal $k$-frame,
+and we randomly project $\mU$ into $\reals^q$, with $q < p$.  If we denote
+the projection matrix by $\mV^\trans$ and set $\mtU =\mV^\trans \mU$, it is 
+natural to ask how close $\mtU$ is to being an orthonormal $k$-frame.
+We can prove the following
+
+\begin{proposition}\label{P:project-kframe}
+    Suppose $\mU \in \reals^{p \times k}$ satisfies $\mU^\trans \mU = \mI_k$.
+    Let $\mV \sim \Unif\big( \stiefel_q(\reals^p) \big)$ and set
+    \(
+        \mtU = \sqrt{p/q} \mV^\trans \mU.
+    \)
+    Then there exists a decomposition 
+    $\mtU = \mtU_0 + \frac{1}{\sqrt{q}} \mtU_1$ such that
+    \[
+        \mtU_0^\trans \mtU_0 = \mI_k
+    \]
+    and
+    \[
+        \E \| \mtU_1 \|_\Frob^2 
+            \leq
+                \frac{1}{8} \,
+                k^2 \, (k + 1)
+                \left( \frac{q}{p} \right)^2
+                \left( 1 - \frac{q}{p} \right).
+    \]
+\end{proposition}
+
+\noindent
+The main ingredients of the proof are a perturbation lemma and a result about $\mtU^\trans \mtU$, stated below.
+
+\begin{lemma}\label{L:project-kframe-dot-products}
+    Suppose $\mU \in \reals^{p \times k}$ satisfies $\mU^\trans \mU = \mI_k$.
+    Let $\mV \sim \Unif\big( \stiefel_q(\reals^p) \big)$ and set
+    \(
+        \mtU = \sqrt{p/q} \mV^\trans \mU.
+    \)
+    Then 
+    \[
+        \E \left[ \mtU^\trans \mtU \right] = \mI_k
+    \]
+    and
+    \[
+        \mE \Big\| 
+            \sqrt{q} \, \big(  \mtU^\trans \mtU - \mI_k \big) 
+        \Big\|_\Frob^2
+                \leq
+                k \, (k+1)
+                \left( \frac{q}{p} \right)^2                
+                \left( 1 - \frac{q}{p} \right),
+    \]
+    with a matching lower bound of
+    \[
+        \mE \Big\| 
+            \sqrt{q} \, \big(  \mtU^\trans \mtU - \mI_k \big) 
+        \Big\|_\Frob^2
+            \geq
+            k \, (k+1)
+            \left( \frac{q}{p} \right)^2
+            \left( 1 - \frac{q}{p} \right)
+            \left(
+            \frac{p}{p+2}
+            \right).
+    \]
+\end{lemma}
+\begin{proof}
+    Set $\mP = \mV \mV^\trans$ so that
+    \(
+        \mtU^\trans \mtU
+        =
+        \frac{p}{q} \, 
+        \mU^\trans \mP \mU.
+    \)
+    Now,
+    \[
+        \mE \left[ \mtU^\trans \mtU \right]
+            =
+                \frac{p}{q} \,
+                \mU^\trans
+                \E \left[ \mP \right]
+                \mU
+            =
+            \mI_k.
+    \]
+    Also, since $\mO^\trans \mP \mO \eqd \mP$ for any $p \times p$ orthogonal
+    matrix $\mO$, we must that $\mU^\trans \mP \mU$ has the same distribution
+    as the upper $k \times k$ submatrix of $\mP$.  This implies that
+    \begin{align*}
+        \mE \Big\| 
+            \mtU^\trans \mtU - \mI_k
+        \Big\|_\Frob^2
+            &= \sum_{i=1}^k \sum_{j=1}^k
+                     \var \left[ \mP_{ij} \right] \\
+            &= \frac{q}{p} \left( 1 - \frac{q}{p} \right)
+               \bigg\{ 
+                    k \cdot \frac{2}{p + 2} 
+                    +
+                    k \, (k-1)
+                    \cdot
+                    \frac{p}{ (p-1) (p+2) }
+               \bigg\} \\
+            &= 
+               \frac{p \, k \, (k+1) }{ (p-1) (p+2) }
+               \left( \frac{q}{p} \right) \left( 1 - \frac{q}{p} \right)
+               \left(
+                    1
+                    -
+                    \frac{2}{ p \, (k+1) }
+               \right).
+    \end{align*}
+    The lower and upper bounds follow.
+\end{proof}
+
+The next ingredient is a perturbation theorem due to Mirsky, which we take 
+from Stewart~\cite{stewart1990pts} and state as a lemma.
+
+\begin{lemma}[Mirsky]\label{L:mirsky}
+    If $\mA$ and $\mA + \mE$ are in $\reals^{n \times p}$, then
+    \[
+        \sum_{i=1}^{n \wedge p} 
+            \big(
+                \sigma_i(\mA + \mE) - \sigma_i( \mA ) 
+            \big)^2 
+        \leq \| \mE \|_\Frob^2,
+    \]
+    where $\sigma_i(\cdot)$ denotes the $i$th singular value.
+\end{lemma}
+
+We can now proceed to the rest of the proof.
+\begin{proof}[Proof of Proposition~\ref{P:project-kframe}]
+    We have that $\mtU^\trans \mtU = \mI_k + \mE$, 
+    where $\E \| \sqrt{q} \mE \|_\Frob^2 \leq C$ and $C$ is
+    given in Lemma~\ref{L:project-kframe-dot-products}.
+    We can apply Lemma~\ref{L:mirsky} to get
+    \[
+        \sum_{i=1}^k 
+            \big(
+                \sigma_k(\mtU^\trans \mtU) - 1
+            \big)^2 
+        \leq \| \mE \|_\Frob^2.
+    \]
+    This implies that
+    \(
+        \max_i |\sigma_i( \mtU^\trans \mtU ) - 1 | \leq \| \mE \|_\Frob
+    \)
+    and there exist $\epsilon_i$ with 
+    $\sigma_i( \mtU ) = \sqrt{1 + \epsilon_i}$.  Note that 
+    \(
+        \E \left[ q \, \epsilon_i^2 \right]
+        \leq \E \| \sqrt{q} \, \mE \|_\Frob^2
+        \leq C.
+    \)
+    Let $\mR$ and $\mS$ be $p \times k$ and $k \times k$ matrices
+    with orthonormal columns such that
+    \[
+        \mtU = \mR (\mI_k + \mDelta) \mS^\trans
+    \]
+    is the SVD of $\mtU$, where 
+    \(
+        \mDelta
+            = 
+                \diag( 
+                    \Delta_1, \Delta_2, \ldots, \Delta_k
+                ),
+    \)
+    and $\Delta_i = \sqrt{ 1 + \epsilon_i } - 1.$  Set
+    \(
+        \mtU_0 = \mR \mS^\trans
+    \)
+    and
+    \(
+        \mtU_1 = \sqrt{q} \, \mR \mDelta \mS^\trans.
+    \)
+    Then,
+    \[
+        \mtU_0^\trans \mtU_0 
+                = \mS \mR^\trans \mR \mS^\trans
+                = \mS \mS^\trans
+                = \mI_k
+    \]
+    and 
+    \[
+        \E \| \mtU_1 \|_\Frob^2 
+            = \sum_{i=1}^k \E \left[ q \, \Delta_i^2 \right]
+            \leq \frac{1}{8} \sum_{i=1}^k \E \left[ q \, \epsilon_i^2 \right]
+            \leq \frac{k \, C}{8},
+    \]
+    where we have used that
+    \(
+        \sqrt{1 + \epsilon_i} 
+            \geq 
+                1 + \frac{1}{2} \epsilon_i - \frac{1}{8} \epsilon_i^2.
+    \)
+\end{proof}
