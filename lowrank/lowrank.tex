@@ -78,8 +78,9 @@ assumptions concern the signal part:
     The factors $\mU_n$ and $\mV_n$ are random matrices of dimensions
     $n \times k$ and $p \times k$, respectively, normalized so that
     $\mU_n^\trans \mU_n =  \mV_n^\trans \mV_n = \mI_k$. 
-    The number of factors, $k$, is a fixed constant.  The ratio 
-    $n/p = \gamma$ is a fixed nonzero scalar in the range $(0,\infty)$.
+    The number of factors, $k$, is a fixed constant.  The aspect ratio
+    satisfies $\frac{n}{p} = \gamma + \oh\left( \frac{1}{\sqrt{n}} \right)$
+    for a fixed nonzero constant $\gamma \in (0,\infty)$.
 \end{assumption}
 \noindent
 
@@ -242,10 +243,36 @@ Assumptions~\ref{A:factors}~and~\ref{A:sizes} are simpler than the assumptions g
 \[
     \mX = \mZ \mXi^\trans + \mE,
 \]
-where $\mXi$ is an $p \times k$ matrix of factors and $\mZ$ is an $n\times k$ matrix of factor loadings whose rows are \iid multivariate $\Normal(0,\, \mC)$ random variables for covariance matrx $\mC$ having eigen-decomposition $\mC = \mQ \mLambda \mQ^\trans$.  Letting $\mZ = \sqrt{n} \mhP \mhLambda \mhQ^\trans$ be the SVD of $\mZ$, Anderson's results \cite{anderson1963atp} give us that $\mhLambda$ and $\mhQ$ converge almost surely to $\mLambda$ and $\mQ$, respectively, and that the diagonal elements of $\sqrt{n} (\mhLambda - \mLambda)$ converge to a mean-zero multivariate normal whenever $\mC$ has no repeated eigenvalues.  If we define $\mU = \mhP$, $\mD = \mhLambda^{1/2}$, and $\mV = \mXi \mhQ$, then $\mX = \sqrt{n} \mU \mD \mV^\trans + \mE$, where the factors satisfy Assumptions~\ref{A:factors}~and~\ref{A:sizes}.  Dropping the normality assumption on the rows of $\mZ$ poses no problem.  Moreover, we can suppose instead of \iid that the rows of $\mZ$ are a martingale difference array with well-behaved low-order moments and still perform a transformation of the variables to get factors of the form we need for Theorems~\ref{T:spiked-eigenvalue-limits}~and~\ref{T:vectors}.
+where $\mXi$ is an $p \times k$ matrix of factors and $\mZ$ is an $n\times k$ matrix of factor loadings whose rows are \iid multivariate $\Normal(0,\, \mC)$ random variables for covariance matrx $\mC$ having eigen-decomposition $\mC = \mQ \mLambda \mQ^\trans$.  Letting $\mZ = \sqrt{n} \mhP \mhLambda^{1/2} \mhQ^\trans$ be the SVD of $\mZ$, Anderson's results \cite{anderson1963atp} give us that $\mhLambda$ and $\mhQ$ converge almost surely to $\mLambda$ and $\mQ$, respectively, and that the diagonal elements of $\sqrt{n} (\mhLambda - \mLambda)$ converge to a mean-zero multivariate normal whenever $\mC$ has no repeated eigenvalues.  If we define $\mU = \mhP$, $\mD = \mhLambda^{1/2}$, and $\mV = \mXi \mhQ$, then $\mX = \sqrt{n} \mU \mD \mV^\trans + \mE$, where the factors satisfy Assumptions~\ref{A:factors}~and~\ref{A:sizes}.  Dropping the normality assumption on the rows of $\mZ$ poses no problem.  Moreover, we can suppose instead of \iid that the rows of $\mZ$ are a martingale difference array with well-behaved low-order moments and still perform a transformation of the variables to get factors of the form we need for Theorems~\ref{T:spiked-eigenvalue-limits}~and~\ref{T:vectors}.
 
 \item
 There is a sign-indeterminancy in the sample and population singular vectors. We choose them arbitrarily.
+
+\item
+The assumption that
+\(
+    \sqrt{n}
+    \left(
+        d_1^2 - \mu_1,
+        d_2^2 - \mu_2,
+        \ldots
+        d_k^2 - \mu_k
+    \right)
+\)
+converges weakly is only necessary for determining second-order
+behavior; the first order results still hold without this assumption.  If
+the limiting distribution of the vector of factor strengths
+\(
+    \sqrt{n}
+    \left(
+        d_1^2 - \mu_1,
+        d_2^2 - \mu_2,
+        \ldots
+        d_k^2 - \mu_k
+    \right)
+\)
+is non-normal, one can still get at the second-order behavior of the SVD 
+through a small adaptation of the proof.
 
 \item 
 Most of the results in Theorems~\ref{T:spiked-eigenvalue-limits}~and~\ref{T:vectors} can be gotten from Onatski's results \cite{onatski2009}.   However, Onatski does not show that $\sqrt{n} (\hmu_i - \bmu_i) \toP 0$ when $\mu_i$ is below the critical threshold.  Furthermore, Onatski proves convergence in probability, not almost sure convergence.  Lastly, Onatski does not get at the joint behavior between $\mTheta_n$ and $\mPhi_n$.
