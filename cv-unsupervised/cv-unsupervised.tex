@@ -179,7 +179,7 @@ $\mZ \mLambda^{1/2} = \sqrt{n} \, \mU \mD \mC^\trans$ be the SVD of $\mZ
 \eqref{E:data-matrix-general} can model dependence between variables as well
 as dependence between observations.
 
-\section{An intrinsic notion of rank}
+\section{An intrinsic notion of rank}\label{S:intrinsic-rank}
 
 With Section~\ref{S:latent-factor-model}'s latent factor model in mind, we
 turn our attention to defining the intrinsic rank of a data set. This
@@ -258,7 +258,7 @@ We are now in a position to define effective rank
     \)
     the effective rank of $\mX$ with respect to $L$ is equal to
     \[
-        k^\ast
+        k_L^\ast
         \define
         \argmin_k \, 
             L \left( 
@@ -269,45 +269,514 @@ We are now in a position to define effective rank
 
 The effective rank depends on the choice of loss function.  In some settings it is preferable to choose an application-specific loss function.  We appeal to simplicity and convenience, choosing squared Frobenius loss.  Specifically,
 \[
-    L_F ( \mA, \, \mA' )
-        = \| \mA - \mA' \|_F^2.
+    L_\Frob ( \mA, \, \mA' )
+        = \| \mA - \mA' \|_\Frob^2.
 \]
-One way to motivate this loss function is that it measures average squared error over all linear functionals of the form 
-$y( \valpha, \, \vbeta) = \valpha^\trans \mA \, \vbeta$;
+One way to motivate this loss function is that it measures average squared error over all bilinear statistics of the form 
+$\valpha^\trans \mA \, \vbeta$;
 \[
     \frac{1}{np} \,
-    \| \mA - \mA' \|_F^2
+    \| \mA - \mA' \|_\Frob^2
     =
-    \int_{ \| \valpha \|_2 = 1}
-    \int_{ \| \vbeta \|_2 = 1}
+    \int\limits_{ \substack{ \| \valpha \|_2 = 1, \\
+                             \| \vbeta \|_2  = 1 } }
+        \!\!\!\!
         \left(
             \valpha^\trans \mA \, \vbeta
             -
             \valpha^\trans \mA' \vbeta
         \right)^2
-        \,
-        d\vbeta \, d\valpha.
+        d\valpha \,
+        d\vbeta.
 \]
 In the context of the latent factor model, the effective rank with respect
-to $L_F$ is the rank that gives the best average-case predictions of linear functionals of the signal part (with respect to squared-error loss). 
+to $L_\Frob$ is the rank that gives the best average-case predictions of 
+bilinear statistics of the signal part (with respect to squared-error loss). 
 
 A common alternative to Frobenius loss is spectral loss, given by
 \[
     L_2 ( \mA, \, \mA' )
         = \| \mA - \mA' \|_2^2.
 \]
-This can be interpreted as worst-case squared error over the class of all linear functionals,
+This can be interpreted as worst-case squared error over the class of all 
+bilinear statistics,
 \[
     \| \mA - \mA' \|_2^2
         =
-            \sup_{ \| \valpha \|_2 = 1 }
-            \sup_{ \| \vbeta \|_2  = 1 }
+            \sup_{ \substack{ \| \valpha \|_2 = 1, \\
+                              \| \vbeta \|_2  = 1 } }
                 \left(
                     \valpha^\trans \mA \, \vbeta
                     -
                     \valpha^\trans \mA' \vbeta
                 \right)^2.
 \]
+
+In the sequel, we denote the optimal ranks with respect to Frobenius and
+spectral loss as $k^\ast_\Frob$ and $k^\ast_2$, respectively.
+
+
+\section{Loss behavior}
+
+In this section we investigate the behavior of the loss functions introduced
+in Section~\ref{S:intrinsic-rank}.  First, we need to be more precise about
+our working assumptions on the data matrices.  The theory is easier if we
+work in an asymptotic setting, introducing a sequence of data matrices
+$\mX_1, \mX_2, \ldots, \mX_n$, where $\mX_n \in \reals^{n \times p}$, $p = p(n)$, $n \to \infty$, and $\frac{n}{p} \to \gamma \in (0,\infty)$.  We
+will need three assumptions.
+
+\begin{assumption}
+    The matrix $\mX_n \in \reals^{n \times p}$ can be decomposed as
+    \[
+        \mX_n = \sqrt{n} \, \mU_n \mD_n \mV_n^\trans + \mE_n.
+    \]
+    Here, 
+    $\mU_n \in \reals^{n \times k_0}$, $\mD_n \in \reals^{k_0 \times k_0}$,
+    and $\mV_n \in \reals^{p \times k_0}$.  The left and right factors
+    $\mU_n$ and $\mV_n$ satisfy
+    \(
+        \mU_n^\trans \mU_n = \mV_n^\trans \mV_n = \mI_{k_0}.
+    \)
+    The aspect ratio satisfies
+    $\frac{n}{p} = \gamma + \oh\left( \frac{1}{\sqrt{n}}\right)$ for a
+    constant $\gamma \in (0, \infty)$.  The number of factors $k_0$
+    is fixed.
+\end{assumption}
+
+\begin{assumption}
+    The matrix of normalized factor strengths is diagonal with
+    \(
+        \mD_n
+            =
+                \diag \left(
+                    d_{n,1}, d_{n,2}, \ldots, d_{n,k_0}
+                \right).
+    \)
+    For $1 \leq i \leq k_0$, the diagonal elements satisfy
+    $d_{n,i}^2 \toas \mu_i$ for deterministic $\mu_i$ satisfiying
+    \(
+        \mu_1 > \mu_2 > \cdots > \mu_{k_0} > 0.
+    \)
+\end{assumption}
+
+\begin{assumption}
+    The noise matrix $\mE_n$ has \iid elements independent of $\mU_n$, 
+    $\mD_n$, and $\mV_n$, with $E_{n,11} \sim \Normal( 0, \, \sigma^2)$.
+\end{assumption}
+
+\noindent
+These assumptions allow us to apply the results of 
+Chapter~\ref{C:svd-behavior} to get the first-order behavior of the
+SVD of $\mX_n$.  As before, we let $\vu_{n,1}, \vu_{n,2}, \ldots, \vu_{n,k_0}$
+and $\vv_{n,1}, \vv_{n,2}, \ldots, \vv_{n,k_0}$ denote the columns of
+$\mU_n$ and $\mV_n$, respectively.  We set 
+$\mX_n = \sqrt{n} \, \mhU_n \mhD_n \mhV_n^\trans$ to be the SVD of $\mX_n$,
+where the columns of $\mhU_n$ and $\mhV_n$ are
+\(
+    \vhu_{n,1}, \vhu_{n,2}, \ldots, \vhu_{n,n\wedge p}
+\)
+and
+\(
+    \vhv_{n,1}, \vhv_{n,2}, \ldots, \vhv_{n,n\wedge p},
+\)
+respectively.  With
+\(
+    \mhD_n 
+        = 
+            \diag \left(
+                \hmu_{n,1}^{1/2}, 
+                \hmu_{n,2}^{1/2}, 
+                \ldots, 
+                \hmu_{n,n\wedge p}^{1/2}
+            \right),
+\)
+we set
+\(
+    \mhD_n(k)
+        =
+            \diag \left(
+                \hmu_{n,1}^{1/2}, 
+                \hmu_{n,2}^{1/2}, 
+                \ldots, 
+                \hmu_{n,k}^{1/2}, 
+                0, 
+                0,
+                \ldots, 
+                0
+            \right)
+\)
+so that
+\(
+    \mhX_{n}(k) = \sqrt{n} \, \mhU_n \mD_n(k) \mhV_n^\trans
+\)
+is the SVD of $\mX_n$ truncated to $k$ terms.
+
+By setting $\mTheta_n = \mV_n^\trans \mhV_n$ and 
+taking the SVD of $\mhV_n - \mV_n \mTheta_n$, the matrix of right factors can 
+be expanded as
+\[
+    \mhV_n = \mV_n \mTheta_n + \mbV_n \mbTheta_n,
+\]
+with $\mbV_n \in \reals^{p \times (p-k_0)}$  satisfying
+$\mbV_n^\trans \mbV_n = \mI_{p-k_0}$ and $\mV_n^\trans \mbV_n = 0$.  
+Similarly, we can expand
+\[
+    \mhU_n = \mU_n \mPhi_n + \mbU_n \mbPhi_n.
+\]
+Then,
+\[
+    \mhX(k)
+        =
+        \sqrt{n} \,
+        \left(
+        \begin{matrix}
+            \mU_n & \mbU_n
+        \end{matrix}
+        \right)
+        \left(
+        \begin{matrix}
+            \mPhi_n \mhD_n(k) \mTheta_n^\trans &
+                \mPhi_n \mhD_n(k) \mbTheta_n^\trans \\
+            \mbPhi_n \mhD_n(k) \mTheta_n^\trans &
+                \mbPhi_n \mhD_n(k) \mbTheta_n^\trans
+        \end{matrix}
+        \right)
+        \left(
+        \begin{matrix}
+            \mV_n^\trans \\
+            \mbV_n^\trans
+        \end{matrix}
+        \right)
+\]
+
+For $1 \leq i \leq k_0$, we set
+\begin{align*}
+    \bmu_i
+        &=
+        \begin{cases}
+            \left( \mu_i + \sigma^2 \right)
+            \left( 1 + \frac{\sigma^2}{\gamma \mu_i} \right)
+                &\text{when $\mu_i > \frac{\sigma^2}{\sqrt{\gamma}}$}, \\
+            \sigma^2 \left( 1 + \frac{1}{\sqrt{\gamma}} \right)^2
+                &\text{otherwise,}
+        \end{cases} \\
+    \theta_i 
+        &=
+        \begin{cases}
+            \sqrt{ 
+                \left( 1 - \frac{\sigma^4}{ \gamma \mu_i^2} \right) 
+                \left( 1 + \frac{\sigma^2}{ \gamma \mu_i  } \right)^{-1} }
+            &\text{when $\mu_i > \frac{\sigma^2}{\sqrt{\gamma}}$,} \\
+            0
+            &\text{otherwise,}
+        \end{cases} \\
+    \varphi_i
+        &=
+        \begin{cases}
+            \sqrt{
+                \left( 1 - \frac{\sigma^4}{ \gamma \mu_i^2} \right)
+                \left( 1 + \frac{\sigma^2}{ \mu_i  } \right)^{-1} }
+            &\text{when $\mu_i > \frac{\sigma^2}{\sqrt{\gamma}}$,} \\
+            0
+            &\text{otherwise,}
+        \end{cases}
+\end{align*}
+while for $i > k_0$, we set 
+$\bmu_i = \sigma^2 \left( 1 + \frac{1}{\sqrt{\gamma}} \right)^2$ 
+and $\theta_i = \varphi_i = 0$.  For $i \geq 1$, we
+define
+\begin{align*}
+    \bar \theta_i  &= \sqrt{ 1 - \theta_i^2 } \\
+    \bar \varphi_i &= \sqrt{ 1 - \varphi_i^2 } \\
+\end{align*}
+With
+\begin{align*}
+    \mD(k) 
+        &= 
+            \diag\left( 
+                \bmu_1^{1/2}, 
+                \bmu_2^{1/2}, 
+                \ldots,
+                \bmu_k^{1/2},
+                0,
+                0,
+                \ldots,
+                0
+            \right) \in \reals^{n \times p}, \\
+    \mTheta
+        &=
+            \diag\left(
+                \theta_1,
+                \theta_2,
+                \ldots,
+                \theta_p
+            \right), \\
+    \mPhi
+        &=
+            \diag\left(
+                \varphi_1,
+                \varphi_2,
+                \ldots,
+                \varphi_n
+            \right),
+\end{align*}
+and
+\begin{align*}
+    \mbTheta
+        &=
+            \diag\left(
+                \bar \theta_1,
+                \bar \theta_2,
+                \ldots,
+                \bar \theta_p
+            \right), \\
+    \mbPhi
+        &=
+            \diag\left(
+                \bar \varphi_1,
+                \bar \varphi_2,
+                \ldots,
+                \bar \varphi_n
+            \right),
+\end{align*}
+Theorems~\ref{T:spiked-eigenvalue-limits}~and~\ref{T:spiked-eigenvector-limits}
+give us that for fixed $k$ as $n \to \infty$,
+\begin{align*}
+    \mPhi_n \mhD(k) \mTheta^\trans
+        &\toas
+            \mPhi \mD(k) \mTheta^\trans, \\
+    \mPhi_n \mhD(k) \mbTheta^\trans
+        &\toas
+            \mPhi \mD(k) \mTheta^\trans, \\
+    \mbPhi_n \mhD(k) \mbTheta^\trans
+        &\toas
+            \mbPhi \mD(k) \mTheta^\trans, \\
+    \mbPhi_n \mhD(k) \mbTheta^\trans
+        &\toas
+            \mbPhi \mD(k) \mbTheta^\trans.
+\end{align*}
+This result makes it easy to analyze the loss behavior.  Letting $\mu_i = 0$
+for $i > k_0$, putting $\bmu_i(k) = \bmu_i \, 1\{i \leq k\}$ and
+\[
+    \mF_i(k)
+        =
+            \left(
+            \begin{matrix}
+                \mu_i^{1/2} - \varphi_i \, \bmu_i^{1/2}(k) \, \theta_i &
+                    \varphi_i \, \bmu_i^{1/2}(k) \, \bar \theta_i \\
+                \bar \varphi_i \, \bmu_i^{1/2}(k) \, \theta_i &
+                    \bar \varphi_i \, \bmu_i^{1/2}(k) \, \bar \theta_i
+            \end{matrix}
+            \right)
+\]
+we have that for any orthogonally-invariant norm $\| \cdot \|$, for
+fixed $k$ as $n\to \infty$,
+\[
+    \frac{1}{\sqrt{n}}
+    \big\| \sqrt{n} \, \mU \mD \mV^\trans - \mhX(k) \big\|
+        \toas
+            \big\|
+                \diag \big(
+                    \mF_1(k),
+                    \mF_2(k),
+                    \ldots
+                    \mF_{k \vee k_0}(k)
+                \big) \big\|.
+\]
+Thus,
+\begin{align*}
+    \frac{1}{n} \,
+    \big\| \sqrt{n} \, \mU \mD \mV^\trans - \mhX(k) \big\|_\Frob^2
+        &\toas
+            \sum_{i=1}^{k \vee k_0}
+                \big\| \mF_i(k) \big\|_\Frob^2 \\
+\intertext{and}
+    \frac{1}{n} \,
+    \big\| \sqrt{n} \, \mU \mD \mV^\trans - \mhX(k) \big\|_2^2
+        &\toas
+            \max_{1 \leq i \leq k \vee k_0}
+                \big\| \mF_i(k) \big\|_2^2.
+\end{align*}
+A straightforward calculation shows
+\[
+    \begin{split}
+    &\mF_i^\trans(k) \, \mF_i(k) \\
+        &\,=
+        \left(
+        \begin{matrix}
+            \mu_i 
+            - 2 \varphi_i \mu_i^{1/2} \theta_i \bmu_i^{1/2}(k) 
+            + \theta_i^2 \bmu_i(k) &
+                \varphi_i \bar \theta_i \mu_i^{1/2} \bmu_i^{1/2}(k)
+                + (1 - 2 \varphi_i^2) \theta_i \bar \theta_i \bmu_i(k) \\
+            \varphi_i \bar \theta_i \mu_i^{1/2} \bmu_i^{1/2}(k)
+            + (1 - 2 \varphi_i^2) \theta_i \bar \theta_i \bmu_i(k) &
+                \bar \theta_i^2 \bmu_i(k)
+        \end{matrix}
+        \right),
+    \end{split}
+\]
+so that
+\begin{align*}
+    \tr \big( \mF_i^\trans(k) \, \mF_i(k) \big)
+        &= \mu_i 
+           - 2 \varphi_i \theta_i \mu_i^{1/2} \bmu_i^{1/2} (k) 
+           + \bmu_i(k) \\
+    \det \big( \mF_i^\trans(k) \, \mF_i(k) \big)
+        &= \bar \varphi_i^2 \bar \theta_i^2 \bmu_i(k)
+           \big( \mu_i^{1/2} - 2 \varphi_i \theta_i \bmu_i^{1/2}(k) \big)^2
+\end{align*}
+When $\mu_i > \gamma^{-1/2}$, we have
+\begin{align*}
+    \tr \big( \mF_i^\trans(k) \, \mF_i(k) \big)
+        &=
+            \begin{cases}
+                \frac{\sigma^2}{\gamma \mu_i}
+                \big(
+                    3 \sigma^2 + (\gamma+1) \mu_i
+                \big)
+                    &\text{if $i \leq k$,} \\
+                \mu_i
+                    &\text{otherwise,}
+            \end{cases} \\
+    \det \big( \mF_i^\trans(k) \, \mF_i(k) \big)
+        &=
+            \begin{cases}
+                \left(
+                    \frac{\sigma^2}{\gamma \mu_i}
+                \right)^2
+                (\mu_i + \sigma^2)
+                (\gamma \mu_i + \sigma^2)
+                \left(
+                    1 - \frac{ 2 \sigma^2 }{ \gamma \mu_i^2}
+                \right)^2
+                    &\text{if $i \leq k$} \\
+                0
+                    &\text{otherwise.}
+            \end{cases}
+\end{align*}
+When $\mu_i \leq \gamma^{-1/2}$, we have
+\begin{align*}
+    \tr \big( \mF_i^\trans(k) \, \mF_i(k) \big)
+        &=
+            \begin{cases}
+                \mu_i 
+                +
+                \sigma^2
+                \left(
+                    1 + \frac{1}{\sqrt{\gamma}}
+                \right)^2
+                    &\text{if $i \leq k$} \\
+                \mu_i
+                    &\text{otherwise,}
+            \end{cases} \\
+    \det \big( \mF_i^\trans(k) \, \mF_i(k) \big)
+        &=
+            \begin{cases}
+                \mu_i \,
+                \sigma^2
+                \left(
+                    1 + \frac{1}{\sqrt{\gamma}}
+                \right)^2
+                    &\text{if $i \leq k$} \\
+                0
+                    &\text{otherwise.}
+            \end{cases}
+\end{align*}
+We can use these expressions to compute
+\begin{align*}
+    \| \mF_i(k) \|_\Frob^2
+        &= \tr \big( \mF_i^\trans(k) \, \mF_i(k) \big), \\
+    \| \mF_i(k) \|_2^2
+        &= \frac{1}{2}
+           \left(
+                 \tr \big( \mF_i^\trans(k) \, \mF_i(k) \big)
+                 +
+                 \sqrt{
+                    \left[ 
+                        \tr \big( \mF_i^\trans(k) \, \mF_i(k) \big) 
+                    \right]^2
+                    -
+                    4
+                    \det \big( \mF_i^\trans(k) \, \mF_i(k) \big) 
+                 }
+           \right).
+\end{align*}
+The expression for the limit of 
+\(
+    \frac{1}{n} 
+    \| \sqrt{n} \, \mU_n \mD_n \mV_n^\trans + \mhX_n(k) \|_2^2
+\)
+is fairly complicated.  In the Frobenius case, we have
+\begin{proposition}
+    For fixed $k$ as $n \to \infty$, we have
+    \[
+        \frac{1}{n}
+        \| \sqrt{n} \, \mU_n \mD_n \mV_n^\trans + \mhX_n(k) \|_\Frob^2
+        \toas
+        \sum_{i=1}^{k}
+            \alpha_i \mu_i
+        +
+        \sum_{i=k+1}^{k_0}
+            \mu_i
+        +
+        \sigma^2
+        \left(
+            1 + \frac{1}{\sqrt{\gamma}}
+        \right)^2
+        \cdot
+        (k - k_0)_+,
+    \]
+    where
+    \[
+        \alpha_i 
+        =
+        \begin{cases}
+            \frac{\sigma^2}{\gamma \mu_i^2}
+                    \big(
+                        3 \sigma^2 + (\gamma+1) \mu_i
+                    \big)
+                &\text{if $\mu_i > \gamma^{-1/2}$,} \\
+            1 
+            + 
+            \frac{\sigma^2}{\mu_i}
+            \left(
+                1
+                +
+                \frac{1}{\sqrt{\gamma}}
+            \right)^2
+                &\text{otherwise.}
+        \end{cases}
+    \]
+\end{proposition}
+\begin{corollary}
+    As $n\to\infty$,
+    \[
+        k^\ast_\Frob
+            \toas
+                \max \left\{ k : 
+                    \lambda_k 
+                        >  
+                            \frac{1 + \gamma^{-1}}{2}
+                            +
+                            \sqrt{ 
+                                \left( \frac{1 + \gamma^{-1} }{2} \right)^2
+                                +
+                                \frac{3}{\gamma}
+                            }
+                \right\},
+    \]
+    provided no $\lambda_k$ is exactly equal to
+    \(
+        \frac{1 + \gamma^{-1}}{2}
+        +
+        \sqrt{ 
+            \left( \frac{1 + \gamma^{-1} }{2} \right)^2
+            +
+            \frac{3}{\gamma}
+        }.
+    \)
+\end{corollary}
 
 
 \begin{figure}[tbh]

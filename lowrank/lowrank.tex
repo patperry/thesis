@@ -140,7 +140,7 @@ values.
     $\vbmu = (\bmu_1, \bmu_2, \ldots, \bmu_k)$,
     where
     \[
-        \bmu_k
+        \bmu_i
         =
         \begin{cases}
             \left( \mu_i + \sigma^2 \right)
@@ -197,7 +197,7 @@ values.
 \end{theorem}
 
 Next, we give the result for the singular vectors:
-\begin{theorem}\label{T:vectors}
+\begin{theorem}\label{T:spiked-eigenvector-limits}
     Say Assumptions~\ref{A:factors}~--~\ref{A:noise} hold.  Then the
     $k\times k$ matrix $\mTheta_n \equiv \mV_n^\trans \mhV_n$ converges almost 
     surely to a matrix 
@@ -243,7 +243,7 @@ Assumptions~\ref{A:factors}~and~\ref{A:sizes} are simpler than the assumptions g
 \[
     \mX = \mZ \mXi^\trans + \mE,
 \]
-where $\mXi$ is an $p \times k$ matrix of factors and $\mZ$ is an $n\times k$ matrix of factor loadings whose rows are \iid multivariate $\Normal(0,\, \mC)$ random variables for covariance matrx $\mC$ having eigen-decomposition $\mC = \mQ \mLambda \mQ^\trans$.  Letting $\mZ = \sqrt{n} \mhP \mhLambda^{1/2} \mhQ^\trans$ be the SVD of $\mZ$, Anderson's results \cite{anderson1963atp} give us that $\mhLambda$ and $\mhQ$ converge almost surely to $\mLambda$ and $\mQ$, respectively, and that the diagonal elements of $\sqrt{n} (\mhLambda - \mLambda)$ converge to a mean-zero multivariate normal whenever $\mC$ has no repeated eigenvalues.  If we define $\mU = \mhP$, $\mD = \mhLambda^{1/2}$, and $\mV = \mXi \mhQ$, then $\mX = \sqrt{n} \mU \mD \mV^\trans + \mE$, where the factors satisfy Assumptions~\ref{A:factors}~and~\ref{A:sizes}.  Dropping the normality assumption on the rows of $\mZ$ poses no problem.  Moreover, we can suppose instead of \iid that the rows of $\mZ$ are a martingale difference array with well-behaved low-order moments and still perform a transformation of the variables to get factors of the form we need for Theorems~\ref{T:spiked-eigenvalue-limits}~and~\ref{T:vectors}.
+where $\mXi$ is an $p \times k$ matrix of factors and $\mZ$ is an $n\times k$ matrix of factor loadings whose rows are \iid multivariate $\Normal(0,\, \mC)$ random variables for covariance matrx $\mC$ having eigen-decomposition $\mC = \mQ \mLambda \mQ^\trans$.  Letting $\mZ = \sqrt{n} \mhP \mhLambda^{1/2} \mhQ^\trans$ be the SVD of $\mZ$, Anderson's results \cite{anderson1963atp} give us that $\mhLambda$ and $\mhQ$ converge almost surely to $\mLambda$ and $\mQ$, respectively, and that the diagonal elements of $\sqrt{n} (\mhLambda - \mLambda)$ converge to a mean-zero multivariate normal whenever $\mC$ has no repeated eigenvalues.  If we define $\mU = \mhP$, $\mD = \mhLambda^{1/2}$, and $\mV = \mXi \mhQ$, then $\mX = \sqrt{n} \mU \mD \mV^\trans + \mE$, where the factors satisfy Assumptions~\ref{A:factors}~and~\ref{A:sizes}.  Dropping the normality assumption on the rows of $\mZ$ poses no problem.  Moreover, we can suppose instead of \iid that the rows of $\mZ$ are a martingale difference array with well-behaved low-order moments and still perform a transformation of the variables to get factors of the form we need for Theorems~\ref{T:spiked-eigenvalue-limits}~and~\ref{T:spiked-eigenvector-limits}.
 
 \item
 There is a sign-indeterminancy in the sample and population singular vectors. We choose them arbitrarily.
@@ -275,7 +275,7 @@ is non-normal, one can still get at the second-order behavior of the SVD
 through a small adaptation of the proof.
 
 \item 
-Most of the results in Theorems~\ref{T:spiked-eigenvalue-limits}~and~\ref{T:vectors} can be gotten from Onatski's results \cite{onatski2009}.   However, Onatski does not show that $\sqrt{n} (\hmu_i - \bmu_i) \toP 0$ when $\mu_i$ is below the critical threshold.  Furthermore, Onatski proves convergence in probability, not almost sure convergence.  Lastly, Onatski does not get at the joint behavior between $\mTheta_n$ and $\mPhi_n$.
+Most of the results in Theorems~\ref{T:spiked-eigenvalue-limits}~and~\ref{T:spiked-eigenvector-limits} can be gotten from Onatski's results \cite{onatski2009}.   However, Onatski does not show that $\sqrt{n} (\hmu_i - \bmu_i) \toP 0$ when $\mu_i$ is below the critical threshold.  Furthermore, Onatski proves convergence in probability, not almost sure convergence.  Lastly, Onatski does not get at the joint behavior between $\mTheta_n$ and $\mPhi_n$.
 
 \end{enumerate}
 
