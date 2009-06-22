@@ -425,7 +425,7 @@ Similarly, we can expand
 \]
 Then,
 \[
-    \mhX(k)
+    \mhX_n(k)
         =
         \sqrt{n} \,
         \left(
@@ -542,16 +542,16 @@ and
 Theorems~\ref{T:spiked-eigenvalue-limits}~and~\ref{T:spiked-eigenvector-limits}
 give us that for fixed $k$ as $n \to \infty$,
 \begin{align*}
-    \mPhi_n \mhD(k) \mTheta^\trans
+    \mPhi_n \mhD_n(k) \mTheta_n^\trans
         &\toas
             \mPhi \mD(k) \mTheta^\trans, \\
-    \mPhi_n \mhD(k) \mbTheta^\trans
+    \mPhi_n \mhD_n(k) \mbTheta_n^\trans
         &\toas
             \mPhi \mD(k) \mTheta^\trans, \\
-    \mbPhi_n \mhD(k) \mbTheta^\trans
+    \mbPhi_n \mhD_n(k) \mbTheta_n^\trans
         &\toas
             \mbPhi \mD(k) \mTheta^\trans, \\
-    \mbPhi_n \mhD(k) \mbTheta^\trans
+    \mbPhi_n \mhD_n(k) \mbTheta_n^\trans
         &\toas
             \mbPhi \mD(k) \mbTheta^\trans.
 \end{align*}
@@ -573,7 +573,7 @@ we have that for any orthogonally-invariant norm $\| \cdot \|$, for
 fixed $k$ as $n\to \infty$,
 \[
     \frac{1}{\sqrt{n}}
-    \big\| \sqrt{n} \, \mU \mD \mV^\trans - \mhX(k) \big\|
+    \big\| \sqrt{n} \, \mU_n \mD_n \mV_n^\trans - \mhX_n(k) \big\|
         \toas
             \big\|
                 \diag \big(
@@ -586,13 +586,13 @@ fixed $k$ as $n\to \infty$,
 Thus,
 \begin{align*}
     \frac{1}{n} \,
-    \big\| \sqrt{n} \, \mU \mD \mV^\trans - \mhX(k) \big\|_\Frob^2
+    \big\| \sqrt{n} \, \mU_n \mD_n \mV_n^\trans - \mhX_n(k) \big\|_\Frob^2
         &\toas
             \sum_{i=1}^{k \vee k_0}
                 \big\| \mF_i(k) \big\|_\Frob^2 \\
 \intertext{and}
     \frac{1}{n} \,
-    \big\| \sqrt{n} \, \mU \mD \mV^\trans - \mhX(k) \big\|_2^2
+    \big\| \sqrt{n} \, \mU_n \mD_n \mV_n^\trans - \mhX_n(k) \big\|_2^2
         &\toas
             \max_{1 \leq i \leq k \vee k_0}
                 \big\| \mF_i(k) \big\|_2^2.
@@ -749,13 +749,30 @@ is fairly complicated.  In the Frobenius case, we have
         \end{cases}
     \]
 \end{proposition}
+
+Figure~\ref{F:frobenius-loss-penalty} shows $\alpha_i$ as a function of
+$\mu_i$.  It is beneficial to include the $i$th term when $\alpha_i < 1$,
+or equivalently
+\(
+    \frac{\mu_i}{\sigma^2}
+    >
+    \frac{1 + \gamma^{-1}}{2}
+    +
+    \sqrt{ 
+        \left( \frac{1 + \gamma^{-1} }{2} \right)^2
+        +
+        \frac{3}{\gamma}
+    }.
+\)
+This gives us the next Corollary.
+
 \begin{corollary}
     As $n\to\infty$,
     \[
         k^\ast_\Frob
             \toas
-                \max \left\{ k : 
-                    \lambda_k 
+                \max \left\{ i : 
+                    \frac{\mu_i}{\sigma^2}
                         >  
                             \frac{1 + \gamma^{-1}}{2}
                             +
@@ -766,17 +783,72 @@ is fairly complicated.  In the Frobenius case, we have
                             }
                 \right\},
     \]
-    provided no $\lambda_k$ is exactly equal to
+    provided no $\mu_k$ is exactly equal to
     \(
-        \frac{1 + \gamma^{-1}}{2}
-        +
-        \sqrt{ 
-            \left( \frac{1 + \gamma^{-1} }{2} \right)^2
+        \sigma^2
+        \left(
+            \frac{1 + \gamma^{-1}}{2}
             +
-            \frac{3}{\gamma}
-        }.
+            \sqrt{ 
+                \left( \frac{1 + \gamma^{-1} }{2} \right)^2
+                +
+                \frac{3}{\gamma}
+            }
+        \right).
     \)
 \end{corollary}
+
+\noindent
+Figure~\ref{F:frobenius-loss-cutoff} shows the critical level
+\(
+    \frac{1 + \gamma^{-1}}{2}
+    +
+    \sqrt{ 
+        \left( \frac{1 + \gamma^{-1} }{2} \right)^2
+        +
+        \frac{3}{\gamma}
+    }
+\)
+as a function of $\gamma$.
+
+\begin{figure}[tbh]
+    \centering
+    \includegraphics{frobenius-loss-penalty}
+    \caption{
+        \captiontitle{Frobenius Loss Penalty}
+        Relative penalty for including the $i$th factor in the SVD 
+        approximation of $\sqrt{n} \, \mU_n \mD_n \mV_n^\trans$, with
+        respect to squared Frobenius loss.  When the $i$th factor
+        has signal strengh $\mu_i$, the cost for excluding the $i$th term
+        of the SVD is $\mu_i$, and the cost for including it is 
+        $\alpha_i \cdot \mu_i$.  Here, we plot $\alpha_i$ as a function
+        of $\mu_i$ for various aspect ratios $\gamma = \frac{n}{p}$.
+        The units are chosen so that $\sigma^2 = 1$.
+    }\label{F:frobenius-loss-penalty}
+\end{figure}
+\begin{figure}[hbt]
+    \centering
+    \includegraphics{frobenius-loss-cutoff}
+    \caption{
+        \captiontitle{Critical Signal Strength}
+        Critical signal strength
+        \(
+            \frac{1 + \gamma^{-1}}{2}
+            +
+            \sqrt{
+                \left( \frac{1 + \gamma^{-1} }{2} \right)^2
+                +
+                \frac{3}{\gamma}
+            }
+        \)
+        plotted against the aspect ratio $\gamma = \frac{n}{p}$.  With
+        respect to Frobenius loss, when the normalized signal strength 
+        $\frac{\mu_i}{\sigma^2}$ is above this level it is beneficial to 
+        include the $i$th term in the SVD approximation of 
+        $\sqrt{n} \, \mU_n \mD_n \mV_n^\trans$.
+    }\label{F:frobenius-loss-cutoff}
+\end{figure}
+
 
 
 \begin{figure}[tbh]

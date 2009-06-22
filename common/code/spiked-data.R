@@ -1,5 +1,5 @@
 
-factors <- function( p, k, type=c("basis", "uniform") ) {
+factors <- function( p, k, type=c("basis", "uniform", "gaussian") ) {
     factors.basis <- function( p, k ) {
         u <- diag( 1, p, k )
         u
@@ -12,11 +12,17 @@ factors <- function( p, k, type=c("basis", "uniform") ) {
         u <- q %*% diag( s, k, k )
         u
     }
+
+	factors.gaussian <- function( p, k ) {
+		u <- matrix( rnorm( p*k, sd=1/p ), p, k )
+		u
+	}
     
     type <- match.arg( type )
     u <- switch( type,
              basis=factors.basis( p, k ),
-           uniform=factors.uniform( p, k )
+           uniform=factors.uniform( p, k ),
+	      gaussian=factors.gaussian( p, k )
          )
     u
 }
@@ -35,8 +41,8 @@ noise <- function( n, p, type=c("white"), var=1 ) {
 }
 
 spiked.data <- function( spikes, n, p, 
-                         left=c("basis", "uniform"), 
-                        right=c("basis", "uniform"),
+                         left=c("basis", "uniform", "gaussian"), 
+                        right=c("basis", "uniform", "gaussian"),
                         noise=c("white"),
                           var=1,
                   compute.svd=TRUE ) {
