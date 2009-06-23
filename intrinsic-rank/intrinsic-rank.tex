@@ -830,8 +830,9 @@ as a function of $\gamma$.
     \centering
     \includegraphics{frobenius-loss-cutoff}
     \caption{
-        \captiontitle{Critical Signal Strength}
-        Critical signal strength
+        \captiontitle{Signal Strength Thresholds}
+        Detection threshold $\gamma^{-1/2}$ and
+        inclusion threshold
         \(
             \frac{1 + \gamma^{-1}}{2}
             +
@@ -841,10 +842,16 @@ as a function of $\gamma$.
                 \frac{3}{\gamma}
             }
         \)
-        plotted against the aspect ratio $\gamma = \frac{n}{p}$.  With
-        respect to Frobenius loss, when the normalized signal strength 
-        $\frac{\mu_i}{\sigma^2}$ is above this level it is beneficial to 
-        include the $i$th term in the SVD approximation of 
+        plotted against the aspect ratio $\gamma = \frac{n}{p}$.  When
+        the normalized signal strength $\frac{\mu_i}{\sigma^2}$ is above the 
+        detection threshold, the $i$th sample SVD factors are correlated with
+        the population factors.  With respect to Frobenius loss, when the 
+        normalized signal strength is above the inclusion threshold, it is 
+        beneficial to include the $i$th term in the SVD approximation of 
         $\sqrt{n} \, \mU_n \mD_n \mV_n^\trans$.
     }\label{F:frobenius-loss-cutoff}
 \end{figure}
+
+\clearpage
+
+\section{Simulations}

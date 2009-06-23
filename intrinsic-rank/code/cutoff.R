@@ -46,14 +46,21 @@ dev.off()
 
 
 
-gamma  <- exp( seq( from=log( 0.04 ), to=log( 25 ), length=100 ) )
-cutoff <- data.frame( gamma=gamma, cutoff=loss.F.cutoff( gamma ) )
-p2 <- ( ggplot( cutoff, aes( gamma, cutoff ) )
-        + labs( x="Aspect Ratio", y="Critical Signal Strength" )
-        + geom_line( colour="red" )
+cutoff <- {
+    n     <- 100
+    gamma <- exp( seq( from=log( 0.04 ), to=log( 25 ), length=n ) )
+    mu    <- c( loss.F.cutoff( gamma ), 1/sqrt( gamma ) )
+    type  <- rep( c( "include", "detect" ), each=n )
+    data.frame( gamma=rep( gamma, 2 ), mu=mu, type=type )
+}
+p2 <- ( ggplot( cutoff, aes( gamma, mu, colour=type ) )
+        + labs( x="Aspect Ratio", y="Signal Strength", colour="Threshold" )
+        + scale_colour_hue( breaks=c("include", "detect"), labels=c("Inclusion", "Detection" ) )
+        + geom_line()
         + scale_x_log2()
         + theme_bw() )
-pdf( file="../plots/frobenius-loss-cutoff.pdf", width=4, height=4 )
+p2
+pdf( file="../plots/frobenius-loss-cutoff.pdf", width=6, height=4 )
 print( p2 )
 dev.off()
 
