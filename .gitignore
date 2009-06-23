@@ -1,6 +1,7 @@
 perry-thesis.pdf
 suthesis
 cv-unsupervised/plots/neurons.pdf
+.DS_Store
 *.aux
 *.bak
 *.bbl
