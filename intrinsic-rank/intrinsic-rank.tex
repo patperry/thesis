@@ -563,9 +563,9 @@ for $i > k_0$, putting $\bmu_i(k) = \bmu_i \, 1\{i \leq k\}$ and
             \left(
             \begin{matrix}
                 \mu_i^{1/2} - \varphi_i \, \bmu_i^{1/2}(k) \, \theta_i &
-                    \varphi_i \, \bmu_i^{1/2}(k) \, \bar \theta_i \\
-                \bar \varphi_i \, \bmu_i^{1/2}(k) \, \theta_i &
-                    \bar \varphi_i \, \bmu_i^{1/2}(k) \, \bar \theta_i
+                    -\varphi_i \, \bmu_i^{1/2}(k) \, \bar \theta_i \\
+                -\bar \varphi_i \, \bmu_i^{1/2}(k) \, \theta_i &
+                    -\bar \varphi_i \, \bmu_i^{1/2}(k) \, \bar \theta_i
             \end{matrix}
             \right)
 \]
@@ -607,10 +607,10 @@ A straightforward calculation shows
             \mu_i 
             - 2 \varphi_i \mu_i^{1/2} \theta_i \bmu_i^{1/2}(k) 
             + \theta_i^2 \bmu_i(k) &
-                \varphi_i \bar \theta_i \mu_i^{1/2} \bmu_i^{1/2}(k)
-                + (1 - 2 \varphi_i^2) \theta_i \bar \theta_i \bmu_i(k) \\
-            \varphi_i \bar \theta_i \mu_i^{1/2} \bmu_i^{1/2}(k)
-            + (1 - 2 \varphi_i^2) \theta_i \bar \theta_i \bmu_i(k) &
+                - \varphi_i \bar \theta_i \mu_i^{1/2} \bmu_i^{1/2}(k)
+                + \theta_i \bar \theta_i \bmu_i(k) \\
+            - \varphi_i \bar \theta_i \mu_i^{1/2} \bmu_i^{1/2}(k)
+            + \theta_i \bar \theta_i \bmu_i(k) &
                 \bar \theta_i^2 \bmu_i(k)
         \end{matrix}
         \right),
@@ -623,10 +623,23 @@ so that
            - 2 \varphi_i \theta_i \mu_i^{1/2} \bmu_i^{1/2} (k) 
            + \bmu_i(k) \\
     \det \big( \mF_i^\trans(k) \, \mF_i(k) \big)
-        &= \bar \varphi_i^2 \bar \theta_i^2 \bmu_i(k)
-           \big( \mu_i^{1/2} - 2 \varphi_i \theta_i \bmu_i^{1/2}(k) \big)^2
+        &= \bar \varphi_i^2 \bar \theta_i^2 \mu_i \bmu_i(k)
 \end{align*}
-When $\mu_i > \gamma^{-1/2}$, we have
+When $\mu_i > \frac{\sigma^2}{\sqrt{\gamma}}$, we can use the identities
+\(
+    \varphi_i \theta_i \bmu_i^{1/2} \mu_i^{-1/2}
+    =
+    1
+    -
+    \frac{\sigma^4}{\gamma \mu_i^2}
+\)
+and
+\(
+    \bar \varphi_i^2 \bar \theta_i^2
+    =
+    \frac{\sigma^4}{\gamma \mu_i^2}
+\)
+to get
 \begin{align*}
     \tr \big( \mF_i^\trans(k) \, \mF_i(k) \big)
         &=
@@ -647,15 +660,12 @@ When $\mu_i > \gamma^{-1/2}$, we have
                 \right)^2
                 (\mu_i + \sigma^2)
                 (\gamma \mu_i + \sigma^2)
-                \left(
-                    1 - \frac{ 2 \sigma^2 }{ \gamma \mu_i^2}
-                \right)^2
                     &\text{if $i \leq k$} \\
                 0
                     &\text{otherwise.}
             \end{cases}
 \end{align*}
-When $\mu_i \leq \gamma^{-1/2}$, we have
+When $\mu_i \leq \frac{\sigma^2}{\sqrt{\gamma}}$, we have
 \begin{align*}
     \tr \big( \mF_i^\trans(k) \, \mF_i(k) \big)
         &=
