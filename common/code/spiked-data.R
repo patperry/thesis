@@ -14,7 +14,7 @@ factors <- function( p, k, type=c("basis", "uniform", "gaussian") ) {
     }
 
 	factors.gaussian <- function( p, k ) {
-		u <- matrix( rnorm( p*k, sd=1/p ), p, k )
+		u <- matrix( rnorm( p*k, sd=1/sqrt( p ) ), p, k )
 		u
 	}
     
@@ -40,28 +40,31 @@ noise <- function( n, p, type=c("white"), var=1 ) {
     e
 }
 
-spiked.data <- function( spikes, n, p, 
+spiked.data <- function( spike, n, p, 
                          left=c("basis", "uniform", "gaussian"), 
                         right=c("basis", "uniform", "gaussian"),
                         noise=c("white"),
                           var=1,
                   compute.svd=TRUE ) {
-    k <- length( spikes )
+    k <- length( spike )
     u <- factors( n, k, left )
     v <- factors( p, k, right )
     e <- noise( n, p, noise, var )
 
     if( k > 0 ) {
-        x <- u %*% diag( sqrt( n*spikes ), k, k ) %*% t( v ) + e
+        mu <- u %*% diag( sqrt( n*spike ), k, k ) %*% t( v )
+        x  <- mu + e
     } else {
-        x <- e
+        mu <- matrix( 0, n, p )
+        x  <- e
     }
     
-    res <- list( n=n, p=p, k=k, u=u, spikes=spikes, v=v, e=e, x=x )
+    res <- list( n=n, p=p, k=k, u=u, spike=spike, v=v, 
+                 x=x, signal=mu, noise=e )
     
     if( compute.svd ) {
         x.svd <- svd( x )
-        res <- c( res, list( u.est=x.svd$u, spikes.est=(x.svd$d)^2/n, v.est=t( x.svd$v ) ) )
+        res <- c( res, list( u.est=x.svd$u, d.est=x.svd$d, spike.est=(x.svd$d)^2/n, v.est=( x.svd$v ) ) )
     }
     
     res

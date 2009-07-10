@@ -273,7 +273,7 @@ The effective rank depends on the choice of loss function.  In some settings it 
         = \| \mA - \mA' \|_\Frob^2.
 \]
 One way to motivate this loss function is that it measures average squared error over all bilinear statistics of the form 
-$\valpha^\trans \mA \, \vbeta$;
+$\valpha^\trans \mA \, \vbeta$,
 \[
     \frac{1}{np} \,
     \| \mA - \mA' \|_\Frob^2
@@ -316,7 +316,7 @@ In the sequel, we denote the optimal ranks with respect to Frobenius and
 spectral loss as $k^\ast_\Frob$ and $k^\ast_2$, respectively.
 
 
-\section{Loss behavior}
+\section{Loss behavior}\label{S:loss-behavior}
 
 In this section we investigate the behavior of the loss functions introduced
 in Section~\ref{S:intrinsic-rank}.  First, we need to be more precise about
@@ -407,7 +407,7 @@ we set
 \)
 so that
 \(
-    \mhX_{n}(k) = \sqrt{n} \, \mhU_n \mD_n(k) \mhV_n^\trans
+    \mhX_{n}(k) = \sqrt{n} \, \mhU_n \mhD_n(k) \mhV_n^\trans
 \)
 is the SVD of $\mX_n$ truncated to $k$ terms.
 
@@ -621,9 +621,9 @@ so that
     \tr \big( \mF_i^\trans(k) \, \mF_i(k) \big)
         &= \mu_i 
            - 2 \varphi_i \theta_i \mu_i^{1/2} \bmu_i^{1/2} (k) 
-           + \bmu_i(k) \\
+           + \bmu_i(k), \\
     \det \big( \mF_i^\trans(k) \, \mF_i(k) \big)
-        &= \bar \varphi_i^2 \bar \theta_i^2 \mu_i \bmu_i(k)
+        &= \bar \varphi_i^2 \bar \theta_i^2 \mu_i \bmu_i(k).
 \end{align*}
 When $\mu_i > \frac{\sigma^2}{\sqrt{\gamma}}$, we can use the identities
 \(
@@ -718,7 +718,7 @@ The expression for the limit of
     \| \sqrt{n} \, \mU_n \mD_n \mV_n^\trans + \mhX_n(k) \|_2^2
 \)
 is fairly complicated.  In the Frobenius case, we have
-\begin{proposition}
+\begin{proposition}\label{P:frob-loss-behavior}
     For fixed $k$ as $n \to \infty$, we have
     \[
         \frac{1}{n}
@@ -746,7 +746,7 @@ is fairly complicated.  In the Frobenius case, we have
                     \big(
                         3 \sigma^2 + (\gamma+1) \mu_i
                     \big)
-                &\text{if $\mu_i > \gamma^{-1/2}$,} \\
+                &\text{if $\mu_i > \frac{\sigma^2}{\sqrt{\gamma}}$,} \\
             1 
             + 
             \frac{\sigma^2}{\mu_i}
@@ -764,53 +764,16 @@ Figure~\ref{F:frobenius-loss-penalty} shows $\alpha_i$ as a function of
 $\mu_i$.  It is beneficial to include the $i$th term when $\alpha_i < 1$,
 or equivalently
 \(
-    \frac{\mu_i}{\sigma^2}
+    \mu_i
     >
-    \frac{1 + \gamma^{-1}}{2}
-    +
-    \sqrt{ 
-        \left( \frac{1 + \gamma^{-1} }{2} \right)^2
-        +
-        \frac{3}{\gamma}
-    }.
+    \mu_\Frob^\ast,
 \)
-This gives us the next Corollary.
-
-\begin{corollary}
-    As $n\to\infty$,
-    \[
-        k^\ast_\Frob
-            \toas
-                \max \left\{ i : 
-                    \frac{\mu_i}{\sigma^2}
-                        >  
-                            \frac{1 + \gamma^{-1}}{2}
-                            +
-                            \sqrt{ 
-                                \left( \frac{1 + \gamma^{-1} }{2} \right)^2
-                                +
-                                \frac{3}{\gamma}
-                            }
-                \right\},
-    \]
-    provided no $\mu_k$ is exactly equal to
-    \(
-        \sigma^2
-        \left(
-            \frac{1 + \gamma^{-1}}{2}
-            +
-            \sqrt{ 
-                \left( \frac{1 + \gamma^{-1} }{2} \right)^2
-                +
-                \frac{3}{\gamma}
-            }
-        \right).
-    \)
-\end{corollary}
-
-\noindent
-Figure~\ref{F:frobenius-loss-cutoff} shows the critical level
-\(
+with
+\begin{equation}\label{E:frob-cutoff}
+    \mu_\Frob^\ast
+    \equiv
+    \sigma^2
+    \left(
     \frac{1 + \gamma^{-1}}{2}
     +
     \sqrt{ 
@@ -818,8 +781,9 @@ Figure~\ref{F:frobenius-loss-cutoff} shows the critical level
         +
         \frac{3}{\gamma}
     }
-\)
-as a function of $\gamma$.
+    \right).
+\end{equation}
+This gives us the next Corollary.
 
 \begin{figure}[tbh]
     \centering
@@ -836,6 +800,40 @@ as a function of $\gamma$.
         The units are chosen so that $\sigma^2 = 1$.
     }\label{F:frobenius-loss-penalty}
 \end{figure}
+
+\begin{corollary}
+    As $n\to\infty$,
+    \[
+        k^\ast_\Frob
+            \toas
+                \max \left\{ i : \mu_i > \mu_\Frob^\ast \right\},
+    \]
+    provided no $\mu_k$ is exactly equal to $\mu_\Frob^\ast$.
+\end{corollary}
+
+\noindent
+The theory in Chapter~\ref{C:svd-behavior} tells us that when 
+$\mu_i > \frac{\sigma^2}{\sqrt{\gamma}}$, the $i$th signal term
+is ``detectible'' in the sense that the $i$th sample singular value and singular vectors are correlated with the population quantities.  Proposition~\ref{P:frob-loss-behavior} tells us that when 
+\(
+    \mu_i 
+    \in 
+    \left(
+        \frac{\sigma^2}{\sqrt{\gamma}}, \, 
+        \mu_\Frob^\ast
+    \right),
+\)
+the $i$th signal term is detectable, but it is \emph{not} helpful (in terms
+of Frobenius norm) to include in the estimate of
+\(
+    \sqrt{n} \, \mU_n \mD_n \mV_n^\trans.
+\)
+Only when $\mu_i$ surpasses the inclusion threshold $\mu_\Frob^\ast$ is it
+beneficial to include the $i$th term.
+
+Figure~\ref{F:frobenius-loss-cutoff} shows the detection and inclusion 
+thresholds as functions of $\gamma$.
+
 \begin{figure}[hbt]
     \centering
     \includegraphics{frobenius-loss-cutoff}
@@ -844,6 +842,8 @@ as a function of $\gamma$.
         Detection threshold $\gamma^{-1/2}$ and
         inclusion threshold
         \(
+            \mu_\Frob^\ast
+            =
             \frac{1 + \gamma^{-1}}{2}
             +
             \sqrt{
@@ -864,4 +864,114 @@ as a function of $\gamma$.
 
 \clearpage
 
-\section{Simulations}
+\section{Simulations}\label{S:intrinsic-loss-simulations}
+
+We confirm the theory of the previous section with a Monte Carlo simulation.  We generate a matrix $\mX$ as follows:
+\begin{enumerate}
+    \item The concentration $\gamma$ is one of $\{ 0.25, 1.0, 4.0 \}$.
+    \item The size of the matrix $s$ is one of $\{ 144, 400, 1600, 4900 \}$.
+        We set the number of rows and columns in the matrix as
+        $n = \sqrt{ s \, \gamma }$ and $p = \sqrt{s / \gamma}$, respectively.
+        This ensures that $\gamma = \frac{n}{p}$ and $s = n \, p$.
+    \item The noise level is set at $\sigma^2 = 1$.  The noise matrix $\mE$
+        is an $n \times p$ matrix with \iid $\Normal\left( 0, \, 1\right)$
+        elements.
+    \item The generative rank, $k_0$, is fixed at $5$.  The normalized
+        factor strengths are set at
+        \(
+            (
+                \mu_1, \,
+                \mu_2, \,
+                \mu_3, \,
+                \mu_4, \,
+                \mu_5
+            )
+            =
+            (
+                4 \mu_\Frob^\ast, \,
+                2 \mu_\Frob^\ast, \,
+                  \mu_\Frob^\ast, \,
+                \frac{1}{2} \mu_\Frob^\ast, \,
+                \frac{1}{4} \mu_\Frob^\ast
+            ),
+        \)
+        and the factor strength matrix is
+        \(
+            \mD 
+            = 
+            \diag\left( 
+                \mu_1^{1/2},
+                \mu_2^{1/2},
+                \ldots, 
+                \mu_5^{1/2}
+            \right).
+        \)
+    \item The left and right factor matrices $\mU$ and $\mV$ are of sizes
+        $n \times 5$ and $p \times 5$, respectively.  We choose these matrices
+        uniformly at random over the Stiefel manifold according
+        to Algorithm~\ref{A:random-steifel} in Appendix~\ref{A:projections}.
+    \item We set $\mX = \sqrt{n} \, \mU \mD \mV^\trans + \mE$ and let
+        $\mhX(k)$ be the SVD of $\mX$ truncated to $k$ terms.
+\end{enumerate}
+After generating $\mX$, we compute the squared Frobenius loss
+\(
+    \frac{1}{n} \| \sqrt{n}\mU \mD \mV^\trans - \mhX(k) \|_F^2
+\)
+and the squared spectral loss
+\(
+    \frac{1}{n} \| \sqrt{n}\mU \mD \mV^\trans - \mhX(k) \|_2^2
+\)
+as functions of the rank, $k$.  In 
+Figures~\ref{F:frob2-loss-sim}~and~\ref{F:spec2-loss-sim}, we plot the results 
+over 500 replicates.  For the Frobenius case, we should expect the loss to
+decrease until $k=2$, stay flat at $k=3$, and then increase thereafter.  This 
+is confirmed by the simulations.  The spectral norm behaves similarly to the 
+Frobenius norm.
+
+
+\begin{figure}[tbh]
+    \centering
+    \includegraphics{frob2-loss-sim}
+    \caption{
+        \captiontitle{Frobenius Loss Penalty}
+        Squared Frobenius loss
+        \(
+            \frac{1}{n} \| \sqrt{n}\mU \mD \mV^\trans - \mhX(k) \|_F^2
+        \)
+        as a function of the rank, $k$, for
+        $\mX$ generated according the the procedure described
+        in Section~\ref{S:intrinsic-loss-simulations} and $\mhX(k)$ equal
+        to the SVD of $\mX$ truncated to $k$ terms.  The concentration 
+        $\gamma = \frac{n}{p}$ is one of $\{ 0.25, 1.0, 4.0 \}$ and the
+        size $s = n p$ is one of $\{ 144, 400, 1600, 4900 \}$.  
+        The solid lines show the means over $500$ replicates with the error 
+        bars showing one standard deviation.  The dashed lines show the 
+        predictions from Section~\ref{S:loss-behavior}.  We can see that as 
+        the size increases, the simulation agrees more and more with the 
+        theory.
+    }\label{F:frob2-loss-sim}
+\end{figure}
+
+\begin{figure}[hbt]
+    \centering
+    \includegraphics{spec2-loss-sim}
+    \caption{
+        \captiontitle{Spectral Loss Penalty}
+        Squared spectral loss
+        \(
+            \frac{1}{n} \| \sqrt{n}\mU \mD \mV^\trans - \mhX(k) \|_2^2
+        \)
+        as a function of the rank, $k$, with $\mX$ and $\mhX(k)$ as in
+        Figure~\ref{F:frob2-loss-sim}.  Sample size $s = n p$ is shown in the 
+        columns and concentration $\gamma = \frac{n}{p}$ is shown in the rows.
+        Solid lines show the means
+        over $500$ replicates with the error bars showing one standard 
+        deviation; the dashed lines show the predictions from 
+        Section~\ref{S:loss-behavior}.  The simulations agrees quite well
+        with the theory, especially for large sample sizes.
+    }\label{F:spec2-loss-sim}
+\end{figure}
+
+\clearpage
+
+\section{Relation to the scree plot}
