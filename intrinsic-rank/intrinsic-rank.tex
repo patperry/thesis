@@ -975,3 +975,41 @@ Frobenius norm.
 \clearpage
 
 \section{Relation to the scree plot}
+
+The scree plot is popular device for choosing the truncation rank in Principal Components Analysis.  
+
+rule-of-thumb for choosing the truncation rank for Principal Components Analysis is to take the ``elbow'' of the scree plot.  
+
+
+\begin{figure}[th]
+    \begin{center}
+        \begin{minipage}{0.49\textwidth}
+            \begin{center}
+                \includegraphics{scree-elbow-right}
+            \end{center}
+        \end{minipage}
+        \begin{minipage}{0.49\textwidth}
+            \begin{center}
+                \includegraphics{scree-elbow-left}
+            \end{center}
+        \end{minipage}
+        \caption{
+            \captiontitle{Scree Plots and Loss Functions}
+            We generate a matrix as $\mX = \sqrt{n} \mU \mD \mV^\trans + \mE$ 
+            and set $\mhX(k)$ equal to the SVD of $\mX$ truncated to $k$ 
+            terms.  The left and right columns show different choices of
+            $\mD$, described in the text.  The top row contains scree plots, 
+            where the square of the $k$th singular value of $\mX$,
+            $\hat d_k^2$, is plotted against 
+            component number, $k$, with units are chosen so that 
+            $\sum_{k} \had d_k^2 = 1$.  The next two rows show
+            $\| \sqrt{n} \mU \mD \mV^\trans - \mhX(k) \|_\Frob^2$ and
+            $\| \sqrt{n} \mU \mD \mV^\trans - \mhX(k) \|_2^2$, as functions
+            of the rank, $k$ with units chosen so that the minimum value is
+            $1.0$.  Dashed lines show the elbow of the scree plot and the
+            minimizers of the two loss functions.  
+            The elbow of the scree plot gives a reasonable estimate of
+            the loss minimizers in the first column, but not in the second.
+        }\label{F:scree-elbow-right}
+    \end{center}
+\end{figure}
