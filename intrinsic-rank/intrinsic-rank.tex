@@ -1004,7 +1004,7 @@ generate a matrix
 \(
     \mX = \sqrt{n} \, \mU \mD \mV^\trans + \mE \in \reals^{n \times p},
 \)
-with $n = p = 100$, such that elements of $\mE$ are \iid $\Normal( 0, \, 1)$.
+with $n = p = 100$, such that elements of $\mE$ are \iid $\Normal( 0, \, 1)$. 
 In the first column, we set
 \(
     \mD^2 = \diag( 5.0, \, 4.75, \, 4.5, \, \ldots, \, 0.5, \, 0.25 ).
@@ -1012,35 +1012,35 @@ In the first column, we set
 The figure shows the scree plot along with
 \(
     \| \sqrt{n} \, \mU \mD \mV^\trans - \mhX(k) \|^2
-\)
+\) 
 for Frobenius and spectral norms, where $\mhX(k)$ is the SVD of $\mX$
 truncated to $k$ terms. There is substantial ambiguity in determining the
-location of the most pronounced elbow. Despite this subtlety, there is indeed
-an elbow relatively close to $k_\Frob^\ast$ and $k_2^\ast$, the minimizers of
+location of the most pronounced elbow. Despite this subtlety, there is indeed 
+an elbow relatively close to $k_\Frob^\ast$ and $k_2^\ast$, the minimizers of 
 the two loss functions.
 
-We can easily manipulate the simulation to get a scree plot with a more
+We can easily manipulate the simulation to get a scree plot with a more 
 pronounced elbow in the wrong place.  In the second column of Figure~\ref{F:scree-elbow}, we augment the factor strength matrix with three additional large values, so that
 \(
-    \mD^2
-    =
-    \diag(
+    \mD^2 
+    = 
+    \diag( 
         20.0, \, 15.0, \, 10.0, \,
-        5.0, \, 4.75, \, 4.5, \, \ldots, \, 0.5, \, 0.25
+        5.0, \, 4.75, \, 4.5, \, \ldots, \, 0.5, \, 0.25 
     ).
 \)
-With this modification, there is a clear elbow at $k=4$.  However, compared to
-the optimal values, truncating the SVD at $k=4$ gives about a 25\% worse error
-with respect to squared Frobenius loss and about 50\% worse with respect to
+With this modification, there is a clear elbow at $k=4$.  However, compared to 
+the optimal values, truncating the SVD at $k=4$ gives about a 25\% worse error 
+with respect to squared Frobenius loss and about 50\% worse with respect to 
 squared spectral loss.
 
-In general, we cannot make any assurances about how close the elbow is to
-$k_\Frob^\ast$ or $k_2^\ast$.  Through a simulation study,
-Jackson~\cite{jackson1993stopping} provides evidence that if the latent
-factors are strong enough to be easily distinguished from noise, then the
-elbow is a reasonable estimate of the loss minimizers.  However, when there
-are both well-separated factors and factors near the critical strength level
-$\mu_\Frob^\ast$, the second example here illustrates that the elbow might be
+In general, we cannot make any assurances about how close the elbow is to 
+$k_\Frob^\ast$ or $k_2^\ast$.  Through a simulation study, 
+Jackson~\cite{jackson1993stopping} provides evidence that if the latent 
+factors are strong enough to be easily distinguished from noise, then the 
+elbow is a reasonable estimate of the loss minimizers.  However, when there 
+are both well-separated factors and factors near the critical strength level 
+$\mu_\Frob^\ast$, the second example here illustrates that the elbow might be 
 a poor estimate.
 
 \begin{figure}[ht]
@@ -1057,8 +1057,8 @@ a poor estimate.
         \end{minipage}
         \caption{
             \captiontitle{Scree Plots and Loss Functions}
-            We generate a matrix as
-            $\mX = \sqrt{n} \, \mU \mD \mV^\trans + \mE$
+            We generate a matrix as 
+            $\mX = \sqrt{n} \, \mU \mD \mV^\trans + \mE$ 
             and set $\mhX(k)$ equal to the SVD of $\mX$ truncated to $k$ 
             terms.  The left and right columns show different choices of
             $\mD$, described in the text.  The top row contains scree plots, 
@@ -1076,3 +1076,74 @@ a poor estimate.
         }\label{F:scree-elbow}
     \end{center}
 \end{figure}
+
+\clearpage
+
+\section{Extensions}\label{S:intrinsic-rank-extensions}
+
+We have focused specifically on truncating the singular value decomposition
+because that is the case for which the theory has been most developed. We have
+also focused specifically on Frobenius and spectral losses. One could easily
+extend our work to look at the nuclear norm loss (sum of singular values)
+\cite{fazel2002mrm} or Stein's loss \cite{james1961ewq}. Alternatively, it is
+not hard to adapt our analysis to study forms like $\| \mhU \mhD(k)^2
+\mhU^\trans - \mU \mD^2 \mU^\trans \|$. For matrix decompositions beyond the
+SVD, extension of our work is more difficult, mainly because very little
+scholarship has been devoted to their theoretic properties.
+
+We have not examined shrinking the singular values at all, but in some 
+situations this may be beneficial.  For example, the Frobenius norm of the $\mF_i$ matrix from Section~\ref{S:loss-behavior}, which is involved in the Frobenius loss
+\(
+    \| \sqrt{n} \, \mU \mD \mV^\trans - \mhX(k) \|_F^2,
+\)
+converges to
+\[
+    \mu_i - 2 \varphi_i \theta_i \mu_i^{1/2} \bmu_i^{1/2} + \bmu_i
+\]
+whenever $k \geq i$.  Recall that $\bmu_i$ is the almost-sure limit of
+the $\hat d_i^2$, the square of the $i$th singular value of $\frac{1}{\sqrt{n}} \mX$.  If we shrink the $i$th singular value, replacing
+$\hat d_i$ with $f(\hat d_i)$ for continuous $f(\cdot)$, then the penalty for
+including the $i$th term converges to
+\[
+    \mu_i 
+    - 2 \varphi_i \theta_i \mu_i^{1/2} f( \bmu_i^{1/2} ) 
+    + f^2( \bmu_i^{1/2} ).
+\]
+This quantity is minimized when
+\(
+    f( \bmu_i^{1/2}) 
+        = \mu_i^{1/2} \varphi_i \theta_i
+        = \bmu_i^{-1/2} 
+          \left( \mu_i - \frac{\sigma^4}{ \gamma \mu_i } \right).               
+\)
+After some algebra, the optimal $f$ takes the form
+\[
+    f( \hat d_i )
+        =
+        \begin{cases}
+        \left(
+            \hat d_i^2
+            -
+            2
+            \big(
+                1 + \frac{1}{\gamma}
+            \big)
+            \sigma^2
+            +
+            \big(
+                1 - \frac{1}{\gamma}
+            \big)^2
+            \frac{\sigma^4}
+                 {\hat d_i^2}
+        \right)^{1/2}
+            &\text{when $\hat d_i 
+                         > 
+                         \sigma 
+                         \left(
+                            1 + \frac{1}{\sqrt{\gamma}}
+                         \right)$,} \\
+        0 
+            &\text{otherwise.}
+        \end{cases}
+\]
+With this shrinkage, it is always beneficial (in terms of Frobenius norm) to include the $i$th term.
