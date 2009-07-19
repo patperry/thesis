@@ -27,7 +27,7 @@ plot_scree <- function( d.est, frob2, spec2, elbow=NA ) {
       + geom_vline( aes( xintercept=xint, colour=I("f3") ), linetype="twodash",
                     data=data.frame( xint=spec2.min,
                                      type=factor( c("f1", "f2", "f3") ) ) )
-      + layer( data=data.frame( x=1:np, y=(100 * d.est^2 / sum( d.est^2 ) ), type="f1" ),
+      + layer( data=data.frame( x=1:np, y=(d.est^2 / sum( d.est^2 ) ), type="f1" ),
                geom=c("point") )
       + layer( data=data.frame( x=0:kmax.f, y=frob2, type="f2" ),
                geom="point" )
@@ -35,9 +35,9 @@ plot_scree <- function( d.est, frob2, spec2, elbow=NA ) {
                geom="point" )
       + theme_bw()
       + xlab( "Rank" )
-      + ylab( paste( "Resid. Spec. Sq.          ",
-                     "Resid. Frob. Sq.            ",
-                     "% Variance")
+      + ylab( paste( "      Resid. Spec. Sq.         ",
+                     "Resid. Frob. Sq.      ",
+                     "Singular Value Sq.")
             )
       + opts( strip.background=theme_blank(),
               strip.text.y=theme_blank(),
