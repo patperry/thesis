@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>currentDocument</key>
+	<string>cv-unsupervised/cv-unsupervised.tex</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -39,7 +41,56 @@
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
+		<key>cv-unsupervised/cv-unsupervised.tex</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>44</integer>
+				<key>line</key>
+				<integer>41</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>31</integer>
+		</dict>
+		<key>intrinsic-rank/intrinsic-rank.tex</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>24</integer>
+				<key>line</key>
+				<integer>2</integer>
+			</dict>
+			<key>columnSelection</key>
+			<false/>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>2</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>24</integer>
+				<key>line</key>
+				<integer>2</integer>
+			</dict>
+		</dict>
 	</dict>
+	<key>openDocuments</key>
+	<array>
+		<string>cv-unsupervised/cv-unsupervised.tex</string>
+		<string>intrinsic-rank/intrinsic-rank.tex</string>
+	</array>
 	<key>shellVariables</key>
 	<array>
 		<dict>
@@ -54,6 +105,6 @@
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{340, 6}, {629, 754}}</string>
+	<string>{{342, 14}, {629, 754}}</string>
 </dict>
 </plist>
