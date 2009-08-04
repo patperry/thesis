@@ -121,6 +121,88 @@ prediction. The second type of hold-out is ``blocked''. This type, due to
 Gabriel, randomly partitions the columns of $\mX$ into ``predictor'' and
 ``response'' sets and then performs the SL version of cross-validation.
 
+\section{Assumptions, and notation}
+
+We will generally assume we have data $\mX \in \reals^{n \times p}$
+generated according to the latent factor model
+\[
+    \mX = \sqrt{n} \, \mU \mD \mV^\trans + \mE.
+\]
+Here, $\mU \in \reals^{n \times k_0}$, $\mV \in \reals^{n \times k_0}$, and
+$\mD = \diag( d_1, d_2, \ldots, d_{k_0} )$, with $\mU^\trans \mU = \mI_{k_0}$
+$\mV^\trans \mV = \mI_{k_0}$, and $d_1 \geq d_2 \geq \cdots \geq d_{k_0} > 0$. We call $\sqrt{n} \, \mU \mD \mV^\trans$ the
+signal part and $\mE$ the noise part. In the spirit of data-driven analysis,
+we avoid putting distributional assumptions on $\mU$, $\mD$, $\mV$, and $\mE$.
+This makes the terms unidentifiable.  While this indeterminacy can (and
+should!) bother some readers, for now we will plod on.
+
+We denote the SVD of $\mX$ by
+\[
+    \mX = \sqrt{n} \, \mhU \mhD \mhV^\trans,
+\]
+with $\mhU \in \reals^{n \times n \wedge p}$, $\mhV \in \reals^{p \times n
+\wedge p}$, and $\mhD = \diag( \hd_1, \hd_2, \ldots, \hd_{n \wedge p})$. Here,
+$\mhU^\trans \mhU = \mhV^\trans \mhV = \mI_{n \wedge p}$ and the singular
+values are ordered
+\(
+    \hd_1 \geq \hd_2 \geq \cdots \geq \hd_{n \wedge p} \geq 0.
+\)
+We set $\mhD(k) = \diag( \hd_1, \hd_2, \ldots, \hd_k, 0, \ldots, 0) \in \reals^{n \wedge p \times n \wedge p}$ so that
+\[
+    \mhX(k) = \sqrt{n} \, \mhU \mhD(k) \mhV^\trans
+\]
+is the SVD of $\mX$ truncated to $k$ terms.  Similarly, we define $\mhU(k) \in
+\reals^{n \times k}$ and $\mhV(k) \in \reals^{p \times k}$ to be the first $k$
+rows of $\mhU$ and $\mhV$, respectively.
+
+We focus on estimating the squared Frobenius prediction error
+\[
+    \PE(k) = \| \sqrt{n} \, \mU \mD \mV^\trans - \mhX(k) \|_\Frob^2
+\]
+or its minimum,
+\[
+    k^\ast_{\PE} = \argmin_k \PE(k).
+\]
+Here, $\| \cdot \|_\Frob^2$ is the sum of squares of the elements.
+
+Another kind of error relevant to cross-validation is \emph{model error}.  We
+let $\mE'$ be a matrix independent of $\mE$ but having the same distribution conditionally on $\mU$, $\mD$, and $\mV^\trans$.  We set
+\[
+    \mX' = \sqrt{n} \, \mU \mD \mV^\trans + \mE'
+\]
+and define the model error
+\[
+    \ME(k) = \E \| \mX' - \mhX(k) \|_\Frob^2.
+\]
+Likewise, we set
+\[
+    k^\ast_{\ME} = \argmin_k \ME(k).
+\]
+If $\mE$ is independent of $\mU$, $\mD$, and $\mV$, then
+\begin{align*}
+    \ME(k)
+        &= \E\| \sqrt{n} \, \mU \mD \mV^\trans - \mhX(k) + \mE' \|_\Frob^2 \\
+    \begin{split}
+        &= \E\| \sqrt{n} \, \mU \mD \mV^\trans - \mhX(k) \| \\
+           &\qquad\qquad+
+           2 \,
+           \E \left[
+               \tr \left(
+                   \big( \sqrt{n} \, \mU \mD \mV^\trans - \mhX(k) \big)^\trans
+                   \mE'
+               \right)
+           \right]
+           +
+           \E\| \mE' \|_\Frob^2
+    \end{split} \\
+        &= \E\big[\PE(k)\big] + \E \| \mE \|_\Frob^2.
+\end{align*}
+The model error is thus equal to the sum of the expected prediction error
+and an irreducible error error term.
+
+
+\section{Hold-out strategies}
+
 
 \clearpage
 
