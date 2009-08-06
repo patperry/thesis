@@ -58,7 +58,7 @@ Most often, cross-validation is applied in supervised contexts. In supervised
 learning (SL) the data consists of a sequence of $(\vx, \vy)$
 predictor-response pairs. Broadly construed, the goal of supervised learning
 is to describe the conditional distribution of $\vy$ given $\vx$. This is
-usually for prediction or classification.  In the supervised context, for a
+usually for prediction or classification.  In the supervised context, for a 
 particular CV replicate there are four parts of data:
 \[
     \left(
@@ -74,14 +74,14 @@ $\mX_\test$ to predict $\mY_\test$. So, the held-in data looks like
     \left(
     \begin{matrix}
         \mX_\train & \mY_\train \\
-        \mX_\test  & \cdot
+        \mX_\test  & \missing
     \end{matrix}
     \right).
 \]
 We extrapolate from $\mX_\test$ to predict $\mY_\test$.
 
 It is not immediately obvious how to apply cross-validation to unsupervised
-learning.  In unsupervised learning there is no $\mY$; we instead have the
+learning.  In unsupervised learning there is no $\mY$; we instead have the 
 two-way partition
 \[
     \left(
@@ -101,30 +101,30 @@ problem any better, for then the division becomes:
     \end{matrix}
     \right),
 \]
-with hold-in
+with holdin
 \[
     \left(
     \begin{matrix}
         \mY_\train \\
-        \cdot
+        \missing
     \end{matrix}
     \right).
 \]
-There is nothing to extrapolate from to predict $\mY_\test$.  For
+There is nothing to extrapolate from to predict $\mY_\test$.  For 
 cross-validation to work in unsupervised learning, we need to consider
-more general hold-outs.
+more general holdouts.
 
-We look at two different types of hold-outs in this chapter. The first, due to
+We look at two different types of holdouts in this chapter. The first, due to
 Wold, is ``speckled'': we leave out random elements of the matrix $\mX$ and
 use a missing data algorithm like expectation-maximization (EM) for
-prediction. The second type of hold-out is ``blocked''. This type, due to
+prediction. The second type of holdout is ``blocked''. This type, due to
 Gabriel, randomly partitions the columns of $\mX$ into ``predictor'' and
 ``response'' sets and then performs the SL version of cross-validation.
 
 \section{Assumptions, and notation}
 
 We will generally assume we have data $\mX \in \reals^{n \times p}$
-generated according to the latent factor model
+generated according to the latent factor model 
 \[
     \mX = \sqrt{n} \, \mU \mD \mV^\trans + \mE.
 \]
@@ -133,12 +133,12 @@ $\mD = \diag( d_1, d_2, \ldots, d_{k_0} )$, with $\mU^\trans \mU = \mI_{k_0}$
 $\mV^\trans \mV = \mI_{k_0}$, and $d_1 \geq d_2 \geq \cdots \geq d_{k_0} > 0$. We call $\sqrt{n} \, \mU \mD \mV^\trans$ the
 signal part and $\mE$ the noise part. In the spirit of data-driven analysis,
 we avoid putting distributional assumptions on $\mU$, $\mD$, $\mV$, and $\mE$.
-This makes the terms unidentifiable.  While this indeterminacy can (and
+This makes the terms unidentifiable.  While this indeterminacy can (and 
 should!) bother some readers, for now we will plod on.
 
 We denote the SVD of $\mX$ by
 \[
-    \mX = \sqrt{n} \, \mhU \mhD \mhV^\trans,
+    \mX = \sqrt{n} \, \mhU \mhD \mhV^\trans, 
 \]
 with $\mhU \in \reals^{n \times n \wedge p}$, $\mhV \in \reals^{p \times n
 \wedge p}$, and $\mhD = \diag( \hd_1, \hd_2, \ldots, \hd_{n \wedge p})$. Here,
@@ -151,8 +151,8 @@ We set $\mhD(k) = \diag( \hd_1, \hd_2, \ldots, \hd_k, 0, \ldots, 0) \in \reals^{
 \[
     \mhX(k) = \sqrt{n} \, \mhU \mhD(k) \mhV^\trans
 \]
-is the SVD of $\mX$ truncated to $k$ terms.  Similarly, we define $\mhU(k) \in
-\reals^{n \times k}$ and $\mhV(k) \in \reals^{p \times k}$ to be the first $k$
+is the SVD of $\mX$ truncated to $k$ terms.  Similarly, we define $\mhU(k) \in 
+\reals^{n \times k}$ and $\mhV(k) \in \reals^{p \times k}$ to be the first $k$ 
 rows of $\mhU$ and $\mhV$, respectively.
 
 We focus on estimating the squared Frobenius prediction error
@@ -162,11 +162,11 @@ We focus on estimating the squared Frobenius prediction error
 or its minimum,
 \[
     k^\ast_{\PE} = \argmin_k \PE(k).
-\]
+\]  
 Here, $\| \cdot \|_\Frob^2$ is the sum of squares of the elements.
 
 Another kind of error relevant to cross-validation is \emph{model error}.  We
-let $\mE'$ be a matrix independent of $\mE$ but having the same distribution conditionally on $\mU$, $\mD$, and $\mV^\trans$.  We set
+let $\mE'$ be a matrix independent of $\mE$ but having the same distribution conditionally on $\mU$, $\mD$, and $\mV^\trans$.  We set 
 \[
     \mX' = \sqrt{n} \, \mU \mD \mV^\trans + \mE'
 \]
@@ -180,20 +180,20 @@ Likewise, we set
 \]
 If $\mE$ is independent of $\mU$, $\mD$, and $\mV$, then
 \begin{align*}
-    \ME(k)
+    \ME(k) 
         &= \E\| \sqrt{n} \, \mU \mD \mV^\trans - \mhX(k) + \mE' \|_\Frob^2 \\
     \begin{split}
         &= \E\| \sqrt{n} \, \mU \mD \mV^\trans - \mhX(k) \| \\
-           &\qquad\qquad+
-           2 \,
+           &\qquad\qquad+ 
+           2 \, 
            \E \left[
-               \tr \left(
-                   \big( \sqrt{n} \, \mU \mD \mV^\trans - \mhX(k) \big)^\trans
+               \tr \left( 
+                   \big( \sqrt{n} \, \mU \mD \mV^\trans - \mhX(k) \big)^\trans 
                    \mE'
                \right)
            \right]
            +
-           \E\| \mE' \|_\Frob^2
+           \E\| \mE' \|_\Frob^2 
     \end{split} \\
         &= \E\big[\PE(k)\big] + \E \| \mE \|_\Frob^2.
 \end{align*}
@@ -202,6 +202,301 @@ and an irreducible error error term.
 
 
 \section{Hold-out strategies}
+
+In this section we describe the various holdout strategies for getting a cross-validation estimate of $\PE(k)$ or $\ME(k)$.
+
+\subsection{Naive holdouts}
+
+First we describe why the ordinary holdout strategy won't work for estimating
+prediction error.  Suppose we leave out a subset of the rows of $\mX$.  After
+permutation, the rows of $\mX$ are partitioned as
+\(
+    \left(
+    \begin{matrix}
+        \mX_1 \\
+        \mX_2
+    \end{matrix}
+    \right),
+\)
+where $\mX_1 \in \reals^{n_1 \times p}$ and $\mX_2 \in \reals^{n_2 \times p}$,
+and $n_1 + n_2 = n$.  The only plausible prediction of $\mX_2$ based on truncating the SVD of $\mX_1$ is the following:
+\begin{enumerate}
+    \item Let $\mX_1 = \sqrt{n} \, \mhU_1 \mhD_1 \mhV_1^\trans$ be the SVD of
+        $\mX_1$, with 
+        \(
+            \mhD_1 
+                = 
+                \diag( 
+                    \hd_1^{(1)}, 
+                    \hd_2^{(1)}, 
+                    \ldots, 
+                    \hd_{n_1 \wedge p}^{(1)}
+                ).
+        \)
+    \item Let 
+        \(
+            \mhD_1(k)
+                =
+                \diag(
+                    \hd_1^{(1)}\!\!\!, \,
+                    \hd_2^{(1)}\!\!\!, 
+                    \ldots, 
+                    \hd_k^{(1)}\!\!\!, \,
+                    0,
+                    \ldots,
+                    0
+                )
+        \)
+        so that
+        $\mhX_1(k) \equiv \sqrt{n} \, \mhU_1 \mhD_1(k) \mhV_1^\trans$ is
+        the SVD of $\mX_1$ truncated to $k$ terms.  Similarly, denote
+        by $\mhV_1(k) \in \reals^{p \times k}$ the first $k$ columns of
+        $\mhV_1$.
+    \item Let $(^+)$ denote pseudo-inverse and predict the held out rows as
+        \(
+            \mhX_2(k) 
+                = 
+                    \mX_2 \,
+                    \mhX_1(k)^\trans
+                    \big(
+                        \mhX_1(k) \mhX_1(k)^\trans
+                    \big)^{+}
+                    \mhX_1(k)
+                =
+                    \mX_2 \, \mhV_1(k) \mhV_1(k)^\trans.
+        \)
+\end{enumerate}
+The problem with this procedure is that $\| \mX_2 - \mhX_2(k) \|_\Frob^2$ 
+decreases with $k$ regardless of the true model for $\mX$.  So, it cannot
+possibly give us a good estimate of the error from truncating the full
+SVD of $\mX$.
+
+A similar situation arrises if we leave out only a subset of the columns of
+$\mX$.  To get a reasonable cross-validation estimate, it is therefore 
+necessary to consider more-general holdout sets.
+
+\subsection{Wold holdouts}
+
+A Wold-style speckled leave-out is perhaps the most obvious attempt at a a
+more general holdout. We leave out a subset of the elements of the $\mX$, then
+use the left-in elements to predict the rest.
+
+First we need to introduce some more notation. Let $\mathcal{I}$ denote the
+set of indices of the elements of $\mX$, so that $\mathcal{I} = \{ (i,j) : 1
+\leq i \leq n, 1 \leq j \leq p \}$. For a subset $I \subset \mathcal{I}$, let
+$\bar I$ denote its complement $\mathcal{I} \setminus I$. We use the symbol
+$\missing$ to denote a missing value, and let 
+\(
+    \reals_\missing = \reals \cup \{ \missing \}.
+\)
+For $I \subset \mathcal{I}$, we define the matrix $\mX_I \in
+\reals_\missing^{n \times p}$ with elements
+\[
+    X_{I,ij}
+    =
+    \begin{cases}
+        X_{ij}     &\text{if $(i,j) \in I$,} \\
+        \missing   &\text{otherwise.}
+    \end{cases}
+\]
+Finally, for $\mA \in \reals_\missing^{n \times p}$, we define
+\[
+    \| \mA \|_{\Frob,I}^2
+        =
+        \sum_{(i,j) \in I} A_{ij}^2.
+\]
+This notation allows us to describe matrices with missing entries.
+
+
+Taking an SVD of a matrix with missing entries is a difficult problem.  First of all, the problem is not very well defined.  If $\mA$ is a matrix with missing entries, there are potentially many different ways of factoring $\mA$ as an SVD-like product.  Often, one attempts to force uniqueness by finding the complete matrix $\mA' \in \reals^{n,p}$ of minimum rank such that $A'_{ij} = A_{ij}$ for all non-missing elements of $\mA$.  Even then, $\mA'$ may not be unique.  Take
+\[
+    \mA
+    =
+    \left(
+    \begin{matrix}
+        1        & \missing \\
+        \missing & \missing
+    \end{matrix}
+    \right).
+\]
+Then
+\[
+    \left(
+    \begin{matrix}
+        1 & 0 \\
+        0 & 0
+    \end{matrix}
+    \right),
+    \quad
+    \left(
+    \begin{matrix}
+        1 & 1 \\
+        0 & 0
+    \end{matrix}
+    \right),
+    \quad
+    \left(
+    \begin{matrix}
+        1 & 0 \\
+        1 & 0
+    \end{matrix}
+    \right),
+    \quad
+    \text{and}
+    \quad
+    \left(
+    \begin{matrix}
+        1 & 1 \\
+        1 & 1
+    \end{matrix}
+    \right)
+\]
+are all rank-$1$ matrices that agree with $\mA$ on its non-missing entries.  We might discriminate between these by picking the matrix with minimum Frobenius norm.  In this case, the matrix
+\[
+    \left(
+    \begin{matrix}
+        1 & \missing \\
+        \missing & 1
+    \end{matrix}
+    \right)
+\]
+presents an interesting problem.  We can either complete it as
+\[
+    \left(
+    \begin{matrix}
+        1 & 1 \\
+        1 & 1
+    \end{matrix}
+    \right)
+    \quad
+    \text{or}
+    \quad
+    \left(
+    \begin{matrix}
+        1 & 0 \\
+        0 & 1
+    \end{matrix}
+    \right).
+\]
+The first option has rank $1$ and Frobenius norm $2$.  The second option
+has higher rank, $2$, but lower Frobenius norm, $\sqrt{2}$.  Which criterion 
+is more important?  It it not clear what the ``right'' SVD of $\mA$ is.
+
+We can ameliorate the problem by considering a sequence of SVDs rather than a 
+single one.  For each $k = 0, 1, 2, \ldots$, define $\mA_k'$ to the the 
+rank-$k$ matrix of minimum Frobenius norm that agrees with $\mA$ on its 
+non-missing elements.  If no such matrix exists, let $I \subset \mathcal{I}$ 
+be indices of the non-missing elements of $\mA$ and define the candidate
+sets
+\begin{align*}
+    \mathcal{A}_k 
+        &= \{ \mA_k \in \reals^{n \times p} : \rank(\mA_k) = k \} \\
+    \mathcal{C}_k
+        &= \{ \mA_k \in  \mathcal{A}_k 
+                : \| \mA - \mA_k \|_{\Frob,I}
+                  =
+                  \min_{\mB_k \in \mathcal{A}_k} 
+                      \| \mA - \mB_k \|_{\Frob,I} \}.
+\end{align*}
+Lastly, put
+\[
+    \mA'_k
+        = \argmin_{\mA_k \in \mathcal{C}_k}
+            \| \mA_k \|_{\Frob,I}.
+\]
+We then define the rank-$k$ SVD of $\mA$ to be the equal to the SVD of 
+$\mA'_k$.  
+
+There are still some problems with these SVDs. First of all, in general there
+may be no relationship between $\mA_k'$ and $\mA_{k+1}'$; the two matrices may
+be completely different and have completely different SVDs. We lose the
+nesting property of ordinary SVDs, where the rank-$k$ SVD is contained in the
+rank $k+1$ SVD. Secondly, although it seems plausible, we do not have any
+guarantees that $\mA_k'$ is unique. Situations may arise where two different
+rank-$k$ matrices have the same norms and the same residual norms on the
+non-missing elements of $\mA$. Finally, finding $\mA'_k$ is a non-convex
+problem. The function $\| \mA - \mA_k \|_{\Frob,I}$ can have more than one
+local maximum.  We need to be aware of these deficiencies.
+
+Rather than get too deep into the $\reals_\ast$-SVD rabbit hole, we choose
+instead to live with an approximation. We acknowledge that computing the best
+rank-$k$ approximation as defined above is computationally infeasible for
+large $n$ and $p$. Instead of proving theorems about the global optimum, we
+focus on an algorithm for computing a local solution.
+
+We use an EM-algorithm to estimate $\mA'_k$. The inputs to the algorithm are
+$k$, a non-negative integer rank, and $\mA \in \reals_\missing^{n \times p}$,
+a matrix with missing values. The output is $\mA_k'$, a rank-$k$ approximation
+of $\mA$. The algorithm proceeds by iteratively estimating the missing values
+of $\mA$ by the values from the first $k$ terms of the SVD of the completed
+matrix. We give detailed pseudocode for the procedure as
+Algorithm~\ref{A:em-svd}. This is essentially the same algorithm as the
+SVDimpute algroithm given in Troyanksaya et al.~\cite{troyanskaya2001missing},
+except that we use a different convergence criterion. SVDimpute stops when
+successive estimates of the missing values of $\mA$ differ by less than ``the
+empirically determined threshold of $0.01$.'' We instead stop when relative
+difference of the residual sum of squares (RSS) between the non-missing
+entries and the rank-$k$ SVD is small (usually $1.0 \times 10^{-4}$ or less).
+Our reason for using a different convergence rule is that the analysis of the
+EM algorithm in Dempster et al.~\cite{dempster1977maximum} shows that the RSS
+decreases with each iteration, but makes no assurances about the missing
+values converging. Regardless of which convergence criterion is used, the
+algorithm is very easy to implement.
+
+\begin{algorithm}
+    \caption{\label{A:em-svd}Rank-$k$ SVD approximation with missing values}
+    
+    \begin{enumerate}
+        \item Let $I = \{ (i,j) : A_{ij} \neq \missing \}$.
+        \item For $1 \leq j \leq p$ let $\mu_j$ be the mean of the
+            non-missing values in column $j$ of $\mA$, or $0$ if all of
+            the entries in column $j$ are missing.
+        \item Define $\mA^{(0)} \in \reals^{n \times p}$ by
+            \[
+                A^{(0)}_{ij}
+                    =
+                    \begin{cases}
+                        A_{ij} &\text{if $(i,j) \in I$,} \\
+                        \mu_j  &\text{otherwise.}
+                    \end{cases}
+            \]
+        \item Initialize the iteration count $N \gets 0$.
+        \item (\textsc{M-Step}) \label{em-svd-m-step} Let 
+            \[
+                \mA^{(N)} = 
+                    \sum_{i=1}^{n \wedge p}
+                        d^{(N)}_i \vu^{(N)}_i \vv^{(N)\trans}_i
+            \]
+            be the SVD of $\mA^{(N)}$ and let $\mA'^{(N)}_k$ be the SVD 
+            truncated to $k$ terms, so that
+            \[
+                \mA'^{(N)}_k 
+                    = 
+                        \sum_{i=1}^{k}
+                            d^{(N)}_i \vu^{(N)}_i \vv^{(N)\trans}_i.
+            \]
+        \item (\textsc{E-Step}) Define $\mA^{(N+1)} \in \reals^{n \times p}$ 
+            as
+            \[
+                A^{(N+1)}_{ij}
+                    =
+                    \begin{cases}
+                        A_{ij}           &\text{if $(i,j) \in I$,} \\
+                        A'^{(N)}_{k,ij}  &\text{otherwise.}
+                    \end{cases}
+            \]
+        \item Set 
+            \[
+                \text{RSS}^{(N)} = \| \mA - \mA'^{(N)}_k \|^2_{\Frob,I}.
+            \]
+            If $|\text{RSS}^{(N)} - \text{RSS}^{(N-1)}|$ is small, declare 
+            convergence and output $\mA'^{(N)}_k$ as $\mA'_k$.  
+            Otherwise, increment $N \gets N + 1$ and go to
+            Step~\ref{em-svd-m-step}.
+    \end{enumerate}
+\end{algorithm}
+
+\subsection{Gabriel holdouts}
 
 
 \clearpage
