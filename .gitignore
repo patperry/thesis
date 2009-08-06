@@ -10,3 +10,4 @@ cv-unsupervised/plots/neurons.pdf
 *.lof
 *.lot
 *.toc
+*.tmproj
