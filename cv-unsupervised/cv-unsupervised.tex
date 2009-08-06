@@ -121,7 +121,7 @@ prediction. The second type of holdout is ``blocked''. This type, due to
 Gabriel, randomly partitions the columns of $\mX$ into ``predictor'' and
 ``response'' sets and then performs the SL version of cross-validation.
 
-\section{Assumptions, and notation}
+\section{Assumptions, and notation}\label{S:ucv-assumptions-notation}
 
 We will generally assume we have data $\mX \in \reals^{n \times p}$
 generated according to the latent factor model 
@@ -201,9 +201,18 @@ The model error is thus equal to the sum of the expected prediction error
 and an irreducible error error term.
 
 
-\section{Hold-out strategies}
+\section{Cross validation strategies}
 
-In this section we describe the various holdout strategies for getting a cross-validation estimate of $\PE(k)$ or $\ME(k)$.
+In this section we describe the various holdout strategies for getting a
+cross-validation estimate of $\PE(k)$ or $\ME(k)$. For performing $K$-fold
+cross-validation on the matrix $\mX$, we partition its elements into $K$
+holdout sets. For each of $K$ replicates and for each value of $k$, we leave
+out one of the holdout sets, fit a $k$-term SVD to the left-in set, and
+evaluate its performance on the left-out set. We thus need to describe the
+holdout set, how to fit an SVD to the left-in data, and how to make a
+prediction of the left-out data. After a brief discussion of why the usual
+(naive) way of doing holdouts won't work, we survey both speckled holdouts
+(Wold-style), as well as block holdouts (Gabriel-style).
 
 \subsection{Naive holdouts}
 
@@ -299,6 +308,15 @@ For $I \subset \mathcal{I}$, we define the matrix $\mX_I \in
         \missing   &\text{otherwise.}
     \end{cases}
 \]
+Similarly $\mX_{\bar I}$, has elements
+\[
+    X_{\bar I,ij}
+    =
+    \begin{cases}
+        X_{ij}     &\text{if $(i,j) \notin I$,} \\
+        \missing   &\text{otherwise.}
+    \end{cases}
+\]
 Finally, for $\mA \in \reals_\missing^{n \times p}$, we define
 \[
     \| \mA \|_{\Frob,I}^2
@@ -307,6 +325,207 @@ Finally, for $\mA \in \reals_\missing^{n \times p}$, we define
 \]
 This notation allows us to describe matrices with missing entries.
 
+A Wold-style speckled holdout is a random subset $I \subset \mathcal{I}$.  The 
+held-in data is the matrix $\mX_{\bar I}$ and the held-out data is the matrix 
+$\mX_I$.  We use a missing value SVD algorithm to fit a $k$-term SVD to 
+$\mX_{\bar I}$.  This gives us an approximation $\mU_k \mD_k \mV_k^\trans$, 
+where $\mU_k \in \reals^{n \times k}$ and $\mV_k \in \reals^{p \times k}$ have 
+orthonormal columns and $\mD \in \reals^{k \times k}$ is diagonal.  We 
+evaluate the SVD on the held-out set by 
+\(
+    \| \mU_k \mD_k \mV_k^\trans - \mX_I \|_{\Frob,I}^2.
+\)
+Aside from the algorithm for getting $\mU_k \mD_k \mV_k^\trans$ from 
+$\mX_{\bar I}$, this is a full description of the CV replicate.
+
+When Wold introduced this form of holdout in 1978~\cite{wold1978cross}, he
+suggested using an algorithm called nonlinear iterative partial least squares
+(NIPALS) to fit an SVD to the held-in data. This algorithm, attributed to
+Fisher~\cite{fisher1923scv}, Wold and Lyttkens~\cite{wold1969nonlinear} never
+seems to have gained much prominence. We suggest instead using an
+expectation-maximization (EM) as is consistent with current mainstream
+practice in Statistics. Either way, there are some subtle issues in taking the
+SVD of a matrix with missing values. We explore these issues further in
+Section~\ref{S:missing-values-svds}, and present a complete algorithm for
+estimating the factors $\mU_k \mD_k \mV_k^\trans$.
+
+\subsection{Gabriel holdouts}
+
+A Gabriel-style holdout works by transforming the unsupervised learning
+problem into a supervised one. We take a subset of the columns of $\mX$ and
+denote them as the \emph{response} columns; the rest are denoted
+\emph{predictor} columns. Then we take a subset of the rows and consider them
+as \emph{test} rows; the rest are \emph{train} rows. This partitions the
+elements of $\mX$ into four blocks. With permutation matrices $\mP$ and $\mQ$,
+we can write
+\[
+    \mP^\trans \mX \mQ
+        =
+        \left(
+        \begin{matrix}
+           \mX_{11} & \mX_{12} \\
+           \mX_{21} & \mX_{22}
+        \end{matrix}
+        \right).
+\]
+Here, $\mX_{11}$ consists of the train-predictor block, $\mX_{12}$ is the train-response block, $\mX_{21}$ is the test-predictor block, and $\mX_{22}$ is the test-response block.  It is to think of the blocks as
+\[
+    \left(
+    \begin{matrix}
+       \mX_{11} & \mX_{12} \\
+       \mX_{21} & \mX_{22}
+    \end{matrix}
+    \right)
+        =
+        \left(
+        \begin{matrix}
+           \mX_\train & \mY_\train \\
+           \mX_\test  & \mY_\test 
+        \end{matrix}
+        \right).
+\]
+A Gabriel-style replicate has holdin
+\[
+\left(
+    \begin{matrix}
+       \mX_{11} & \mX_{12} \\
+       \mX_{21} & \missing
+    \end{matrix}
+    \right)
+\]
+and holdout $\mX_{22}$.
+
+To fit a model to the holdin set, we take the SVD of $\mX_{11}$ and fit a 
+regression function from the predictor columns to the response columns.  
+Normally, the regression is ordinary least squares regression from the 
+principal component loadings to the response columns.  Then, to evaluate the 
+function on the holdout set, we apply the estimated regression function to 
+$\mX_{21}$ to get a prediction $\mhX_{22}$.
+
+In precise terms, suppose that there are $p_1$ predictor columns, $p_2$ response columns, $n_1$ train rows, and $n_2$ test rows.  Then $\mX_{11} \in \reals^{n_1 \times p_1}$ and $\mX_{22} \in \reals^{n_2 \times p_2}$ with
+$p_1 + p_2 = p$ and $n_1 + n_2 = n$.  First we fit an SVD to the train-predictor block 
+\[
+    \mX_{11} = \sqrt{n} \, \mhU_1 \mhD_1 \mhV_1^\trans.  
+\]    
+Then, we truncate the SVD to $k$ terms as 
+$\sqrt{n} \, \mhU_1(k) \mhD_1(k) \mhV_1^\trans(k)$ in the same way as is discussed 
+in Section~\ref{S:ucv-assumptions-notation}.  This defines a projection 
+$\mhV_1(k)$ and principal component scores 
+\[
+    \mhZ_1(k) = \mX_{11} \mhV_1(k) = \sqrt{n} \, \mhU_1(k) \mhD_1(k).
+\]
+Similarly, we can get the principal components scores for the test-predictor block as
+\[
+    \mhZ_2(k) = \mX_{21} \mhV_1(k).
+\]
+Next, we model the response columns as linear functions of the principal component scores.  We fit the model
+\(
+    \mX_{12} = \mhZ_1(k) \mB
+\)
+with
+\[
+    \mhB 
+        =
+        \big( \mhZ_1(k)^\trans \mhZ_1(k) \big)^{+} \mhZ_1(k)^\trans \mX_{12}
+        =
+        \frac{1}{\sqrt{n}} \,
+        \mhD_1(k)^{+} \, \mhU_1(k)^\trans \mX_{12}.
+\]
+Finally, we apply the model the the test rows to get a prediction for the test-response block
+\[
+    \mhX_{22}
+        =
+        \mhZ_2(k) \mhB
+        =
+        \mX_{21} 
+        \left(
+            \frac{1}{\sqrt{n}} \,
+            \mhV_1(k) \mhD_1(k)^{+} \, \mhU_1(k)^\trans 
+        \right)
+        \mX_{12}.
+\]
+This gives a complete description of the CV replicate.
+
+We can get some intuition for why Gabriel-style replicates work by expressing 
+the latent factor decomposition $\mX = \sqrt{n} \,\mU \mD \mV^\trans + \mE$ in 
+block form.  We let
+\(
+    \mP
+    =
+    \left(
+    \begin{matrix}
+        \mP_1 &
+        \mP_2
+    \end{matrix}
+    \right)
+\)
+and
+\(
+    \mQ
+    =
+    \left(
+    \begin{matrix}
+        \mQ_1 &
+        \mQ_2
+    \end{matrix}
+    \right)
+\)
+be the block-decompositions of the row and column permutations so that
+$\mX_{ij} = \mP_i^\trans \mX \mQ_j$.  We define $\mU_i = \mP_i^\trans \mU$,
+$\mV_j = \mQ_j^\trans \mV$, and $\mE_{ij} = \mP_i^\trans \mE \mQ_j$ so that
+\begin{align*}
+    \mP^\trans \mX \mQ
+        &=
+            \left(
+            \begin{matrix}
+                \mP_1^\trans \\
+                \mP_2^\trans
+            \end{matrix}
+            \right)
+            \left(
+                \sqrt{n} \, \mU \mD \mV^\trans + \mE
+            \right)
+            \left(
+            \begin{matrix}
+                \mQ_1 & \mQ_2
+            \end{matrix}
+            \right) \\
+        &=
+            \sqrt{n}
+            \left(
+            \begin{matrix}
+                \mU_1 \mD \mV_1^\trans
+                    & \mU_1 \mD \mV_2^\trans  \\
+                \mU_2 \mD \mV_1^\trans
+                    & \mU_2 \mD \mV_2^\trans
+            \end{matrix}
+            \right)
+            +
+            \left(
+            \begin{matrix}
+                \mE_{11} & \mE_{12} \\
+                \mE_{21} & \mE_{22}
+            \end{matrix}
+            \right).
+\end{align*}
+Thus, all four blocks have the same low-rank structure.  If the noise is small 
+then $\mX_{22} \approx \sqrt{n} \, \mU_2 \mD \mV_2^\trans$ and
+\[
+    \mhX_{22} 
+        \approx 
+            \sqrt{n} \,
+                \mU_2 \mD 
+                \big( \mV_1^\trans \mhV_1(k) \big) \,
+                \mhD(k)^{+} \,
+                \big( \mhU_1(k)^\trans \mU_1 \big) \,
+                \mD \mV_2^\trans
+\]
+If the noise is exactly zero, $k = k_0$, and $\rank(\mX_{22}) = \rank(\mX)$, 
+then Owen and Perry~\cite{owen2009bi} show that $\mhX_{22} = \mX_{22}$.  For 
+other types of noise, the next chapter proves a more general consistency 
+result.
+
+\section{Missing-value SVDs}\label{S:missing-values-svds}
 
 Taking an SVD of a matrix with missing entries is a difficult problem.  First of all, the problem is not very well defined.  If $\mA$ is a matrix with missing entries, there are potentially many different ways of factoring $\mA$ as an SVD-like product.  Often, one attempts to force uniqueness by finding the complete matrix $\mA' \in \reals^{n,p}$ of minimum rank such that $A'_{ij} = A_{ij}$ for all non-missing elements of $\mA$.  Even then, $\mA'$ may not be unique.  Take
 \[
@@ -496,7 +715,7 @@ algorithm is very easy to implement.
     \end{enumerate}
 \end{algorithm}
 
-\subsection{Gabriel holdouts}
+
 
 
 \clearpage
