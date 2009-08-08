@@ -1,18 +1,23 @@
 
-rank.est.wk <- function( ell, n ) {
-    p   <- length( ell )
-    np  <- min( n, p )
-    
-    a   <- rep( NA, np )
-    mdl <- rep( NA, np )
+source( "rank.est.R" )
 
-    for( k in seq( from=0, to=( np-1 ), by=1 ) ) {
-        a[ k+1 ]   <- mean( ell[ (k+1):p ] )
-        mdl[ k+1 ] <- -( p-k ) * n * ( mean( log( ell[ (k+1):p ] ) ) 
-                                       - log( a[ k+1 ] ) )
-        mdl[ k+1 ] <- mdl[ k+1 ] + 1/2 * k * ( 2*p - k ) * log( n )                             
+# MDL estimator for number of signals proposed by Wax & Kailath in 
+# "Detection of signals by information theoretic criteria", IEEE
+# Transactions on Acoustics, Speech and Signal Processing 33 (2) (1985)
+# 387--392.
+rank.est.eigs.mdl <- function( ell, n, p, maxrank ) {
+    if( length( ell ) < p )
+        ell <- c( ell, rep( 0, p-length( ell ) ) )
+    
+    mdl <- rep( NA, maxrank+1 )
+
+    for( k in seq( from=0, to=maxrank, by=1 ) ) {
+        mdl[ k+1 ] <- ( -( p-k ) * n * ( mean( log( ell[ (k+1):p ] ) ) 
+                                         - log( mean( ell[ (k+1):p ] ) ) )
+                        + 1/2 * k * ( 2*p - k ) * log( n ) )                           
     }
     
     rank <- which.min( mdl ) - 1
     rank
 }    
+rank.est.mdl <- rank.est( rank.est.eigs.mdl )
