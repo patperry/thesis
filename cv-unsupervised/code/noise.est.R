@@ -53,7 +53,7 @@ noise.est <- function( noise.est.eigs ) {
     }
 }
 
-noise.est.naive.eigs <- function( ell, k, n, p ) {
+noise.est.eigs.naive <- function( ell, k, n, p ) {
     if( k == 0 ) {
         sigma2 <- mean( ell )
     } else {
@@ -61,15 +61,15 @@ noise.est.naive.eigs <- function( ell, k, n, p ) {
     }
     sigma2
 }
-noise.est.naive <- noise.est( noise.est.naive.eigs )
+noise.est.naive <- noise.est( noise.est.eigs.naive )
 
 # N.M. Faber, L.M.C. Buydens, and G. Kateman. "Aspects of pseudorank 
 #    estimation methods based on the eigenvalues of principal component 
 #    analysis of random matrices." Chemometrics and Intelligent Laboratory 
 #    Systems, 25:203–226, 1994. 
-noise.est.fbk.eigs <- function( ell, k, n, p ) {
+noise.est.eigs.fbk <- function( ell, k, n, p ) {
     sigma2.0 <- noise.est.naive.eigs( ell, k, n, p )
     sigma2   <- sigma2.0/( 1 - k/n )
     sigma2
 }
-noise.est.fbk <- noise.est( noise.est.fbk.eigs )
+noise.est.fbk <- noise.est( noise.est.eigs.fbk )

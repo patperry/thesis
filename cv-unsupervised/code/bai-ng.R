@@ -9,7 +9,7 @@ info.crit.bn <- function( ell, n, p, maxrank, type=c("1", "2", "3") ) {
         
     v    <- ( sum( ell ) - c( 0, cumsum( ell ) ) )/( n*p )
     c.np <- min( sqrt( n ), sqrt( p ) )
-    k    <- 0:maxrank
+    k    <- 0:length( ell )
     
     
     if( type == "1" ) {
@@ -20,7 +20,7 @@ info.crit.bn <- function( ell, n, p, maxrank, type=c("1", "2", "3") ) {
         ic <- log( v ) + k * ( log( c.np^2 )/( c.np^2 ) )
     }
     
-    ic
+    ic[1:(maxrank+1)]
 }
 
 rank.est.eigs.bic <- function( type ) {

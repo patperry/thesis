@@ -6,14 +6,15 @@ rank.est <- function( rank.est.eigs ) {
                 stop( "'x' cannot be a 'charactor' or 'factor' type." )
             if( !is.na( n ) )
                 warning( "Parameter 'n' is ignored." )
-            if( maxrank < 0 )
-                stop( "'maxrank' must be non-negative.")
             if( !is.na( p ) )
                 warning( "Parameter 'p' is ignored." )
             
             x   <- scale( as.matrix( x ), center, scale )
             n   <- nrow( x )
             p   <- ncol( x )
+
+            if( maxrank < 0 )
+                stop( "'maxrank' must be non-negative.")
 
             d   <- svd( x )$d
             ell <- d^2 / n

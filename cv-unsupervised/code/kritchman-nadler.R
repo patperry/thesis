@@ -31,10 +31,11 @@ noise.est.eigs.kn <- function( ell, k, n, p, maxiter=30, tol=1e-5 ) {
         } else {
             sigma2.0 <- sigma2.new
         }
+
+        if( iter == maxiter )
+            warning( "Did not converge after ", maxiter, " iterations." )
     }
     
-    if( iter == maxiter )
-        warning( "Did not converge after ", maxiter, " iterations." )
         
     sigma2 <- sigma2.0
     sigma2
@@ -50,23 +51,27 @@ rank.est.eigs.kn <- function( ell, n, p, maxrank, beta=1, alpha=0.001,
 
     sigma2.est.arr <- rep( NA, maxrank )
 
+    rank <- 0
     for( k in seq_len( maxrank ) ) {
         par      <- WishartMaxPar( n, p-k, beta )
         mu.np    <- par$centering
         sigma.np <- par$scaling
         
-        sigma2.est.k        <- noise.est.eigs.kn( ell, k, n, p, maxiter, tol )
+        sigma2.est.k <- suppressWarnings(
+                            noise.est.eigs.kn( ell, k, n, p, maxiter, tol ) )
         sigma2.est.arr[ k ] <- sigma2.est.k
         at.least.k.signals  <-  ( n * ell[ k ] 
                                   > 
                                   sigma2.est.k
                                   * ( mu.np + s.Wishart * sigma.np ) )
                                  
-        if( !at.least.k.signals )
+        if( at.least.k.signals ) {
+            rank <- k
+        } else {
             break
+        }
     }
 
-    rank <- k-1
     rank
 }
-rank.est.kn <- noise.est( rank.est.eigs.kn )
+rank.est.kn <- rank.est( rank.est.eigs.kn )
