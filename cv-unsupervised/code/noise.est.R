@@ -68,7 +68,7 @@ noise.est.naive <- noise.est( noise.est.eigs.naive )
 #    analysis of random matrices." Chemometrics and Intelligent Laboratory 
 #    Systems, 25:203–226, 1994. 
 noise.est.eigs.fbk <- function( ell, k, n, p ) {
-    sigma2.0 <- noise.est.naive.eigs( ell, k, n, p )
+    sigma2.0 <- noise.est.eigs.naive( ell, k, n, p )
     sigma2   <- sigma2.0/( 1 - k/n )
     sigma2
 }
