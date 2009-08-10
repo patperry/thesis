@@ -59,7 +59,7 @@ noise <- function( n, p, type=c("white", "heavy", "colored"), ... ) {
         e
     }
     
-    noise.heavy <- function( n, p, var=1, df=5, ... ) {
+    noise.heavy <- function( n, p, var=1, df=3, ... ) {
         if( var <= 0 )
             stop( "var must be positive" )
         if( df <= 2 )
@@ -72,7 +72,7 @@ noise <- function( n, p, type=c("white", "heavy", "colored"), ... ) {
         e
     }
     
-    noise.colored <- function( n, p, var=1, rowdf=5, coldf=5, ... ) {
+    noise.colored <- function( n, p, var=1, rowdf=3, coldf=3, ... ) {
         if( var <= 0 )
             stop( "var must be positive" )
         if( rowdf <= 2 )
@@ -108,10 +108,16 @@ spiked.data <- function( spike, n, p,
                         noise=c("white", "heavy", "colored"),
                     var.noise=1,
                   compute.svd=TRUE,
+                  factor.seed=NA,
+                   noise.seed=NA,
                          ... ) {
     k <- length( spike )
+    if( !is.na( factor.seed ) )
+        set.seed( factor.seed )
     u <- factors( n, k, left, ... )
     v <- factors( p, k, right, ... )
+    if( !is.na( noise.seed ) )
+        set.seed( noise.seed )
     e <- noise( n, p, noise, var=var.noise, ... )
 
     if( k > 0 ) {
