@@ -53,14 +53,14 @@ rank.est.eigs.kn <- function( ell, n, p, maxrank, beta=1, alpha=0.001,
 
     rank <- 0
     for( k in seq_len( maxrank ) ) {
-        par      <- WishartMaxPar( n, p-k, beta )
+        par      <- WishartMaxPar( n, p-k, beta=beta )
         mu.np    <- par$centering
         sigma.np <- par$scaling
         
         sigma2.est.k <- suppressWarnings(
                             noise.est.eigs.kn( ell, k, n, p, maxiter, tol ) )
         sigma2.est.arr[ k ] <- sigma2.est.k
-        at.least.k.signals  <-  ( n * ell[ k ] 
+        at.least.k.signals  <-  ( ell[ k ] 
                                   > 
                                   sigma2.est.k
                                   * ( mu.np + s.Wishart * sigma.np ) )
