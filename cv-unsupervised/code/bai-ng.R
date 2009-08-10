@@ -7,10 +7,9 @@ info.crit.bn <- function( ell, n, p, maxrank, type=c("1", "2", "3") ) {
     if( length( ell ) < maxrank )
         ell <- c( ell, rep( 0, maxrank-length( ell ) ) )
         
-    v    <- ( sum( ell ) - c( 0, cumsum( ell ) ) )/( n*p )
+    v    <- ( sum( ell ) - c( 0, cumsum( ell ) ) )/( p )
     c.np <- min( sqrt( n ), sqrt( p ) )
     k    <- 0:length( ell )
-    
     
     if( type == "1" ) {
         ic <- log( v ) + k * ( (n+p)/(n*p) ) * log( ( n*p )/( n+p ) )
