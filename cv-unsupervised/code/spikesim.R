@@ -6,6 +6,7 @@ source( "rotate.R" )
 source( "bai-ng.R" )
 source( "faber-kowalski.R" )
 source( "kritchman-nadler.R" )
+source( "malinowski.R" )
 source( "perry-wolfe.R" )
 source( "rao-edelman.R" )
 source( "wax-kailath.R" )
@@ -49,8 +50,8 @@ spikesim <- function( spike, n, p,
     bic3 <- rank.est.bic3( x, maxrank=maxrank, center=FALSE )
     
     fk <- rank.est.fk( x, maxrank=maxrank, center=FALSE )
-    
     kn <- rank.est.kn( x, maxrank=maxrank, center=FALSE )
+    mF <- rank.est.mF( x, maxrank=maxrank, center=FALSE )
     
     pw.naive <- rank.est.pw.naive( x, maxrank=maxrank, center=FALSE )
     pw.fbk   <- rank.est.pw.fbk( x, maxrank=maxrank, center=FALSE )
@@ -85,8 +86,8 @@ spikesim <- function( spike, n, p,
                   bic3=bic3,
       
                     fk=fk,
-                    
                     kn=kn,
+                    mF=mF,
                     
               pw.naive=pw.naive, 
                 pw.fbk=pw.fbk, 
@@ -163,8 +164,8 @@ summary.spikesim <- function( object, ... ) {
                   bic3=object$bic3,
       
                     fk=object$fk,
-                    
                     kn=object$kn,
+                    mF=object$mF,
                     
               pw.naive=object$pw.naive, 
                 pw.fbk=object$pw.fbk, 
