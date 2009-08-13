@@ -155,32 +155,31 @@ is the SVD of $\mX$ truncated to $k$ terms.  Similarly, we define $\mhU(k) \in
 \reals^{n \times k}$ and $\mhV(k) \in \reals^{p \times k}$ to be the first $k$ 
 rows of $\mhU$ and $\mhV$, respectively.
 
-We focus on estimating the squared Frobenius prediction error
+We focus on estimating the squared Frobenius model error
 \[
-    \PE(k) = \| \sqrt{n} \, \mU \mD \mV^\trans - \mhX(k) \|_\Frob^2
+    \ME(k) = \| \sqrt{n} \, \mU \mD \mV^\trans - \mhX(k) \|_\Frob^2
 \]
 or its minimum,
 \[
-    k^\ast_{\PE} = \argmin_k \PE(k).
+    k^\ast_{\ME} = \argmin_k \PE(k).
 \]  
 Here, $\| \cdot \|_\Frob^2$ is the sum of squares of the elements.
 
-Another kind of error relevant to cross-validation is \emph{model error}.  We
-let $\mE'$ be a matrix independent of $\mE$ but having the same distribution conditionally on $\mU$, $\mD$, and $\mV^\trans$.  We set 
+Another kind of error relevant to cross-validation is \emph{prediction error}.  We let $\mE'$ be a matrix independent of $\mE$ but having the same distribution conditionally on $\mU$, $\mD$, and $\mV^\trans$.  We set 
 \[
     \mX' = \sqrt{n} \, \mU \mD \mV^\trans + \mE'
 \]
-and define the model error
+and define the prediction error
 \[
-    \ME(k) = \E \| \mX' - \mhX(k) \|_\Frob^2.
+    \PE(k) = \E \| \mX' - \mhX(k) \|_\Frob^2.
 \]
 Likewise, we set
 \[
-    k^\ast_{\ME} = \argmin_k \ME(k).
+    k^\ast_{\PE} = \argmin_k \PE(k).
 \]
 If $\mE$ is independent of $\mU$, $\mD$, and $\mV$, then
 \begin{align*}
-    \ME(k) 
+    \PE(k) 
         &= \E\| \sqrt{n} \, \mU \mD \mV^\trans - \mhX(k) + \mE' \|_\Frob^2 \\
     \begin{split}
         &= \E\| \sqrt{n} \, \mU \mD \mV^\trans - \mhX(k) \| \\
@@ -195,29 +194,32 @@ If $\mE$ is independent of $\mU$, $\mD$, and $\mV$, then
            +
            \E\| \mE' \|_\Frob^2 
     \end{split} \\
-        &= \E\big[\PE(k)\big] + \E \| \mE \|_\Frob^2.
+        &= \E\big[\ME(k)\big] + \E \| \mE \|_\Frob^2.
 \end{align*}
-The model error is thus equal to the sum of the expected prediction error
+The prediction error is thus equal to the sum of the expected model error
 and an irreducible error error term.
 
 
 \section{Cross validation strategies}
 
 In this section we describe the various holdout strategies for getting a
-cross-validation estimate of $\PE(k)$ or $\ME(k)$. For performing $K$-fold
-cross-validation on the matrix $\mX$, we partition its elements into $K$
-holdout sets. For each of $K$ replicates and for each value of $k$, we leave
-out one of the holdout sets, fit a $k$-term SVD to the left-in set, and
-evaluate its performance on the left-out set. We thus need to describe the
-holdout set, how to fit an SVD to the left-in data, and how to make a
-prediction of the left-out data. After a brief discussion of why the usual
-(naive) way of doing holdouts won't work, we survey both speckled holdouts
-(Wold-style), as well as block holdouts (Gabriel-style).
+cross-validation estimate of $\PE(k)$. It is possible to get an estimate of
+$\ME(k)$ from the estimate of $\PE(k)$ by subtracting an estimate of the
+irreducible error. For now, though, we choose to focus just on estimating
+$\PE(k)$.
+
+For performing $K$-fold cross-validation on the matrix $\mX$, we partition its
+elements into $K$ holdout sets. For each of $K$ replicates and for each value
+of $k$, we leave out one of the holdout sets, fit a $k$-term SVD to the
+left-in set, and evaluate its performance on the left-out set. We thus need to
+describe the holdout set, how to fit an SVD to the left-in data, and how to
+make a prediction of the left-out data. After a brief discussion of why the
+usual (naive) way of doing holdouts won't work, we survey both speckled
+holdouts (Wold-style), as well as block holdouts (Gabriel-style).
 
 \subsection{Naive holdouts}
 
-First we describe why the ordinary holdout strategy won't work for estimating
-prediction error.  Suppose we leave out a subset of the rows of $\mX$.  After
+The ordinary holdout strategy will not work for estimating prediction error.  Suppose we leave out a subset of the rows of $\mX$.  After
 permutation, the rows of $\mX$ are partitioned as
 \(
     \left(
@@ -525,9 +527,59 @@ then Owen and Perry~\cite{owen2009bi} show that $\mhX_{22} = \mX_{22}$.  For
 other types of noise, the next chapter proves a more general consistency 
 result.
 
-\subsection{Generalized cross-validation}
+\subsection{Rotated cross-validation}
 
+When the underlying signal $\mU \mD \mV^\trans$ is sparse, it's possible that we will miss it in the training set.  For example, if 
+\(
+    \mU 
+    =
+    \left(
+    \begin{matrix}
+        1 & 0 & 0 & 0
+    \end{matrix}
+    \right)^\trans
+\)
+and
+\(
+    \mV
+    =
+    \left(
+    \begin{matrix}
+        1 & 0 & 0 & 0 & 0
+    \end{matrix}
+    \right)^\trans
+\),
+then
+\[
+    \mU \mD \mV^\trans
+    =
+    \left(
+    \begin{matrix}
+        d_{1} & 0 & 0 & 0 & 0 \\
+        0     & 0 & 0 & 0 & 0 \\
+        0     & 0 & 0 & 0 & 0 \\
+        0     & 0 & 0 & 0 & 0 
+    \end{matrix}
+    \right).
+\]
+Either the test set will observe this factor, or the train set, but not both.  Only the set that contains $\mX_{11}$ will be affected by the factor.
 
+One way to adjust for sparse factors is to randomly rotate the rows and
+columns of $\mX$ before performing the cross-validation. We generate $\mP \in
+\reals^{n \times n}$ and $\mQ \in \reals^{p \times p}$, uniformly random
+orthogonal matrices, by employing Algorithm~\ref{A:random-steifel}. Then, we
+set $\mtX = \mP \mX \mQ^\trans$ and perform ordinary cross-validation on
+$\mtX$. Regardless of the factor structure in $\mX$, the signal part of $\mtX$
+will be uniformly spread across all elements of the matrix. We call this
+procedure \emph{rotated cross-validation}, abbreviated RCV.  
+
+RCV is similar in spirit to the generalized cross-validation (GCV) described
+in Craven \& Wahba~\cite{craven1978smoothing} and Golub et
+al.~\cite{golub1979generalized}. GCV is an orthogonally-invariant way of
+performing leave-one-out cross validation for regression. The difference is
+that GCV rotates to a specific non-random configuration of the data that gives
+equal weight to all observations in the rotated space, while RCV rotates to a 
+random configuration that gives equal weight in expectation.
 
 \section{Missing-value SVDs}\label{S:missing-values-svds}
 
@@ -776,9 +828,9 @@ algorithm is very easy to implement.
         \\
         &\multicolumn{16}{l}{\scriptsize{\textit{White Noise}}} \\
  CV-Gabriel &  &  &  &  &  &  &  &  99 &  1 &  &  &  &  &  &  & \\ 
- GCV-Gabriel &  &  &  &  &  &  &  &  97 &  2 &  1 &  &  &  &  &  & \\ 
+ RCV-Gabriel &  &  &  &  &  &  &  &  97 &  2 &  1 &  &  &  &  &  & \\ 
  CV-Wold &  &  &  &  &  &  &  &  100 &  &  &  &  &  &  &  & \\ 
- GCV-Wold &  &  &  &  &  &  &  &  100 &  &  &  &  &  &  &  & \\ 
+ RCV-Wold &  &  &  &  &  &  &  &  100 &  &  &  &  &  &  &  & \\ 
  AIC &  &  &  &  &  &  &  &  99 &  1 &  &  &  &  &  &  & \\ 
  BIC$_1$ &  &  &  &  &  &  &  &  100 &  &  &  &  &  &  &  & \\ 
  BIC$_2$ &  &  &  &  &  &  &  &  100 &  &  &  &  &  &  &  & \\ 
@@ -789,9 +841,9 @@ algorithm is very easy to implement.
         \\
         &\multicolumn{16}{l}{\scriptsize{\textit{Heavy Noise}}} \\
 CV-Gabriel &  &  &  &  &  &  &  &  61 &  35 &  4 &  &  &  &  &  & \\ 
- GCV-Gabriel &  &  &  &  &  &  &  &  42 &  27 &  12 &  14 &  5 &  &  &  & \\ 
+ RCV-Gabriel &  &  &  &  &  &  &  &  42 &  27 &  12 &  14 &  5 &  &  &  & \\ 
  CV-Wold &  &  &  &  &  &  &  &  99 &  1 &  &  &  &  &  &  & \\ 
- GCV-Wold &  &  &  &  &  &  &  &  68 &  26 &  5 &  1 &  &  &  &  & \\ 
+ RCV-Wold &  &  &  &  &  &  &  &  68 &  26 &  5 &  1 &  &  &  &  & \\ 
  AIC &  &  &  &  &  &  &  &  3 &  20 &  22 &  32 &  18 &  4 &  1 &  & \\ 
  BIC$_1$ &  &  &  &  &  &  &  &  65 &  27 &  7 &  1 &  &  &  &  & \\ 
  BIC$_2$ &  &  &  &  &  &  &  &  70 &  26 &  3 &  1 &  &  &  &  & \\ 
@@ -802,9 +854,9 @@ CV-Gabriel &  &  &  &  &  &  &  &  61 &  35 &  4 &  &  &  &  &  & \\
         \\
         &\multicolumn{16}{l}{\scriptsize{\textit{Colored Noise}}} \\
 CV-Gabriel &  &  &  &  &  &  &  &  32 &  42 &  18 &  5 &  2 &  1 &  &  & \\ 
- GCV-Gabriel &  &  &  &  &  &  &  &  6 &  7 &  18 &  13 &  15 &  26 &  9 &  4 &  2\\ 
+ RCV-Gabriel &  &  &  &  &  &  &  &  6 &  7 &  18 &  13 &  15 &  26 &  9 &  4 &  2\\ 
  CV-Wold &  &  &  &  &  &  &  &  97 &  3 &  &  &  &  &  &  & \\ 
- GCV-Wold &  &  &  &  &  &  &  &  22 &  39 &  29 &  7 &  2 &  1 &  &  & \\ 
+ RCV-Wold &  &  &  &  &  &  &  &  22 &  39 &  29 &  7 &  2 &  1 &  &  & \\ 
  AIC &  &  &  &  &  &  &  &  &  &  &  &  &  2 &  9 &  19 &  70\\ 
  BIC$_1$ &  &  &  &  &  &  &  &  14 &  26 &  31 &  20 &  4 &  4 &  1 &  & \\ 
  BIC$_2$ &  &  &  &  &  &  &  &  23 &  41 &  24 &  9 &  1 &  2 &  &  & \\ 
@@ -834,9 +886,9 @@ CV-Gabriel &  &  &  &  &  &  &  &  32 &  42 &  18 &  5 &  2 &  1 &  &  & \\
         \\
         &\multicolumn{16}{l}{\scriptsize{\textit{White Noise}}} \\
 CV-Gabriel &  &  &  &  &  &  &  8 &  73 &  11 &  7 &  1 &  &  &  &  & \\ 
- GCV-Gabriel &  &  &  &  &  &  &  &  98 &  2 &  &  &  &  &  &  & \\ 
+ RCV-Gabriel &  &  &  &  &  &  &  &  98 &  2 &  &  &  &  &  &  & \\ 
  CV-Wold &  &  &  &  &  &  1 &  8 &  91 &  &  &  &  &  &  &  & \\ 
- GCV-Wold &  &  &  &  &  &  &  1 &  99 &  &  &  &  &  &  &  & \\ 
+ RCV-Wold &  &  &  &  &  &  &  1 &  99 &  &  &  &  &  &  &  & \\ 
  AIC &  &  &  &  &  &  &  &  100 &  &  &  &  &  &  &  & \\ 
  BIC$_1$ &  &  &  &  &  &  &  1 &  99 &  &  &  &  &  &  &  & \\ 
  BIC$_2$ &  &  &  &  &  &  &  1 &  99 &  &  &  &  &  &  &  & \\ 
@@ -847,9 +899,9 @@ CV-Gabriel &  &  &  &  &  &  &  8 &  73 &  11 &  7 &  1 &  &  &  &  & \\
         \\
         &\multicolumn{16}{l}{\scriptsize{\textit{Heavy Noise}}} \\
 CV-Gabriel &  &  &  &  &  &  &  5 &  52 &  29 &  11 &  2 &  1 &  &  &  & \\ 
- GCV-Gabriel &  &  &  &  &  &  &  &  39 &  24 &  19 &  11 &  6 &  1 &  &  & \\ 
+ RCV-Gabriel &  &  &  &  &  &  &  &  39 &  24 &  19 &  11 &  6 &  1 &  &  & \\ 
  CV-Wold &  &  &  &  &  1 &  1 &  11 &  83 &  4 &  &  &  &  &  &  & \\ 
- GCV-Wold &  &  &  &  &  &  &  &  66 &  28 &  5 &  1 &  &  &  &  & \\ 
+ RCV-Wold &  &  &  &  &  &  &  &  66 &  28 &  5 &  1 &  &  &  &  & \\ 
  AIC &  &  &  &  &  &  &  &  2 &  21 &  24 &  33 &  11 &  6 &  3 &  & \\ 
  BIC$_1$ &  &  &  &  &  &  &  1 &  63 &  27 &  6 &  3 &  &  &  &  & \\ 
  BIC$_2$ &  &  &  &  &  &  &  1 &  71 &  22 &  5 &  1 &  &  &  &  & \\ 
@@ -860,9 +912,9 @@ CV-Gabriel &  &  &  &  &  &  &  5 &  52 &  29 &  11 &  2 &  1 &  &  &  & \\
         \\
         &\multicolumn{16}{l}{\scriptsize{\textit{Colored Noise}}} \\
 CV-Gabriel &  &  &  &  &  &  &  4 &  34 &  19 &  24 &  8 &  6 &  5 &  &  & \\ 
- GCV-Gabriel &  &  &  &  &  &  &  &  1 &  5 &  13 &  13 &  22 &  20 &  10 &  8 &  8\\ 
+ RCV-Gabriel &  &  &  &  &  &  &  &  1 &  5 &  13 &  13 &  22 &  20 &  10 &  8 &  8\\ 
  CV-Wold &  &  &  &  &  1 &  1 &  8 &  83 &  4 &  3 &  &  &  &  &  & \\ 
- GCV-Wold &  &  &  &  &  &  &  &  26 &  32 &  25 &  12 &  2 &  2 &  &  &  1\\ 
+ RCV-Wold &  &  &  &  &  &  &  &  26 &  32 &  25 &  12 &  2 &  2 &  &  &  1\\ 
  AIC &  &  &  &  &  &  &  &  &  &  &  &  &  2 &  10 &  19 &  69\\ 
  BIC$_1$ &  &  &  &  &  &  &  &  17 &  23 &  29 &  20 &  3 &  4 &  2 &  &  2\\ 
  BIC$_2$ &  &  &  &  &  &  &  &  24 &  36 &  27 &  9 &  2 &  1 &  1 &  & \\ 
@@ -892,9 +944,9 @@ CV-Gabriel &  &  &  &  &  &  &  4 &  34 &  19 &  24 &  8 &  6 &  5 &  &  & \\
         \\
         &\multicolumn{16}{l}{\scriptsize{\textit{White Noise}}} \\
  CV-Gabriel &  &  &  &  &  &  &  3 &  56 &  32 &  9 &  &  &  &  &  & \\ 
- GCV-Gabriel &  &  &  &  &  &  &  5 &  66 &  20 &  8 &  1 &  &  &  &  & \\ 
+ RCV-Gabriel &  &  &  &  &  &  &  5 &  66 &  20 &  8 &  1 &  &  &  &  & \\ 
  CV-Wold &  &  &  &  &  &  4 &  31 &  65 &  &  &  &  &  &  &  & \\ 
- GCV-Wold &  &  &  &  &  &  3 &  32 &  65 &  &  &  &  &  &  &  & \\ 
+ RCV-Wold &  &  &  &  &  &  3 &  32 &  65 &  &  &  &  &  &  &  & \\ 
  AIC &  &  &  &  &  &  &  3 &  95 &  2 &  &  &  &  &  &  & \\ 
  BIC$_1$ &  &  &  &  &  1 &  13 &  46 &  40 &  &  &  &  &  &  &  & \\ 
  BIC$_2$ &  &  &  &  1 &  8 &  29 &  47 &  15 &  &  &  &  &  &  &  & \\ 
@@ -905,9 +957,9 @@ CV-Gabriel &  &  &  &  &  &  &  4 &  34 &  19 &  24 &  8 &  6 &  5 &  &  & \\
         \\
         &\multicolumn{16}{l}{\scriptsize{\textit{Heavy Noise}}} \\
 CV-Gabriel &  &  &  &  1 &  &  1 &  2 &  10 &  51 &  25 &  8 &  1 &  1 &  &  & \\ 
- GCV-Gabriel &  &  &  &  &  &  &  &  13 &  37 &  24 &  13 &  9 &  2 &  1 &  &  1\\ 
+ RCV-Gabriel &  &  &  &  &  &  &  &  13 &  37 &  24 &  13 &  9 &  2 &  1 &  &  1\\ 
  CV-Wold &  1 &  4 &  6 &  4 &  13 &  17 &  21 &  32 &  1 &  &  &  &  &  &  1 & \\ 
- GCV-Wold &  &  &  &  &  1 &  2 &  13 &  59 &  16 &  4 &  2 &  1 &  1 &  &  &  1\\ 
+ RCV-Wold &  &  &  &  &  1 &  2 &  13 &  59 &  16 &  4 &  2 &  1 &  1 &  &  &  1\\ 
  AIC &  &  &  &  &  &  &  &  7 &  15 &  28 &  25 &  14 &  7 &  1 &  2 &  1\\ 
  BIC$_1$ &  &  &  &  &  1 &  2 &  16 &  58 &  16 &  3 &  2 &  &  1 &  &  &  1\\ 
  BIC$_2$ &  &  &  &  &  4 &  15 &  23 &  46 &  8 &  1 &  1 &  1 &  &  1 &  & \\ 
@@ -918,9 +970,9 @@ CV-Gabriel &  &  &  &  1 &  &  1 &  2 &  10 &  51 &  25 &  8 &  1 &  1 &  &  & \
         \\
         &\multicolumn{16}{l}{\scriptsize{\textit{Colored Noise}}} \\
 CV-Gabriel &  &  &  &  &  &  &  2 &  9 &  22 &  21 &  25 &  10 &  3 &  5 &  2 &  1\\ 
- GCV-Gabriel &  &  &  &  &  &  &  &  2 &  4 &  11 &  16 &  14 &  12 &  19 &  9 &  13\\ 
+ RCV-Gabriel &  &  &  &  &  &  &  &  2 &  4 &  11 &  16 &  14 &  12 &  19 &  9 &  13\\ 
  CV-Wold &  1 &  4 &  4 &  7 &  9 &  17 &  14 &  34 &  4 &  &  &  &  2 &  &  1 &  1\\ 
- GCV-Wold &  &  &  &  &  &  &  2 &  29 &  24 &  17 &  8 &  6 &  7 &  2 &  4 &  1\\ 
+ RCV-Wold &  &  &  &  &  &  &  2 &  29 &  24 &  17 &  8 &  6 &  7 &  2 &  4 &  1\\ 
  AIC &  &  &  &  &  &  &  &  &  &  &  &  &  4 &  14 &  14 &  68\\ 
  BIC$_1$ &  &  &  &  &  &  &  2 &  26 &  22 &  20 &  9 &  8 &  3 &  2 &  4 &  4\\ 
  BIC$_2$ &  &  &  &  &  &  &  4 &  39 &  28 &  12 &  5 &  4 &  1 &  3 &  3 &  1\\ 
@@ -951,9 +1003,9 @@ CV-Gabriel &  &  &  &  &  &  &  2 &  9 &  22 &  21 &  25 &  10 &  3 &  5 &  2 & 
         \\
         &\multicolumn{16}{l}{\scriptsize{\textit{White Noise}}} \\
 CV-Gabriel &  &  &  &  &  &  8 &  16 &  39 &  27 &  8 &  2 &  &  &  &  & \\ 
- GCV-Gabriel &  &  &  &  &  &  1 &  8 &  53 &  27 &  9 &  1 &  1 &  &  &  & \\ 
+ RCV-Gabriel &  &  &  &  &  &  1 &  8 &  53 &  27 &  9 &  1 &  1 &  &  &  & \\ 
  CV-Wold &  &  &  2 &  2 &  11 &  16 &  29 &  40 &  &  &  &  &  &  &  & \\ 
- GCV-Wold &  &  &  &  &  2 &  15 &  29 &  54 &  &  &  &  &  &  &  & \\ 
+ RCV-Wold &  &  &  &  &  2 &  15 &  29 &  54 &  &  &  &  &  &  &  & \\ 
  AIC &  &  &  &  &  &  &  6 &  77 &  16 &  1 &  &  &  &  &  & \\ 
  BIC$_1$ &  &  &  &  1 &  4 &  21 &  45 &  29 &  &  &  &  &  &  &  & \\ 
  BIC$_2$ &  &  &  1 &  4 &  14 &  27 &  37 &  17 &  &  &  &  &  &  &  & \\ 
@@ -964,9 +1016,9 @@ CV-Gabriel &  &  &  &  &  &  8 &  16 &  39 &  27 &  8 &  2 &  &  &  &  & \\
         \\
         &\multicolumn{16}{l}{\scriptsize{\textit{Heavy Noise}}} \\
 CV-Gabriel &  &  &  &  &  &  2 &  4 &  22 &  25 &  24 &  20 &  3 &  &  &  & \\ 
- GCV-Gabriel &  &  &  &  &  &  1 &  4 &  9 &  18 &  20 &  18 &  12 &  13 &  2 &  1 &  2\\ 
+ RCV-Gabriel &  &  &  &  &  &  1 &  4 &  9 &  18 &  20 &  18 &  12 &  13 &  2 &  1 &  2\\ 
  CV-Wold &  1 &  1 &  4 &  10 &  16 &  19 &  29 &  18 &  &  1 &  &  &  &  &  1 & \\ 
- GCV-Wold &  &  &  &  &  &  2 &  19 &  51 &  7 &  16 &  3 &  1 &  &  &  1 & \\ 
+ RCV-Wold &  &  &  &  &  &  2 &  19 &  51 &  7 &  16 &  3 &  1 &  &  &  1 & \\ 
  AIC &  &  &  &  &  &  &  &  2 &  17 &  16 &  19 &  22 &  8 &  4 &  10 &  2\\ 
  BIC$_1$ &  &  &  &  &  1 &  4 &  21 &  51 &  5 &  13 &  3 &  1 &  &  &  1 & \\ 
  BIC$_2$ &  &  &  &  2 &  4 &  16 &  32 &  31 &  4 &  9 &  &  1 &  &  &  1 & \\ 
@@ -977,9 +1029,9 @@ CV-Gabriel &  &  &  &  &  &  2 &  4 &  22 &  25 &  24 &  20 &  3 &  &  &  & \\
         \\
         &\multicolumn{16}{l}{\scriptsize{\textit{Colored Noise}}} \\
 CV-Gabriel &  &  &  &  &  &  2 &  5 &  16 &  19 &  19 &  12 &  9 &  3 &  10 &  3 &  2\\ 
- GCV-Gabriel &  &  &  &  &  &  &  &  1 &  2 &  7 &  12 &  15 &  19 &  11 &  8 &  25\\ 
+ RCV-Gabriel &  &  &  &  &  &  &  &  1 &  2 &  7 &  12 &  15 &  19 &  11 &  8 &  25\\ 
  CV-Wold &  1 &  3 &  6 &  11 &  10 &  17 &  21 &  25 &  2 &  2 &  &  &  1 &  &  &  1\\ 
- GCV-Wold &  &  &  &  &  &  &  2 &  22 &  21 &  19 &  12 &  11 &  3 &  5 &  3 &  2\\ 
+ RCV-Wold &  &  &  &  &  &  &  2 &  22 &  21 &  19 &  12 &  11 &  3 &  5 &  3 &  2\\ 
  AIC &  &  &  &  &  &  &  &  &  &  &  &  &  2 &  8 &  9 &  81\\ 
  BIC$_1$ &  &  &  &  &  &  &  1 &  22 &  23 &  20 &  10 &  9 &  4 &  2 &  3 &  6\\ 
  BIC$_2$ &  &  &  &  &  1 &  &  7 &  37 &  17 &  13 &  9 &  7 &  1 &  3 &  4 &  1\\ 

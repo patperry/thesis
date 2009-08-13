@@ -161,9 +161,9 @@ latex.benchmark <- function( object, ... ) {
     method <- sum$method
     
     cat( " CV-Gabriel");  print.counts( sum[method == "gabriel.best",] )
-    cat( " GCV-Gabriel"); print.counts( sum[method == "gabriel.rot.best",] )
+    cat( " RCV-Gabriel"); print.counts( sum[method == "gabriel.rot.best",] )
     cat( " CV-Wold");     print.counts( sum[method == "wold.best",] )
-    cat( " GCV-Wold");    print.counts( sum[method == "wold.rot.best",] )
+    cat( " RCV-Wold");    print.counts( sum[method == "wold.rot.best",] )
     cat( " AIC");         print.counts( sum[method == "aic",] )
     cat( " BIC$_1$");     print.counts( sum[method == "bic1",] )
     cat( " BIC$_2$");     print.counts( sum[method == "bic2",] )
