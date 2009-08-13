@@ -854,8 +854,33 @@ for real-world data.
 
 \subsection{Prediction error estimation}
 
+Our goal with the first simulation was to get intuition for the behavior of
+Gabriel- and Wold-style cross validation as prediction error estimators. We
+generated random data of the form $\mX = \sqrt{n} \mU \mD \mV^\trans + \mE$,
+described above. With $\mhX(k)$ being the SVD of $\mX$ truncated to $k$ terms,
+the (normalized) true prediction error is given by
+\[ 
+    \PE(k) = \| \sqrt{n} \mU \mD \mV^\trans - \mhX(k) \|_\Frob^2 + 1. 
+\] 
+Cross-validation gives us an estimate $\widehat{\PE}(k)$ of the prediction 
+error curve.  We wanted to see how $\widehat{\PE}(k)$ compares to $\PE(k)$.
 
-\begin{figure}[htb]
+Figures~\ref{F:cvsvd-pe-strong}~and~\ref{F:cvsvd-pe-weak} show the true and
+estimated prediction error curves from $(2,2)$-fold Gabriel CV and $5$-fold
+Wold CV, along with their RCV variants. The plots only show one set of curves
+for each factor and noise instance, but other replicates showed similar
+behavior.  
+
+For most of the simulations, the cross-validation estimates of prediction
+error are generally conservative. The only exception is with weak factors and
+colored noise, perhaps because of the ambiguity in what constitutes ``signal''
+and what constitutes ``noise'' in this simulation. This global upward bias
+agrees with previous studies of cross-validation 
+(e.g.~\cite{breiman1992little} and \cite{breiman1992submodel}).  The RCV versions of the methods generally brought down the bias.  Some authors have observed a downward bias at the minimizer of $\widehat{\PE}(k)$ for ordinary cross-validation (\cite{breiman1984cart}, \cite{tibshirani2009}).  This bias does not appear to be present here.
+
+A striking difference between Wold- and Gabriel-style CV is their behavior for $k$ greater than $k^\ast_\PE$.  Gabriel-style CV does a better job at estimating the true $\PE(k)$, which is relatively flat.  Wold-style CV, on the other hand, increases steeply for $k$ past the minimizer.  Since estimating $\PE(k)$ past its minimizer is generally of very little interest, the Wold-style CV behavior is more desirable.
+
+\begin{figure}[ht]\label{F:cvsvd-pe-strong}
     \centering
     \begin{minipage}{0.49\textwidth}
         \begin{center}
@@ -869,11 +894,18 @@ for real-world data.
     \end{minipage}
     \caption{
         \captiontitle{Cross-validation with strong factors}
+        Estimated prediction error curves for Gabriel- and Wold-style
+        cross-validation, both original and rotated (RCV) versions, with
+        strong factors in the data.  
+        The true prediction error is shown in black, the CV curves are red, 
+        and the RCV curves are blue.  Error bars give are computed from the 
+        CV replicates.  Despite their upward bias, the methods do
+        well at estimating $\PE(k)$ for $k \leq k^\ast_\PE$.
     }
 \end{figure}
 
 
-\begin{figure}[tbh]
+\begin{figure}[ht]\label{F:cvsvd-pe-weak}
     \centering
     \begin{minipage}{0.49\textwidth}
         \begin{center}
@@ -887,12 +919,20 @@ for real-world data.
     \end{minipage}
     \caption{
         \captiontitle{Cross-validation with weak factors}
+        Estimated prediction error curves for Gabriel- and Wold-style
+        cross-validation, both original and rotated (RCV) versions, with
+        weak factors in the data.  As in Figure~\ref{F:cvsvd-pe-strong} the
+        true prediction error is shown in black, the CV curves are red, and
+        the RCV curves are blue.  Error bars give are computed from the 
+        CV replicates.  The methods have a harder time estimating $\PE(k)$
+        and its minimizer.
     }
 \end{figure}
 
-
-
 \clearpage 
+
+\subsection{Rank estimation}
+
 
 \begin{table}
     \tiny
