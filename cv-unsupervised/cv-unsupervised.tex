@@ -581,6 +581,7 @@ that GCV rotates to a specific non-random configuration of the data that gives
 equal weight to all observations in the rotated space, while RCV rotates to a 
 random configuration that gives equal weight in expectation.
 
+
 \section{Missing-value SVDs}\label{S:missing-values-svds}
 
 Taking an SVD of a matrix with missing entries is a difficult problem.  First of all, the problem is not very well defined.  If $\mA$ is a matrix with missing entries, there are potentially many different ways of factoring $\mA$ as an SVD-like product.  Often, one attempts to force uniqueness by finding the complete matrix $\mA' \in \reals^{n,p}$ of minimum rank such that $A'_{ij} = A_{ij}$ for all non-missing elements of $\mA$.  Even then, $\mA'$ may not be unique.  Take
@@ -774,6 +775,85 @@ algorithm is very easy to implement.
 \clearpage
 
 \section{Simulations}
+
+We performed two sets of simulations to gauge the performance of Gabriel- and Wold-style cross-validation.  In the first set of simulations, we compare estimated prediction error with true prediction error.  In the second set, we evaluate the methods' abilities to estimate $k_\PE^\ast$, the optimal rank.
+
+Each simulation generates a data matrix $\mX$ as 
+\(
+    \mX = \sqrt{n} \mU \mD \mV^\trans + \mE.
+\)
+We fix the dimensions and number of generating signals as $n = 100$, $p = 50$,
+and $k_0 = 6$.  For ``weak'' factors we set 
+\(
+    \mD 
+    = 
+    \mD_\text{weak}
+    =
+    \diag \left(
+        10, 9, 8, 7, 6, 5
+    \right)
+\)
+and for ``strong'' factors, we set
+\(
+    \mD
+    =
+    \mD_\text{strong}
+    =
+    \sqrt{n} \mD_\text{weak}.
+\)
+We generate $\mU$, $\mV$, and $\mE$ independently of each other.  To avoid 
+ambiguity in what constitutes ``signal'' and what constitutes ``noise'', we 
+ensure that the elements of $\mE$ are uncorrelated with each other.
+
+We consider two types of factors.  For ``Gaussian'' factors, we put the elements of $\mU$ distributed \iid with
+$U_{11} \sim \Normal\big( 0, \, \frac{1}{n} \big)$ and the elements of
+$\mV$ \iid with $V_{11} \sim \Normal\big( 0, \, \frac{1}{p} \big)$, also independent of $\mU$.  For ``Sparse'' factors we use sparsity parameter $s = 10\%$ and set
+\[
+    \Prob\{ U_{11} = 0 \} = 1 - s,
+\]
+\[
+    \Prob\Big\{ U_{11} = -\frac{1}{\sqrt{s \, n}} \Big\}
+    =
+    \Prob\Big\{ U_{11} = +\frac{1}{\sqrt{s \, n}} \Big\}    
+    = 
+    \frac{s}{2}.
+\]
+Similarly, we put
+\[
+    \Prob\{ V_{11} = 0 \} = 1 - s,
+\]
+\[
+    \Prob\Big\{ V_{11} = -\frac{1}{\sqrt{s \, p}} \Big\}
+    =
+    \Prob\Big\{ V_{11} = +\frac{1}{\sqrt{s \, p}} \Big\}    
+    = 
+    \frac{s}{2}.
+\]
+The scalings in both cases are chosen so that $\E [\mU^\trans \mU] = \E 
+[\mV^\trans \mV] = \mI_{k_0}$.  Gaussian factors are uniformly spread out in the observations and variables, while sparse factors are only observable in a small percentage of the matrix entries (about $1\%$).
+
+We use three types of noise.  For ``white'' noise, we generate the elements of $\mE$ \iid with $E_{11} \sim \Normal\left( 0, \, 1\right)$.  For ``heavy'' noise, we use \iid elements with $E_{11} \sim \sigma_\nu^{-1} \, t_\nu$, and
+$\nu = 3$.  Here $t_\nu$ is a $t$ random variable with $\nu$ degrees of freedom, and $\sigma_\nu = \sqrt{\nu/(\nu-2)}$ is chosen so that 
+$\E [ E_{11}^2 ] = 1$.  Heavy noise is so-called because it has a heavy tail.  Lastly, for ``colored'' noise, we first generate
+$\sigma^2_1, \ldots, \sigma^2_n \sim \text{Inverse-$\chi^2$}(\nu_1)$ and
+$\tau^2_1, \ldots, \tau^2_p \sim \text{Inverse-$\chi^2$}(\nu_2)$ independently, with $\nu_1 = \nu_2 = 3$.  Then we generate the elements of $\mE$ independently as
+\(
+    E_{ij} \sim 
+        c_{\nu_1, \nu_2}^{-1} \, \cdot \Normal( 0, \, \sigma^2_i + \tau^2_j),
+\)
+where
+\(
+    c_{\nu_1, \nu_2}
+        =
+        \sqrt{1/(\nu_1 - 2) + 1/(\nu_2 - 2)}
+\).
+Again, $c_{\nu_1, \nu_2}$ is chosen so that $\E [E_{ij}^2] = 1$.  Colored 
+noise simulates heteroscedasticity.  All three types of noise are plausible 
+for real-world data.
+
+
+\subsection{Prediction error estimation}
+
 
 \begin{figure}[htb]
     \centering
