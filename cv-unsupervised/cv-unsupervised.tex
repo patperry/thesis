@@ -1282,4 +1282,28 @@ responses for each neuron and condition.
     }\label{F:motor-cortex-data}
 \end{figure}
 
+The data from the NSPL motor cortex experiment can be put into a matrix where
+each neuron is thought of as a variable, and the timepoints of each condition
+are thought of as observations. This gives us a matrix $\mX$ with $p = 49$
+variables and $n = 27 \cdot 422 = 11394$ observations. Of course, the rows of
+$\mX$ are nothing like \iid, and the noise in $\mX$ is not white. Parametric
+methods are not likely to give very reliable estimates of the dimensionality
+of $\mX$, but cross-validation stands a reasonable chance.
+
+After centering the columns of $\mX$, we performed Wold- and Gabriel-style cross-validation to estimate the dimensionality of the signal part of $\mX$.  
+For Gabriel-style CV, we first tried both $(2,2)$-fold and $(2,49)$-fold; both resulting $\widehat{PE}(k)$ curves had their minima at the maximum $k$.  For $5$-fold Wold-style CV, there is a minimum at $k=13$.  The BIC, $F$, MDL, and UIP estimators all chose $k=48$ as the dimensionality, while the AIC estimator chose $k=47$.  We show the cross-validation estimated prediction curves in Figure~\ref{F:motor-cv-est}
+
+\begin{figure}
+    \centering
+    \includegraphics{motor-cv-est}
+    \caption{
+        \captiontitle{Motor cortex estimated prediction error}
+        Prediction error as a function of rank, estimated by three 
+        cross-validation methods.  The units are normalized so that the
+        maximum prediction error is $1.0$.  Error bars show one standard    
+        error, estimated from the folds. The prediction error estimate from
+        Wold-style CV shows a minimum at $k=13$, but the Gabriel-style
+        CV estimates always decrease with $k$.  
+    }\label{F:motor-cv-est}
+\end{figure}
 
