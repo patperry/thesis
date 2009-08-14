@@ -720,7 +720,7 @@ values converging. Regardless of which convergence criterion is used, the
 algorithm is very easy to implement.
 
 \begin{algorithm}
-    \caption{\label{A:em-svd}Rank-$k$ SVD approximation with missing values}
+    \caption{Rank-$k$ SVD approximation with missing values}\label{A:em-svd}
     
     \begin{enumerate}
         \item Let $I = \{ (i,j) : A_{ij} \neq \missing \}$.
@@ -880,7 +880,7 @@ agrees with previous studies of cross-validation
 
 A striking difference between Wold- and Gabriel-style CV is their behavior for $k$ greater than $k^\ast_\PE$.  Gabriel-style CV does a better job at estimating the true $\PE(k)$, which is relatively flat.  Wold-style CV, on the other hand, increases steeply for $k$ past the minimizer.  Since estimating $\PE(k)$ past its minimizer is generally of very little interest, the Wold-style CV behavior is more desirable.
 
-\begin{figure}[ht]\label{F:cvsvd-pe-strong}
+\begin{figure}[ht]
     \centering
     \begin{minipage}{0.49\textwidth}
         \begin{center}
@@ -901,11 +901,11 @@ A striking difference between Wold- and Gabriel-style CV is their behavior for $
         and the RCV curves are blue.  Error bars give are computed from the 
         CV replicates.  Despite their upward bias, the methods do
         well at estimating $\PE(k)$ for $k \leq k^\ast_\PE$.
-    }
+    }\label{F:cvsvd-pe-strong}
 \end{figure}
 
 
-\begin{figure}[ht]\label{F:cvsvd-pe-weak}
+\begin{figure}[ht]
     \centering
     \begin{minipage}{0.49\textwidth}
         \begin{center}
@@ -926,7 +926,7 @@ A striking difference between Wold- and Gabriel-style CV is their behavior for $
         the RCV curves are blue.  Error bars give are computed from the 
         CV replicates.  The methods have a harder time estimating $\PE(k)$
         and its minimizer.
-    }
+    }\label{F:cvsvd-pe-weak}
 \end{figure}
 
 \clearpage 
@@ -976,7 +976,7 @@ Tables~\ref{T:rank-est-strong-gauss}--\ref{T:rank-est-weak-sparse} summarize
 the results of 100 replicates.  For the strong factors in white noise, almost
 all of the methods correctly estimate the true $\PE$-minimizing rank.  When the noise is non-white, Wold-style CV is the clear winner.  For the weak factors in white noise, the AIC, $F$ and UIP methods fare well, and the performance of the cross-validation-based methods is mediocre.  For non-white noise and weak factors, none of the methods perform very well.
 
-\begin{table}\label{T:rank-est-strong-gauss}
+\begin{table}
     \tiny
     \centering    
     \begin{tabular}{lrrrrrrrrrrrrrrrr}
@@ -1034,10 +1034,10 @@ CV-Gabriel &  &  &  &  &  &  &  &  61 &  35 &  4 &  &  &  &  &  & \\
         Difference between the estimated rank and the true minimizer of 
         $\PE(k)$ for 100 replicates of strong Gaussian factors with various
         types of noise.
-    }
+    }\label{T:rank-est-strong-gauss}
 \end{table}
 
-\begin{table}\label{T:rank-est-strong-sparse}
+\begin{table}
     \tiny
     \centering    
     \begin{tabular}{lrrrrrrrrrrrrrrrr}
@@ -1095,10 +1095,10 @@ CV-Gabriel &  &  &  &  &  &  &  5 &  52 &  29 &  11 &  2 &  1 &  &  &  & \\
         Difference between the estimated rank and the true minimizer of 
         $\PE(k)$ for 100 replicates of strong sparse factors with various
         types of noise.
-    }
+    }\label{T:rank-est-strong-sparse}
 \end{table}
 
-\begin{table}\label{T:rank-est-weak-gauss}
+\begin{table}
     \tiny
     \centering    
     \begin{tabular}{lrrrrrrrrrrrrrrrr}
@@ -1156,11 +1156,11 @@ CV-Gabriel &  &  &  &  1 &  &  1 &  2 &  10 &  51 &  25 &  8 &  1 &  1 &  &  & \
         Difference between the estimated rank and the true minimizer of 
         $\PE(k)$ for 100 replicates of weak Gaussian factors with various
         types of noise.
-    }
+    }\label{T:rank-est-weak-gauss}
 \end{table}
 
 
-\begin{table}\label{T:rank-est-weak-sparse}
+\begin{table}
     \tiny
     \centering
     \begin{tabular}{lrrrrrrrrrrrrrrrr}
@@ -1218,13 +1218,48 @@ CV-Gabriel &  &  &  &  &  &  2 &  4 &  22 &  25 &  24 &  20 &  3 &  &  &  & \\
         Difference between the estimated rank and the true minimizer of 
         $\PE(k)$ for 100 replicates of weak sparse factors with various
         types of noise.
-    }
+    }\label{T:rank-est-weak-sparse}
 \end{table}
-
 
 \clearpage
 
 \section{Real data example}
+
+We conclude this chapter with an application from Neuroscience. The Neural
+Prosthetic Systems Laboratory at Stanford University (NPSL) is interested in
+studying the motor cortex region of the brain. Essentially, they want to know
+what the correspondence is between neural activity in that part of the brain
+and motor activity (movement). Research is still at a very fundamental level,
+and the basic question of how many things are being represented is still
+unanswered. It is thought that desired position, speed, and velocity get
+expressed as neural activity, but conjectures about the dimensionality of the
+neural responses vary from $7$ to $20$ or more.
+
+NPSL has designed and carried out an experiment mean to measure the 
+dimensionality of neural response for a two-dimensional motion task.  The 
+experiment involves measuring the activity in $49$ neurons as a monkey 
+performs $27$ different movement tasks (conditions).
+
+For a particular neuron and condition, a simplified explanation of the 
+experiment is as follows:
+\begin{enumerate}
+    \item At time $t=0 \, \text{ms}$, start recording neural activity in the 
+        monkey.
+    \item At time $t=400 \, \text{ms}$ (\textsc{target-on}), show the monkey a 
+        target.  The monkey is not allowed to move at this point.
+    \item At a random time between time $t=400 \, \text{ms}$ and time 
+        $t = 1560 \, \text{ms}$, allow the monkey to move.
+    \item At time $t=1560 \, \text{ms}$ (\textsc{movement}), the monkey starts 
+        to move and point at the target.
+    \item Record activity up to but not including time $t=2110 \, \text{ms}$. 
+\end{enumerate}
+Each condition includes a target position and a configuration of obstacles. 
+The same monkey is used for every trial.  Measurements are taken at 
+$5 \, \text{ms}$ intervals, so that there are $422$ total time points.  It is 
+necessary to do some registration, scaling, and interpolation before doing 
+more serious data analysis, but the details of those processes are not 
+important for our purposes.  Figure~\ref{F:motor-cortex-data} shows the 
+responses for each neuron and condition.
 
 \begin{figure}[tbh]
     \centering
@@ -1239,11 +1274,12 @@ CV-Gabriel &  &  &  &  &  &  2 &  4 &  22 &  25 &  24 &  20 &  3 &  &  &  & \\
         \end{center}
     \end{minipage}
     \caption{
-        \captiontitle{Motor Cortex Data}
+        \captiontitle{Motor cortex data}
         Response rates in 47 neurons for 27 movement tasks.  The subplots show
         the normalized response rates in a single neuron as functions of time.  
         Each color corresponds to a different movement task.  The plot on
         the left is a zoomed-in view of the data for the first neuron.
-    }
+    }\label{F:motor-cortex-data}
 \end{figure}
+
 
