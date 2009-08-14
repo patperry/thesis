@@ -780,7 +780,7 @@ algorithm is very easy to implement.
 
 \section{Simulations}
 
-We performed two sets of simulations to gauge the performance of Gabriel- and Wold-style cross-validation.  In the first set of simulations, we compare estimated prediction error with true prediction error.  In the second set, we evaluate the methods' abilities to estimate $k_\PE^\ast$, the optimal rank.
+We performed two sets of simulations to gauge the performance of Gabriel- and Wold-style cross-validation.  In the first set of simulations, we compare estimated prediction error with true prediction error.  In the second set, we evaluate the methods' abilities to estimate $k_{\PE}^\ast$, the optimal rank.
 
 Each simulation generates a data matrix $\mX$ as 
 \(
@@ -882,7 +882,7 @@ and what constitutes ``noise'' in this simulation. This global upward bias
 agrees with previous studies of cross-validation 
 (e.g.~\cite{breiman1992little} and \cite{breiman1992submodel}).  The RCV versions of the methods generally brought down the bias.  Some authors have observed a downward bias at the minimizer of $\widehat{\PE}(k)$ for ordinary cross-validation (\cite{breiman1984cart}, \cite{tibshirani2009}).  This bias does not appear to be present here.
 
-A striking difference between Wold- and Gabriel-style CV is their behavior for $k$ greater than $k^\ast_\PE$.  Gabriel-style CV does a better job at estimating the true $\PE(k)$, which is relatively flat.  Wold-style CV, on the other hand, increases steeply for $k$ past the minimizer.  Since estimating $\PE(k)$ past its minimizer is generally of very little interest, the Wold-style CV behavior is more desirable.
+A striking difference between Wold- and Gabriel-style CV is their behavior for $k$ greater than $k^\ast_{\PE}$.  Gabriel-style CV does a better job at estimating the true $\PE(k)$, which is relatively flat.  Wold-style CV, on the other hand, increases steeply for $k$ past the minimizer.  Since estimating $\PE(k)$ past its minimizer is generally of very little interest, the Wold-style CV behavior is more desirable.
 
 \begin{figure}[ht]
     \centering
@@ -904,7 +904,7 @@ A striking difference between Wold- and Gabriel-style CV is their behavior for $
         The true prediction error is shown in black, the CV curves are red, 
         and the RCV curves are blue.  Error bars give are computed from the 
         CV replicates.  Despite their upward bias, the methods do
-        well at estimating $\PE(k)$ for $k \leq k^\ast_\PE$.
+        well at estimating $\PE(k)$ for $k \leq k^\ast_{\PE}$.
     }\label{F:cvsvd-pe-strong}
 \end{figure}
 
