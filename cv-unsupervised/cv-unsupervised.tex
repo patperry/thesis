@@ -1307,3 +1307,40 @@ For Gabriel-style CV, we first tried both $(2,2)$-fold and $(2,49)$-fold; both r
     }\label{F:motor-cv-est}
 \end{figure}
 
+
+\section{Summary and future work}
+
+We have described two different forms of cross-validation appropriate for
+model selection in unsupervised learning. Wold-style CV uses a ``speckled''
+leav-out, and Gabriel-style CV uses a ``blocked'' leave-out. We have defined
+two forms of error associated with SVD/PCA-like models, the prediction error
+and the model error. Through simulaitons, we have shown that both forms of CV
+can be considered to give estimates of prediction error. Both methods perform
+well, but Wold-style CV seems to be more robust to badly-behaved noise. We
+have applied these cross-validation methods to a data analysis problem from a
+Neuroscience experiment.
+
+We have focused on latent factor models and the singular value decomposition.
+However, it is relatively easy to translate the two styles of cross-validation
+presented here to other unsupervised learning methods. For Wold-style
+holdouts, an EM-like algorithm can usually be applied to the models in many
+unsupervised learning contexts. The Gabriel-style philosophy of ``treat some
+of the variables as response and the others as predictors'' can also be
+applied more broadly. We are in the process of investigating both
+cross-validation strategies for clustering and kernel-based manifold learning.
+
+This chapter leaves a number of open questions.  Mainly, we have not provided 
+any theoretic results here, only simulations.  A quote from Downton's discussion of Stone's 1974 paper on cross-validation is particularly appropriate here:
+\begin{quote}
+    A current nine-day wonder in the press concerns the exploits of a Mr. Uri
+    Geller who appears to be able to bend metal objects without touching them;
+    [The author] seems to be attempting to bend statistics without touching
+    them. My attitude to both of these phenomena is one of open-minded 
+    scepticism; I do not believe in either of these prestigious activities, on 
+    the other hand they both deserve serious scientific examination
+    \cite{stone1974cv}.
+\end{quote}
+In the next chapter, we provide some theoretical justification for 
+Gabriel-style cross-validation, but analysis of Wold-style cross-validation is 
+still an open problem.
+
