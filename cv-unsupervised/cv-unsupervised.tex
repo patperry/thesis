@@ -31,7 +31,7 @@ many of the ideas generalize to other methods. We suppose that the data,
 $\mX$, is an $n \times p$ matrix generated according to the signal-plus-noise
 model $\mX = \sqrt{n} \mU \mD \mV^\trans + \mE$. We consider the first term to
 be the ``signal'' matrix, and the second term to be ``noise''. Often the
-signal term is a low-rank product. Our goal is to estimate the this term as
+signal term is a low-rank product. Our goal is to estimate this term as
 best as possible by truncating the singular value decomposition (SVD) of
 $\mX$. Here ``best'' means with respect to the metrics introduced in
 Chapter~\ref{C:intrinsic-rank}. We are interested in the model selection
@@ -101,7 +101,7 @@ problem any better, for then the division becomes:
     \end{matrix}
     \right),
 \]
-with holdin
+with hold-in
 \[
     \left(
     \begin{matrix}
@@ -110,14 +110,14 @@ with holdin
     \end{matrix}
     \right).
 \]
-There is nothing to extrapolate from to predict $\mY_\test$.  For 
+Now, there is nothing to extrapolate from to predict $\mY_\test$!  For 
 cross-validation to work in unsupervised learning, we need to consider
-more general holdouts.
+more general hold-outs.
 
-We look at two different types of holdouts in this chapter. The first, due to
+We look at two different types of hold-outs in this chapter. The first, due to
 Wold, is ``speckled'': we leave out random elements of the matrix $\mX$ and
 use a missing data algorithm like expectation-maximization (EM) for
-prediction. The second type of holdout is ``blocked''. This type, due to
+prediction. The second type of hold-out is ``blocked''. This type, due to
 Gabriel, randomly partitions the columns of $\mX$ into ``predictor'' and
 ``response'' sets and then performs the SL version of cross-validation.
 
@@ -161,7 +161,7 @@ We focus on estimating the squared Frobenius model error
 \]
 or its minimum,
 \[
-    k^\ast_{\ME} = \argmin_k \PE(k).
+    k^\ast_{\ME} = \argmin_k \ME(k).
 \]  
 Here, $\| \cdot \|_\Frob^2$ is the sum of squares of the elements.
 
@@ -197,29 +197,29 @@ If $\mE$ is independent of $\mU$, $\mD$, and $\mV$, then
         &= \E\big[\ME(k)\big] + \E \| \mE \|_\Frob^2.
 \end{align*}
 The prediction error is thus equal to the sum of the expected model error
-and an irreducible error error term.
+and an irreducible error term.
 
 
 \section{Cross validation strategies}
 
-In this section we describe the various holdout strategies for getting a
+In this section we describe the various hold-out strategies for getting a
 cross-validation estimate of $\PE(k)$. It is possible to get an estimate of
 $\ME(k)$ from the estimate of $\PE(k)$ by subtracting an estimate of the
 irreducible error. For now, though, we choose to focus just on estimating
 $\PE(k)$.
 
 For performing $K$-fold cross-validation on the matrix $\mX$, we partition its
-elements into $K$ holdout sets. For each of $K$ replicates and for each value
-of $k$, we leave out one of the holdout sets, fit a $k$-term SVD to the
-left-in set, and evaluate its performance on the left-out set. We thus need to
-describe the holdout set, how to fit an SVD to the left-in data, and how to
-make a prediction of the left-out data. After a brief discussion of why the
-usual (naive) way of doing holdouts won't work, we survey both speckled
-holdouts (Wold-style), as well as block holdouts (Gabriel-style).
+elements into $K$ hold-out sets. For each of $K$ replicates and for each value
+of the rank, $k$, we leave out one of the hold-out sets, fit a $k$-term SVD to
+the left-in set, and evaluate its performance on the left-out set. We thus
+need to describe the hold-out set, how to fit an SVD to the left-in data, and
+how to make a prediction of the left-out data. After a brief discussion of why
+the usual (naive) way of doing hold-outs won't work, we survey both speckled
+hold-outs (Wold-style), as well as block hold-outs (Gabriel-style).
 
-\subsection{Naive holdouts}
+\subsection{Naive hold-outs}
 
-The ordinary holdout strategy will not work for estimating prediction error.  Suppose we leave out a subset of the rows of $\mX$.  After
+The ordinary hold-out strategy will not work for estimating prediction error.  Suppose we leave out a subset of the rows of $\mX$.  After
 permutation, the rows of $\mX$ are partitioned as
 \(
     \left(
@@ -284,12 +284,12 @@ SVD of $\mX$.
 
 A similar situation arrises if we leave out only a subset of the columns of
 $\mX$.  To get a reasonable cross-validation estimate, it is therefore 
-necessary to consider more-general holdout sets.
+necessary to consider more-general hold-out sets.
 
-\subsection{Wold holdouts}
+\subsection{Wold hold-outs}
 
 A Wold-style speckled leave-out is perhaps the most obvious attempt at a a
-more general holdout. We leave out a subset of the elements of the $\mX$, then
+more general hold-out. We leave out a subset of the elements of the $\mX$, then
 use the left-in elements to predict the rest.
 
 First we need to introduce some more notation. Let $\mathcal{I}$ denote the
@@ -327,7 +327,7 @@ Finally, for $\mA \in \reals_\missing^{n \times p}$, we define
 \]
 This notation allows us to describe matrices with missing entries.
 
-A Wold-style speckled holdout is a random subset $I \subset \mathcal{I}$.  The 
+A Wold-style speckled hold-out is a random subset $I \subset \mathcal{I}$.  The 
 held-in data is the matrix $\mX_{\bar I}$ and the held-out data is the matrix 
 $\mX_I$.  We use a missing value SVD algorithm to fit a $k$-term SVD to 
 $\mX_{\bar I}$.  This gives us an approximation $\mU_k \mD_k \mV_k^\trans$, 
@@ -340,7 +340,7 @@ evaluate the SVD on the held-out set by
 Aside from the algorithm for getting $\mU_k \mD_k \mV_k^\trans$ from 
 $\mX_{\bar I}$, this is a full description of the CV replicate.
 
-When Wold introduced this form of holdout in 1978~\cite{wold1978cross}, he
+When Wold introduced this form of hold-out in 1978~\cite{wold1978cross}, he
 suggested using an algorithm called nonlinear iterative partial least squares
 (NIPALS) to fit an SVD to the held-in data. This algorithm, attributed to
 Fisher~\cite{fisher1923scv}, Wold and Lyttkens~\cite{wold1969nonlinear} never
@@ -351,9 +351,9 @@ SVD of a matrix with missing values. We explore these issues further in
 Section~\ref{S:missing-values-svds}, and present a complete algorithm for
 estimating the factors $\mU_k \mD_k \mV_k^\trans$.
 
-\subsection{Gabriel holdouts}
+\subsection{Gabriel hold-outs}
 
-A Gabriel-style holdout works by transforming the unsupervised learning
+A Gabriel-style hold-out works by transforming the unsupervised learning
 problem into a supervised one. We take a subset of the columns of $\mX$ and
 denote them as the \emph{response} columns; the rest are denoted
 \emph{predictor} columns. Then we take a subset of the rows and consider them
@@ -370,7 +370,7 @@ we can write
         \end{matrix}
         \right).
 \]
-Here, $\mX_{11}$ consists of the train-predictor block, $\mX_{12}$ is the train-response block, $\mX_{21}$ is the test-predictor block, and $\mX_{22}$ is the test-response block.  It is to think of the blocks as
+Here, $\mX_{11}$ consists of the train-predictor block, $\mX_{12}$ is the train-response block, $\mX_{21}$ is the test-predictor block, and $\mX_{22}$ is the test-response block.  It is beneficial to think of the blocks as
 \[
     \left(
     \begin{matrix}
@@ -386,7 +386,7 @@ Here, $\mX_{11}$ consists of the train-predictor block, $\mX_{12}$ is the train-
         \end{matrix}
         \right).
 \]
-A Gabriel-style replicate has holdin
+A Gabriel-style replicate has hold-in
 \[
 \left(
     \begin{matrix}
@@ -395,13 +395,13 @@ A Gabriel-style replicate has holdin
     \end{matrix}
     \right)
 \]
-and holdout $\mX_{22}$.
+and hold-out $\mX_{22}$.
 
-To fit a model to the holdin set, we take the SVD of $\mX_{11}$ and fit a 
+To fit a model to the hold-in set, we take the SVD of $\mX_{11}$ and fit a 
 regression function from the predictor columns to the response columns.  
 Normally, the regression is ordinary least squares regression from the 
 principal component loadings to the response columns.  Then, to evaluate the 
-function on the holdout set, we apply the estimated regression function to 
+function on the hold-out set, we apply the estimated regression function to 
 $\mX_{21}$ to get a prediction $\mhX_{22}$.
 
 In precise terms, suppose that there are $p_1$ predictor columns, $p_2$ response columns, $n_1$ train rows, and $n_2$ test rows.  Then $\mX_{11} \in \reals^{n_1 \times p_1}$ and $\mX_{22} \in \reals^{n_2 \times p_2}$ with
@@ -562,7 +562,7 @@ then
     \end{matrix}
     \right).
 \]
-Either the test set will observe this factor, or the train set, but not both.  Only the set that contains $\mX_{11}$ will be affected by the factor.
+Either the test set will observe this factor, or the train set, but not both.  Only the set that contains $X_{11}$ will be affected by the factor.
 
 One way to adjust for sparse factors is to randomly rotate the rows and
 columns of $\mX$ before performing the cross-validation. We generate $\mP \in
@@ -584,7 +584,7 @@ random configuration that gives equal weight in expectation.
 
 \section{Missing-value SVDs}\label{S:missing-values-svds}
 
-Taking an SVD of a matrix with missing entries is a difficult problem.  First of all, the problem is not very well defined.  If $\mA$ is a matrix with missing entries, there are potentially many different ways of factoring $\mA$ as an SVD-like product.  Often, one attempts to force uniqueness by finding the complete matrix $\mA' \in \reals^{n,p}$ of minimum rank such that $A'_{ij} = A_{ij}$ for all non-missing elements of $\mA$.  Even then, $\mA'$ may not be unique.  Take
+To perform a Wold-style cross-validation we need to be able to compute the SVD of a matrix with missing entries.  This is a difficult problem.  First of all, the problem is not very well defined.  If $\mA$ is a matrix with missing entries, there are potentially many different ways of factoring $\mA$ as an SVD-like product.  Often, one attempts to force uniqueness by finding the complete matrix $\mA' \in \reals^{n,p}$ of minimum rank such that $A'_{ij} = A_{ij}$ for all non-missing elements of $\mA$.  Even then, $\mA'$ may not be unique.  Take
 \[
     \mA
     =
@@ -1225,7 +1225,7 @@ CV-Gabriel &  &  &  &  &  &  2 &  4 &  22 &  25 &  24 &  20 &  3 &  &  &  & \\
 
 \section{Real data example}
 
-We conclude this chapter with an application from Neuroscience. The Neural
+We conclude this chapter with a Neuroscience application . The Neural
 Prosthetic Systems Laboratory at Stanford University (NPSL) is interested in
 studying the motor cortex region of the brain. Essentially, they want to know
 what the correspondence is between neural activity in that part of the brain
@@ -1235,7 +1235,7 @@ unanswered. It is thought that desired position, speed, and velocity get
 expressed as neural activity, but conjectures about the dimensionality of the
 neural responses vary from $7$ to $20$ or more.
 
-NPSL has designed and carried out an experiment mean to measure the 
+NPSL has designed and carried out an experiment meant to measure the 
 dimensionality of neural response for a two-dimensional motion task.  The 
 experiment involves measuring the activity in $49$ neurons as a monkey 
 performs $27$ different movement tasks (conditions).
@@ -1259,7 +1259,7 @@ $5 \, \text{ms}$ intervals, so that there are $422$ total time points.  It is
 necessary to do some registration, scaling, and interpolation before doing 
 more serious data analysis, but the details of those processes are not 
 important for our purposes.  Figure~\ref{F:motor-cortex-data} shows the 
-responses for each neuron and condition.
+preprocessed responses for each neuron and condition.
 
 \begin{figure}[tbh]
     \centering
@@ -1323,14 +1323,16 @@ Neuroscience experiment.
 We have focused on latent factor models and the singular value decomposition.
 However, it is relatively easy to translate the two styles of cross-validation
 presented here to other unsupervised learning methods. For Wold-style
-holdouts, an EM-like algorithm can usually be applied to the models in many
+hold-outs, an EM-like algorithm can usually be applied to the models in many
 unsupervised learning contexts. The Gabriel-style philosophy of ``treat some
 of the variables as response and the others as predictors'' can also be
 applied more broadly. We are in the process of investigating both
 cross-validation strategies for clustering and kernel-based manifold learning.
 
 This chapter leaves a number of open questions.  Mainly, we have not provided 
-any theoretic results here, only simulations.  A quote from Downton's discussion of Stone's 1974 paper on cross-validation is particularly appropriate here:
+any theoretical results here, only simulations.  A quote from Downton's 
+discussion of Stone's 1974 paper on cross-validation equally applies to our 
+work:
 \begin{quote}
     A current nine-day wonder in the press concerns the exploits of a Mr. Uri
     Geller who appears to be able to bend metal objects without touching them;
@@ -1340,7 +1342,5 @@ any theoretic results here, only simulations.  A quote from Downton's discussion
     the other hand they both deserve serious scientific examination
     \cite{stone1974cv}.
 \end{quote}
-In the next chapter, we provide some theoretical justification for 
-Gabriel-style cross-validation, but analysis of Wold-style cross-validation is 
-still an open problem.
+Despite Dowton's skepticism, cross-validation has proven to be an invaluable tool for supervised learning.  It is our hope that with some additional work, CV can be just as valuable for unsupervised learning.  In the next chapter, we provide some theoretical justification for Gabriel-style cross-validation, but analysis of Wold-style cross-validation is still an open problem.
 
