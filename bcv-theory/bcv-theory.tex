@@ -1,22 +1,103 @@
 \chapter[Optimal leave-out size for BCV]{Optimal leave-out size for bi-cross-validation}
 
-In this chapter we will determine the optimal leave out-size for bi-cross-validation (BCV), along with proving a weak form of consistency.  We start with a lengthy discussion of what exactly BCV is trying to estimate.  Once we have a well-defined criterion, we show how to choose BCV parameters to get optimal performance.  In our context, ``optimal'' will mean that the rank chosen by BCV agrees with a specified risk.
+In this chapter we will determine the optimal leave out-size for Gabriel-style
+cross-validation of an SVD, also known as bi-cross-validation (BCV), along
+with proving a weak form of consistency.  In Chapter~\ref{C:intrinsic-rank},
+we rigorously defined the rank estimation problem, and in 
+Chapter~\ref{C:cvul} we introduced Gabriel-style cross validation.  Here, we 
+provide theoretic justification for Gabriel-style CV.
 
-\subsection{An asymptotic framework}
+First, a quick review of the problem.  We are given $\mX$, and $n \times p$ matrix generating by a ``signal-plus-noise'' process, 
+\[
+    \mX = \sqrt{n} \, \mU \mD \mV^\trans + \mE.
+\]
+Here, $\mU \in \reals^{n \times k_0}$, $\mD \in \reals^{k_0 \times k_0}$,
+$\mV \in \reals^{p \times k_0}$, and $\mE \in \reals^{n \times p}$.  The first
+term, $\sqrt{n} \mU \mD \mV^\trans$, is the low-rank ``signal'' part.  We call 
+$\mU$ and $\mV$ the matrices of left and right factors, respectively.  They 
+are normalized so that $\mU^\trans \mU = \mV^\trans \mV = \mI_{k_0}$.  The 
+factors ``strengths'' are given in $\mD$, a diagonal matrix of the form
+\(
+    \mD =
+        \diag( d_1, d_2, \ldots, d_{k_0}),
+\)
+with $d_1 \geq d_2 \geq \cdots \geq d_{k_0} \geq 0$.  Also, typically $k_0$ is 
+much smaller than $n$ and $p$.  Lastly, $\mE$ consists of ``noise''.  Although more general types of noise are possible, for simplicity we will assume that $\mE$ is independent of $\mU$, $\mD$, and $\mV$.  We think 
+of the signal part as the important part of $\mX$, and the noise part is 
+inherently uninteresting.
 
-From a theoretical standpoint, it is more natural to work with a sequence
-of data matrices $\mX_1, \mX_2, \ldots, \mX_n$.  
-The matrix $\mX_n$ is of size $n \times p$, with $p = p(n)$, $n \to \infty$,
-and $\frac{n}{p} = \gamma + \oh\left( \frac{1}{\sqrt{n}} \right)$ for fixed
-constant $\gamma \in (0, \infty)$.   We have
-\begin{equation}
-    \mX_n = \sqrt{n} \mU_n \mD_n \mV_n^\trans + \mE_n,
-\end{equation}
-where $\mU_n^\trans \mU_n = \mV_n^\trans \mV_n^\trans = \mI_k$ and
-$\mD_n = \diag( d_{n,1}, d_{n,2}, \ldots, d_{n,k})$.  We label the columns
-of $\mU_n$ and $\mV_n$ as $\vu_{n,1}, \vu_{n,2}, \ldots, \vu_{n,k}$ and
-$\vv_{n,1}, \vv_{n,2}, \ldots, \vv_{n,k}$, respectively.
+The rank estimation problem is find the optimal number of terms of the SVD of $\mX$ to keep to estimate the signal part.  We let 
+$\mX = \sqrt{n} \, \mhU \mhD \mhV^\trans$ be the SVD of $\mX$, where 
+$\mhU \in \reals^{n \times n \wedge p}$ and 
+$\mhV \in \reals^{p \times n \wedge p}$ have orthonormal columns, and
+\(
+    \mhD = \diag(
+        \hd_1, \hd_2, \ldots, \hd_{n \wedge p}
+    )
+\)
+with $\hd_1 \geq \hd_2 \geq \cdots \geq \hd_{n \wedge p}$.  For $0 \leq k \leq n \wedge p$, we define
+\(
+    \mhD(k) = \diag(
+        \hd_1, \hd_2, \ldots, \hd_k, 0, 0, \ldots, 0
+    )
+\)
+so that $\mhX(k) \equiv \sqrt{n} \, \mhU \mhD(k) \mhV^\trans$ is the SVD of $\mX$ truncated to $k$ terms.  The model error with respect to Frobenius loss is given by
+\[
+    \ME(k) = \frac{1}{n \, p}
+             \| \sqrt{n} \, \mU \mD \mV^\trans - \mhX(k) \|_\Frob^2
+\]
+The optimal rank is defined with respect to this criterion as
+\[
+    k^\ast = \argmin_k \ME(k).
+\]
+The problem we consider is how to estimate $\ME(k)$ or $k^\ast$.
 
+Closely related to model error is the \emph{prediction error}.  For prediction error, we conjure a noise matrix $\mE'$ with the same distribution as $\mE$ and let $\mX' = \sqrt{n} \mU \mD \mV^\trans + \mE'$.  The prediction error is defined as
+\[
+    \PE(k) \equiv \frac{1}{n \, p} \E[ \mX' - \mhX(k) ],
+\]
+which can be expressed as
+\[
+    \PE(k) = \E[ \ME(k) ] + \frac{1}{n \, p} \E \| \mE \|_\Frob^2.
+\]
+The minimizer of $\PE$ is the same as the minimizer of $\E[ \ME(k) ]$,
+and one can get an estimate of $\ME$ a $\PE$ estimate by subtracting an estimate of the noise level.
 
-\section{Choosing a loss function}
+The previous chapter suggests using Gabriel-style cross-validation for estimating the optimal rank.  Owen \& Perry~\cite{owen2009bi} call this procedure bi-cross-validation (BCV).  For fold $(i,j)$ of BCV, we permute
+the rows of $\mX$ with matrices $\mP^{(i)}$ and $\mQ^{(j)}$, then partition the result into four blocks as
+\[
+    \mP^{(i)}^\trans \mX \mQ^{(j)}
+        =
+        \left(
+        \begin{matrix}
+            \mX_{11} & \mX_{12} \\
+            \mX_{21} & \mX_{22}
+        \end{matrix}
+        \right).
+\]
+We take the SVD of the upper-left block and evaluate its predictive 
+performance on the lower-right block.  If 
+$\mX_{11} = \sqrt{n} \mhU_1 \mhD_1 \mhV^\trans$ is the SVD of $\mX_{11}$ and
+$\mhX_{11}(k) = \sqrt{n} \mhU_1 \mhD_1(k) \mhV^\trans$ is its truncation to 
+$k$ terms, then the BCV estimate of prediction error from this fold is given 
+by
+\[
+    \widehat{\PE}\big(k ; i, j \big)
+        =
+            \frac{1}{n_2 \, p_2}
+            \| \mX_{22} - \mX_{21} \mhX_{11}(k)^+ \mX_{12} \|_\Frob^2,
+\]
+where $^+$ denotes pseudo-inverse and $\mX_{22}$ has dimensions $n_2 \times p_2$.  For $(K,L)$-fold BCV, the final estimate is the average over all folds:
+\[
+    \widehat{\PE}(k)
+        =
+        \frac{1}{K L}
+        \sum_{i=1}^K
+        \sum_{j=1}^L
+            \widehat{\PE}\big(k ; i, j \big).
+\]
+From $\widehat{\PE}(k)$ we can get an estimate of the optimal rank as
+$\hat k = \argmin_k \widehat{\PE}(k)$.
+
+In this chapter, we give a theoretical analysis of $\widehat{\PE}(k)$.  This allows us to determine the bias inherent in $\widehat{\PE}(k)$ and its consistency properties for estimating $k^\ast$, along with guidance for choosing the number of folds ($K$ and $L$).
 
