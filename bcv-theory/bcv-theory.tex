@@ -1,4 +1,5 @@
 \chapter[Optimal leave-out size for BCV]{Optimal leave-out size for bi-cross-validation}
+\label{C:optimal-leave-out}
 
 In this chapter we will determine the optimal leave out-size for Gabriel-style
 cross-validation of an SVD, also known as bi-cross-validation (BCV), along
@@ -101,3 +102,468 @@ $\hat k = \argmin_k \widehat{\PE}(k)$.
 
 In this chapter, we give a theoretical analysis of $\widehat{\PE}(k)$.  This allows us to determine the bias inherent in $\widehat{\PE}(k)$ and its consistency properties for estimating $k^\ast$, along with guidance for choosing the number of folds ($K$ and $L$).
 
+
+\section{Assumptions and notation}
+
+The theory becomes easier if we work in an asymptotic framework.  For that,
+we introduce a sequence of data matrices indexed by $n$:
+\[
+    \mX_{n} = \sqrt{n} \, \mU_n \mD_n \mV_n^\trans + \mE_n.
+\]
+Here, $\mX_n \in \reals^{n \times p}$ with $p = p(n)$ and 
+$\frac{n}{p} \to \gamma \in (0,\infty)$.  Even though the dimensions of $\mX_n$ grow, we assume that the number of factors is fixed at $k_0$.  The full set of assumptions is as follows:
+
+\begin{assumption}\label{A:optimal-leave-out-shapes}
+    We have a sequence of random matrices $\mX_n \in \reals^{n \times p}$ 
+    with $n \to \infty$ and $p = p(n)$ also going to infinity.  Their ratio
+    converges to a fixed constant $\gamma \in (0, \infty)$ as 
+    $\frac{n}{p} = \gamma + \oh\left( \frac{1}{\sqrt{n}} \right)$.
+\end{assumption}
+
+\begin{assumption}
+    The matrix $\mX_n$ is generated as 
+    $\mX_n = \sqrt{n} \, \mU_n \mD_n \mV_n^\trans + \mE_n$.  Here,
+    $\mU_n \in \reals^{n \times k_0}$, 
+    $\mD_n \in \reals^{k_0 \times k_0}$,
+    $\mV_n \in \reals^{p \times k_0}$, and $\mE_n \in \reals^{n \times p}$.
+    The number of factors, $k_0$, is fixed.
+\end{assumption}
+
+\begin{assumption}
+    The matrices of left and right factors, $\mU_n$ and $\mV_n$, have 
+    orthonormal columns, i.e. 
+    $\mU_n^\trans \mU_n = \mV_n^\trans \mV_n = \mI_{k_0}$.
+    Their columns are denoted by
+    $\vu_{n,1}, \vu_{n,2}, \ldots, \vu_{n,k_0}$ and
+    $\vv_{n,1}, \vu_{n,2}, \ldots, \vv_{n,k_0}$, respectively.
+\end{assumption}
+
+\begin{assumption}
+    The matrix of factor strengths is diagonal:
+    \[
+        \mD_n = \diag( d_{n,1}, d_{n,2}, \ldots, d_{n,k_0}).  
+    \]
+    The strengths
+    converge as $d_{n,i}^2 \toas \mu_i$ and 
+    $d_{n,i}^2 - \mu_i = \OhP\left( \frac{1}{\sqrt{n}} \right)$, strictly
+    ordered as
+    \(
+        \mu_1 > \mu_2 > \cdots > \mu_{k_0} > 0.
+    \)
+\end{assumption}
+
+\begin{assumption}\label{A:optimal-leave-out-noise}
+    The noise matrix $\mE_n$ is independent of $\mU_n$, $\mD_n$, and $\mV_n$.
+    Its elements are \iid with 
+    \(
+        E_{n,11} \sim \Normal( 0, \, \sigma^2 ).
+    \)
+\end{assumption}
+
+\noindent
+These assumptions are stanford for latent factor models.
+
+We can apply the work of allow us to apply the work of
+Chapter~\ref{C:intrinsic-rank} to get the behavior of the model error.
+    We
+let $\mX_n = \sqrt{n} \, \mhU_n \mhD_n \mhV_n^\trans$ be the SVD of $\mX_n$ and let $\mhX_n(k) = \sqrt{n} \, \mhU_n \mhD_n(k) \mhV_n^\trans$ be its truncation to $k$ terms.  Then the model error is
+\[
+    {\ME}_n (k)
+        = 
+            \frac{1}{n p} 
+            \big\| 
+                \sqrt{n} \mU_n \mD_n \mV_n^\trans 
+                - 
+                \mhX_n(k)
+            \big\|_\Frob^2.
+\]
+With Assumtions~\ref{A:optimal-leave-out-shapes}--\ref{A:optimal-leave-out-noise}, we can apply Proposition~\ref{P:frob-loss-behavior} to get that for fixed
+$k$ as $n \to \infty$,
+\[
+    p \cdot {\ME}_n (k)
+        \toas
+        \sum_{i=1}^{k}
+            \alpha_i \mu_i
+        +
+        \sum_{i=k+1}^{k_0}
+            \mu_i
+        +
+        \sigma^2
+        \left(
+            1 + \frac{1}{\sqrt{\gamma}}
+        \right)^2
+        \cdot
+        (k - k_0)_+,
+\]
+where
+\[
+    \alpha_i 
+    =
+    \begin{cases}
+        \frac{\sigma^2}{\gamma \mu_i^2}
+                \big(
+                    3 \sigma^2 + (\gamma+1) \mu_i
+                \big)
+            &\text{if $\mu_i > \frac{\sigma^2}{\sqrt{\gamma}}$,} \\
+        1 
+        + 
+        \frac{\sigma^2}{\mu_i}
+        \left(
+            1
+            +
+            \frac{1}{\sqrt{\gamma}}
+        \right)^2
+            &\text{otherwise.}
+    \end{cases}
+\]
+Defining $k_n^\ast$ as the minimizer of ${\ME}_n(k)$, we also get that
+\[
+    k_n^\ast
+        \toas
+            \max \left\{ i : \mu_i > \mu_\text{crit} \right\},
+\]
+where
+\[
+    \mu_\text{crit}
+    \equiv
+    \sigma^2
+    \left(
+    \frac{1 + \gamma^{-1}}{2}
+    +
+    \sqrt{ 
+        \left( \frac{1 + \gamma^{-1} }{2} \right)^2
+        +
+        \frac{3}{\gamma}
+    }
+    \right),
+\]
+provided no $\mu_i$ is exactly eqaul to $\mu_\text{crit}$.  We therefore know
+how ${\ME}_n(k)$ and its minimizer behave.
+
+To study the bi-cross-validation estimate of prediction error, we need to 
+introduce some more notation.  As we are only analyzing first-order 
+behavior, we can restrict our analysis to the prediction error estimate from a 
+single fold.  We let $\mP_n \in \reals^{n \times n}$ and 
+$\mQ_n \in \reals^{p \times p}$ be permutation matrices for the fold, partitioned as
+\(
+    \mP_n 
+        = 
+        \left( 
+        \begin{matrix}
+            \mP_{n,1} & \mP_{n,2}
+        \end{matrix}
+        \right)
+\)
+and
+\(
+    \mQ_n
+        =
+        \left(
+        \begin{matrix}
+            \mQ_{n,1} & \mQ_{n,2}
+        \end{matrix}
+        \right),
+\)
+with $\mP_{n,1} \in \reals^{n \times n_1}$, $\mP_{n,2} \in \reals^{n \times n_2}$, $\mQ_{n,1} \in \reals^{p \times p_1}$, and $\mQ_{n,2} \in \reals^{p \times p_2}$.  Note that $n = n_1 + n_2$ and that $p = p_1 + p_2$.  We define
+$\mX_{n,ij} = \mP_{n,i}^\trans \mX \mQ_{n,j}$,
+$\mE_{n,ij} = \mP_{n,i}^\trans \mE \mQ_{n,j}$,
+$\mU_{n,i} = \mP_{n,i}^\trans \mU_n$, and
+$\mV_{n,j} = \mQ_{n,j}^\trans \mV_n$.  Then in block form,
+\begin{align*}
+    \mP_n^\trans \mX_n \mQ_n
+        &=
+            \left(
+            \begin{matrix}
+                \mX_{n,11} & \mX_{n,12} \\
+                \mX_{n,21} & \mX_{n,22}
+            \end{matrix}
+            \right) \\
+        &=
+            \sqrt{n}
+            \left(
+            \begin{matrix}
+                \mU_{n,1} \mD_n \mV_{n,1}^\trans &
+                    \mU_{n,1} \mD_n \mV_{n,2}^\trans \\
+                \mU_{n,2} \mD_n \mV_{n,1}^\trans &
+                    \mU_{n,2} \mD_n \mV_{n,2}^\trans
+            \end{matrix}
+            \right)
+            +
+            \left(
+            \begin{matrix}
+                \mE_{n,11} & \mE_{n,12} \\
+                \mE_{n,21} & \mE_{n,22}
+            \end{matrix}
+            \right)
+\end{align*}
+This is the starting point of our analysis.
+
+Next, we describe the estimate of prediction error.  We let
+$\mX_{n,11} = \sqrt{n} \, \mhU_{n,1} \mhD_{n,1} \mhV_{n,1}^\trans$ be the
+SVD of $\mX_{n,11}$.  Here,
+\begin{align*}
+    \mhU_{n,1}
+        &=
+            \left(
+            \begin{matrix}
+                \vhu_{n,1}^{(1)} & 
+                \vhu_{n,2}^{(1)} & 
+                \cdots & 
+                \vhu_{n,n_1 \wedge p_1}^{(1)}
+            \end{matrix}
+            \right), \\
+    \mhV_{n,1}
+        &=
+            \left(
+            \begin{matrix}
+                \vhv_{n,1}^{(1)} & 
+                \vhv_{n,2}^{(1)} & 
+                \cdots & 
+                \vhv_{n,n_1 \wedge p_1}^{(1)}
+            \end{matrix}
+            \right),
+\intertext{and}
+    \mhD_{n,1}
+        &=
+            \diag \left(
+                \hd_{n,1}^{(1)},
+                \hd_{n,2}^{(1)},
+                \ldots,
+                \hd_{n,n_1 \wedge p_1}^{(1)}
+            \right).
+\end{align*}
+For convenience, we define $\hmu_{n,i}^{(1)} = \big(\hd_{n,i}^{(1)}\big)^2$.
+For $0 \leq k \leq n_1 \wedge p_1$, we let
+\[
+    \mhD_{n,1}(k)
+        =
+            \diag \left(
+                \hd_{n,1}^{(1)},
+                \hd_{n,2}^{(1)},
+                \ldots,
+                \hd_{n,k}^{(1)},                
+                0,
+                0,
+                \ldots,
+                0
+            \right)
+\]
+so that 
+\(
+    \mhX_{n,11} (k)
+        \equiv \sqrt{n} \, \mhU_{n,1} \mhD_{n,1}(k) \mhV_{n,1}^\trans
+\)
+is the SVD of $\mhX$ truncated to $k$ terms.  It has pseudo-inverse
+\(
+    \mhX_{n,11}(k)^+
+        =
+            \frac{1}{\sqrt{n}} \, 
+            \mhV_{n,1} \mhD_{n,1}(k)^+ \mhU_{n,1}^\trans.
+\)
+The BCV rank-$k$ prediction of $\mX_{22}$ is
+\begin{align*}
+    \mhX_{n,22}(k)
+        &=
+            \mX_{n,21} \mhX_{n,11}^{+}(k) \mX_{n,12} \\
+        &=
+            \big(
+                \sqrt{n} \, \mU_{n,2} \mD_n \mV_{n,1}^\trans 
+                + \mE_{n,21}
+            \big)
+            \big(
+                \mhX_{n,11}(k)^+
+            \big)
+            \big(
+                \sqrt{n} \, \mU_{n,1} \mD_n \mV_{n,2}^\trans 
+                + \mE_{n,12}
+            \big) \\
+    \begin{split}
+        &= 
+            \sqrt{n} \, \mU_{n,2} \mD_n \mV_{n,1}^\trans
+                \mhV_{n,1} \mhD_{n,1}(k)^+ \mhU_{n,1}^\trans
+                \mU_{n,1} \mD_n \mV_{n,2}^\trans \\
+        &\quad+
+            \mU_{n,2} \mD_n \mV_{n,1}^\trans
+                \mhV_{n,1} \mhD_{n,1}(k)^+ \mhU_{n,1}^\trans
+                \mE_{n,12} \\
+        &\quad+
+            \mE_{n,21}
+                \mhV_{n,1} \mhD_{n,1}(k)^+ \mhU_{n,1}^\trans
+                \mU_{n,1} \mD_n \mV_{n,2}^\trans \\
+        &\quad+
+            \frac{1}{\sqrt{n}} \, \mE_{n,21}
+                \mhV_{n,1} \mhD_{n,1}(k)^+ \mhU_{n,1}^\trans
+                \mE_{n,12}
+    \end{split} \\
+    \begin{split}
+        &=
+            \sqrt{n} \, 
+                \mU_{n,2} \mD_n 
+                \mTheta_{n,1} \mhD_{n,1}(k)^+ \mPhi_{n,1}^\trans
+                \mD_n \mV_{n,2}^\trans \\
+        &\quad+
+            \mU_{n,2} \mD_n \mTheta_{n,1} \mhD_{n,1}(k)^+ \mtE_{n,12} \\
+        &\quad+
+            \mtE_{n,21} 
+                \mhD_{n,1}(k)^+ \mPhi_{n,1}^\trans \mD_n \mV_{n,2}^\trans \\
+        &\quad+
+            \frac{1}{\sqrt{n}} \, \mtE_{n,21} \mhD_{n,1}(k)^+ \mtE_{n,12},
+    \end{split}
+\end{align*}
+where 
+$\mTheta_{n,1} = \mV_{n,1}^\trans \mhV_{n,1}$,
+$\mPhi_{n,1}   = \mU_{n,1}^\trans \mhU_{n,1}$,
+$\mtE_{n,12} = \mhU_{n,1}^\trans \mE_{n,12}$, and
+$\mtE_{n,21} = \mE_{n,21} \mhV_{n,1}$.  Note that $\mtE_{n,12}$ and $\mtE_{n,21}$ have \iid $\Normal( 0 ,\, \sigma^2 )$ entries, also independent of the other terms that make up $\mhX_{n,22}(k)$ and $\mX_{n,22}$.  By conditioning on $\mtE_{n,12}$ and $\mtE_{n,21}$, we can see that $\mhX_{22}(k)$ is in general a biased estimate of $\sqrt{n} \, \mU_{n,2} \mD_n \mV_{n,2}^\trans$.
+
+To analyze $\mhX_{22}(k)$, we need to impose some additional assumptions.
+The first assumption is fairly banal and involves the leave-out sizes.
+
+\begin{assumption}
+    There exist fixed $K, L \in (0, \infty)$ (not necessarily integers),
+    such that as $n \to \infty$,
+    $\frac{n}{n_2} \to K$ and $\frac{p}{p_2} \to L$.
+\end{assumption}
+
+\noindent
+The next assumption is not quite so innocent and involves the distribution of the factors.
+
+\begin{assumption}\label{A:held-in-orthog}
+    The departure from orthogonality for the held-in factors $\mU_{n,1}$
+    and $\mV_{n,1}$ is of order $1/\sqrt{n}$.  Specifically,
+    \begin{gather*}
+        \sup_n 
+        \E \, \Big\| 
+            \sqrt{n_1} 
+            \Big( 
+                \mU_{n,1}^\trans \mU_{n,1} 
+                -
+                \frac{n_1}{n} \mI_{k_0}
+            \Big)
+        \Big\|_\Frob^2
+        <
+        \infty, \quad\text{and} \\
+        \sup_n
+        \E \, \Big\| 
+            \sqrt{p_1} 
+            \Big( 
+                \mV_{n,1}^\trans \mV_{n,1} 
+                -
+                \frac{p_1}{p} \mI_{k_0}
+            \Big)
+        \Big\|_\Frob^2
+        <
+        \infty.
+    \end{gather*}
+\end{assumption}
+
+\noindent
+This assumption is there so that we can apply the theory in Chapter~\ref{C:svd-behavior} to get at the behavior of the SVD of $\mX_{n,11}$.  It is satisfied, for example, if we are performing rotated cross-validation (subsection~\ref{SS:rotated-cv}) or if the factors are generated by certain stationary processes.
+
+
+\section{The SVD of the held-in block}
+
+The first step in analyzing the BCV estimate of prediction error is to see how the SVD of $\mX_{n,11}$ behaves.  With Assumptions~\ref{A:optimal-leave-out-shapes}--\ref{A:held-in-orthog}, we can start this analysis.  Our strategy is to use Assumption~\ref{A:held-in-orthog} to apply a matrix perturbation argument in combination with Theorems~\ref{T:spiked-eigenvalue-limits} and~\ref{T:spiked-eigenvector-limits}.
+
+The main two ingredients are two standard results about perturbed singular value decompositions.  The first theorem is about singular values:
+
+\begin{theorem}[Mirsky]
+    If $\mA$ and $\mA + \mE$ are in $\reals^{n \times p}$, then
+    \[
+        \sum_{i=1}^{n \wedge p}
+            \big(
+                \sigma_i(\mA + \mE)
+                -
+                \sigma_i(\mA)
+            \big)^2
+        \leq
+        \| \mE \|_\Frob^2,
+    \]
+    where $\sigma_i(\cdot)$ denotes the $i$th singular value.
+\end{theorem}
+
+\noindent
+The next theorem is about singular vectors.
+
+\begin{theorem}[Wedin]
+    Let
+    \[
+        \left(
+        \begin{matrix}
+            \mU_1 & \mU_2 & \mU_3
+        \end{matrix}
+        \right)^\trans
+        \mA
+        \left(
+        \begin{matrix}
+            \mV_1 & \mV_2
+        \end{matrix}
+        \right)
+        =
+        \left(
+        \begin{matrix}
+            \mSigma_1 & 0 \\
+            0         & \mSigma_2 \\
+            0         & 0
+        \end{matrix}
+        \right)
+    \]
+    be a singular value decomposition of $\mA$, in which the singular
+    values are not necessarily in descending order.  Let $\mtA = \mA + \mE$
+    be a perturbation of $\mA$ and let
+    \[
+        \left(
+        \begin{matrix}
+            \mtU_1 & \mtU_2 & \mtU_3
+        \end{matrix}
+        \right)^\trans
+        \mtA
+        \left(
+        \begin{matrix}
+            \mtV_1 & \mtV_2
+        \end{matrix}
+        \right)
+        =
+        \left(
+        \begin{matrix}
+            \mtSigma_1 & 0 \\
+            0          & \mtSigma_2 \\
+            0          & 0
+        \end{matrix}
+        \right).
+    \]
+    Let $\mH$ be the matrix of canonical angles between
+    $\mathcal{R}(\mU_1)$ and $\mathcal{R}(\mtU_1)$, and let
+    $\mXi$ be the matrix of canonical angles between
+    $\mathcal{R}(\mV_1)$ and $\mathcal{R}(\mtV_1)$.  Define
+    \[
+        \mR = \mA \mtV_1 - \mtU_1 \mtSigma_1
+    \]
+    and
+    \[
+        \mS = \mA^\trans \mtU_1 - \mtV_1 \mtSigma_1.
+    \]
+    If there is a $\delta > 0$ such that
+    \[
+        \min_{i,j} 
+            | \sigma_i( \mtSigma_1 ) - \sigma_j( \mSigma_2 )| 
+        \geq 
+        \delta
+    \]
+    and
+    \[
+        \min_i \sigma_i( \mtSigma_1 ) \geq \delta,
+    \]
+    then
+    \[
+        \| \sin \mH \|_\Frob^2 + \| \sin \mXi \|_\Frob^2
+        \leq
+        \frac{\| \mR \|_\Frob^2 + \| \mS \|_\Frob^2}{\delta^2}.
+    \]
+\end{theorem}
+
+\noindent
+In the above theorem, the matrix of canonical angles between 
+$\mathcal{R}(\mU_1)$ and $\mathcal{R}(\mtU_1)$, $\mH$, is a matrix whose
+diagonal entries are the singular values of $\mU_1^\trans \mtU_1$ and whose
+off-diagonal elements are zero.  The matrix $\sin \mH$ is interpreted as element-wise application of the $\sin$ function.  The other matrices, $\mXi$ and $\sin \mXi$, are similarly defined.
