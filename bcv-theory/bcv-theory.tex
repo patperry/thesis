@@ -421,8 +421,9 @@ The first assumption is fairly banal and involves the leave-out sizes.
 
 \begin{assumption}
     There exist fixed $K, L \in (0, \infty)$ (not necessarily integers),
-    such that as $n \to \infty$,
-    $\frac{n}{n_2} \to K$ and $\frac{p}{p_2} \to L$.
+    such that
+    $\frac{n}{n_2} = K + \oh\left(\frac{1}{\sqrt{n}}\right)$ and 
+	$\frac{p}{p_2} = L + \oh\left(\frac{1}{\sqrt{n}}\right)$.
 \end{assumption}
 
 \noindent
@@ -464,6 +465,99 @@ This assumption is there so that we can apply the theory in Chapter~\ref{C:svd-b
 \section{The SVD of the held-in block}
 
 The first step in analyzing the BCV estimate of prediction error is to see how the SVD of $\mX_{n,11}$ behaves.  With Assumptions~\ref{A:optimal-leave-out-shapes}--\ref{A:held-in-orthog}, we can start this analysis.  Our strategy is to use Assumption~\ref{A:held-in-orthog} to apply a matrix perturbation argument in combination with Theorems~\ref{T:spiked-eigenvalue-limits} and~\ref{T:spiked-eigenvector-limits}.
+
+We show that we can apply Theorem~\ref{T:spiked-eigenvector-limits} to 
+$\sqrt{n} \mU_{n,1} \mD_n \mV_{n,1} + \mE_{n,11}$ even though $\mU_{n,1}$ and $\mV_{n,1}$ do not have orthogonal columns.  First we set
+\[
+	\gamma_1
+		= 
+		\frac{K-1}{K}
+		\cdot
+		\frac{L}{L-1}
+		\cdot
+		\gamma
+\]
+and note that 
+\(
+	\frac{n_1}{p_1} 
+		= 
+		\frac{n_1}{n} \cdot \frac{p}{p_1} \cdot \frac{n}{p}
+		=
+		\gamma_1 + \oh\left( \frac{1}{\sqrt{n_1}} \right).
+\)
+Next, for $1 \leq i \leq k_0$, we define
+\begin{gather*}
+	\mu_{1,i}
+		= 
+			\frac{L-1}{L} \cdot \mu_{i}, \\
+	\bmu_{1,i}
+		=
+		\begin{cases}
+			\frac{K-1}{K}
+			\cdot
+            \left( \mu_{1,i} + \sigma^2 \right)
+            \left( 1 + \frac{\sigma^2}{\gamma \mu_{1,i}} \right)
+                &\text{when $\mu_{1,i} 
+							 > 
+							 \frac{\sigma^2}{\sqrt{\gamma_1}}$}, \\
+			\frac{K-1}{K}
+			\cdot
+            \sigma^2 \left( 1 + \frac{1}{\sqrt{\gamma_1}} \right)^2
+                &\text{otherwise.}
+        \end{cases}		
+			\\
+	\theta_{1,i}
+		=
+	        \begin{cases}
+				\frac{L-1}{L}
+				\cdot
+				\sqrt{
+		            \left( 
+						1 
+						- 
+						\frac{\sigma^4}{ \gamma_1 \mu_{1,i}^2}
+					\right)
+		            \left(
+						1 
+						+ 
+						\frac{\sigma^2}{ \gamma_1 \mu_{1,i} } 
+					\right)^{-1}
+				}
+	            &\text{when $\mu_{1,i} 
+							 > 
+							 \frac{\sigma^2}{\sqrt{\gamma_1}}$,} \\
+	            0
+	            &\text{otherwise,}
+	        \end{cases} \\
+    \varphi_{1,i}
+        =
+            \begin{cases}
+				\frac{K-1}{K}
+				\cdot
+				\sqrt{
+	                \left( 
+						1 
+						- 
+						\frac{\sigma^4}{ \gamma_1 \mu_{1,i}^2} 
+					\right)
+	                \left(
+						1 
+						+ 
+						\frac{\sigma^2}{ \mu_{1,i} } 
+					\right)^{-1}
+				}
+                &\text{when $\mu_{1,i} 
+							 > 
+							\frac{\sigma^2}{\sqrt{\gamma_1}}$,} \\
+                0
+                &\text{otherwise.}
+            \end{cases}
+\end{gather*}
+
+\begin{proposition}
+\end{proposition}
+
+
 
 The main two ingredients are two standard results about perturbed singular value decompositions.  The first theorem is about singular values:
 
