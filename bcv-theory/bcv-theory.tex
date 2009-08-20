@@ -67,7 +67,7 @@ and one can get an estimate of $\ME$ a $\PE$ estimate by subtracting an estimate
 The previous chapter suggests using Gabriel-style cross-validation for estimating the optimal rank.  Owen \& Perry~\cite{owen2009bi} call this procedure bi-cross-validation (BCV).  For fold $(i,j)$ of BCV, we permute
 the rows of $\mX$ with matrices $\mP^{(i)}$ and $\mQ^{(j)}$, then partition the result into four blocks as
 \[
-    \mP^{(i)}^\trans \mX \mQ^{(j)}
+    \mP^{(i)\trans} \mX \mQ^{(j)}
         =
         \left(
         \begin{matrix}
