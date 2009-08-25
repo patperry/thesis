@@ -1,4 +1,8 @@
+perry-thesis.dvi
+perry-thesis.fdb_latexmk
 perry-thesis.pdf
+perry-thesis.ps
+perry-thesis.synctex.gz
 suthesis
 cv-unsupervised/plots/neurons.pdf
 .DS_Store
