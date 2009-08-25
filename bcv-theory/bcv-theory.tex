@@ -496,7 +496,7 @@ Next, for $1 \leq i \leq k_0$, we define
 			\frac{K-1}{K}
 			\cdot
             \left( \mu_{1,i} + \sigma^2 \right)
-            \left( 1 + \frac{\sigma^2}{\gamma \mu_{1,i}} \right)
+            \left( 1 + \frac{\sigma^2}{\gamma_1 \mu_{1,i}} \right)
                 &\text{when $\mu_{1,i} 
 							 > 
 							 \frac{\sigma^2}{\sqrt{\gamma_1}}$}, \\
@@ -1363,7 +1363,8 @@ With these lemmas, we can prove the following:
 			\Big\|_\Frob^2
 		\right]
 			\to
-				\gamma^{-1} 
+				\frac{\sigma^2}{\gamma}
+				\cdot 
 				\sum_{i=1}^{k \wedge k_0}
 					\frac{\mu_i}{\bmu_{1,i}}
 					\theta_{1,i}^2,
@@ -1377,6 +1378,8 @@ With these lemmas, we can prove the following:
 			\Big\|_\Frob^2
 		\right]
 			\to
+				\sigma^2
+				\cdot
 				\sum_{i=1}^{k \wedge k_0} 
 					\frac{\mu_i}{\bmu_{1,i}}
 					\varphi_{1,i}^2,
@@ -1392,9 +1395,10 @@ With these lemmas, we can prove the following:
 			\Big\|_\Frob^2
 		\right]
 			\to
-				\gamma^{-1}
+				\frac{\sigma^2}{\gamma}
+				\cdot
 				\sum_{i=1}^k
-					\frac{1}{\bmu_{1,i}}.
+					\frac{\sigma^2}{\bmu_{1,i}}.
 	\end{gather*}
 \end{lemma}
 \begin{proof}
@@ -1503,11 +1507,146 @@ With these lemmas, we can prove the following:
 			\end{cases}
 	\]
 	We can apply the Bounded Convergence to get the result for the first
-	term since the elements of $\mU_{n,2}$, $\mV_{n,2}$ $\mTheta_{n,1}$ and
-	$\mPhi_{n,1}$ are bounded by $1$ and since
+	term since the elements of $\mU_{n,2}$, $\mV_{n,2}$, $\mTheta_{n,1}$ 
+	and $\mPhi_{n,1}$ are bounded by $1$ and since
 	Lemma~\ref{L:d1-bounded-away-from-0} ensures that the elements of
 	$\mhD_{n,1}(k)^+$ are bounded as well.
 	
 	The last three terms can be gotten similarly by applying
 	Lemma~~\ref{L:frob-random-product}.
 \end{proof}
+
+We can now get an expression for the limit of the estimated model
+approximation error.  Specifically,
+\begin{align*}
+	\begin{split}
+	\E \bigg[  
+		\frac{p}{n_2 \, p_2}
+		\Big\|
+			\sqrt{n} \, &\mU_{n,2} \mD_n \mV_{n,2}^\trans
+			-
+			\mhX_{n,22}(k)
+		\Big\|_\Frob^2
+	\bigg] \\
+		&=
+			\sum_{i=1}^{k \wedge k_0}
+			\Bigg\{
+				\mu_i 
+				\left( 
+					1
+					-
+					\sqrt{\frac{\mu_i}{\bmu_{1,i}}}
+					\theta_{1,i}
+					\varphi_{1,i}
+				\right)^2
+				+
+				\sigma^2
+				\frac{\mu_i}{\bmu_i}
+				\left(
+					\gamma^{-1} \theta_{1,i}^2
+					+
+					\varphi_{1,i}^2
+				\right)
+				+
+				\frac{\sigma^4}{\gamma \bmu_{1,i}}
+			\Bigg\} \\
+			&\qquad\qquad+
+			\sum_{i=k+1}^{k_0}
+				\mu_i
+			+
+			\frac{\sigma^2}{\gamma}
+			\cdot\!\!\!
+			\sum_{i=k_0+1}^k
+				\frac{\sigma^2}{\bmu_{1,i}}
+	\end{split} \\
+		&=
+			\sum_{i=1}^{k \wedge k_0}
+				\beta_i \, \mu_i
+			+
+			\sum_{i=k+1}^{k_0}
+				\mu_i
+			+
+			\frac{\sigma^2}{\gamma}
+			\left(
+				1
+				+
+				\frac{1}{\sqrt{\gamma_1}}
+			\right)^{-2}\!\!\!\!\!
+			\cdot
+			(k - k_0)_+,
+\end{align*}
+where
+\begin{align*}
+	\beta_i
+		&=
+			\left( 
+				1
+				-
+				\sqrt{\frac{\mu_i}{\bmu_{1,i}}}
+				\theta_{1,i}
+				\varphi_{1,i}
+			\right)^2
+			+
+			\frac{\sigma^2}{\bmu_i}
+			\left(
+				\gamma^{-1} \theta_{1,i}^2
+				+
+				\varphi_{1,i}^2
+			\right)
+			+
+			\frac{1}{\mu_i}
+			\frac{\sigma^4}{\gamma \bmu_{1,i}} \\
+		&=
+			1
+			-
+			2
+			\sqrt{\frac{\mu_i}{\bmu_{1,i}}}
+			\theta_{1,i}
+			\varphi_{1,i}
+			+
+			\frac{\mu_i}{\bmu_{1,i}}
+			\theta_{1,i}^2
+			\varphi_{1,i}^2
+			+
+			\frac{\sigma^2}{\bmu_i}
+			\left(
+				\gamma^{-1} \theta_{1,i}^2
+				+
+				\varphi_{1,i}^2
+			\right)
+			+
+			\frac{1}{\mu_i}
+			\frac{\sigma^4}{\gamma \bmu_{1,i}}.
+\end{align*}
+When $\mu_{1,i} \leq \frac{\sigma^2}{\sqrt{\gamma_1}}$,
+$\theta_{1,i} = \varphi_{1,i} = 0$ and
+\(
+	\bmu_{1,i} 
+		= 
+			\frac{K-1}{K} 
+			\cdot 
+			\sigma^2
+			\left(
+				1
+				+
+				\frac{1}{\sqrt{\gamma_1}}
+			\right)^2,
+\)
+so that
+\[
+	\beta_i
+		=
+			1
+			+
+			\frac{1}{\gamma}
+			\cdot
+			\frac{\sigma^2}{\mu_i}
+			\cdot
+			\left(
+				1
+				+
+				\frac{1}{\sqrt{\gamma_1}}
+			\right)^{-2}.
+\]
+Conversely, when $\mu_{1,i} > \frac{\sigma^2}{\sqrt{\gamma_1}}$,
+we have
