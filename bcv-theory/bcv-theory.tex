@@ -950,3 +950,372 @@ Theorems~\ref{T:spiked-eigenvalue-limits}~and~\ref{T:spiked-eigenvector-limits}.
     \end{align*}
     A similar argument applies to show that property (3) holds.
 \end{proof}
+
+\section{The prediction bias}
+
+In this section, we study the estimate of prediction error
+\[
+	\widehat{\PE}_n(k)
+		=
+			\frac{1}{n_2 \, p_2}
+			\| \mX_{n,22} - \mhX_{n,22}(k) \|_\Frob^2
+\]
+We can expand this as
+\begin{align*}
+	\widehat{\PE}_n(k)
+		&=
+			\frac{1}{n_2 \, p_2}
+			\tr \Big(
+				\big(
+					\mX_{n,22} - \mhX_{n,22}(k)
+				\big)
+				\big(
+					\mX_{n,22} - \mhX_{n,22}(k)
+				\big)^\trans
+			\Big) \\
+	\begin{split}
+		&=
+			\frac{1}{n_2 \, p_2}
+			\tr \Big(
+				\big(
+					\sqrt{n} \, \mU_{n,2} \mD_n \mV_{n,2}^\trans 
+					+
+					\mE_{n,22}
+					- 
+					\mhX_{n,22}(k)
+				\big) \\
+				&\qquad\qquad\qquad\cdot
+				\big(
+					\sqrt{n} \, \mU_{n,2} \mD_n \mV_{n,2}^\trans 
+					+
+					\mE_{n,22}
+					- 
+					\mhX_{n,22}(k)
+				\big)^\trans
+			\Big)
+	\end{split} \\
+	\begin{split}
+		&=
+			\frac{1}{n_2 \, p_2}
+			\bigg(
+				\big\| 
+					\sqrt{n} \, \mU_{n,2} \mD_n \mV_{n,2}^\trans
+					-
+					\mhX_{n,22}(k)
+				\big\|_\Frob^2 \\
+				&\qquad\qquad\quad+
+				2 \, 
+				\tr \Big(
+					\mE_{n,22}
+					\big(
+						\sqrt{n} \, \mU_{n,2} \mD_n \mV_{n,2}^\trans 
+						- 
+						\mhX_{n,22}(k)
+					\big)^\trans
+				\Big) \\
+				&\qquad\qquad\quad+
+				\|
+					\mE_{n,22}
+				\|_\Frob^2
+			\bigg).
+	\end{split}
+\end{align*}
+It has expectation
+\[
+	\E \left[ \widehat{\PE}_n(k) \right]
+		=
+			\E \left[
+				\frac{1}{n_2 \, p_2}
+				\big\| 
+					\sqrt{n} \, \mU_{n,2} \mD_n \mV_{n,2}^\trans
+					-
+					\mhX_{n,22}(k)
+				\big\|
+			\right]
+			+
+			\sigma^2.
+\]
+The first term is the expected model approximation error and the second term is the irreducible error.
+
+The expected model approximation error expands into four terms.  We have
+\begin{multline*}
+	\E \big\|
+		\sqrt{n} \, \mU_{n,2} \mD_n \mV_{n,2}^\trans
+		-
+		\mhX_{n,22}(k)
+	\big\|_\Frob^2 \\
+		=
+			\E\Big[ 
+				\tr \Big(
+					\big(
+						\sqrt{n} \,
+						\mU_{n,2} 
+						( 
+							\mD_n 
+							- 
+							\mD_n 
+							\mTheta_{n,1} \mhD_{n,1}(k)^+ \mPhi_{n,1}
+							\mD_n
+						)
+						\mV_{n,2}^\trans \\
+						-
+						\mU_{n,2} 
+						\mD_n \mTheta_{n,1} \mhD_{n,1}(k)^+ 
+						\mtE_{n,12} \\
+						- 
+						\mtE_{n,21}
+						\mhD_{n,1}(k)^+ \mPhi_{n,1}^\trans \mD_n 
+						\mV_{n,2}^\trans \\
+						-
+						\frac{1}{\sqrt{n}}
+						\mtE_{n,21}
+						\mhD_{n,1}(k)^+
+						\mtE_{n,12}
+					\big) \\
+					\cdot
+					\big(
+						\sqrt{n} \,
+						\mU_{n,2} 
+						( 
+							\mD_n 
+							- 
+							\mD_n 
+							\mTheta_{n,1} \mhD_{n,1}(k)^+ \mPhi_{n,1}
+							\mD_n
+						)
+						\mV_{n,2}^\trans \\
+						-
+						\mU_{n,2} 
+						\mD_n \mTheta_{n,1} \mhD_{n,1}(k)^+ 
+						\mtE_{n,12} \\
+						- 
+						\mtE_{n,21}
+						\mhD_{n,1}(k)^+ \mPhi_{n,1}^\trans \mD_n 
+						\mV_{n,2}^\trans \\
+						-
+						\frac{1}{\sqrt{n}}
+						\mtE_{n,21}
+						\mhD_{n,1}(k)^+
+						\mtE_{n,12}
+					\big)^\trans
+				\Big)
+			\Big].
+\end{multline*}
+By first conditioning on everything but $\mtE_{n,12}$ and $\mtE_{n,21}$, the
+cross-terms cancel and we get
+\begin{multline*}
+	\E \big\|
+		\sqrt{n} \, \mU_{n,2} \mD_n \mV_{n,2}^\trans
+		-
+		\mhX_{n,22}(k)
+	\big\|_\Frob^2 \\
+		=
+			\E\big\|
+				\sqrt{n} \,
+				\mU_{n,2} 
+				( 
+					\mD_n 
+					- 
+					\mD_n 
+					\mTheta_{n,1} \mhD_{n,1}(k)^+ \mPhi_{n,1}
+					\mD_n
+				)
+				\mV_{n,2}^\trans 
+			\big\|_\Frob^2 \\
+			+
+			\E\big\|
+				\mU_{n,2} 
+				\mD_n \mTheta_{n,1} \mhD_{n,1}(k)^+ 
+				\mtE_{n,12}
+			\big\|_\Frob^2 \\
+			+
+			\E\big\|
+				\mtE_{n,21}
+				\mhD_{n,1}(k)^+ \mPhi_{n,1}^\trans \mD_n 
+				\mV_{n,2}^\trans
+			\big\|_\Frob^2 \\
+			+
+			\E\big\|
+				\frac{1}{\sqrt{n}}
+				\mtE_{n,21}
+				\mhD_{n,1}(k)^+
+				\mtE_{n,12}
+			\big\|_\Frob^2.
+\end{multline*}
+Since $\mtE_{n,12}$ and $\mtE_{n,21}$ are made of \iid $\Normal( 0, \, \sigma^2)$ random variables, the last three terms are fairly easy to analyze.
+We can use the following lemma:
+
+\begin{lemma}
+	Let $\mZ \in \reals^{m \times n}$ be a random matrix with uncorrelated
+	elements, all having having mean $0$ and variance $1$ (but not necessarily 
+	from the same distribution).  If $\mA \in \reals^{n \times p}$ is 
+	independent of $\mZ$, then
+	\[
+		\E \left\|
+			\mZ \mA
+		\right\|_\Frob^2
+			=
+				m
+				\cdot
+				\mE \left\| \mA \right\|_\Frob^2.
+	\]
+\end{lemma}
+\begin{proof}
+	The square of the $ij$ element of the product is given by
+	\begin{align*}
+		\left( \mZ \mA \right)_{ij}^2
+			&=
+				\Big(
+					\sum_{\alpha=1}^n
+						Z_{i \alpha} A_{\alpha j}
+				\Big)^2 \\
+			&=
+				\sum_{\alpha=1}^n
+					Z_{i \alpha}^2 A_{\alpha j}^2
+				+
+				\sum_{\alpha \neq \beta}
+					Z_{i \alpha} A_{\alpha j}
+					Z_{i \beta}  A_{\beta j}
+	\end{align*}
+	This has expectation
+	\[
+		\E \left[
+			\left( \mZ \mA \right)_{ij}^2
+		\right]
+			=
+				\sum_{\alpha=1}^n
+					\E\left[ A_{\alpha j}^2 \right],
+	\]
+	so that
+	\begin{align*}
+		\E \left\|
+			\mZ \mA
+		\right\|_\Frob^2
+			&=
+				\sum_{i=1}^m
+				\sum_{j=1}^p
+					\E \left[
+						\left( \mZ \mA \right)_{ij}^2
+					\right] \\
+			&=
+				\sum_{i=1}^m
+				\sum_{j=1}^p
+					\sum_{\alpha=1}^n
+						\E\left[ A_{\alpha j}^2 \right] \\
+			&= m \cdot \E \left\| \mA \right\|_\Frob^2. \qedhere
+	\end{align*}
+\end{proof}
+
+We also need a technical result to ensure that after appropriate scaling, the
+expectations are finite.
+
+\begin{lemma}
+	For fixed $k$ as $n \to \infty$, 
+	$\hd_{n,k}^{(1)} $ is almost surely bounded away from zero.
+\end{lemma}
+\begin{proof}
+	We have that $\hd_{n,k}^{(1)}$ is the $k$th singular value of
+	\(
+		\frac{1}{\sqrt{n}} \mX_{n,11}
+			=
+				\mU_{n,1} \mD_n \mV_{n,1}^\trans
+				+
+				\frac{1}{\sqrt{n}}
+				\mE_{n,11}.
+	\)
+	This is the same as the $k$th eigenvalue of
+	\begin{multline*}
+		\frac{1}{n} \mX_{n,11} \mX_{n,11}^\trans
+			=
+				\mU_{n,1} \mD_n \mV_{n,1}^\trans 
+					\mV_{n,1} \mD_n \mU_{n,1}^\trans
+				+
+				\frac{1}{\sqrt{n}}
+				\mU_{n,1} \mD_n \mV_{n,1}^\trans \mE_{n,11}^\trans \\
+				+
+				\frac{1}{\sqrt{n}}
+				\mE_{n,11}
+				\mV_{n,1} \mD_n \mU_{n,1}^\trans
+				+
+				\frac{1}{n}
+				\mE_{n,11} \mE_{n,11}^\trans.
+	\end{multline*}
+	For each $n$, we choose 
+	\(
+		\mO_n
+			=
+			\left(
+			\begin{matrix}
+				\mO_{n,1} & \mO_{n,2}
+			\end{matrix}
+			\right)
+		\in \reals^{n \times n}
+	\)
+	to be an orthogonal matrix with $\mO_{n,2} \in \reals^{n \times n-k_0}$ 
+	and $\mO_{n,2}^\trans \mU_{n,1} = 0$.
+	Then, with $\lambda_k(\cdot)$ denoting the $k$th eigenvalue, we have
+	\begin{align*}
+		\hd_{n,k}^{(1)}
+			&=
+				\lambda_k \left(
+					\frac{1}{n} \mX_{n,11} \mX_{n,11}^\trans
+				\right) \\
+			&=
+				\lambda_k \left(
+					\mO_{n}^\trans
+					\Big(
+						\frac{1}{n} \mX_{n,11} \mX_{n,11}^\trans
+					\Big)
+					\mO_n
+				\right) \\
+			&=
+				\lambda_k \left(
+					\left(
+					\begin{matrix}
+						\mA_{n,11} & \mA_{n,12} \\
+						\mA_{n,21} & \mA_{n,22}
+					\end{matrix}
+					\right)
+				\right),
+	\end{align*}
+	for
+	\(
+		\mA_{n,ij} 
+			= 
+				\frac{1}{n}
+				\mO_{n,i}^\trans 
+				\mX_{n,11}^\trans \mX_{n,11}
+				\mO_{n,j}.
+	\)
+	Note that
+	\(
+		\mA_{n,22} 
+			= 
+				\frac{1}{n} 
+				\mO_{n,2}^\trans \mE_{n,11} \mE_{n,11}^\trans \mO_{n,2}
+	\)
+	is an $(n-k) \times (n-k)$ matrix with \iid $\Normal( 0, \, \sigma^2)$
+	entries.
+	
+	Define $G_n = \lambda_k ( \mA_{n,22} )$
+	By the eigenvalue interlacing inequality \cite{golub1996mc}, we have
+	that
+	\(
+		\hd_{n,k}^{(1)}
+			\geq
+				G_n.
+	\)
+	Moreover, Theorems~\ref{T:mp-limit}~and~\ref{T:max-wishart-eig-limit}
+	give us that 
+	\(
+		G_n
+			\toas 
+				\sigma^2
+				\left(
+					1 + \frac{1}{\sqrt{\gamma_1}}
+				\right)^2.
+	\)
+	Hence, almost surely for $n$ large enough 
+	$\hd_{n,k}^{(1)} \geq G_n \geq \sigma^2$.
+\end{proof}
+
