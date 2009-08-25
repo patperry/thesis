@@ -1145,7 +1145,7 @@ cross-terms cancel and we get
 Since $\mtE_{n,12}$ and $\mtE_{n,21}$ are made of \iid $\Normal( 0, \, \sigma^2)$ random variables, the last three terms are fairly easy to analyze.
 We can use the following lemma:
 
-\begin{lemma}
+\begin{lemma}\label{L:frob-random-product}
 	Let $\mZ \in \reals^{m \times n}$ be a random matrix with uncorrelated
 	elements, all having having mean $0$ and variance $1$ (but not necessarily 
 	from the same distribution).  If $\mA \in \reals^{n \times p}$ is 
@@ -1209,7 +1209,7 @@ We can use the following lemma:
 We also need a technical result to ensure that after appropriate scaling, the
 expectations are finite.
 
-\begin{lemma}
+\begin{lemma}\label{L:d1-bounded-away-from-0}
 	For fixed $k$ as $n \to \infty$, 
 	$\hd_{n,k}^{(1)} $ is almost surely bounded away from zero.
 \end{lemma}
@@ -1319,3 +1319,195 @@ expectations are finite.
 	$\hd_{n,k}^{(1)} \geq G_n \geq \sigma^2$.
 \end{proof}
 
+With these lemmas, we can prove the following:
+
+\begin{lemma}
+	The terms in the expected model approximation error converge as:
+	\begin{gather*}
+		\begin{split}
+		\E\bigg[ 
+			\frac{p}{n_2 \, p_2} 
+			\Big\|
+				\sqrt{n} \,
+				\mU_{n,2} 
+				( 
+					\mD_n 
+					&- 
+					\mD_n 
+					\mTheta_{n,1} \mhD_{n,1}(k)^+ \mPhi_{n,1}
+					\mD_n
+				)
+				\mV_{n,2}^\trans 
+			\Big\|_\Frob^2
+		\bigg] \\
+			&\to 
+			 	\sum_{i=1}^{k \wedge k_0}
+					\mu_i 
+					\left( 
+						1 
+						- 
+						\sqrt{ \frac{ \mu_i }{ \bmu_{1,i} } }
+						\theta_{1,i}
+						\varphi_{1,i}
+					\right)^2
+				+
+				\sum_{i=k+1}^{k_0}
+					\mu_i,
+		\end{split}\\
+		\E\left[ 
+			\frac{p}{n_2 \, p_2} 
+			\Big\|
+				\mU_{n,2} 
+				\mD_n \mTheta_{n,1} \mhD_{n,1}(k)^+ 
+				\mtE_{n,12}
+			\Big\|_\Frob^2
+		\right]
+			\to
+				\gamma^{-1} 
+				\sum_{i=1}^{k \wedge k_0}
+					\frac{\mu_i}{\bmu_{1,i}}
+					\theta_{1,i}^2,
+				\\
+		\E\left[ 
+			\frac{p}{n_2 \, p_2} 
+			\Big\|
+				\mtE_{n,21}
+				\mhD_{n,1}(k)^+ \mPhi_{n,1}^\trans \mD_n 
+				\mV_{n,2}^\trans
+			\Big\|_\Frob^2
+		\right]
+			\to
+				\sum_{i=1}^{k \wedge k_0} 
+					\frac{\mu_i}{\bmu_{1,i}}
+					\varphi_{1,i}^2,
+				\\
+\intertext{and}
+		\E\left[ 
+			\frac{p}{n_2 \, p_2} 
+			\Big\|
+				\frac{1}{\sqrt{n}}
+				\mtE_{n,21}
+				\mhD_{n,1}(k)^+
+				\mtE_{n,12}
+			\Big\|_\Frob^2
+		\right]
+			\to
+				\gamma^{-1}
+				\sum_{i=1}^k
+					\frac{1}{\bmu_{1,i}}.
+	\end{gather*}
+\end{lemma}
+\begin{proof}
+	The squared Frobenius norm in the first term is equal to
+	\begin{align*}
+		\tr\Big(
+			&\big(
+				\sqrt{n} \,
+				\mU_{n,2} 
+				( 
+					\mD_n 
+					- 
+					\mD_n 
+					\mTheta_{n,1} \mhD_{n,1}(k)^+ \mPhi_{n,1}
+					\mD_n
+				)
+				\mV_{n,2}^\trans 
+			\big) \\
+			&\qquad\cdot
+			\big(
+				\sqrt{n} \,
+				\mU_{n,2} 
+				( 
+					\mD_n 
+					- 
+					\mD_n 
+					\mTheta_{n,1} \mhD_{n,1}(k)^+ \mPhi_{n,1}
+					\mD_n
+				)
+				\mV_{n,2}^\trans 
+			\big)^\trans
+		\Big) \\
+		&=
+			n
+			\cdot
+			\tr\Big(
+				\big( 
+					\mD_n 
+					- 
+					\mD_n 
+					\mTheta_{n,1} \mhD_{n,1}(k)^+ \mPhi_{n,1}
+					\mD_n
+				\big)
+				\cdot
+				\big(
+					\mV_{n,2}^\trans 
+					\mV_{n,2}
+				\big) \\
+				&\qquad\qquad\cdot
+				\big( 
+					\mD_n 
+					- 
+					\mD_n 
+					\mTheta_{n,1} \mhD_{n,1}(k)^+ \mPhi_{n,1}
+					\mD_n
+				\big)
+				\cdot
+				\big(
+					\mU_{n,2}^\trans
+					\mU_{n,2} 
+				\big) 
+			\Big).
+	\end{align*}
+	Now, 
+		$\mU_{n,2}^\trans \mU_{n,2} \toP \frac{1}{K} \mI_{k_0}$,
+		$\mV_{n,2}^\trans \mV_{n,2} \toP \frac{1}{L} \mI_{k_0}$,
+	and
+	\begin{align*}
+		\mD_n &- \mD_n \mTheta_{n,1} \mhD_{n,1}(k)^+ \mPhi_{n,1} \mD_n \\
+			&\toP
+				\diag\Big(
+					\mu_1^{1/2}
+					-
+					\mu_1^{1/2}
+					\theta_{1,1}
+					\bmu_{1,1}^{-1/2}(k) \,
+					\varphi_{1,1}
+					\mu_1^{1/2},
+					\quad
+					\mu_2^{1/2}
+					-
+					\mu_2^{1/2}
+					\theta_{1,2}
+					\bmu_{1,2}^{-1/2}(k) \,
+					\varphi_{1,2}
+					\mu_2^{1/2},
+					\quad
+					\ldots, \\
+					&\qquad\qquad\qquad
+					\mu_{k_0}^{1/2}
+					-
+					\mu_{k_0}^{1/2}
+					\theta_{1,k_0}
+					\bmu_{1,k_0}^{-1/2}(k) \,
+					\varphi_{1,k_0}
+					\mu_{k_0}^{1/2} 
+				\Big),
+	\end{align*}
+	where
+	\[
+		\bmu_{1,i}(k) 
+			=
+			\begin{cases}
+				\bmu_{1,i} &\text{if $i \leq k$,} \\
+				0          &\text{otherwise.}
+			\end{cases}
+	\]
+	We can apply the Bounded Convergence to get the result for the first
+	term since the elements of $\mU_{n,2}$, $\mV_{n,2}$ $\mTheta_{n,1}$ and
+	$\mPhi_{n,1}$ are bounded by $1$ and since
+	Lemma~\ref{L:d1-bounded-away-from-0} ensures that the elements of
+	$\mhD_{n,1}(k)^+$ are bounded as well.
+	
+	The last three terms can be gotten similarly by applying
+	Lemma~~\ref{L:frob-random-product}.
+\end{proof}
