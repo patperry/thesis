@@ -1,4 +1,4 @@
-\chapter[Optimal leave-out size for BCV]{Optimal leave-out size for bi-cross-validation}
+\chapter[A theoretical analysis of BCV]{A theoretical analysis of bi-cross-validation}
 \label{C:optimal-leave-out}
 
 In this chapter we will determine the optimal leave out-size for Gabriel-style
@@ -27,7 +27,7 @@ much smaller than $n$ and $p$.  Lastly, $\mE$ consists of ``noise''.  Although m
 of the signal part as the important part of $\mX$, and the noise part is 
 inherently uninteresting.
 
-The rank estimation problem is find the optimal number of terms of the SVD of $\mX$ to keep to estimate the signal part.  We let 
+The rank estimation problem is find the optimal number of terms of the SVD to keep to estimate the signal part.  We let 
 $\mX = \sqrt{n} \, \mhU \mhD \mhV^\trans$ be the SVD of $\mX$, where 
 $\mhU \in \reals^{n \times n \wedge p}$ and 
 $\mhV \in \reals^{p \times n \wedge p}$ have orthonormal columns, and
@@ -47,7 +47,7 @@ so that $\mhX(k) \equiv \sqrt{n} \, \mhU \mhD(k) \mhV^\trans$ is the SVD of $\mX
     \ME(k) = \frac{1}{n \, p}
              \| \sqrt{n} \, \mU \mD \mV^\trans - \mhX(k) \|_\Frob^2
 \]
-The optimal rank is defined with respect to this criterion as
+The optimal rank is defined with respect to this criterion is
 \[
     k^\ast = \argmin_k \ME(k).
 \]
@@ -100,10 +100,15 @@ Here, $^+$ denotes pseudo-inverse and $\mX_{22}$ has dimensions $n_2 \times p_2$
 From $\widehat{\PE}(k)$ we can get an estimate of the optimal rank as
 $\hat k = \argmin_k \widehat{\PE}(k)$.
 
-In this chapter, we give a theoretical analysis of $\widehat{\PE}(k)$.  This allows us to determine the bias inherent in $\widehat{\PE}(k)$ and its consistency properties for estimating $k^\ast$, along with guidance for choosing the number of folds ($K$ and $L$).
+In this chapter, we give a theoretical analysis of $\widehat{\PE}(k)$. This
+allows us to determine the bias inherent in $\widehat{\PE}(k)$ and its
+consistency properties for estimating $k^\ast$, along with guidance for
+choosing the number of folds ($K$ and $L$).
+Section~\ref{S:bcv-theory-assumptions} sets out our assumptions and notation.
+Section~\ref{S:bcv-theory-results} gives our main results.  Then, Sections~\ref{S:bcv-theory-holdin}~and~\ref{S:bcv-pe-estimate} are devoted to proofs, followed by a discussion in Section~\ref{S:bcv-theory-summary}.
 
 
-\section{Assumptions and notation}
+\section{Assumptions and notation}\label{S:bcv-theory-assumptions}
 
 The theory becomes easier if we work in an asymptotic framework.  For that,
 we introduce a sequence of data matrices indexed by $n$:
@@ -111,7 +116,7 @@ we introduce a sequence of data matrices indexed by $n$:
     \mX_{n} = \sqrt{n} \, \mU_n \mD_n \mV_n^\trans + \mE_n.
 \]
 Here, $\mX_n \in \reals^{n \times p}$ with $p = p(n)$ and 
-$\frac{n}{p} \to \gamma \in (0,\infty)$.  Even though the dimensions of $\mX_n$ grow, we assume that the number of factors is fixed at $k_0$.  The full set of assumptions is as follows:
+$\frac{n}{p} \to \gamma \in (0,\infty)$.  Even though the dimensions of $\mX_n$ grow, we assume that the number of factors is fixed at $k_0$.  The first set of assumptions is as follows:
 
 \begin{assumption}\label{A:optimal-leave-out-shapes}
     We have a sequence of random matrices $\mX_n \in \reals^{n \times p}$ 
@@ -161,18 +166,18 @@ $\frac{n}{p} \to \gamma \in (0,\infty)$.  Even though the dimensions of $\mX_n$ 
 \end{assumption}
 
 \noindent
-These assumptions are stanford for latent factor models.
+These assumptions are standard for latent factor models.
 
-We can apply the work of allow us to apply the work of
+We can apply the work of
 Chapter~\ref{C:intrinsic-rank} to get the behavior of the model error.
     We
 let $\mX_n = \sqrt{n} \, \mhU_n \mhD_n \mhV_n^\trans$ be the SVD of $\mX_n$ and let $\mhX_n(k) = \sqrt{n} \, \mhU_n \mhD_n(k) \mhV_n^\trans$ be its truncation to $k$ terms.  Then the model error is
 \[
     {\ME}_n (k)
         = 
-            \frac{1}{n p} 
+            \frac{1}{n \, p} 
             \big\| 
-                \sqrt{n} \mU_n \mD_n \mV_n^\trans 
+                \sqrt{n} \, \mU_n \mD_n \mV_n^\trans 
                 - 
                 \mhX_n(k)
             \big\|_\Frob^2.
@@ -241,7 +246,7 @@ provided no $\mu_i$ is exactly eqaul to $\mu_\text{crit}$.  We therefore know
 how ${\ME}_n(k)$ and its minimizer behave.
 
 To study the bi-cross-validation estimate of prediction error, we need to 
-introduce some more notation.  As we are only analyzing first-order 
+introduce some more assumptions and notation.  As we are only analyzing first-order 
 behavior, we can restrict our analysis to the prediction error estimate from a 
 single fold.  We let $\mP_n \in \reals^{n \times n}$ and 
 $\mQ_n \in \reals^{p \times p}$ be permutation matrices for the fold, partitioned as
@@ -298,7 +303,7 @@ $\mV_{n,j} = \mQ_{n,j}^\trans \mV_n$.  Then in block form,
 \end{align*}
 This is the starting point of our analysis.
 
-Next, we describe the estimate of prediction error.  We let
+Now we look at the estimate of prediction error.  We let
 $\mX_{n,11} = \sqrt{n} \, \mhU_{n,1} \mhD_{n,1} \mhV_{n,1}^\trans$ be the
 SVD of $\mX_{n,11}$.  Here,
 \begin{align*}
@@ -353,14 +358,14 @@ so that
     \mhX_{n,11} (k)
         \equiv \sqrt{n} \, \mhU_{n,1} \mhD_{n,1}(k) \mhV_{n,1}^\trans
 \)
-is the SVD of $\mhX$ truncated to $k$ terms.  It has pseudo-inverse
+is the SVD of $\mX_{n,11}$ truncated to $k$ terms.  This matrix has pseudo-inverse
 \(
     \mhX_{n,11}(k)^+
         =
             \frac{1}{\sqrt{n}} \, 
             \mhV_{n,1} \mhD_{n,1}(k)^+ \mhU_{n,1}^\trans.
 \)
-The BCV rank-$k$ prediction of $\mX_{22}$ is
+Therefore, the BCV rank-$k$ prediction of $\mX_{22}$ is
 \begin{align*}
     \mhX_{n,22}(k)
         &=
@@ -431,7 +436,7 @@ The next assumption is not quite so innocent and involves the distribution of th
 
 \begin{assumption}\label{A:held-in-orthog}
     The departure from orthogonality for the held-in factors $\mU_{n,1}$
-    and $\mV_{n,1}$ is of order $1/\sqrt{n}$.  Specifically,
+    and $\mV_{n,1}$ is of order $\frac{1}{\sqrt{n}}$.  Specifically,
     \begin{gather*}
         \sup_n 
         \E \, \Big\| 
@@ -459,10 +464,10 @@ The next assumption is not quite so innocent and involves the distribution of th
 \end{assumption}
 
 \noindent
-This assumption is there so that we can apply the theory in Chapter~\ref{C:svd-behavior} to get at the behavior of the SVD of $\mX_{n,11}$.  It is satisfied, for example, if we are performing rotated cross-validation (subsection~\ref{SS:rotated-cv}) or if the factors are generated by certain stationary processes.  It is likely that the theory presented below holds under a weaker condition, but a detailed analysis is beyond the scope of this chapter.
+This assumption is there so that we can apply the theory in Chapter~\ref{C:svd-behavior} to get at the behavior of the SVD of $\mX_{n,11}$.  It is satisfied, for example, if we are performing rotated cross-validation (see subsection~\ref{SS:rotated-cv}) or if the factors are generated by certain stationary processes.  It is likely that the theory presented below holds under a weaker condition, but a detailed analysis is beyond the scope of this chapter.
 
 
-\section{Main results}
+\section{Main results}\label{S:bcv-theory-results}
 
 The BCV estimate of prediction error from a single replicate is given
 by
@@ -479,8 +484,7 @@ It turns out that
 	\right]
 \)
 is dominated by the irreducible error.  However, if we have a $\sqrt{n p}$-consistent estimate of $\sigma^2$, then we can get an expression for
-the scaled limit of the estimated model error.  This is the main result of
-the paper.
+the scaled limit of the estimated model error.  This expression is the main result of the paper.
 
 \begin{theorem}\label{T:bcv-expected-me}
 	Suppose that $\hat \sigma_n^2$ is a sequence of 
@@ -505,7 +509,7 @@ the paper.
 				-
 				\hat \sigma_n^2.
 	\]
-	Then
+	Then, for fixed $k$ as $n\to\infty$,
 	\[
 		\E \left[ p \cdot \widehat{\ME}_n(k) \right]
 			\to
@@ -525,7 +529,7 @@ the paper.
 			&=
 				\begin{cases}
 					\frac{
-			            \frac{\sigma^2}{\rho \gamma \mu_{i}^2}
+			            \frac{\sigma^2}{\gamma \mu_{i}^2}
 			            \left(
 			                3 \sigma^2
 			                +
@@ -539,17 +543,17 @@ the paper.
 			            \right)
 			        }
 			        {
-			            1
+			            \rho
 			            +
 						\left(
-							\frac{K}{K-1}
-							+
 							\gamma
-							\frac{L}{L-1}
+							\frac{K-1}{K}
+							+
+							\frac{L-1}{L}
 						\right)
 			            \frac{\sigma^2}{\gamma \mu_{i}}
 			            +
-			            \frac{\sigma^4}{\rho \gamma \mu_{i}^2}
+			            \frac{\sigma^4}{\gamma \mu_{i}^2}
 			        }&\text{when $\mu_{i} > 
 								  \frac{\sigma^2}{\sqrt{\rho \, \gamma}}$,} \\
 					1 + \frac{\eta}{\mu_i}&\text{otherwise,}
@@ -577,7 +581,7 @@ the paper.
 \end{theorem}
 
 It is interesting to compare $\beta_i$ with the expression for $\alpha_i$
-in the limit of $\ME_n(k)$, the true model error.  Although the BCV 
+in the limit of $p \cdot \ME_n(k)$, the true model error.  Although the BCV 
 estimator of model error is biased, this bias is small for large 
 $\mu_i$, $K$, and $L$.
 
@@ -600,17 +604,14 @@ Theorem~\ref{T:bcv-expected-me}.
 						\sqrt{\frac{2}{\rho}}
 				\right\},
 	\]
-	provided no $\mu_i$ is exactly equal to
+	(provided no $\mu_i$ is exactly equal to
 	\(
 		\frac{\sigma^2}{\sqrt{\gamma}}
 		\cdot
-		\sqrt{\frac{2}{\rho}}
-	\).
+		\sqrt{\frac{2}{\rho}},
+	\)
+	in which case the limit is ambiguous).
 \end{corollary}
-
-\noindent
-When some $\mu_i$ equals the cutoff value, $\hat k_n$ does not have
-a limit, but its behavior is not hard to analyze.
 
 We can use Corollary~\ref{C:bcv-expected-me-cutoff} to guide our choice
 of $K$ and $L$.  If we choose them carefully, then $\hat k_n$ and
@@ -637,9 +638,8 @@ $k^\ast_n$ will converge to the same value.
 		\(
 			\frac{\sigma^2}{\sqrt{\gamma}}
 			\cdot
-			\sqrt{\frac{2}{\rho}},
+			\sqrt{\frac{2}{\rho}}).
 		\)
-	in which case the limits are ambiguous).
 \end{corollary}
 
 Interestingly, the first-order-optimal choices of $K$ and $L$ do not
@@ -679,10 +679,13 @@ For general aspect ratios ($\gamma \neq 1$), this requires
 					     \sqrt{\bar \gamma}
 					 \right)}.
 \end{align*}
-For very large or very small aspect ratios ($\gamma \to 0$ or $\gamma \to \infty$), $\bar \gamma \to \infty$ and $K \to 1$.  In these situations one should leave out almost all of the matrix when performing
+For very large or very small aspect ratios ($\gamma \to 0$ or $\gamma \to \infty$), and $K \to 1$.  In these situations one should leave out almost all of the matrix when performing
 bi-cross-validation.
 
-\section{The SVD of the held-in block}
+The remainder of the chapter is devoted to proving Theorem~\ref{T:bcv-expected-me}.
+
+
+\section{The SVD of the held-in block}\label{S:bcv-theory-holdin}
 
 The first step in analyzing the BCV estimate of prediction error is to see how the SVD of $\mX_{n,11}$ behaves.  With Assumptions~\ref{A:optimal-leave-out-shapes}--\ref{A:held-in-orthog}, we can start this analysis.  Our strategy is to use Assumption~\ref{A:held-in-orthog} to apply a matrix perturbation argument in combination with Theorems~\ref{T:spiked-eigenvalue-limits} and~\ref{T:spiked-eigenvector-limits}.
 
@@ -848,7 +851,7 @@ With this scaling,
         \Big( \sqrt{\frac{p}{p_1}} \mV_{n,1} \Big)
     \bigg]
     =
-    \mI_{k_0}
+    \mI_{k_0},
 \]
 and the diagonal elements of
 \(
@@ -865,7 +868,7 @@ converge to
 \)
 So, Proposition~\ref{P:holdin-svd} should at least be plausible.  
 
-We prove Proposition~\ref{P:holdin-svd} by showing that
+We prove the result by showing that
 \(
     \Big(
         \sqrt{\frac{n}{n_1}} \mU_{n,1}
@@ -879,7 +882,7 @@ We prove Proposition~\ref{P:holdin-svd} by showing that
     \Big)^\trans
 \)
 is \emph{almost} an SVD.  We denote its $k_0$-term SVD by 
-$\mtU_{n,1} \mtD_{n,1} \mtV_{n,1}^\trans$, and show the following:
+$\mtU_{n,1} \mtD_{n,1} \mtV_{n,1}^\trans$, and demonstrate the following:
 \begin{lemma}\label{L:svd-random-perturb}
     Three properties hold:
     \begin{enumerate}[(1)]
@@ -1171,7 +1174,7 @@ Theorems~\ref{T:spiked-eigenvalue-limits}~and~\ref{T:spiked-eigenvector-limits}.
     A similar argument applies to show that property (3) holds.
 \end{proof}
 
-\section{The prediction bias}
+\section{The prediction error estimate}\label{S:bcv-pe-estimate}
 
 In this section, we study the estimate of prediction error
 \[
@@ -1733,7 +1736,7 @@ With these lemmas, we can prove the following:
 	$\mhD_{n,1}(k)^+$ are bounded as well.
 	
 	The last three terms can be gotten similarly by applying
-	Lemma~~\ref{L:frob-random-product}.
+	Lemmas~\ref{L:frob-random-product}~and~\ref{L:d1-bounded-away-from-0}.
 \end{proof}
 
 We can now get an expression for the limit of the estimated model
@@ -2089,3 +2092,11 @@ or equivalently
 \(
     \mu_i > \frac{\sigma^2}{\sqrt{\gamma}} \cdot \sqrt{\frac{2}{\rho}}.
 \)
+Getting the final expressions for $\beta_i$ and $\eta$ in 
+Theorem~\ref{T:bcv-expected-me} is a matter of routine algebra.
+
+\section{Summary and future work}\label{S:bcv-theory-summary}
+
+We have provided an analysis of the first-order behavior of bi-cross-validation.  This analysis has shown that BCV gives a biased estimate of prediction error, with an explicit expression for the bias.  Fortunately, the bias is not too bad when the signal strength is large and the leave-out sizes are small.  Importantly, our analysis gives guidance as to how the leave-out sizes should be chosen.  Our theoretical analysis agrees with the simulations done by Owen \& Perry~\cite{owen2009bi}, who observed that larger hold-out sizes tend to perform better.
+
+The form of consistency we give is rather weak since we did not analyze the variance of the BCV prediction error estimate.  We will address this limitation in future work.  For now, we can get some comfort from empirical observations in \cite{owen2009bi} that the variance of the estimator is not too large.  Indeed, based on these simulations, it is entirely possible that the variance becomes negligible for large $n$ and $p$.
