@@ -581,10 +581,106 @@ in the limit of $\ME_n(k)$, the true model error.  Although the BCV
 estimator of model error is biased, this bias is small for large 
 $\mu_i$, $K$, and $L$.
 
-A corollary to \ref{T:bcv-expected-me} gives the behavior of the
-minimizer of the expected model error estimate.
+A corollary gives the behavior of the minimizer of the expected model 
+error estimate. We let $\hat k_n$ be the rank that minimizes 
+$\E\left[ \widehat{\ME}_n(k) \right]$.  The next two results follow from
+Theorem~\ref{T:bcv-expected-me}.
 
+\begin{corollary}\label{C:bcv-expected-me-cutoff}
+	As $n \to \infty$,
+	\[
+		\hat k_n
+			\to
+				\max\left\{
+					i :
+						\mu_i 
+						> 
+						\frac{\sigma^2}{\sqrt{\gamma}}
+						\cdot
+						\sqrt{\frac{2}{\rho}}
+				\right\},
+	\]
+	provided no $\mu_i$ is exactly equal to
+	\(
+		\frac{\sigma^2}{\sqrt{\gamma}}
+		\cdot
+		\sqrt{\frac{2}{\rho}}
+	\).
+\end{corollary}
 
+\noindent
+When some $\mu_i$ equals the cutoff value, $\hat k_n$ does not have
+a limit, but its behavior is not hard to analyze.
+
+We can use Corollary~\ref{C:bcv-expected-me-cutoff} to guide our choice
+of $K$ and $L$.  If we choose them carefully, then $\hat k_n$ and
+$k^\ast_n$ will converge to the same value.
+
+\begin{corollary}
+	If
+	\[
+		\sqrt{\rho}
+			=
+				\frac{\sqrt{2}}
+					 {\sqrt{\bar \gamma} + \sqrt{\bar \gamma + 3}},
+	\]
+	where
+	\[
+		\bar \gamma
+			=
+				\left(
+					\frac{\gamma^{1/2} + \gamma^{-1/2}}{2}
+				\right)^2,
+	\]
+	then $\hat k_n$ and $k^\ast_n$ converge to the same value
+	(provided no $\mu_i$ is exactly equal to
+		\(
+			\frac{\sigma^2}{\sqrt{\gamma}}
+			\cdot
+			\sqrt{\frac{2}{\rho}},
+		\)
+	in which case the limits are ambiguous).
+\end{corollary}
+
+Interestingly, the first-order-optimal choices of $K$ and $L$ do not
+depend on the aspect ratio of the original matrix.  All that matters
+is the ratio of the number of elements in $\mX_{n,11}$ to the number
+of elements in $\mX_{n}$.  
+
+For a square matrix, $\gamma = \bar \gamma = 1$, and the optimal 
+$\rho$ is $\frac{2}{9}$.  If we choose $K = L$, then this requires
+\[
+	\frac{K-1}{K}
+		=
+			\frac{\sqrt{2}}{3},
+\]
+so that
+\[
+	K
+		=
+			\left(
+				1
+				-
+				\frac{\sqrt{2}}{3}
+			\right)^{-1}
+	\approx
+			1.89.
+\]
+For general aspect ratios ($\gamma \neq 1$), this requires
+\begin{align*}
+	K
+		&=
+			\frac{3}{3
+					 -
+					 2
+					 \left(
+						 \sqrt{\bar \gamma + 3}
+						 -
+					     \sqrt{\bar \gamma}
+					 \right)}.
+\end{align*}
+For very large or very small aspect ratios ($\gamma \to 0$ or $\gamma \to \infty$), $\bar \gamma \to \infty$ and $K \to 1$.  In these situations one should leave out almost all of the matrix when performing
+bi-cross-validation.
 
 \section{The SVD of the held-in block}
 
