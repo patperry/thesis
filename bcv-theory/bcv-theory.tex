@@ -509,7 +509,7 @@ Next, for $1 \leq i \leq k_0$, we define
 	\theta_{1,i}
 		=
 	        \begin{cases}
-				\frac{L-1}{L}
+				\sqrt{\frac{L-1}{L}}
 				\cdot
 				\sqrt{
 		            \left( 
@@ -532,7 +532,7 @@ Next, for $1 \leq i \leq k_0$, we define
     \varphi_{1,i}
         =
             \begin{cases}
-				\frac{K-1}{K}
+				\sqrt{\frac{K-1}{K}}
 				\cdot
 				\sqrt{
 	                \left( 
@@ -1587,7 +1587,7 @@ where
 				\varphi_{1,i}
 			\right)^2
 			+
-			\frac{\sigma^2}{\bmu_i}
+			\frac{\sigma^2}{\bmu_{1,i}}
 			\left(
 				\gamma^{-1} \theta_{1,i}^2
 				+
@@ -1608,7 +1608,7 @@ where
 			\theta_{1,i}^2
 			\varphi_{1,i}^2
 			+
-			\frac{\sigma^2}{\bmu_i}
+			\frac{\sigma^2}{\bmu_{1,i}}
 			\left(
 				\gamma^{-1} \theta_{1,i}^2
 				+
@@ -1648,5 +1648,224 @@ so that
 				\frac{1}{\sqrt{\gamma_1}}
 			\right)^{-2}.
 \]
-Conversely, when $\mu_{1,i} > \frac{\sigma^2}{\sqrt{\gamma_1}}$,
-we have
+In the opposite situation
+($\mu_{1,i} > \frac{\sigma^2}{\sqrt{\gamma_1}}$), we define
+\[
+    \rho
+        =
+            \frac{L-1}{L}
+            \cdot
+            \frac{K-1}{K}
+\]
+and get the simplifications
+\begin{gather*}
+    \frac{\bmu_{1,i}}{\mu_i}
+        =
+            \rho
+            \cdot
+            \left(
+                1
+                +
+                (1 + \gamma_1^{-1})
+                \frac{\sigma^2}{\mu_{1,i}}
+                +
+                \frac{\sigma^4}{\gamma_1 \mu_i^2}
+            \right), \\
+    \theta_{1,i} \varphi_{1,i}
+        =
+            \rho
+            \cdot
+            \sqrt{\frac{\mu_i}{\bmu_{1,i}}}
+            \cdot
+            \left(
+                1
+                -
+                \frac{\sigma^4}{\gamma_1 \mu_{1,i}^2}
+            \right),
+\end{gather*}
+so that
+\begin{multline*}
+    -2 \sqrt{\frac{\mu_i}{\bmu_{1,i}}} \theta_{1,i} \varphi_{1,i}
+    +
+    \frac{\mu_i}{\bmu_i} \theta_{1,i}^2 \varphi_{1,i}^2 \\
+        =
+            -
+            \rho^2
+            \left(
+                \frac{\mu_i}{\bmu_{1,i}}
+            \right)^2
+            \left(
+                1
+                -
+                \frac{\sigma^4}{\gamma_1 \mu_{1,i}^2}
+            \right)
+            \left(
+                1
+                +
+                2( 1 + \gamma_1^{-1}) \frac{\sigma^2}{\mu_{1,i}}
+                +
+                3
+                \frac{\sigma^4}{\gamma_1 \mu_{1,i}^2}
+            \right),
+\end{multline*}
+\[
+    \frac{\sigma^2}{\bmu_{1,i}}
+    \left(
+        \gamma^{-1} \theta_{1,i}^2
+        +
+        \varphi_{1,i}^2
+    \right)
+        =
+            \rho^2
+            \left(
+                \frac{\mu_i}{\bmu_{1,i}}
+            \right)^2
+            \left(
+                1
+                -
+                \frac{\sigma^4}{\gamma_1 \mu_{1,i}^2}
+            \right)
+            \left(
+                (1 + \gamma_1^{-1})
+                \frac{\sigma^2}{\mu_{1,i}}
+                +
+                2
+                \frac{\sigma^4}{\gamma_1 \mu_{1,i}^2}
+            \right),
+\]
+and
+\[
+    \frac{1}{\mu_i}
+    \frac{\sigma^4}{\gamma \bmu_{1,i}}
+        =
+            \rho^2
+            \left(
+                \frac{\mu_i}{\bmu_{1,i}}
+            \right)^2
+            \left(
+                \frac{\sigma^4}{\gamma_1 \mu_{1,i}^2}
+            \right)
+            \left(
+                1
+                +
+                (1 + \gamma_1^{-1})
+                \frac{\sigma^2}{\mu_{1,i}}
+                +
+                \frac{\sigma^4}{\gamma_1 \mu_{1,i}^2}
+            \right).
+\]
+Putting it all together, we get
+\begin{align*}
+    \begin{split}
+    \beta_i
+        &=
+            1
+            +
+            \rho^2
+            \left(
+                \frac{\mu_i}{\bmu_{1,i}}
+            \right)^2 
+            \cdot
+            \bigg\{
+                \left(
+                    1
+                    -
+                    \frac{\sigma^4}{\gamma_1 \mu_{1,i}^2}
+                \right)
+                \left(
+                    -
+                    1
+                    -
+                    (1 + \gamma_1^{-1})
+                    \frac{\sigma^2}{\mu_{1,i}}
+                    -
+                    \frac{\sigma^4}{\gamma_1 \mu_{1,i}^2}
+                \right) \\
+            &\qquad\qquad\qquad\qquad\qquad+
+                \left(
+                    \frac{\sigma^4}{\gamma_1 \mu_{1,i}^2}
+                \right)
+                \left(
+                    1
+                    +
+                    (1 + \gamma_1^{-1})
+                    \frac{\sigma^2}{\mu_{1,i}}
+                    +
+                    \frac{\sigma^4}{\gamma_1 \mu_{1,i}^2}
+                \right)
+            \bigg\}
+    \end{split} \\
+    &=
+        1
+        +
+        \rho^2
+        \left(
+            \frac{\mu_i}{\bmu_{1,i}}
+        \right)^2
+        \left(
+            2
+            \frac{\sigma^4}{\gamma_1 \mu_{1,i}^2}
+            -
+            1
+        \right)
+        \left(
+            1
+            +
+            (1 + \gamma_1^{-1})
+            \frac{\sigma^2}{\mu_{1,i}}
+            +
+            \frac{\sigma^4}{\gamma_1 \mu_{1,i}^2}
+        \right) \\
+    &=
+        1
+        +
+        \frac{2 \frac{\sigma^4}{\gamma_1 \mu_{1,i}^2} - 1}
+             {
+                1
+                +
+                (1 + \gamma_1^{-1})
+                \frac{\sigma^2}{\mu_{1,i}}
+                +
+                \frac{\sigma^4}{\gamma_1 \mu_{1,i}^2}
+             } \\
+    &=
+        \frac{ 3 \frac{\sigma^4}{\gamma_1 \mu_{1,i}^2} 
+               +
+               (1 + \gamma_1^{-1})
+               \frac{\sigma^2}{\mu_{1,i}}
+             }
+             {
+                1
+                +
+                (1 + \gamma_1^{-1})
+                \frac{\sigma^2}{\mu_{1,i}}
+                +
+                \frac{\sigma^4}{\gamma_1 \mu_{1,i}^2}
+             } \\
+    &=
+        \frac{
+            \frac{\sigma^2}{\gamma_1 \mu_{1,i}^2}
+            \left(
+                3 \sigma^2
+                +
+                (\gamma_1 + 1)
+                \mu_{1,i}
+            \right)
+        }
+        {
+            1
+            +
+            (1 + \gamma_1^{-1})
+            \frac{\sigma^2}{\mu_{1,i}}
+            +
+            \frac{\sigma^4}{\gamma_1 \mu_{1,i}^2}
+        }.
+\end{align*}
+In particular, note that $\beta_i < 1$ when
+\(
+    2 \frac{\sigma^4}{\gamma_1 \mu_{1,i}^2} - 1 < 0,
+\)
+or equivalently
+\(
+    \mu_i > \sigma^2 \sqrt{\frac{2}{\rho}}.
+\)
