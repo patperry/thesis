@@ -1,11 +1,11 @@
 
 \chapter{Multivariate statistics background}\label{C:multivariate-background}
 
-Multivariate statistics will prove to be a central tool in our later analyses.  We use this chapter to gather the relevant definitions and results, concentrating mainly on the eigenvalues and eigenvectors from sample covariance matrices.  The literature in this area spans over fifty years.  We give the basic definitions and properties of the multivariate normal and Wishart distributions in Section~\ref{S:mulitivariate-definitions}.  Then, in Section~\ref{S:multivariate-classical}, we survey classical results about sample covariance matrices when the number of dimensions, $p$, is fixed and the sample size, $n$, grows to infinity.  This material is by now standard and can be found in any good multivariate statistics book.  Lastly,  in Section~\ref{S:multivariate-modern}, we survey modern asymptotics, where $n \to \infty$ and $p$ grows with $n$.  Modern multivariate asymptotics is still an active research topic, but today it is possible to give a reasonably-complete description of the objects of interest.
+Multivariate statistics will prove to be a central tool for this thesis.  We use this chapter to gather the relevant definitions and results, concentrating mainly on the eigenvalues and eigenvectors from sample covariance matrices.  The literature in this area spans over fifty years.  We give the basic definitions and properties of the multivariate normal and Wishart distributions in Section~\ref{S:mulitivariate-definitions}.  Then, in Section~\ref{S:multivariate-classical}, we survey classical results about sample covariance matrices when the number of dimensions, $p$, is fixed and the sample size, $n$, grows to infinity.  This material is by now standard and can be found in any good multivariate statistics book.  Lastly,  in Section~\ref{S:multivariate-modern}, we survey modern asymptotics, where $n \to \infty$ and $p$ grows with $n$.  Modern multivariate asymptotics is still an active research topic, but today it is possible to give a reasonably-complete description of the objects of interest.
 
 \section{The multivariate normal and Wishart distributions}\label{S:mulitivariate-definitions}
 
-We start with the definition of the multivariate normal distribution and some basic properties, which can be found, for example, in \cite{muirhead1982ams}[Chapters 1--3].
+We start with the definition of the multivariate normal distribution and some basic properties, which can be found, for example, in Muirhead~\cite{muirhead1982ams}[Chapters 1--3].
 
 \begin{definition}[Multivariate Normal Distribution]
     \label{D:multivariate-normal}
@@ -21,7 +21,7 @@ a random vector
 \(
     \vX \in \reals^p
 \)
-is distributed from the multivariate normal distribution, denoted 
+is said to be distributed from the multivariate normal distribution, denoted 
 \(
     \vX 
     \sim 
@@ -42,7 +42,7 @@ and variance
 \end{definition}
 
 \noindent
-The multivariate normal distribution is defined for any positive-semidefinite covariance matrix $\mSigma$, but it only has a density when $\mSigma$ is strictly positive definite.
+The multivariate normal distribution is defined for any positive-semidefinite covariance matrix $\mSigma$, but it only has a density when $\mSigma$ is strictly positive-definite.
 
 \begin{proposition}
 If $\vX \in \reals^p$ follows a multivariate normal distribution with mean $\vmu$ and positive-definite covariance matrix $\mSigma$, then its components have density
@@ -71,7 +71,7 @@ Let
 \(
     \mC \in \reals^{q \times p},
 \)
-and say
+and 
 \(
     \vX 
     \sim
@@ -92,10 +92,10 @@ Define $\vY = \mC \vX + \va$.  Then
 \end{proposition}
 
 \noindent
-Two immediate corollaries are
+Two immediate corollaries are:
 
 \begin{corollary}\label{C:normal-orthog-invariant}
-Say that
+Suppose that
 \(
     \vX 
     \sim 
@@ -115,7 +115,7 @@ is an orthogonal matrix.  Then
 \end{corollary}
 
 \begin{corollary}
-Suppose that
+If
 \(
     \vX 
     \sim 
@@ -124,17 +124,17 @@ Suppose that
         \mSigma
     \right)
 \)
-and that $\mSigma = \mC \mC^\trans$ for a matrix $\mC \in \reals^{p \times p}$.
-Let 
+and $\mSigma = \mC \mC^\trans$ for a matrix $\mC \in \reals^{p \times p}$,
+and if
 \(
     \vZ
     \sim
     \Normal \left(
         \vzero, \,
         \mI_p
-    \right)
-\).
-Then
+    \right),
+\)
+then
 \(
     \mC \vZ
     \eqd
@@ -573,10 +573,11 @@ a mean-zero multivariate normal having covariance
 
 \noindent
 If the elements of $\vX_1$ have vanishing first and third moments (for instance if
+the distribution of $\vX_1$ is symmetric about the origin, i.e.
 \(
     \vX_1 \eqd - \vX_1
-\)
-), and if
+\)),
+and if
 \(
     \E \left[
         \vX_1 \vX_1^\trans
@@ -658,7 +659,7 @@ With this transformation, we can characterize the distribution of $\mS_n$ comple
 \)
 
 
-The next result we present is about the sample principal compoents.  It is motivated by Proposition~\ref{P:sample-cov-limit} and is originally due to Anderson~\cite{anderson1963atp}, though he does not state result quite like this.  
+The next result we present is about the sample principal components.  It is motivated by Proposition~\ref{P:sample-cov-limit} and is originally due to Anderson~\cite{anderson1963atp}, though he does not state the result quite like this.  
 
 \begin{theorem}\label{T:eigen-random-perturb}
 For $n\to \infty$ and $p$ fixed, let $\mS_1, \mS_2, \ldots, \mS_n$ be a sequence of random symmetric $p \times p$ matrices with 
@@ -906,6 +907,7 @@ Equations~\eqref{L:eigen-perturb:E:orthog-perturb-1}--\eqref{L:eigen-perturb:E:e
         &= H_{n,ii} + \oh\left( 1 \right).
 \end{align}
 \end{subequations}
+This completes the proof.
 \end{proof}
 
 An application of the results of this section is the following theorem, which describes the behavior of principal components analysis for large $n$ and fixed $p$.
@@ -950,7 +952,7 @@ Similarly, let $\mS_n = \mU_n \mL_n \mU_n^\trans$ be the eigendecomposition of $
     \right)
 \),
 \(
-    l_1 > l_2 > \cdots > l_p
+    l_{n,1} > l_{n,2} > \cdots > l_{n,p}
 \),
 and signs chosen so that
 \(
@@ -1001,7 +1003,7 @@ for a fixed constant
 \(
     \gamma \in \left( 0, \infty \right).
 \)
-There is no widely-accepted name for $\gamma$, but we will adopt the terminology of Mar\v{c}enko and Pastur \cite{marcenko1967des} and call it the \emph{concentration}.
+There is no widely-accepted name for $\gamma$, but we will sometimes adopt the terminology of Mar\v{c}enko and Pastur \cite{marcenko1967des} and call it the \emph{concentration}.
 
 Most of the random matrix theory literature concerning sample covariance matrices is focused on eigenvalues.  Given a sequence of sample covariance matrices $\mS_1, \mS_2, \ldots, \mS_n$, with $\mS_n \in \reals^{p\times p}$ and $p = p(n)$ these results generally come in one of two forms.  If we label the eigenvalues of $\mS_n$ as
 \(
@@ -1009,9 +1011,9 @@ Most of the random matrix theory literature concerning sample covariance matrice
 \)
 with $l_{n,1} \geq l_{n,2} \geq \cdots \geq l_{n,p}$, then we can define
 a random measure
-\[
+\begin{equation}
     F^{S_n} = \frac{1}{p} \sum_{i=1}^p \delta_{l_{n,i}}.
-\]
+\end{equation}
 This measure represents a random draw from the set of eigenvalues of $\mS_n$ that puts equal weight on each eigenvalue.  It is called the \emph{spectral measure} of $\mS_n$.  Results about $F^{S_n}$ are generally called results about the ``bulk'' of the spectrum.  
 
 The second major class of results is concerned with the behavior of the
@@ -1034,12 +1036,12 @@ We let $\mX_n$ be the $n \times p$ matrix
     =
     \left(
     \begin{matrix}
-        \vX_{n,1}^\trans \\
-        \vX_{n,2}^\trans \\
-        \vdots \\
-        \vX_{n,n}^\trans
+        \vX_{n,1} &
+        \vX_{n,2} &
+        \cdots &
+        \vX_{n,n}
     \end{matrix}
-    \right),
+    \right)^\trans,
 \)
 so that 
 \(
@@ -1059,17 +1061,17 @@ has density
     \fMP_\gamma(x)
     =
     \frac{\gamma}{2 \pi x}
-    \sqrt{(x - a)(b - x)},
+    \sqrt{(x - a_\gamma)(b_\gamma - x)},
     \quad
-    a \leq x \leq b,
+    a_\gamma \leq x \leq b_\gamma,
 \end{equation}
 where
 \(
-    a = \left( 1 - \frac{1}{\sqrt{\gamma}} \right)^2
+    a_\gamma = \left( 1 - \frac{1}{\sqrt{\gamma}} \right)^2
 \)
 and
 \(
-    b = \left( 1 + \frac{1}{\sqrt{\gamma}} \right)^2.
+    b_\gamma = \left( 1 + \frac{1}{\sqrt{\gamma}} \right)^2.
 \)
 When $\gamma < 1$, there is an additional point-mass of $(1 - \gamma)$ at the origin.
 \end{theorem}
@@ -1087,7 +1089,7 @@ Silverstein~\cite{silverstein1995sce}.  These papers either proceed via a combin
     \centering
     \includegraphics{mp-law}
     \caption{
-        \captiontitle{The Mar\v{c}enko-Pastur Law}
+        \captiontitle{The Mar\v{c}enko-Pastur law}
         Density, $\fMP_\gamma(x)$, plotted against quantile, $x$,
         for concentration $\gamma = 0.25$, $1$, and $4$.  Concentration
         is equal to the number of samples per dimension. For $\gamma < 1$,
@@ -1123,7 +1125,7 @@ Equivalently, Theorem~\ref{T:mp-limit} can be stated as a strong law of large nu
     \end{equation}
 \end{corollary}
 
-Concerning convergence rates for the quantities in Theorem~\ref{T:mp-limit},  Bai et al. \cite{bai2003crs} study the total variation distance between $F^{\mS_n}$ and $\FMP_\gamma$.  Under suitable conditions on $X_{11}$ and $\gamma$, they show that
+Concerning convergence rates for the quantities in Theorem~\ref{T:mp-limit},  Bai et al. \cite{bai2003crs} study the total variation distance between $F^{\mS_n}$ and $\FMP_\gamma$.  Under suitable conditions on $X_{n,11}$ and $\gamma$, they show that
 \(
     \| F^{\mS_n} - \FMP_\gamma \|_\text{TV}
     =
@@ -1136,7 +1138,7 @@ and
     \Ohas\left( n^{-2/5 + \varepsilon} \right)
 \)
 for any $\varepsilon > 0$.
-Guionnet and Zeitouni \cite{guionnet2000csm} give concentration of measure results.  If $X_{11}$ satisfies a Poincar\'e inequality and $g$ is Lipschitz, they show that for $\delta$ large enough,
+Guionnet and Zeitouni \cite{guionnet2000csm} give concentration of measure results.  If $X_{n,11}$ satisfies a Poincar\'e inequality and $g$ is Lipschitz, they show that for $\delta$ large enough,
 \begin{equation}\label{E:wishart-ldp}
     -
     \frac{1}{n^2}
@@ -1178,7 +1180,7 @@ It is interesting to look at the scaled behavior in equation~\eqref{E:wishart-fu
 	    \ldots, \\
             \int g_k(x) \, dF^{\mS_n}(x)
 	    -
-            \int g_k(x) \, d\FMP(x),
+            \int g_k(x) \, d\FMP(x)
 	\Big)
     \end{multline*}
     is tight.
@@ -1188,13 +1190,13 @@ It is interesting to look at the scaled behavior in equation~\eqref{E:wishart-fu
     \begin{equation}\label{E:wishart-clt-mean}
         \mu_i
 	    =
-	    \frac{ g_i(a) + g_i(b) }
+	    \frac{ g_i(a_\gamma) + g_i(b_\gamma) }
                  { 4 }
 	    -
             \frac{1}{2 \pi}
-	    \int_{a}^{b}
+	    \int_{a_\gamma}^{b_\gamma}
 	        \frac{ g_i(x) }
-	             { \sqrt{(x-a)(b-x)} }
+	             { \sqrt{(x-a_\gamma)(b_\gamma-x)} }
                 \,
                 dx
     \end{equation}
@@ -1211,14 +1213,12 @@ It is interesting to look at the scaled behavior in equation~\eqref{E:wishart-fu
     	    \frac{d}{dz_2} m(z_2)
     	    dz_1 dz_2.
     \end{equation}
-    In equations~\eqref{E:wishart-clt-mean}~and~\eqref{E:wishart-clt-cov},
-    $a = (1 - \gamma^{-1/2})^2$ and $b = (1 + \gamma^{-1/2})^2$.  The 
-    integrals in~\eqref{E:wishart-clt-cov} are contour integrals enclosing the 
+    The integrals in~\eqref{E:wishart-clt-cov} are contour integrals enclosing the 
     support of $\FMP_\gamma$, and
     \begin{equation}
         m(z)
         =
-	    \frac{-(z + 1 - \gamma^{-1}) + \sqrt{(z-a)(z-b)}}{2 z},
+	    \frac{-(z + 1 - \gamma^{-1}) + \sqrt{(z-a_\gamma)(z-b_\gamma)}}{2 z},
     \end{equation}
     with the square root defined to have positive imaginary part when
     $\Im z > 0$.
@@ -1227,6 +1227,7 @@ It is interesting to look at the scaled behavior in equation~\eqref{E:wishart-fu
 \noindent
 The case when $\E\left[ X_{n,11}^4 \right] = 3$ is of particular interest
 because it arises when $X_{n,11} \sim \Normal\left( 0, 1 \right)$.
+
 This theorem was proved by Bai and Silverstein~\cite{bai2004clt}, and can
 be considered a generalization of the work by Johnsson~\cite{jonsson1982slt}.
 In computing the variance integral~\eqref{E:wishart-clt-cov}, it is useful to know that $m$ satisfies
@@ -1251,7 +1252,7 @@ extreme eigenvalues of $\mS_n$ should converge to the edges of the support
 of $\FMP_\gamma$.  Indeed, under suitable assumptions, this is exactly what
 happens.  For the largest eigenvalue, work on this problem started with Geman~\cite{geman1980ltn}, and his assumptions were further weekend by Jonsson~\cite{jonsson1983ole} and Silverstein~\cite{silverstein1984ole}.
 Yin et al.~\cite{yin1988lle} prove the result under the weakest possible
-conditions \cite{bai1988nle}.
+conditions~\cite{bai1988nle}.
 
 \begin{theorem}\label{T:max-wishart-eig-limit}
     Let $\mX_1, \mX_2, \ldots, \mX_n$ be a sequence of random matrices of
@@ -1290,7 +1291,7 @@ For the case when the elements of $\mX_n$ are correlated, Bai and Silverstein~\c
 After appropriate centering and scaling, the largest eigenvalue of a white
 Wishart matrix converges weakly to a random variable with known distribution.
 Johansson~\cite{johansson2000sfa} proved this statement and identified the
-limiting distribution for complex white Wishart matrices.  Johnstone~\cite{johnstone2001dle} later provided an analogous result for real matrices.  
+limiting distribution for complex white Wishart matrices.  Johnstone~\cite{johnstone2001dle} later provided an analogous result for real matrices, which we state below.  
 
 \begin{theorem}\label{T:tw-limit-largest}
     Let $\mX_1, \mX_2, \ldots, \mX_n$ be a sequence of random matrices of
@@ -1361,7 +1362,7 @@ with boundary condition $q(x) \sim \Ai(x)$ as $x \to \infty$ and $\Ai(x)$ the Ai
             dx
     \right\}.
 \]
-Hastings and McLeod~\cite{hastings1980bvp} study the tail behavior of $q(x)$.  Using their analysis, one can show \cite{perry2009mre} that for $s \to -\infty$, 
+Hastings and McLeod~\cite{hastings1980bvp} study the tail behavior of $q(x)$.  Using their analysis, one can show (see, e.g. \cite{perry2009mre}) that for $s \to -\infty$, 
 \[
     \FTW_1(s)
     \sim
@@ -1387,7 +1388,7 @@ The density of $\FTW_1$ is shown in Figure~\ref{F:tw-density}.
     \centering
     \includegraphics{tw-law}
     \caption{
-        \captiontitle{The Tracy-Widom Law}
+        \captiontitle{The Tracy-Widom law}
         Limiting density of the largest eigenvalue from a white Wishart
         matrix after appropriate centering and scaling.
     }
@@ -1432,7 +1433,7 @@ A result like Theorem~\ref{T:tw-limit-largest} holds true for the smallest eigen
     \end{align*}
     If $\gamma \in (0, 1)$, then
     \[
-        \frac{l_{n,p-n+1} - \mu_{n,p}^-}{\sigma_{n,p}^-}
+        \frac{l_{n,p-n+1} - \mu_{p,n}^-}{\sigma_{p,n}^-}
         \tod
         W_1
         \sim
@@ -1453,7 +1454,7 @@ Theorem~\ref{T:tw-limit-smallest} does not apply when $\frac{n}{p} \to 1$.  Edel
     Theorem~\ref{T:tw-limit-largest}.  If $p(n) = n$, then for $t \geq 0$,
     \[
         \Prob\left\{
-            n l_{n,p} \leq t
+            n \, l_{n,p} \leq t
         \right\}
         \to
         \int_0^t
@@ -1467,12 +1468,12 @@ Theorem~\ref{T:tw-limit-smallest} does not apply when $\frac{n}{p} \to 1$.  Edel
 In addition to the extreme eigenvalues, it is possible to study the joint distribution of top or bottom $k$ sample eigenvalues for fixed $k$ as
 $n \to \infty$.  In light of Theorem~\ref{T:mp-limit}, for fixed $k$ we must have that the top (respectively, bottom) sample eigenvalues converge almost-surely to the same limit.  Furthermore, Soshnikov~\cite{soshnikov2002nud} showed that applying the centering and scaling from Theorem~\ref{T:tw-limit-largest} to the top $k$ sample eigenvalues gives a specific limiting distribution.
 
-It is natural to ask if the limiting eigenvalue distributions are specific to Wishart matrices, or if they apply to non-Gaussian data as well.  There is compelling evidence that the Tracy-Widom law is universal.   Soshnikov~\cite{soshnikov2002nud} extended Theorem~\ref{T:tw-limit-largest} to more general $\mX_n$ under the assumption that $X_{n,11}$ is sub-Gaussian and $n-p = \Oh(p^{1/3})$.  Tao and Vu~\cite{tao2009rmd} showed that Theorem~\ref{T:tw-limit-smallest} applies for general $X_{n,11}$ with $\E X_{n,11} = 0$ and $\E X_{n,11}^2 = 1$.
+It is natural to ask if the limiting eigenvalue distributions are specific to Wishart matrices, or if they apply to non-Gaussian data as well.  There is compelling evidence that the Tracy-Widom law is universal.   Soshnikov~\cite{soshnikov2002nud} extended Theorem~\ref{T:tw-limit-largest} to more general $\mX_n$ under the assumption that $X_{n,11}$ is sub-Gaussian and $n-p = \Oh(p^{1/3})$.  Tao and Vu~\cite{tao2009rmd} showed that Theorem~\ref{T:edelman-limit-smallest} applies for general $X_{n,11}$ with $\E X_{n,11} = 0$ and $\E X_{n,11}^2 = 1$.
 
 
 \subsection{Eigenvectors}
 
-Relatively little attention has been focused on the eigenvectors of sample covariance matrices.  While many results are known, as of yet there is no complete characterization of the eigenvectors from a general sample covariance matrix.  Most of the difficulty in tackling the problem is that it is difficult to describe convergence properties of $\mU_n$, the $p\times p$ matrix of eigenvectors, when $n$ and $p$ go to infinity.  The individual $p^2$ elements of $\mU_n$ do converge in any meaningful way, so the challenge is to come up with relevant macroscopic characteristics of $\mU_n$.
+Relatively little attention has been focused on the eigenvectors of sample covariance matrices.  While many results are known, as of yet there is no complete characterization of the eigenvectors from a general sample covariance matrix.  Most of the difficulty in tackling the problem is that it is hard to describe convergence properties of $\mU_n$, the $p\times p$ matrix of eigenvectors, when $n$ and $p$ go to infinity.  The individual $p^2$ elements of $\mU_n$ do converge in any meaningful way, so the challenge is to come up with relevant macroscopic characteristics of $\mU_n$.
 
 Silverstein~\cite{silverstein1979reg} was perhaps the first to study the eigenvectors of large-dimensional sample covariance matrices.  He hypothesized that for sample covariance matrices of increasing dimension, the eigenvector matrix becomes more and more ``Haar-like''.  A random matrix $\mU \in \reals^{p\times p}$ is said to be Haar-distributed over the orthogonal group if for every fixed $p \times p$ orthogonal matrix $\mO$, the rotated matrix $\mO \mU$ is has the same distribution as $\mU$.  That is, $\mO \mU \eqd \mU$.  Silverstein's conjecture was that as $n \to \infty$, $\mU_n$ behaves more and more like a Haar-distributed matrix.  The next theorem displays one aspect Haar-like behavior.
 
@@ -1543,7 +1544,7 @@ We let $\vb_n = \mU_n \va_n$.  Then,
         \,
         g( l_{n,i} ).
 \end{equation}
-If $\mU_n$ is Haar-distributed, then $\vb_n$ will be distributed uniformly over the unit sphere in $\reals^p$, and the average in \eqref{E:evector-functional} will put about weight $\frac{1}{p}$ on each eigenvalue.  If $\mU_n$ puts bias in any particular direction then the average might put extra weight on particular eigenvalues.
+If $\mU_n$ is Haar-distributed, then $\vb_n$ will be distributed uniformly over the unit sphere in $\reals^p$, and the average in \eqref{E:evector-functional} will put about weight $\frac{1}{p}$ on each eigenvalue.  If $\mU_n$ puts bias in any particular direction then the average will put extra weight on particular eigenvalues.
 
 Silverstein investigated second-order behavior of eigenvectors in \cite{silverstein1981dbe}, \cite{silverstein1984slt}, \cite{silverstein1989eld}, and \cite{silverstein1990wcr}.  He demonstrated that certain second-order behavior of $\mU_n$ depends in a crucial way on the fourth moment of $X_{n,11}$.  This greatly restricts the class of $\mX_n$ for with the eigenvectors of $\mS_n$ are Haar-like.
 
