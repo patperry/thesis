@@ -3,7 +3,9 @@ perry-thesis.fdb_latexmk
 perry-thesis.pdf
 perry-thesis.ps
 perry-thesis.synctex.gz
+perry-thesis-abstract.pdf
 suthesis
+suthesis-abstract
 cv-unsupervised/plots/neurons.pdf
 .DS_Store
 *.aux
@@ -13,5 +15,6 @@ cv-unsupervised/plots/neurons.pdf
 *.log
 *.lof
 *.lot
+*.swp
 *.toc
 *.tmproj
