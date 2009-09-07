@@ -4,12 +4,12 @@
 \section{Introduction}
 
 Many modern data sets involve simultaneous measurements of a large number of
-variables. Some financial applications including portfolio selection involve
+variables. Some financial applications, such as portfolio selection, involve
 looking at the market prices of hundreds or thousands of stocks and their
-evolution over time \cite{markowitz1952ps}. Microarray studies
-\cite{schena1995qmg} involve measuring the expression levels of thousands of
-genes simultaneously. Text processing \cite{manning1999fsn} involves counting
-the appearances of thousands of words on thousands of documents. In all of these
+evolution over time~\cite{markowitz1952ps}. Microarray studies
+involve measuring the expression levels of thousands of
+genes simultaneously~\cite{schena1995qmg}.  Text processing involves counting
+the appearances of thousands of words on thousands of documents~\cite{manning1999fsn}.  In all of these
 applications, it is natural to suppose that even though the data are
 high-dimensional, their dynamics are driven by a relatively small number of
 latent factors.
@@ -23,20 +23,19 @@ behaves.  Unfortunately, his results do not apply when the sample size is
 comparable to the dimensionality.
 
 A further complication with many modern data sets is that it is no longer
-appropriate to assume the observations are \iid Also, sometimes it is
+appropriate to assume the observations are \iid. Also, sometimes it is
 difficult to distinguish between ``observation'' and ``variable''. We call such
 data ``transposable''. A microarray study involving measurements of $p$ genes
 for $n$ different patients can be considered transposable: we can either treat
 each gene as a measurement of the patient, or we can treat each patient as a
 measurement of the gene. There are correlations both between the genes
-\emph{and} between the patients, so in fact both interpretations are relevant
-\cite{efron2008smi}.
+\emph{and} between the patients, so in fact both interpretations are relevant~\cite{efron2008smi}.
 
 One can study latent factor models in a transpose-agnostic way be considering
 generative models of the form $\mX = \mU \mD \mV^\trans + \mE$. Here, $\mX$ is
 the $n \times p$ observed data matrix. The unobserved row and column factors
 are given by $\mU$ and $\mV$, respectively, matrices with $k$ orthonormal
-columns each, with $k \ll \min(n,p)$. The strengths of the factors are given
+columns each, and $k \ll \min(n,p)$. The strengths of the factors are given
 in the $k\times k$ diagonal matrix $\mD$, and $\mE$ is a matrix of noise. A
 natural estimator for the latent factor term $\mU \mD \mV^\trans$ can be
 gotten from truncating the singular value decomposition (SVD)
@@ -44,8 +43,8 @@ gotten from truncating the singular value decomposition (SVD)
 of the SVD when $n$ and $p$ both tend to infinity, with their ratio tending to
 a nonzero constant.
 
-In an upcoming paper, Onatski~\cite{onatski2009} gives a very thorough
-treatment of these models. He assumes that the elements of $E$ are \iid
+In an upcoming paper, Onatski~\cite{onatski2009} gives a thorough
+treatment of latent factor models. He assumes that the elements of $\mE$ are \iid
 Gaussians, that $\sqrt{n} ( \mU^\trans \mU - \mI_k) $ tends to a multivariate
 Gaussian distribution, and that $\mV$ and $\mD$ are both nonrandom. The
 contributions of this chapter are twofold. First, we work under a
@@ -65,10 +64,10 @@ main results.
 \subsection{Assumptions and notation}
 
 We will work sequences of matrices indexed by $n$, with
-\[
-    \mX_n = \sqrt{n} \mU_n \mD_n \mV_n^\trans + \mE_n.
-\]
-We denote by $\sqrt{n} \mU_n \mD_n \mV_n^\trans$ the ``signal'' part of the
+\begin{equation}
+    \mX_n = \sqrt{n} \, \mU_n \mD_n \mV_n^\trans + \mE_n.
+\end{equation}
+We denote by $\sqrt{n} \, \mU_n \mD_n \mV_n^\trans$ the ``signal'' part of the
 matrix $\mX_n$ and $\mE_n$ the ``noise'' part. We will often refer to $\mU_n$
 and $\mV_n$ as the left and right factors of $\mX_n$, and the matrix $\mD_n$
 will be called the matrix of normalized factor strengths. The first two
@@ -118,7 +117,7 @@ We need to introduce some more notation. We denote the columns of $\mU_n$ and
 $\mV_n$ by $\vu_{n,1}, \vu_{n,2}, \ldots, \vu_{n,k}$ and $\vv_{n,1},
 \vv_{n,2}, \ldots, \vv_{n,k}$, respectively. We let 
 \[
-    \mX_n \approx \sqrt{n} \mhU_n \mhD_n \mhV_n^\trans
+    \mX_n \approx \sqrt{n} \, \mhU_n \mhD_n \mhV_n^\trans
 \]
 be the singular value decomposition of
 $\mX_n$ truncated to $k$ terms, where $\mhD_n = \diag( \hat \mu_{n,1}^{1/2},
@@ -139,7 +138,7 @@ values.
     converges almost surely to 
     $\vbmu = (\bmu_1, \bmu_2, \ldots, \bmu_k)$,
     where
-    \[
+    \begin{equation}
         \bmu_i
         =
         \begin{cases}
@@ -149,14 +148,14 @@ values.
             \sigma^2 \left( 1 + \frac{1}{\sqrt{\gamma}} \right)^2
                 &\text{otherwise.}
         \end{cases}
-    \]
+    \end{equation}
     Moveover, 
     \(
         \sqrt{n} (\vhmu - \vbmu)
     \)
     converges in distribution to a (possibly degenerate) multivariate normal
     with covariance matrix $\mbSigma$ whose $ij$ element is given by
-    \[
+    \begin{equation}
         \bsigma_{ij}
         \equiv
         \begin{cases}
@@ -184,7 +183,7 @@ values.
             0
                 &\text{otherwise.}
         \end{cases}
-    \]
+    \end{equation}
     When $\sigma_{ii} = 2 \mu_i^2$, 
     and $\mu_i > \frac{\sigma^2}{\sqrt{\gamma}}$, the variance of the $i$th
     component simplifies to
@@ -247,6 +246,11 @@ where $\mXi$ is an $p \times k$ matrix of factors and $\mZ$ is an $n\times k$ ma
 
 \item
 There is a sign-indeterminancy in the sample and population singular vectors. We choose them arbitrarily.
+
+\item
+If instead of almost-sure convergence, $\mD_n$ converges in probability to $\mD$,
+then the theorems still hold with $\vhmu_n$, $\mTheta_n$, and $\mPhi_n$ converging
+in probability.
 
 \item
 The assumption that
@@ -334,7 +338,7 @@ then in block form,
 \]
 Because Gaussian white noise is orthogonally invariant, the
 matrices $\mtE_{n,ij}$ are all independent with \iid $\Normal(0, \, 1)$ elements.  Let
-\[
+\begin{equation}
     \mtE_{n,22}
     =
     \sqrt{n}
@@ -350,7 +354,7 @@ matrices $\mtE_{n,ij}$ are all independent with \iid $\Normal(0, \, 1)$ elements
     \end{matrix}
     \right)
     \mP_{n}^\trans
-\]
+\end{equation}
 be the SVD of $\mtE_{n,22}$, with
 \(
     \mLambda_n
@@ -369,7 +373,7 @@ be the SVD of $\mtE_{n,22}$, with
     \Wishart_{p-k} \left( n-k, \mI_{p-k} \right).
 \)
 Define
-\begin{align*}
+\begin{align}
     \mtX_n
         &=
             \left(
@@ -390,7 +394,7 @@ Define
                 \mI_k & 0 \\
                 0     & \mP_n
             \end{matrix}
-            \right) \\
+            \right) \notag \\
         &=
             \left(
             \begin{matrix}
@@ -399,7 +403,7 @@ Define
                 \mE_{n,31}                  & 0
             \end{matrix}
             \right),
-\end{align*}
+\end{align}
 where 
 $\mE_{n,11} = \mtE_{n,11}$, 
 $\mE_{n,12} = \mtE_{n,12} \mP_n$,
@@ -412,7 +416,7 @@ Finally, let
     \mtU_n \mtD_n \mtV_n
 \]
 be the SVD of $\mtX_n$, truncated to $k$ terms.  Lastly, put the left and right singular vectors in block form as
-\[
+\begin{equation}
     \mtU_n
     =
     \left(
@@ -421,9 +425,9 @@ be the SVD of $\mtX_n$, truncated to $k$ terms.  Lastly, put the left and right 
         \mtU_{n,2}
     \end{matrix}
     \right)
-\]
+\end{equation}
 and
-\[
+\begin{equation}
     \mtV_n
     =
     \left(
@@ -432,7 +436,7 @@ and
         \mtV_{n,2}
     \end{matrix}
     \right),
-\]
+\end{equation}
 where $\mtU_{n,1}$ and $\mtV_{n,1}$ both $k\times k$ matrices.
 
 We have gotten to $\mtX_n$ via an orthogonal change of basis applied to $\mX_n$.  By carefully choosing this basis, we have assured that:
@@ -453,11 +457,14 @@ We have gotten to $\mtX_n$ via an orthogonal change of basis applied to $\mX_n$.
         $\mtU_{n,1}$.
         Similarly, $\mV_n^\trans \mhV_n = \mtV_{n,1}$.
 \end{enumerate}
+This simplified form of the problem makes it much easier to analyze the 
+SVD of $\mX_n$.
+
 
 \section{The secular equation}\label{S:secular-equation}
 
 We set $\mS_n = \frac{1}{n} = \mtX_n^\trans \mtX_n$.  The eigenvalues and eigenvectors of $\mS_n$ are the squares of the singular values of $\frac{1}{\sqrt{n}} \mtX_n$ and its right singular vectors, respectively.  In block form, we have
-\[
+\begin{equation}
     \mS_n
     =
     \left(
@@ -466,9 +473,10 @@ We set $\mS_n = \frac{1}{n} = \mtX_n^\trans \mtX_n$.  The eigenvalues and eigenv
         \mS_{n,21} & \mS_{n,22}
     \end{matrix}
     \right),
-\]
+\end{equation}
 where
-\begin{align*}
+\begin{subequations}
+\begin{align}
     \begin{split}
     \mS_{n,11}
         &=
@@ -487,7 +495,10 @@ where
                 +
                 \mE_{n,31}^\trans \mE_{n,31}
             \right),
-    \end{split} \\
+    \end{split}
+\end{align}
+and
+\begin{align}
     \mS_{n,12}
         &=
             \frac{1}{\sqrt{n}}
@@ -514,7 +525,8 @@ where
             +
             \frac{1}{n}
             \mE_{n,12}^\trans \mE_{n,12}.
-\end{align*}
+\end{align}
+\end{subequations}
 
 Now we study the eigendecomposition of $\mS_n$.  If 
 \(
@@ -630,11 +642,12 @@ is an eigenvector of $\mS_n$ with eigenvalue $\mu$.  We define
             \mT_n(z) \,
             \vx, \label{E:secular-f}
 \end{gather}
-and refer to the equation $f_n(z, \vx) = 0$ as the \emph{secular equation}.
+and refer to the equation $f_n(z, \vx) = 0$ as the \emph{secular equation}.  This
+is a slight abuse of terminology.  A more standard use of the term ``secular equation'' would involve a determinant, i.e. $\det \mT_n(z) = 0$.  However, for our purposes it will be more convenient to work with $f_n$.
 
 \subsection{Outline of the proof}
 
-With probability one, $\mS_n$ and $\mS_{n,22}$ have no eigenvalues in common.  This implies that all of the eigenvalues of $\mS_n$ are solutions to the secular equation.  First, we give a perturbation expansion for $f_n(z, \vx)$ in Section~\ref{S:secular-equation}.  Then, in Section~\ref{S:solutions-to-secular-eq} we study the solutions of  $f_n(z, \vx) = 0$.  It turns out that these solutions are dramatically different depending on the size of $z$.  If $z > (1 + \gamma^{-1/2})^2$, then we can write
+With probability one, $\mS_n$ and $\mS_{n,22}$ have no eigenvalues in common.  This implies that all of the eigenvalues of $\mS_n$ are solutions to the secular equation.  First, we give a perturbation expansion for $f_n(z, \vx)$ in Section~\ref{S:anal-sec-eqn}.  Then, in Section~\ref{S:solutions-to-secular-eq} we study the solutions of  $f_n(z, \vx) = 0$.  It turns out that these solutions are dramatically different depending on the size of $z$.  If $z > (1 + \gamma^{-1/2})^2$, then we can write
 \begin{align*}
     z 
         &= 
@@ -654,19 +667,43 @@ With probability one, $\mS_n$ and $\mS_{n,22}$ have no eigenvalues in common.  T
             \ohP\left( \frac{1}{\sqrt{n}} \right).
 \end{align*}
 Otherwise, the solution satisfies
-\begin{align*}
+\[
     z
-        &=
+        =
             z^0
             + 
             \ohP\left( \frac{1}{\sqrt{n}} \right).
-\end{align*}
+\]
 In Section~\ref{S:singular-values-and-vectors} we get the singular values and singular vectors of $\frac{1}{\sqrt{n}} \mtX_n$ from the solutions of the secular equation.  From a solution pair $(z, \vx)$, we can construct an eigenvalue and an eigenvector of $\mS_n$ using equation~\eqref{E:v-from-v1}.  Then, we can get the corresponding left singular vectors through multiplying by $\mtX_n$.  Finally, in Section~\ref{S:lowrank-gamma-lt-1} we show that the results still hold when $\gamma < 1$.  For parts of the proof, we will need some limit theorems for weighted sums from Appendix~\ref{A:weighted-sums}.
 
-\section{Analysis of the secular equation}
+\section{Analysis of the secular equation}\label{S:anal-sec-eqn}
 
 We can simplify the equation for $\mT_n(z)$.  
-By making use of the Sherman-Morrison-Wordbury formula~\cite{golub1996mc}, we can write
+By making use of the Sherman-Morrison-Woodbury formula~\cite{golub1996mc}, we can get an expression for $\left(\mS_{n,22} - z \mI_{p-k}\right)^{-1}$.  As a reminder, the Sherman-Morrison-Woodbury formula states that for matrices $\mA, \mB, \mC,$ and $\mD$ with compatible dimensions, the following formula for the inverse holds:
+\[
+    \left(
+        \mA
+        +
+        \mB
+        \mD
+        \mC
+    \right)^{-1}
+        =
+        \mA^{-1}
+        -
+        \mA^{-1}
+        \mB
+        \left(
+            \mD^{-1}
+            +
+            \mC
+            \mA^{-1}
+            \mB
+        \right)^{-1}
+        \mC
+        \mA^{-1}.
+\]
+Using this, we can write
 \begin{align*}
     \left(
         \mS_{n,22} - z \mI_{p-k}
@@ -721,7 +758,7 @@ By making use of the Sherman-Morrison-Wordbury formula~\cite{golub1996mc}, we ca
             \right)^{-1}.
     \end{split}
 \end{align*}
-If we define $\mtD_n = \mD_n + \frac{1}{\sqrt{n}} \mE_{n,11}$, then we can compute
+Next, we define $\mtD_n = \mD_n + \frac{1}{\sqrt{n}} \mE_{n,11}$, so that
 \begin{align*}
     \begin{split}
     \mS_{n,12} 
@@ -746,203 +783,262 @@ If we define $\mtD_n = \mD_n + \frac{1}{\sqrt{n}} \mE_{n,11}$, then we can compu
                 +
                 \mLambda_n^{1/2} \mE_{n,21}
             \right)
-    \end{split} \\
-    \begin{split}
-        &=
-            \frac{1}{n}
-            \mtD_n^\trans
-            \mE_{n,12}
-            \left(
-                \mLambda_n
-                -
-                z
-                \mI_{p-k}
-            \right)^{-1}
-            \mE_{n,12}^\trans
-            \mtD_n \\
-            &\qquad+
-            \frac{1}{n}
-            \mtD_n^\trans
-            \mE_{n,12}
-            \left(
-                \mLambda_n
-                -
-                z
-                \mI_{p-k}
-            \right)^{-1}
-            \mLambda_n^{1/2}
-            \mE_{n,21} \\
-            &\qquad+
-            \frac{1}{n}
-            \mE_{n,21}^\trans
-            \mLambda_n^{1/2}
-            \left(
-                \mLambda_n
-                -
-                z
-                \mI_{p-k}
-            \right)^{-1}
-            \mE_{n,12}^\trans
-            \mtD_n \\
-            &\qquad+
-            \frac{1}{n}
-            \mE_{n,21}^\trans
-            \mLambda_n^{1/2}
-            \left(
-                \mLambda_n
-                -
-                z
-                \mI_{p-k}
-            \right)^{-1}
-            \mLambda_n^{1/2}
-            \mE_{n,21} \\
-            &\qquad-
-            \frac{1}{n^2}
-            \mtD_n^\trans
-            \mE_{n,12}
-            \left(
-                \mLambda_n
-                -
-                z
-                \mI_{p-k}
-            \right)^{-1}
-            \mE_{n,12}^\trans \\
-            &\qquad\qquad\cdot
-            \left(
-                \mI_k
-                +
-                \frac{1}{n}
-                \mE_{n,12}
-                \left(
-                    \mLambda_n
-                    -
-                    z
-                    \mI_{p-k}
-                \right)^{-1}
-                \mE_{n,12}^\trans
-            \right)^{-1} \\
-            &\qquad\qquad\cdot
-            \mE_{n,12}
-            \left(
-                \mLambda_n
-                -
-                z
-                \mI_{p-k}
-            \right)^{-1}
-            \mE_{n,12}^\trans
-            \mtD_n \\
-            &\qquad-
-            \frac{1}{n^2}
-            \mtD_n^\trans
-            \mE_{n,12}
-            \left(
-                \mLambda_n
-                -
-                z
-                \mI_{p-k}
-            \right)^{-1}
-            \mE_{n,12}^\trans \\
-            &\qquad\qquad\cdot
-            \left(
-                \mI_k
-                +
-                \frac{1}{n}
-                \mE_{n,12}
-                \left(
-                    \mLambda_n
-                    -
-                    z
-                    \mI_{p-k}
-                \right)^{-1}
-                \mE_{n,12}^\trans
-            \right)^{-1} \\
-            &\qquad\qquad\cdot
-            \mE_{n,12}
-            \left(
-                \mLambda_n
-                -
-                z
-                \mI_{p-k}
-            \right)^{-1}
-            \mLambda_n^{1/2}
-            \mE_{n,21} \\
-            &\qquad-
-            \frac{1}{n^2}
-            \mE_{n,21}^\trans
-            \mLambda_{n}^{1/2}
-            \left(
-                \mLambda_n
-                -
-                z
-                \mI_{p-k}
-            \right)^{-1}
-            \mE_{n,12}^\trans \\
-            &\qquad\qquad\cdot
-            \left(
-                \mI_k
-                +
-                \frac{1}{n}
-                \mE_{n,12}
-                \left(
-                    \mLambda_n
-                    -
-                    z
-                    \mI_{p-k}
-                \right)^{-1}
-                \mE_{n,12}^\trans
-            \right)^{-1} \\
-            &\qquad\qquad\cdot
-            \mE_{n,12}
-            \left(
-                \mLambda_n
-                -
-                z
-                \mI_{p-k}
-            \right)^{-1}
-            \mE_{n,12}^\trans
-            \mtD_n \\
-            &\qquad-
-            \frac{1}{n^2}
-            \mE_{n,21}^\trans
-            \mLambda_{n}^{1/2}
-            \left(
-                \mLambda_n
-                -
-                z
-                \mI_{p-k}
-            \right)^{-1}
-            \mE_{n,12}^\trans \\
-            &\qquad\qquad\cdot
-            \left(
-                \mI_k
-                +
-                \frac{1}{n}
-                \mE_{n,12}
-                \left(
-                    \mLambda_n
-                    -
-                    z
-                    \mI_{p-k}
-                \right)^{-1}
-                \mE_{n,12}^\trans
-            \right)^{-1} \\
-            &\qquad\qquad\cdot
-            \mE_{n,12}
-            \left(
-                \mLambda_n
-                -
-                z
-                \mI_{p-k}
-            \right)^{-1}
-            \mLambda_{n}^{1/2}
-            \mE_{n,21}
     \end{split}
 \end{align*}
-To put it mildly, this is a formidable expression.  We can simplify the formula substantially when $z > \left(1 + \gamma^{-1/2} \right)^2$.
+The final expression for
+\(
+    \mS_{n,12}
+    \left(
+        \mS_{n,22} - z \mI_{p-k}
+    \right)^{-1}
+    \mS_{n,21}
+\)
+has eight terms, each of which is rather complicated.  For now, we have no choice
+but to write them all down, but rest assured we will spend considerable time
+finding simplifications. 
+
+We have
+\begin{align}
+    \mT_n(z)
+        &=
+            \mS_{n,11}
+            -
+            z
+            \mI_k
+            -
+            \mS_{n,12}
+            \left(
+                \mS_{n,22} - z \mI_{p-k}
+            \right)^{-1}
+            \mS_{n,21} \notag \\
+        &=
+            \mS_{n,11}
+            -
+            z
+            \mI_k
+            + 
+            \sum_{i=1}^8
+                \mT_n^{(i)}(z),
+\end{align}
+where
+\begin{subequations}
+\begin{align}
+    \mT_n^{(1)}(z)
+        &=
+            -
+            \frac{1}{n}
+            \mtD_n^\trans
+            \mE_{n,12}
+            \left(
+                \mLambda_n
+                -
+                z
+                \mI_{p-k}
+            \right)^{-1}
+            \mE_{n,12}^\trans
+            \mtD_n, \\
+    \mT_n^{(2)}(z)
+        &=
+            -
+            \frac{1}{n}
+            \mtD_n^\trans
+            \mE_{n,12}
+            \left(
+                \mLambda_n
+                -
+                z
+                \mI_{p-k}
+            \right)^{-1}
+            \mLambda_n^{1/2}
+            \mE_{n,21}, \\
+    \mT_n^{(3)}(z)
+        &=
+            -
+            \frac{1}{n}
+            \mE_{n,21}^\trans
+            \mLambda_n^{1/2}
+            \left(
+                \mLambda_n
+                -
+                z
+                \mI_{p-k}
+            \right)^{-1}
+            \mE_{n,12}^\trans
+            \mtD_n, \\
+    \mT_n^{(4)}(z)
+        &=
+            -
+            \frac{1}{n}
+            \mE_{n,21}^\trans
+            \mLambda_n^{1/2}
+            \left(
+                \mLambda_n
+                -
+                z
+                \mI_{p-k}
+            \right)^{-1}
+            \mLambda_n^{1/2}
+            \mE_{n,21}, \\
+    \begin{split}
+    \mT_n^{(5)}(z)
+        &=
+            \frac{1}{n^2}
+            \mtD_n^\trans
+            \mE_{n,12}
+            \left(
+                \mLambda_n
+                -
+                z
+                \mI_{p-k}
+            \right)^{-1}
+            \mE_{n,12}^\trans \\
+            &\qquad\qquad\cdot
+            \left(
+                \mI_k
+                +
+                \frac{1}{n}
+                \mE_{n,12}
+                \left(
+                    \mLambda_n
+                    -
+                    z
+                    \mI_{p-k}
+                \right)^{-1}
+                \mE_{n,12}^\trans
+            \right)^{-1} \\
+            &\qquad\qquad\cdot
+            \mE_{n,12}
+            \left(
+                \mLambda_n
+                -
+                z
+                \mI_{p-k}
+            \right)^{-1}
+            \mE_{n,12}^\trans
+            \mtD_n, 
+    \end{split} \\
+    \begin{split}
+    \mT_n^{(6)}(z)
+        &=    
+            \frac{1}{n^2}
+            \mtD_n^\trans
+            \mE_{n,12}
+            \left(
+                \mLambda_n
+                -
+                z
+                \mI_{p-k}
+            \right)^{-1}
+            \mE_{n,12}^\trans \\
+            &\qquad\qquad\cdot
+            \left(
+                \mI_k
+                +
+                \frac{1}{n}
+                \mE_{n,12}
+                \left(
+                    \mLambda_n
+                    -
+                    z
+                    \mI_{p-k}
+                \right)^{-1}
+                \mE_{n,12}^\trans
+            \right)^{-1} \\
+            &\qquad\qquad\cdot
+            \mE_{n,12}
+            \left(
+                \mLambda_n
+                -
+                z
+                \mI_{p-k}
+            \right)^{-1}
+            \mLambda_n^{1/2}
+            \mE_{n,21},
+    \end{split} \\
+    \begin{split}
+    \mT_n^{(7)}(z)
+        &=
+            \frac{1}{n^2}
+            \mE_{n,21}^\trans
+            \mLambda_{n}^{1/2}
+            \left(
+                \mLambda_n
+                -
+                z
+                \mI_{p-k}
+            \right)^{-1}
+            \mE_{n,12}^\trans \\
+            &\qquad\qquad\cdot
+            \left(
+                \mI_k
+                +
+                \frac{1}{n}
+                \mE_{n,12}
+                \left(
+                    \mLambda_n
+                    -
+                    z
+                    \mI_{p-k}
+                \right)^{-1}
+                \mE_{n,12}^\trans
+            \right)^{-1} \\
+            &\qquad\qquad\cdot
+            \mE_{n,12}
+            \left(
+                \mLambda_n
+                -
+                z
+                \mI_{p-k}
+            \right)^{-1}
+            \mE_{n,12}^\trans
+            \mtD_n,
+    \end{split} \\
+    \begin{split}
+    \mT_n^{(8)}(z)
+        &=
+            \frac{1}{n^2}
+            \mE_{n,21}^\trans
+            \mLambda_{n}^{1/2}
+            \left(
+                \mLambda_n
+                -
+                z
+                \mI_{p-k}
+            \right)^{-1}
+            \mE_{n,12}^\trans \\
+            &\qquad\qquad\cdot
+            \left(
+                \mI_k
+                +
+                \frac{1}{n}
+                \mE_{n,12}
+                \left(
+                    \mLambda_n
+                    -
+                    z
+                    \mI_{p-k}
+                \right)^{-1}
+                \mE_{n,12}^\trans
+            \right)^{-1} \\
+            &\qquad\qquad\cdot
+            \mE_{n,12}
+            \left(
+                \mLambda_n
+                -
+                z
+                \mI_{p-k}
+            \right)^{-1}
+            \mLambda_{n}^{1/2}
+            \mE_{n,21}.
+    \end{split}
+\end{align}
+\end{subequations}
+To put it mildly, this is a formidable expression.  Notice, however, that several common subexpressions appear in the terms of $\mT_n(z)$.  We can simplify the formulas for thes subexpressions when $z > \left(1 + \gamma^{-1/2} \right)^2$.
 
 \begin{lemma}\label{L:eij-product-limits}
     If $z > \left(1 + \gamma^{-1/2} \right)^2$, then
-    \begin{align*}
+    \begin{subequations}
+    \begin{align}
         \frac{1}{n}
         \mE_{n,12}
         \left(
@@ -997,7 +1093,8 @@ To put it mildly, this is a formidable expression.  We can simplify the formula 
             &\toas
                 \left( 1 - \gamma^{-1} \right)
                 \mI_k.
-    \end{align*}
+    \end{align}
+    \end{subequations}
 \end{lemma}
 \begin{proof}
 We prove the result for the first quantity and the other derivations are analogous.  We have that
@@ -1031,18 +1128,18 @@ and let
     Y_{N,\alpha} = \left( \mE_{n,12} \right)_{i\alpha}
                    \left( \mE_{n,12} \right)_{j\alpha}.
 \)
-Letting $b(\gamma) = \left( 1 + \gamma^{-1/2} \right)^2$, the function
+Letting $b_\gamma = \left( 1 + \gamma^{-1/2} \right)^2$, the function
 \[
     g(t) 
     = 
     \begin{cases}
         \frac{1}{t - z} 
-            &\text{if $t \leq b(\gamma)$,} \\
-        \frac{1}{b(\gamma) - z}
+            &\text{if $t \leq b_\gamma$,} \\
+        \frac{1}{b_\gamma - z}
             &\text{otherwise,}
     \end{cases}
 \]
-is bounded and continuous.  Moreover, since $\lambda_{n,1} \toas b(\gamma)$, with probability one $g(\lambda_{n,\alpha})$ is eventually equal to $W_{N,\alpha}$ for all $\alpha$.  The Wishart LLN (Corollary~\ref{C:wishart-lln}) gives us that
+is bounded and continuous.  Moreover, since $\lambda_{n,1} \toas b_\gamma$, with probability one $g(\lambda_{n,\alpha})$ is eventually equal to $W_{N,\alpha}$ for all $\alpha$.  The Wishart LLN (Corollary~\ref{C:wishart-lln}) gives us that
 \[
     \frac{1}{N}
     \sum_{\alpha=1}^N W_{N,\alpha}
@@ -1050,7 +1147,7 @@ is bounded and continuous.  Moreover, since $\lambda_{n,1} \toas b(\gamma)$, wit
             \int
                 \frac{1}{t - z} d\FMP_\gamma(t).
 \]
-Since $| W_{N,\alpha} | \leq W_{N,1} \overset{\text{a.s.}}{\leq} b(\gamma)$, the fourth moments of the weights are uniformly bounded in $N$.  
+Since $| W_{N,\alpha} | \leq W_{N,1} \overset{\text{a.s.}}{\leq} b_\gamma$, the fourth moments of the weights are uniformly bounded in $N$.  
 
 The $Y_{N,\alpha}$ are all \iid with $\E Y_{N,\alpha} = \delta_{ij}$ and $\E Y_{N,\alpha}^4 < \infty$.  The weighed SLLN (Proposition~\ref{P:weighted-slln}) gives us that
 \[
@@ -1067,7 +1164,6 @@ Since $\frac{p-k}{n} \to \gamma^{-1}$, this completes the proof.
 \end{proof}
 
 The function
-\begin{subequations}
 \begin{align}
     m(z)
         &\define
@@ -1077,14 +1173,15 @@ The function
             \gamma
             \cdot
             \frac{ -(z - 1 + \gamma^{-1})
-                   +\sqrt{ \big( z - b(\gamma) \big) 
-                           \big( z - a(\gamma) \big) } }
+                   +\sqrt{ \big( z - b_\gamma \big) 
+                           \big( z - a_\gamma \big) } }
                  { 2 z },
 \end{align}
 is the Stieltjes transform of $\FMP_\gamma$, where
+\begin{subequations}
 \begin{align}
-    a(\gamma) &= \left( 1 - \gamma^{-1/2} \right)^2, \\
-    b(\gamma) &= \left( 1 + \gamma^{-1/2} \right)^2.
+    a_\gamma &= \left( 1 - \gamma^{-1/2} \right)^2, \\
+    b_\gamma &= \left( 1 + \gamma^{-1/2} \right)^2.
 \end{align}
 \end{subequations}
 When restricted to the complement of the support of $\FMP_\gamma$, it has a well-defined inverse
@@ -1101,7 +1198,7 @@ When restricted to the complement of the support of $\FMP_\gamma$, it has a well
     Considered as functions of $z$, the quantities in 
     Lemma~\ref{L:eij-product-limits} and their derivatives
     converge uniformly over any closed
-    interval $[u,v] \subset \big( b(\gamma),\infty \big)$.
+    interval $[u,v] \subset \big( b_\gamma,\infty \big)$.
 \end{lemma}
 \begin{proof}
     We show this for the first quantity and the other proofs are similar.
@@ -1131,7 +1228,7 @@ When restricted to the complement of the support of $\FMP_\gamma$, it has a well
             \toas 0.
     \]
     Let $\epsilon > 0$ be arbitrary.  Note that for 
-    $z > b(\gamma)$, $m'(z) > 0$ and $m''(z) < 0$.  We let $d = m'(u)$ and
+    $z > b_\gamma$, $m'(z) > 0$ and $m''(z) < 0$.  We let $d = m'(u)$ and
     choose a grid
     \[
         u = z_1 < z_2 < \cdots < z_{M-1} < z_M = v,
@@ -1154,7 +1251,7 @@ When restricted to the complement of the support of $\FMP_\gamma$, it has a well
             \frac{\epsilon}{2}.
     \]
     Also guarantee that $N$ is large enough so that $\lambda_{n,1} < u$ 
-    (this is possible since $\lambda_{n,1} \toas b(\gamma) < u$).
+    (this is possible since $\lambda_{n,1} \toas b_\gamma < u$).
     Let $z \in [u,v]$ be arbitrary and find $l$ such that 
     $z_l \leq z \leq z_{l+1}$.
     Observe that $e_{n,ij}(z)$ is monotone for $z > \lambda_{n,1}$.  Thus,
@@ -1206,7 +1303,8 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
 \begin{lemma}\label{L:eij-product-scaled-limits}
     If $z_1, z_2, \ldots, z_l > \left( 1 + \gamma^{-1/2} \right)^2$, 
     then jointly for $z \in \{ z_1, z_2, \ldots, z_l \}$
-    \begin{align*}
+    \begin{subequations}
+    \begin{align}
         \sqrt{n}
         \left(
             \frac{1}{n}
@@ -1282,7 +1380,8 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
             \mI_k
         \right)
             &\tod \mL_2,
-    \end{align*}
+    \end{align}
+    \end{subequations}
     where the elements of $\mF(z)$, $\mG(z)$, $\mH(z)$, $\mK$, $\mL_1$ and 
     $\mL_2$ jointly define a multivariate Gaussian process indexed by $z$. 
     All but $\mG(z)$ are symmetric.  If we define
@@ -1313,8 +1412,10 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
         \Big\{ \mL_2 \Big\}
     \]
     are mutually independent of each other.
+    
     The other covariances are defined by
-    \begin{align*}
+    \begin{subequations}
+    \begin{align}
         \cov\Big( F_{ij}(z_1), \, F_{ij}(z_2) \Big)
             &= \gamma^{-1}
                \left( 1 + \delta_{ij} \right)
@@ -1344,19 +1445,20 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
         \cov\Big( L_{2,ij}, \, L_{2,ij} \Big)
             &= (1 - \gamma^{-1})
                \left( 1 + \delta_{ij} \right),
-    \end{align*}
-    with the interpretation
+    \end{align}
+    \end{subequations}
+    with the interpretation that
     \begin{align*}
         \frac{ m(z_1) - m(z_2) }
              { z_1 - z_2 }
             &=
-                m'(z_1), \\
+                m'(z_1) \\
     \intertext{and}
         \frac{ z_1 \, m(z_1) - z_2 \, m(z_2) }
              { z_1 - z_2 }
             &= m( z_1 ) + z_1 \, m'(z_1)
     \end{align*}
-    for $z_1 = z_2$.
+    when $z_1 = z_2$.
 \end{lemma}
 \begin{proof}
     The distributions of $\mK$, $\mL_1$, and $\mL_2$ follow from the 
@@ -1652,13 +1754,13 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
 \end{proof}
 
 \begin{remark}
-    It is possible to show that the sequences in Lemma~\ref{L:eij-product-scaled-limits} are tight by an argument similar to the one used in \cite{onatski2009}.  This implies that the convergence is uniform in $z$.  We actually only need that the finite-dimensional distributions converge.
+    It is possible to show that the sequences in Lemma~\ref{L:eij-product-scaled-limits} are tight by an argument similar to the one used in \cite{onatski2009}.  This implies that the convergence is uniform in $z$.  For our purposes, we only need that the finite-dimensional distributions converge.
 \end{remark}
 
 With Lemmas~\ref{L:eij-product-limits}~and~\ref{L:eij-product-scaled-limits},
 we can simplify $\mT_n(z)$.  For convenience, we define
 $\mF_n (z)$ such that
-\[
+\begin{equation}
     \frac{1}{n}
     \mE_{n,12}
     \left(
@@ -1675,19 +1777,19 @@ $\mF_n (z)$ such that
             +
             \frac{1}{\sqrt{n}}
             \mF_n(z)
-\]
+\end{equation}
 and $\mF_n(z) \tod \mF(z)$ pointwise in $z$,
 with $\mG_n(z), \mH_n(z), \mK_n, \mL_{n,1},$ and $\mL_{n,2}$ defined similarly.  We can now get at the first and second-order behavior of $\mT_n(z)$.
 
 \begin{lemma}
-    If $[u,v] \subset \big( b(\gamma), \, \infty \big)$, then
+    If $[u,v] \subset \big( b_\gamma, \, \infty \big)$, then
     \(
         \mT_n( z )
             \toas
                 \mT_0( z )
     \)
     uniformly on $[u,v]$, where
-    \[
+    \begin{equation}
         \mT_0( z )
             =
                 \frac{1}{ 1 + \gamma^{-1} m(z) }
@@ -1695,21 +1797,21 @@ with $\mG_n(z), \mH_n(z), \mK_n, \mL_{n,1},$ and $\mL_{n,2}$ defined similarly. 
                 +
                 \frac{1}{m(z)}
                 \mI_k.
-    \]
+    \end{equation}
 \end{lemma}
 
 \begin{lemma}
     If $z > (1 + \gamma^{-1/2})^2$, then
-    \[
+    \begin{equation}
         \mT_n( z ) 
             = 
                 \mT_0( z )
                 +
                 \frac{1}{\sqrt{n}}
                 \mT_{n,1}( z ),
-    \]
+    \end{equation}
     where
-    \begin{equation*}
+    \begin{equation}
         \begin{split}
             \mT_{n,1}( z ) 
                 &= \mL_{n,2}
@@ -1732,7 +1834,7 @@ with $\mG_n(z), \mH_n(z), \mK_n, \mL_{n,1},$ and $\mL_{n,2}$ defined similarly. 
                 +
                 \ohP\left( 1 \right).
         \end{split}
-    \end{equation*}
+    \end{equation}
 \end{lemma}
 \begin{proof}
     First, we have
@@ -1896,11 +1998,11 @@ First we look at the solutions of $f_0(z, \vx)$.
         m(z) = - \frac{1}{\mu_i + \gamma^{-1}}.
     \]
     Note that $m(z) > - \left( \gamma^{-1/2} + \gamma^{-1} \right)^{-1}$ and
-    $m'(z) > 0$ on $\big( b(\gamma), \infty \big)$.  Hence, a unique solution
-    only exists when $\mu_i > \gamma^{-1/2}$.
+    $m'(z) > 0$ on $\big( b_\gamma, \infty \big)$.  Hence, a unique solution
+    exists exactly when $\mu_i > \gamma^{-1/2}$.
 \end{proof}
 
-Given a solution of $f_0(z, \vx) = 0$, it is not hard to believe that there is a sequence of solutions $(z_n, \vx_n)$ converging to $z$ and $\vx$.  We dedicate the rest of this section to making this statement precise.  
+Given a solution of $f_0(z, \vx) = 0$, it is not hard to believe that there is a sequence of solutions $(z_n, \vx_n)$ such that $f_n(z_n, \vx_n) = 0$, with $z_n$ and $\vx_n$ converging to $z$ and $\vx$, respectively.  We dedicate the rest of this section to making this statement precise.  
 
 \begin{lemma}\label{L:zn-sequence-exists}
     If $\mu > \gamma^{-1/2}$ occurs $l$ times on the diagonal of $\mD^2$, then
@@ -1915,7 +2017,7 @@ Given a solution of $f_0(z, \vx) = 0$, it is not hard to believe that there is a
                 m^{-1} \left( \frac{1}{\mu + \gamma^{-1}} \right)$.
     \end{enumerate}
 \end{lemma}
-
+\noindent
 The proof involves a technical lemma, which we state and prove now.
 
 \begin{lemma}\label{L:uniform-converge-same-roots}
@@ -2031,21 +2133,21 @@ We will use a perturbation lemma, which follows from the $\sin \Theta$ theorem (
 \end{proof}
 
 Finally, we show that eventually the points described in Lemma~\ref{L:zn-sequence-exists} are the only zeros of $f_n(z, \vx)$ having
-$z > \big( b(\gamma) \big)$.  Since $f_n(z, \vx) = 0$ implies 
+$z > b_\gamma$.  Since $f_n(z, \vx) = 0$ implies 
 $\det \mT_n(z) = 0$, it suffices to show that $\mT_n(z)$ has no other
 zeros.
 
 \begin{lemma}\label{L:detT-solution-upper-bound}
     For $n$ large enough, almost surely
     the equation $\det \mT_n(z) = 0$ has exactly 
-    $\bar k$ solutions in  $\big( b(\gamma), \infty \big)$
+    $\bar k$ solutions in  $\big( b_\gamma, \infty \big)$
     (namely, the $\bar k$  points described in 
     Lemma~\ref{L:zn-sequence-exists}).
 \end{lemma}
 \begin{proof}
     By Lemma~\ref{L:uniform-converge-same-roots}, for $n$ large enough
     $\det \mT_n(z)$ and $\det \mT_0(z)$ have the same number of solutions in 
-    $(u,v) \subset \big( b(\gamma), \infty \big)$.  Thus, we only need to
+    $(u,v) \subset \big( b_\gamma, \infty \big)$.  Thus, we only need to
     show that the solutions of $\det \mT_n(z)$ are bounded.  Since every
     solution is an eigenvalue of $\mS_n$, this amounts to showing that the
     eigenvalues of $\mS_n$ are bounded.  Using the Courant-Fischer 
@@ -2061,7 +2163,7 @@ zeros.
                     \| \mE_n \|_2
                 \right)^2 \\
             &\toas
-                \left( \sqrt{\mu_1} + \sqrt{b(\gamma)} \right)^2.
+                \left( \sqrt{\mu_1} + \sqrt{b_\gamma} \right)^2.
     \end{align*}
     Thus, the solutions of $\det \mT_n(z) = 0$ are almost-surely bounded.
 \end{proof}
@@ -2158,7 +2260,7 @@ so that $\vx_0^\trans ( \vx_n - \vx_0 ) = \OhP\left( \frac{1}{n} \right)$.  With
     $(\bmu_i, \ve_i)$, such that $f_n(z_n, \vx_n) = 0$ and $\mu_i \neq \mu_j$
     for $i \neq j$, then:
     \begin{enumerate}[(i)]
-        \item \[
+        \item \begin{equation}
                   \sqrt{n} ( z_n - \bmu_i) 
                   = 
                   -
@@ -2166,13 +2268,13 @@ so that $\vx_0^\trans ( \vx_n - \vx_0 ) = \OhP\left( \frac{1}{n} \right)$.  With
                        {\big(\mT_0'(\bmu_i) \big)_{ii}}
                   +
                   \ohP(1).
-              \]
-        \item \[
+              \end{equation}
+        \item \begin{equation}
                    \sqrt{n} \left( x_{n,i} - 1 \right)
                    =
                    \ohP\left( 1 \right).
-              \]
-        \item \[
+              \end{equation}
+        \item \begin{equation}
                   \sqrt{n} \, x_{n,j}
                   = 
                   -
@@ -2182,7 +2284,7 @@ so that $\vx_0^\trans ( \vx_n - \vx_0 ) = \OhP\left( \frac{1}{n} \right)$.  With
                   \ohP(1)
                   \quad
                   \text{for $i \neq j$.}
-              \]
+              \end{equation}
     \end{enumerate}
     \begin{proof}
         We have done most of the work in the exposition above.  In particular,
@@ -2434,17 +2536,17 @@ $\frac{1}{\sqrt{n}} \mtX_n$.
 \subsection{Singular values}
 
 Every value $z$ with $f_n(z, \vx)$ for some $\vx$ is the square of a
-singular value of $\frac{1}{\sqrt{n}} \mtX_n$.  Therefore,  Section~\ref{E:x-identifiability} describes the behavior of the top $\bar k$ singular values.  To complete the proof of Theorem~\ref{T:spiked-eigenvalue-limits} for $\gamma \geq 1$, we only need to describe what happens to the singular values corresponding to the indices $i$ with $\mu_i \leq \gamma^{-1/2}$.
+singular value of $\frac{1}{\sqrt{n}} \mtX_n$.  Therefore,  Section~\ref{S:solutions-to-secular-eq} describes the behavior of the top $\bar k$ singular values.  To complete the proof of Theorem~\ref{T:spiked-eigenvalue-limits} for $\gamma \geq 1$, we only need to describe what happens to the singular values corresponding to the indices $i$ with $\mu_i \leq \gamma^{-1/2}$.
 
 \begin{lemma}\label{L:eigenvalue-below-threshold-limit}
     If $\mu_i \leq \gamma^{-1/2}$ then the $i$th eigenvalue of
-    $\mS_n$, converges almost surely to $b(\gamma)$.
+    $\mS_n$, converges almost surely to $b_\gamma$.
 \end{lemma}
 \begin{proof}
 From Lemma~\ref{L:detT-solution-upper-bound}, we know that for $n$ large
 enough and $\epsilon$ small, there are exactly
-$\bar k = \max \{ i : \mu_ > \gamma^{-1/2} \}$ eigenvalues of $\mS_n$
-in $\big( b(\gamma) + \epsilon, \infty)$.  From the eigenvalue interleaving
+$\bar k = \max \{ i : \mu_i > \gamma^{-1/2} \}$ eigenvalues of $\mS_n$
+in $\big( b_\gamma + \epsilon, \infty)$.  From the eigenvalue interleaving
 inequalities, we know that the $i$th eigenvalue of $\mS_n$ is at least as
 big as the $i$th eigenvalue of $\mS_{n,22}$.  
 
@@ -2457,10 +2559,10 @@ $\bar k < i \leq k$.  Then almost surely,
         \leq
         \limsup_{n\to\infty} \hmu_{n,i}        
         \leq
-        b(\gamma) + \epsilon.
+        b_\gamma + \epsilon.
 \]
-Since $\lambda_{n,i} \toas b(\gamma)$ and $\epsilon$ is arbitrary, this
-forces $\hmu_{n,i} \toas b(\gamma)$.
+Since $\lambda_{n,i} \toas b_\gamma$ and $\epsilon$ is arbitrary, this
+forces $\hmu_{n,i} \toas b_\gamma$.
 \end{proof}
 
 \begin{lemma}
@@ -2472,13 +2574,13 @@ forces $\hmu_{n,i} \toas b(\gamma)$.
 \end{lemma}
 \begin{proof}
 We use the same notation as in Lemma~\ref{L:eigenvalue-below-threshold-limit}.
-Since $\lambda_{n,i} = b(\gamma) + \OhP(n^{-2/3})$, we have that
+Since $\lambda_{n,i} = b_\gamma + \OhP(n^{-2/3})$, we have that
 \[
-    \sqrt{n} \big( \lambda_{n,i} - b(\gamma) \big) \toP 0.
+    \sqrt{n} \big( \lambda_{n,i} - b_\gamma \big) \toP 0.
 \]
 This means that
 \[
-    \liminf_{n\to\infty} \sqrt{n} \big( \hmu_{n,i} - b(\gamma) \big)
+    \liminf_{n\to\infty} \sqrt{n} \big( \hmu_{n,i} - b_\gamma \big)
         \geq \ohP(1).
 \]
 The upper bound is a little more delicate.  By the Courant-Fischer min-max
@@ -2508,7 +2610,7 @@ for any $\epsilon > 0$.  From the work in  Section~\ref{S:solutions-to-secular-e
                 \frac{\tsigma_i}{ \sqrt{n} }
             \right) \\
         &=
-            b(\gamma)
+            b_\gamma
             +
             \epsilon^2
             \frac{ \gamma^{1/2} - 1 }{ 1 + \gamma^{1/2} \epsilon }
@@ -2540,7 +2642,7 @@ Therefore, for all $0 < \epsilon < 1$, we have
     \left(
         \hmu_{n,i}
         - 
-        b(\gamma) 
+        b_\gamma 
         - \epsilon^2
         \frac{ \gamma^{1/2} - 1 }{ 1 + \gamma^{1/2} \epsilon }
     \right)
@@ -2554,7 +2656,7 @@ Letting $\epsilon \to 0$, we get
         \big(
             \hmu_{n,i}
             -
-            b(\gamma)
+            b_\gamma
         \big)
         \leq
         \ohP(1).
@@ -2565,7 +2667,7 @@ Together with the lower bound, this implies
     \big(
         \hmu_{n,i}
         -
-        b(\gamma)
+        b_\gamma
     \big)
     \toP
     0.
@@ -2603,7 +2705,7 @@ of $\vtx_n$ is given by
         \right)
         \vx_n.
 \]
-It is straightforward to show that for $z > b(\gamma)$,
+It is straightforward to show that for $z > b_\gamma$,
 \begin{align*}
     \mI_{k}
     +
@@ -2619,7 +2721,7 @@ It is straightforward to show that for $z > b(\gamma)$,
            \frac{ m'(z) }{ \big( m(z) \big)^2 }
            \mI_k
 \end{align*}
-uniformly for $z$ in any compact subset of $\big( b(\gamma), \infty \big)$.
+uniformly for $z$ in any compact subset of $\big( b_\gamma, \infty \big)$.
 It is also not hard to compute for $\mu_i > \gamma^{-1/2}$ that
 \[
     -\mT_0'( \bmu_i )
@@ -2663,14 +2765,14 @@ Write
                  { ( \tlambda_{n,\alpha} - z_{n,i} )^2 },
 \]
 where $\vs_{n,1}, \vs_{n,2}, \ldots, \vs_{n,p-k}$ are the 
-columns of $\mS_{n,12}$, and
+eigenvectors of $\mS_{n,22}$ multiplied by $\mS_{n,12} = \mS_{n,21}^\trans$, and
 $\tlambda_{n,1}, \tlambda_{n,2}, \ldots, \tlambda_{n,p-k}$ are the eigenvalues
 of $\mS_{n,22}$.  For $\epsilon > 0$, define the event 
 \(
     J_{n}(\epsilon)
     =
     \left\{
-        z_{n,i} < b(\gamma) + \epsilon
+        z_{n,i} < b_\gamma + \epsilon
     \right\}.
 \)
 From the interleaving inequality, we have $z_{n,i} \geq \tlambda_{n,i}$.
@@ -2686,7 +2788,7 @@ With respect to the ordering on positive-definite matrices, we have
         &\succeq
             \sum_{\alpha=i}^{p-k}
                     \frac{ \vs_{n,\alpha} \, \vs_{n,\alpha}^\trans }
-                         { ( b(\gamma) + \epsilon - z_{n,i} )^2 }
+                         { ( b_\gamma + \epsilon - z_{n,i} )^2 }
             \qquad\text{on $J_n(\epsilon)$.}
 \end{align*}
 It is not hard to show that
@@ -2694,7 +2796,7 @@ It is not hard to show that
     \left\|
         \sum_{\alpha=1}^{i-1}
                 \frac{ \vs_{n,\alpha} \, \vs_{n,\alpha}^\trans }
-                     { ( b(\gamma) + \epsilon - z_{n,i} )^2 }
+                     { ( b_\gamma + \epsilon - z_{n,i} )^2 }
     \right\|
         \toas 0.
 \)
@@ -2702,18 +2804,18 @@ Therefore,
 \[
     \sum_{\alpha=i}^{p-k}
             \frac{ \vs_{n,\alpha} \, \vs_{n,\alpha}^\trans }
-                 { ( b(\gamma) + \epsilon - z_{n,i} )^2 }
+                 { ( b_\gamma + \epsilon - z_{n,i} )^2 }
         \toas
-        \frac{ \gamma^{-1} m'\big( b(\gamma) + \epsilon \big) }
-             { 1 + \gamma^{-1} m\big( b(\gamma) + \epsilon \big)}
+        \frac{ \gamma^{-1} m'\big( b_\gamma + \epsilon \big) }
+             { 1 + \gamma^{-1} m\big( b_\gamma + \epsilon \big)}
         \mD^2
         +
-        \frac{ m'\big( b(\gamma) + \epsilon \big) }
-             { \left[ m\big( b(\gamma) + \epsilon \big) \right]^2}
+        \frac{ m'\big( b_\gamma + \epsilon \big) }
+             { \left[ m\big( b_\gamma + \epsilon \big) \right]^2}
         \mI_k.
 \]
 As $n\to\infty$, we have $\Prob\big( J_n(\epsilon) \big) \to 1$.  So,
-since $m'\big( b(\gamma) + \epsilon \big) \geq \frac{C}{\sqrt{\epsilon}}$
+since $m'\big( b_\gamma + \epsilon \big) \geq \frac{C}{\sqrt{\epsilon}}$
 for some constant $C$, 
 letting $\epsilon \to 0$ we must have that the smallest eigenvalue of
 \(
@@ -2772,7 +2874,7 @@ It is not hard to show that
 \(
     \mR_n(z) \toas \mR_0(z),
 \)
-uniformly for $z > b(\gamma)$, and
+uniformly for $z > b_\gamma$, and
 \(
     \mR_n(z) 
         = 
@@ -2782,7 +2884,7 @@ uniformly for $z > b(\gamma)$, and
             + 
             \ohP\left( \frac{1}{\sqrt{n}} \right)
 \)
-pointwise for $z > b(\gamma)$.  Here,
+pointwise for $z > b_\gamma$.  Here,
 \[
     \mR_0(z) = \frac{1}{ 1 + \gamma^{-1} m(z) } \mD,
 \]
@@ -2818,7 +2920,7 @@ A straightforward calculation shows the following:
                      { 1 + \tfrac{1}{\mu_i} } \right)^{1/2} \,
                 \ve_i .
     \]
-    If $\mu_i \leq \gamma^{-1/2}$ and $z_{n,i} \toas b(\gamma)$, then
+    If $\mu_i \leq \gamma^{-1/2}$ and $z_{n,i} \toas b_\gamma$, then
     \[
         \vy_{n,i} \toas 0.
     \]
@@ -2826,7 +2928,7 @@ A straightforward calculation shows the following:
 
 \section{Results for $\gamma \in (0,1)$}\label{S:lowrank-gamma-lt-1}
 
-Remarkably the formulas for the limiting quantities still hold when $\gamma < 1$.  To see this, we can get the behavior for $\gamma < 1$ by taking the transpose of $\mX_n$ and applying the theorem for $\gamma \geq 1$.  We switch the roles of $n$ and $p$, replace $\mu_i$ by $\mu_i' = \gamma \mu_i$ replace $\gamma$ by $\gamma' = \gamma^{-1}$.  Then, for instance, the critical cutoff becomes
+Remarkably the formulas for the limiting quantities still hold when $\gamma < 1$.  To see this, we can get the behavior for $\gamma < 1$ by taking the transpose of $\mX_n$ and applying the theorem for $\gamma \geq 1$.  We switch the roles of $n$ and $p$, replace $\mu_i$ by $\mu_i' = \gamma \mu_i$, and replace $\gamma$ by $\gamma' = \gamma^{-1}$.  Then, for instance, the critical cutoff becomes
 \begin{align*}
     \mu_i' &> \frac{1}{\sqrt{\gamma'}}, \quad\text{i.e.} \\
     \gamma \mu_i &> \gamma^{1/2},
@@ -2844,6 +2946,8 @@ The formulas for the other quantities also still remain true.
 
 \section{Related work, extensions, and future work}\label{S:lowrank-related-extensions}
 
+With the proofs completed, we now discuss some extensions and related work.
+
 \subsection{Related work}
 
 When Johnstone~\cite{johnstone2001dle} worked out the distribution of the largest eigenvalue in the null (no signal) case, he proposed studying ``spiked'' alternative models.  Spiked data consists of vector-valued observations with population covariance of the form
@@ -2857,12 +2961,12 @@ After this initial work, Bai \& Yao~\cite{bai2008clt}~\cite{bai2008lts} derived 
 
 The above authors all consider data of the form $\mX = \mZ \mSigma^{1/2}$.
 Onatski~\cite{onatski2009}, like us, examines data of the form 
-$\mX = \mU \mD \mV^T + \mE$.  With slightly different assumptions than ours, he is able to give the probability limits of the top eigenvalues, along with the marginal distributions of the scaled eigenvalues and singular vectors.  However, Onatski does not work in a ``transpose-invariant'' framework like we do, so his methods will not allow getting at the joint distribution of the left and right singular vectors.
+$\mX = \mU \mD \mV^T + \mE$.  With slightly different assumptions than ours, he is able to give the probability limits of the top eigenvalues, along with the marginal distributions of the scaled eigenvalues and singular vectors.  However, Onatski does not work in a ``transpose-agnostic'' framework like we do, so his methods do not allow getting at the joint distribution of the left and right singular vectors.
 
 \subsection{Extensions and future work}
 
 We have stopped short of computing the second-order behavior of the singular vectors, but no additional theory is required to get at these quantities.  Anyone patient enough can use our results to compute the joint distribution of 
-$\| \vtx_{n,i} \|_2$, $\vx_{n,i}$, and $\vy_{n,i}$.  This will give the joint behavior of the singular vectors.  
+$\| \vtx_{n,i} \|_2$, $\vx_{n,i}$, and $\vy_{n,i}$.  This in turn will give the joint behavior of the singular vectors.  
 
 Most of the proof remains unchanged for complex Gaussian noise, provided
 transpose ($^\trans$) is replaced by conjugate-transpose ($^\herm$).  The
