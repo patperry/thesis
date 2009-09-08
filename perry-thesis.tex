@@ -36,6 +36,7 @@
     \secondreader{Jonathan E. Taylor}
 
 \includeonly{
+    acknowledgment,
     {\thesischapter{introduction}},
     {\thesischapter{multivariate}},
     {\thesischapter{lowrank}},
@@ -54,26 +55,16 @@
 
 % first the preface sections.  
 
-% this includes the file preface.tex which should include the
-% following commands
 \beforepreface
+
 \prefacesection{Abstract}
 \input{abstract}
 
-% \prefacesection{preface}
-% body of the preface
-% \include{preface}
+\include{acknowledgment}
 
-% any other preface sections
-
-% the last preface section (e.g., acknowledgement.tex)
-% should look like
-% \prefacesection{Acknowledgement}
-% body 
 \figurespagefalse
 \tablespagefalse
 \afterpreface
-%\include{acknowledgement}
 
 \includechapter{introduction}
 \includechapter{multivariate}
