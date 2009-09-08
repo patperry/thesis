@@ -12,7 +12,7 @@ of \iid random variables.  First, we give a weak law of large numbers (WLLN):
     \(
         \bW_n = \frac{1}{n} \sum_{i=1}^n W_{n,i}.
     \) 
-    If $\bW_n \toP \bW$ and that
+    If $\bW_n \toP \bW$ and 
     $\E \left[ \frac{1}{n} \sum_{i=1}^n W_{n,i}^2 \right]$ is uniformly 
     bounded in $n$, then
     \[
@@ -68,7 +68,7 @@ We do not give a proof of Proposition~\ref{P:weighted-wlln}, but instead derive 
                \sum_{i=1}^n
                    W_{n,i}^4
                +
-               3 \E \left[
+               3 \, \E \left[
                    (X_{n,1} - \mu)^2 (X_{n,2} - \mu)^2
                \right]
                \sum_{i \neq j}
@@ -81,7 +81,7 @@ We do not give a proof of Proposition~\ref{P:weighted-wlln}, but instead derive 
         \right]^2
     \end{align*}
     for some constant $C_1$ bounding $\E \left[ X_{n,1} - \mu \right]^4$
-    and $3 \E \left[ (X_{n,1} - \mu)^2 (X_{n,2} - \mu)^2 \right]$.
+    and $3 \, \E \left[ (X_{n,1} - \mu)^2 (X_{n,2} - \mu)^2 \right]$.
     Therefore, the full expectation is bounded by some other constant $C_2$.  
     We have just shown that
     \[
