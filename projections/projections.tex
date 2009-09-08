@@ -72,7 +72,7 @@ this distribution by
 \subsection{Generating random elements}
 
 The easiest way to generate a random element of $\stiefel_k(\reals^p)$ is
-to let $\mZ$ to be an $p \times k$ matrix of \iid $\Normal( 0, \, 1)$
+to let $\mZ$ to be a $p \times k$ matrix of \iid $\Normal( 0, \, 1)$
 random variables, take the $QR$ decomposition $\mZ = \mQ \mR$, and let
 $\mV$ be equal to the first $k$ columns of $\mQ$.  In practice, there is
 a bias in the way standard $QR$ implementations choose the signs of the
@@ -107,7 +107,7 @@ This algorithm has a time complexity of $\Oh\left( p k^2 \right)$. Diaconis
 and Shahshahani~\cite{diaconis1987sag} present an alternative approach called
 the subgroup algorithm which can be used to generate $\mV$ as a product of 
 $k$ Householder reflections.  Their algorithm has time complexity 
-$\Oh\left( p k \right)$.  Mezzadri~\cite{mezzadri2007grm} gives a readable 
+$\Oh\left( p k \right)$.  Mezzadri~\cite{mezzadri2007grm} gives a simple 
 description of the subgroup algorithm.
 
 
@@ -527,7 +527,7 @@ Suppose we have $\mU \in \reals^{p \times k}$, an orthonormal $k$-frame,
 and we randomly project $\mU$ into $\reals^q$, with $q < p$.  If we denote
 the projection matrix by $\mV^\trans$ and set $\mtU =\mV^\trans \mU$, it is 
 natural to ask how close $\mtU$ is to being an orthonormal $k$-frame.
-We can prove the following
+We can prove the following:
 
 \begin{proposition}\label{P:project-kframe}
     Suppose $\mU \in \reals^{p \times k}$ satisfies $\mU^\trans \mU = \mI_k$.
