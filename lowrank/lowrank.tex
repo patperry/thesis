@@ -643,11 +643,11 @@ is an eigenvector of $\mS_n$ with eigenvalue $\mu$.  We define
             \vx, \label{E:secular-f}
 \end{gather}
 and refer to the equation $f_n(z, \vx) = 0$ as the \emph{secular equation}.  This
-is a slight abuse of terminology.  A more standard use of the term ``secular equation'' would involve a determinant, i.e. $\det \mT_n(z) = 0$.  However, for our purposes it will be more convenient to work with $f_n$.
+is a slight abuse of terminology.  A more standard use of the term ``secular equation'' would be analogous to a characteristic equation and involve a determinant, i.e. $\det \mT_n(z) = 0$.  However, for our purposes it will be more convenient to work with $f_n$.
 
 \subsection{Outline of the proof}
 
-With probability one, $\mS_n$ and $\mS_{n,22}$ have no eigenvalues in common.  This implies that all of the eigenvalues of $\mS_n$ are solutions to the secular equation.  First, we give a perturbation expansion for $f_n(z, \vx)$ in Section~\ref{S:anal-sec-eqn}.  Then, in Section~\ref{S:solutions-to-secular-eq} we study the solutions of  $f_n(z, \vx) = 0$.  It turns out that these solutions are dramatically different depending on the size of $z$.  If $z > (1 + \gamma^{-1/2})^2$, then we can write
+With probability one, $\mS_n$ and $\mS_{n,22}$ have no eigenvalues in common.  This implies that all of the eigenvalues of $\mS_n$ are solutions to the secular equation.  First, we give a perturbation expansion for $f_n(z, \vx)$ in Section~\ref{S:anal-sec-eqn}.  Then, in Section~\ref{S:solutions-to-secular-eq} we study the solutions of  $f_n(z, \vx) = 0$.  It turns out that these solutions are dramatically different depending on the size of $z$.  If $z > (1 + \gamma^{-1/2})^2$, then we can find a perturbation expansion
 \begin{align*}
     z 
         &= 
@@ -664,9 +664,12 @@ With probability one, $\mS_n$ and $\mS_{n,22}$ have no eigenvalues in common.  T
             \frac{1}{\sqrt{n}}
             \vx^1
             + 
-            \ohP\left( \frac{1}{\sqrt{n}} \right).
+            \ohP\left( \frac{1}{\sqrt{n}} \right),
 \end{align*}
-Otherwise, the solution satisfies
+where $(z^0, \vx^0)$ is the limit of $(z, \vx)$ as $n\to \infty$ and
+$(z^1, \vx^1)$ is the order-$\frac{1}{\sqrt{n}}$ approximation error.
+Otherwise, $\vx$ does not have a limit and the $z$ part of the solution 
+satisfies
 \[
     z
         =
@@ -679,13 +682,12 @@ In Section~\ref{S:singular-values-and-vectors} we get the singular values and si
 \section{Analysis of the secular equation}\label{S:anal-sec-eqn}
 
 We can simplify the equation for $\mT_n(z)$.  
-By making use of the Sherman-Morrison-Woodbury formula~\cite{golub1996mc}, we can get an expression for $\left(\mS_{n,22} - z \mI_{p-k}\right)^{-1}$.  As a reminder, the Sherman-Morrison-Woodbury formula states that for matrices $\mA, \mB, \mC,$ and $\mD$ with compatible dimensions, the following formula for the inverse holds:
+By making use of the Sherman-Morrison-Woodbury formula~\cite{golub1996mc}, we can get an expression for $\left(\mS_{n,22} - z \mI_{p-k}\right)^{-1}$.  As a reminder, the Sherman-Morrison-Woodbury formula states that for matrices $\mA$, $\mB$, and $\mC$ with compatible dimensions, the following formula for the inverse holds:
 \[
     \left(
         \mA
         +
         \mB
-        \mD
         \mC
     \right)^{-1}
         =
@@ -694,7 +696,7 @@ By making use of the Sherman-Morrison-Woodbury formula~\cite{golub1996mc}, we ca
         \mA^{-1}
         \mB
         \left(
-            \mD^{-1}
+            \mI
             +
             \mC
             \mA^{-1}
@@ -2083,7 +2085,8 @@ We will use a perturbation lemma, which follows from the $\sin \Theta$ theorem (
 
 \begin{lemma}\label{L:approx-eigenpair}
     Let $(z,\vx)$ be an approximate eigenpair of the $k\times k$
-    matrix $\mA$ with $\| \vx \|_2 = 1$.  Let $\vr = \mA \vx - z \vx$.
+    matrix $\mA$ (in the sense that $\mA \vx \approx z \vx$), with 
+    $\| \vx \|_2 = 1$.  Let $\vr = \mA \vx - z \vx$.
     Suppose that there is a set $\mathcal{L}$ of $k-1$ eigenvalues of $\mA$ 
     such that
     \[
@@ -2568,12 +2571,13 @@ forces $\hmu_{n,i} \toas b_\gamma$.
 \begin{lemma}
     If $\mu_i \leq \gamma^{-1/2}$, then
     \(
-        \sqrt{n} ( \hmu_i - \mu_i ) \toP 0,
+        \sqrt{n} ( \hmu_i - \bmu_i ) \toP 0,
     \)
     where $\hmu_i$ is the $i$th eigenvalue of $\mS_n$.
 \end{lemma}
 \begin{proof}
 We use the same notation as in Lemma~\ref{L:eigenvalue-below-threshold-limit}.
+Recall that in the present situation, $\bmu_i = b_\gamma$.
 Since $\lambda_{n,i} = b_\gamma + \OhP(n^{-2/3})$, we have that
 \[
     \sqrt{n} \big( \lambda_{n,i} - b_\gamma \big) \toP 0.
