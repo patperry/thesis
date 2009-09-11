@@ -7,7 +7,7 @@ thousands of variables are becoming increasingly more common. Making sense of
 data of this size is simply not tractable without imposing a simplifying
 model. One popular simplification is to posit existence of a small number of
 common factors that drive the dynamics of the data, which are usually
-estimated by principal components analysis (PCA) or some variation thereof.
+estimated by principal component analysis (PCA) or some variation thereof.
 The $n \times p$ data matrix $\mX$ is approximated as a low-rank product $\mX
 \approx \mU \mV^\trans$, where $\mU$ and $\mV$ are $n \times k$ and $p \times
 k$, respectively, with $k$ much smaller than $n$ and $p$.
@@ -996,7 +996,7 @@ Frobenius norm.
 \section{Relation to the scree plot}\label{S:intrinsic-rank-scree-plot}
 
 Cattell's scree plot~\cite{cattell1966scree} is a popular device for choosing
-the truncation rank in principal components analysis. One plots the square of
+the truncation rank in principal component analysis. One plots the square of
 the singular value, $\hat d^2_k$, against the component number, $k$. Typically
 such a plot exhibits an ``elbow'', where the slope changes noticeably. This is
 the point at which Cattell recommends truncating the SVD of the matrix.
