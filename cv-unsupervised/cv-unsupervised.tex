@@ -809,9 +809,9 @@ We generate $\mU$, $\mV$, and $\mE$ independently of each other.  To avoid
 ambiguity in what constitutes ``signal'' and what constitutes ``noise'', we 
 ensure that the elements of $\mE$ are uncorrelated with each other.
 
-We consider two types of factors.  For ``Gaussian'' factors, we put the elements of $\mU$ distributed \iid with
+We consider two types of factors.  For ``Gaussian'' factors, we put the elements of $\mU$ distributed iid with
 $U_{11} \sim \Normal\big( 0, \, \frac{1}{n} \big)$ and the elements of
-$\mV$ \iid with $V_{11} \sim \Normal\big( 0, \, \frac{1}{p} \big)$, also independent of $\mU$.  For ``Sparse'' factors we use sparsity parameter $s = 10\%$ and set
+$\mV$ iid with $V_{11} \sim \Normal\big( 0, \, \frac{1}{p} \big)$, also independent of $\mU$.  For ``Sparse'' factors we use sparsity parameter $s = 10\%$ and set
 \[
     \Prob\{ U_{11} = 0 \} = 1 - s,
 \]
@@ -836,7 +836,7 @@ Similarly, we put
 The scalings in both cases are chosen so that $\E [\mU^\trans \mU] = \E 
 [\mV^\trans \mV] = \mI_{k_0}$.  Gaussian factors are uniformly spread out in the observations and variables, while sparse factors are only observable in a small percentage of the matrix entries (about $1\%$).
 
-We use three types of noise.  For ``white'' noise, we generate the elements of $\mE$ \iid with $E_{11} \sim \Normal\left( 0, \, 1\right)$.  For ``heavy'' noise, we use \iid elements with $E_{11} \sim \sigma_\nu^{-1} \, t_\nu$, and
+We use three types of noise.  For ``white'' noise, we generate the elements of $\mE$ iid with $E_{11} \sim \Normal\left( 0, \, 1\right)$.  For ``heavy'' noise, we use iid elements with $E_{11} \sim \sigma_\nu^{-1} \, t_\nu$, and
 $\nu = 3$.  Here $t_\nu$ is a $t$ random variable with $\nu$ degrees of freedom, and $\sigma_\nu = \sqrt{\nu/(\nu-2)}$ is chosen so that 
 $\E [ E_{11}^2 ] = 1$.  Heavy noise is so-called because it has a heavy tail.  Lastly, for ``colored'' noise, we first generate
 $\sigma^2_1, \ldots, \sigma^2_n \sim \text{Inverse-$\chi^2$}(\nu_1)$ and
@@ -1290,7 +1290,7 @@ The data from the NSPL motor cortex experiment can be put into a matrix where
 each neuron is thought of as a variable, and the timepoints of each condition
 are thought of as observations. This gives us a matrix $\mX$ with $p = 49$
 variables and $n = 27 \cdot 422 = 11394$ observations. Of course, the rows of
-$\mX$ are nothing like \iid, and the noise in $\mX$ is not white. Parametric
+$\mX$ are nothing like iid, and the noise in $\mX$ is not white. Parametric
 methods are not likely to give very reliable estimates of the dimensionality
 of $\mX$, but cross-validation stands a reasonable chance.
 

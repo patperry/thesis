@@ -1,7 +1,7 @@
 
 \chapter{Multivariate statistics background}\label{C:multivariate-background}
 
-Multivariate statistics will prove to be a central tool for this thesis.  We use this chapter to gather the relevant definitions and results, concentrating mainly on the eigenvalues and eigenvectors from sample covariance matrices.  The literature in this area spans over fifty years.  We give the basic definitions and properties of the multivariate normal and Wishart distributions in Section~\ref{S:mulitivariate-definitions}.  Then, in Section~\ref{S:multivariate-classical}, we survey classical results about sample covariance matrices when the number of dimensions, $p$, is fixed and the sample size, $n$, grows to infinity.  This material is by now standard and can be found in any good multivariate statistics book.  Lastly,  in Section~\ref{S:multivariate-modern}, we survey modern asymptotics, where $n \to \infty$ and $p$ grows with $n$.  Modern multivariate asymptotics is still an active research topic, but today it is possible to give a reasonably-complete description of the objects of interest.
+Multivariate statistics will prove to be a central tool for this thesis.  We use this chapter to gather the relevant definitions and results, concentrating mainly on the eigenvalues and eigenvectors from sample covariance matrices.  The literature in this area spans over fifty years.  We give the basic definitions and properties of the multivariate normal and Wishart distributions in Section~\ref{S:mulitivariate-definitions}.  Then, in Section~\ref{S:multivariate-classical}, we survey classical results about sample covariance matrices when the number of dimensions, $p$, is fixed and the sample size, $n$, grows to infinity.  This material is by now standard and can be found in any good multivariate statistics book (e.g. Muirhead~\cite{muirhead1982ams}).  Lastly,  in Section~\ref{S:multivariate-modern}, we survey modern asymptotics, where $n \to \infty$ and $p$ grows with $n$.  Modern multivariate asymptotics is still an active research topic, but today it is possible to give a reasonably-complete description of the objects of interest.
 
 \section{The multivariate normal and Wishart distributions}\label{S:mulitivariate-definitions}
 
@@ -174,7 +174,10 @@ and the sample covariance
     \sum_{i=1}^n
         \left(
             \vX_i - \vbX_n
-        \right)^2
+        \right)
+        \left(
+            \vX_i - \vbX_n
+        \right)^\trans
 \end{equation}
 are sufficient statistics for $\vmu$ and $\mSigma$.
 \end{proposition}
@@ -183,7 +186,7 @@ To describe the distribution of $\mS_n$, we need to introduce the
 Wishart distribution.
 
 \begin{definition}[Wishart Distribution]\label{D:wishart}
-Let $\vX_1, \vX_2, \ldots, \vX_n \in \reals^p$ be an \iid sequence of
+Let $\vX_1, \vX_2, \ldots, \vX_n \in \reals^p$ be an iid sequence of
 random vectors, each distributed as
 \(
     \Normal \left(
@@ -250,7 +253,7 @@ is the multivariate gamma function, computed as
 \end{equation}
 \end{proposition}
 
-We can now characterize the distributions of the sufficient statistics of a sequence of \iid multivariate normal random vectors.
+We can now characterize the distributions of the sufficient statistics of a sequence of iid multivariate normal random vectors.
 
 \begin{proposition}
 Let 
@@ -366,7 +369,7 @@ In the random matrix theory literature, with $\sigma^2 = 1$ the eigenvalue densi
 In this section we present results about sample covariance matrices when the sample size, $n$, tends to infinity, with the number of dimensions, $p$ a fixed constant.  A straightforward application of the strong law of large numbers gives us the limits of the sample mean and covariance.
 
 \begin{proposition}\label{P:suff-stat-limits}
-Let $\vX_1, \vX_2, \ldots, \vX_n$ be a sequence of \iid random vectors in $\reals^p$ with
+Let $\vX_1, \vX_2, \ldots, \vX_n$ be a sequence of iid random vectors in $\reals^p$ with
 \(
     \E \left[
         \vX_1
@@ -508,7 +511,7 @@ Suppose that
 \(
     \vX_1, \vX_2, \ldots, \vX_n
 \)
-is a sequence of \iid random vectors in $\reals^p$ with 
+is a sequence of iid random vectors in $\reals^p$ with 
 \[
     \E \left[
         \vX_1 \vX_1^\trans
@@ -516,9 +519,9 @@ is a sequence of \iid random vectors in $\reals^p$ with
     =
     \mSigma,
 \]
-and that for all $1 \leq i,j,i',j' \leq p$ there exists 
+and that for all $1 \leq i,j,i',j' \leq p$ there exists finite
 \(
-    \Gamma_{iji'j'} < \infty
+    \Gamma_{iji'j'}
 \)
 with
 \[
@@ -572,6 +575,9 @@ a mean-zero multivariate normal having covariance
 \end{proposition}
 
 \noindent
+In the previous proposition, $\vecm$ is an operator that stacks the columns of
+an $n\times p$ matrix to create an $n p$-dimensional vector.
+
 If the elements of $\vX_1$ have vanishing first and third moments (for instance if
 the distribution of $\vX_1$ is symmetric about the origin, i.e.
 \(
@@ -659,7 +665,7 @@ With this transformation, we can characterize the distribution of $\mS_n$ comple
 \)
 
 
-The next result we present is about the sample principal components.  It is motivated by Proposition~\ref{P:sample-cov-limit} and is originally due to Anderson~\cite{anderson1963atp}, though he does not state the result quite like this.  
+The next result we present is about the sample principal components.  It is motivated by Proposition~\ref{P:sample-cov-limit} and is originally due to Anderson~\cite{anderson1963atp}.
 
 \begin{theorem}\label{T:eigen-random-perturb}
 For $n\to \infty$ and $p$ fixed, let $\mS_1, \mS_2, \ldots, \mS_n$ be a sequence of random symmetric $p \times p$ matrices with 
@@ -705,8 +711,7 @@ If $\mG = \OhP\left( 1 \right)$, and the signs of $\mU_n$ are chosen so that $U_
 \end{subequations}
 \end{theorem}
 \noindent
-More generally, Anderson treats the case when the $\lambda_i$ are not all unique.  The key ingredient to Anderson's proof is a perturbation lemma, which we will state and prove.
-
+More generally, Anderson treats the case when the $\lambda_i$ are not all unique.  The key ingredient to Anderson's proof is a perturbation lemma, which we state and prove below.
 \begin{lemma}\label{L:eigen-perturb}
 For 
 \(
@@ -904,16 +909,16 @@ Equations~\eqref{L:eigen-perturb:E:orthog-perturb-1}--\eqref{L:eigen-perturb:E:e
            +
            \oh \left( 1 \right), \quad \text{and} \\
     \Delta_{n,ii}
-        &= H_{n,ii} + \oh\left( 1 \right).
+        &= H_{n,ii} + \oh\left( 1 \right). 
 \end{align}
 \end{subequations}
 This completes the proof.
 \end{proof}
 
-An application of the results of this section is the following theorem, which describes the behavior of principal components analysis for large $n$ and fixed $p$.
+An application of the results of this section is the following theorem, which describes the behavior of principal component analysis for large $n$ and fixed $p$.
 
 \begin{theorem}
-Let $\vX_1, \vX_2, \ldots, \vX_n$ be a sequence of \iid 
+Let $\vX_1, \vX_2, \ldots, \vX_n$ be a sequence of iid 
 \(
     \Normal \left(
         \vmu, \,
@@ -960,21 +965,25 @@ and signs chosen so that
 \)
 for $1 \leq i \leq p$.  Then
 \begin{enumerate}[(i)]
-    \item $\mU_n \toas \Phi$ and $l_{n,i} \toas \lambda_i$ for
-        $1 \leq i \leq p$.
-    \item Jointly for all $1 \leq i \leq p$,
+    \item $l_{n,i} \toas \lambda_i$ for
+        $1 \leq i \leq p$, and $\mU_n \toas \Phi$ .
+    \item 
+        After appropriate cenering and scaling, 
+	$\{ l_{n,i} \}_{i=1}^p$ and $\mU_n$
+        converge jointly in distribution and their limits
+        are independent.	
+	For all $1 \leq i \leq p$
         \[
             \sqrt{n} \left( l_{n,i} - \lambda_i \right) 
             \tod 
-            \Normal\left( 0, \, 2 \lambda_i^2 \right)
+            \Normal\left( 0, \, 2 \lambda_i^2 \right),
         \]
         and
         \[
             \sqrt{n} \left( \mPhi^\trans \mU_n - \mI_p \right) \tod \mF,
         \]
-        where $\mF$ is a skew-symmetric matrix independent of the
-        eigenvalue limits with elements above the diagonal independent of
-        each other and distributed as 
+        where $\mF$ is a skew-symmetric matrix with elements above the 
+	diagonal independent of each other and distributed as 
         \[
             F_{ij}
             \sim
@@ -1054,7 +1063,7 @@ Most asymptotic results about sample covariance matrices are expressed in terms 
 
 \begin{theorem}\label{T:mp-limit}
 Let $\mX_1, \mX_2, \ldots, \mX_n$ be a sequence of random matrices of increasing dimension as $n \to \infty$, so that $\mX_n \in \reals^{n\times p}$ and $p = p(n)$.
-Define $\mS_n = \frac{1}{n} \mX_n^\trans \mX_n$.  If the elements of $\mX_n$ are \iid with $\E| X_{n,11} - \E X_{n,11} |^2 = 1$ and $\frac{n}{p} \to \gamma > 0$, then the empirical spectral measure $F^{\mS_n}$ almost surely converges in distribution to a deterministic probability measure.  This measure, denoted
+Define $\mS_n = \frac{1}{n} \mX_n^\trans \mX_n$.  If the elements of $\mX_n$ are iid with $\E| X_{n,11} - \E X_{n,11} |^2 = 1$ and $\frac{n}{p} \to \gamma > 0$, then the empirical spectral measure $F^{\mS_n}$ almost surely converges in distribution to a deterministic probability measure.  This measure, denoted
 $\FMP_\gamma$, is called the Mar\v{c}enko-Pastur Law.  For $\gamma \geq 1$ it
 has density
 \begin{equation}
@@ -1131,11 +1140,11 @@ Concerning convergence rates for the quantities in Theorem~\ref{T:mp-limit},  Ba
     =
     \OhP\left( n^{-2/5} \right)
 \)
-and
+and that with probability one
 \(
     \| F^{\mS_n} - \FMP_\gamma \|_\text{TV}
     =
-    \Ohas\left( n^{-2/5 + \varepsilon} \right)
+    \Oh\left( n^{-2/5 + \varepsilon} \right)
 \)
 for any $\varepsilon > 0$.
 Guionnet and Zeitouni \cite{guionnet2000csm} give concentration of measure results.  If $X_{n,11}$ satisfies a Poincar\'e inequality and $g$ is Lipschitz, they show that for $\delta$ large enough,
@@ -1160,8 +1169,9 @@ It is interesting to look at the scaled behavior in equation~\eqref{E:wishart-fu
 
 \begin{theorem}[Wishart CLT]\label{T:wishart-clt}
     Let $\mX_1, \mX_2, \ldots, \mX_n$ be a sequence of random $n\times p$ 
-    matrices with $p = p(n)$.  Assume that $\mX_n$ has \iid elements and that 
-    $\E\left[ X_{n,11} \right] = 0$ and $\E\left[ X_{n,11}^2 \right] = 1$.  
+    matrices with $p = p(n)$.  Assume that $\mX_n$ has iid elements and that 
+    $\E\left[ X_{n,11} \right] = 0$, $\E\left[ X_{n,11}^2 \right] = 1$,
+    and $\E\left[ X_{n,11}^4 \right] < \infty$.  
     Define $\mS_n = \frac{1}{n} \mX_n^\trans \mX_n$ and let $F^{\mS_n}$ be its 
     spectral measure.  If $n \to \infty$, $\frac{n}{p} \to \gamma$ and $g_1, 
     g_2, \ldots, g_k$ 
@@ -1239,7 +1249,7 @@ and
 \[
     z = - \frac{1}{m(z)} + \frac{\gamma^{-1}}{m(z) + 1}.
 \]
-Bai and Silverstein show how to computing the limiting means and variances
+Bai and Silverstein show how to compute the limiting means and variances
 for $g(x) = \log x$ and $g(x) = x^r$.  They also derive a similar CLT when
 the elements of $\mX_n$ are correlated.
 
@@ -1250,7 +1260,7 @@ We now turn our attention to the extreme eigenvalues of a sample covariance
 matrix.  It seems plausible that if $F^{\mS_n} \tod \FMP_\gamma$, then the
 extreme eigenvalues of $\mS_n$ should converge to the edges of the support
 of $\FMP_\gamma$.  Indeed, under suitable assumptions, this is exactly what
-happens.  For the largest eigenvalue, work on this problem started with Geman~\cite{geman1980ltn}, and his assumptions were further weekend by Jonsson~\cite{jonsson1983ole} and Silverstein~\cite{silverstein1984ole}.
+happens.  For the largest eigenvalue, work on this problem started with Geman~\cite{geman1980ltn}, and his assumptions were further weakened by Jonsson~\cite{jonsson1983ole} and Silverstein~\cite{silverstein1984ole}.
 Yin et al.~\cite{yin1988lle} prove the result under the weakest possible
 conditions~\cite{bai1988nle}.
 
@@ -1262,7 +1272,7 @@ conditions~\cite{bai1988nle}.
     denote its eigenvalues by 
     $l_{n,1} \geq l_{n,2} \geq \cdots \geq l_{n,p}$.  If the 
     elements of $\mX_n$ are 
-    \iid with $\E X_{n,11} = 0$, $\E X_{n,11}^2 = 1$, and
+    iid with $\E X_{n,11} = 0$, $\E X_{n,11}^2 = 1$, and
     $\E X_{n,11}^4 < \infty$, then
     \[
         l_{n,1} \toas \left( 1 + \gamma^{-1/2} \right)^2.
@@ -1301,7 +1311,7 @@ limiting distribution for complex white Wishart matrices.  Johnstone~\cite{johns
     \(
         l_{n,1} \geq l_{n,2} \geq \cdots \geq l_{n,p}.
     \)
-    If the elements of $\mX_n$ are \iid with
+    If the elements of $\mX_n$ are iid with
     \(
         X_{n,11} \sim \Normal\left( 0, \, 1 \right),
     \)
@@ -1475,12 +1485,30 @@ It is natural to ask if the limiting eigenvalue distributions are specific to Wi
 
 Relatively little attention has been focused on the eigenvectors of sample covariance matrices.  While many results are known, as of yet there is no complete characterization of the eigenvectors from a general sample covariance matrix.  Most of the difficulty in tackling the problem is that it is hard to describe convergence properties of $\mU_n$, the $p\times p$ matrix of eigenvectors, when $n$ and $p$ go to infinity.  The individual $p^2$ elements of $\mU_n$ do converge in any meaningful way, so the challenge is to come up with relevant macroscopic characteristics of $\mU_n$.
 
-Silverstein~\cite{silverstein1979reg} was perhaps the first to study the eigenvectors of large-dimensional sample covariance matrices.  He hypothesized that for sample covariance matrices of increasing dimension, the eigenvector matrix becomes more and more ``Haar-like''.  A random matrix $\mU \in \reals^{p\times p}$ is said to be Haar-distributed over the orthogonal group if for every fixed $p \times p$ orthogonal matrix $\mO$, the rotated matrix $\mO \mU$ is has the same distribution as $\mU$.  That is, $\mO \mU \eqd \mU$.  Silverstein's conjecture was that as $n \to \infty$, $\mU_n$ behaves more and more like a Haar-distributed matrix.  The next theorem displays one aspect Haar-like behavior.
+Silverstein~\cite{silverstein1979reg} was perhaps the first to study the eigenvectors of large-dimensional sample covariance matrices.  He hypothesized that for sample covariance matrices of increasing dimension, the eigenvector matrix becomes more and more ``Haar-like''.  A random matrix $\mU \in \reals^{p\times p}$ is said to be Haar-distributed over the orthogonal group if for every fixed $p \times p$ orthogonal matrix $\mO$, the rotated matrix $\mO \mU$ has the same distribution as $\mU$.  That is, $\mO \mU \eqd \mU$.  Silverstein's conjecture was that as $n \to \infty$, $\mU_n$ behaves more and more like a Haar-distributed matrix.  The next theorem displays one aspect Haar-like behavior.
+
+To state the theorem, we need to define the extension of a scalar function
+$g : \reals \mapsto \reals$ to symmetric matrix arguments.  If 
+$\mS = \mU \mL \mU^\trans$ is the eigendecomposition of the symmetric
+matrix $\mS \in \reals^{p \times p}$, with 
+$\mL = \diag(l_1, l_2, \ldots, l_p)$, then we define
+\[
+    g\left( \mS \right)
+        =
+            \mU
+            \Big(
+                \diag\big(
+                    g(l_1), g(l_2), \ldots, g(l_p)
+                \big)
+            \Big)
+            \mU^\trans.
+\]
+With this notion, we can state Silverstein's result.
 
 \begin{theorem}\label{T:evec-functional-limit}
     Let $\mX_1, \mX_2, \ldots, \mX_n$ be a sequence of random matrices of
     increasing dimension, with $\mX_n \in \reals^{n \times p}$, $p = p(n)$,
-    and $\mX_n$ having \iid elements with 
+    and $\mX_n$ having iid elements with 
     \(
         \E X_{n,11} = 0,
     \)
@@ -1519,15 +1547,15 @@ eigendecomposition of $\mS_n$, with
         l_{n,1}, l_{n,2}, \ldots, l_{n,p}
     \right),
 \)
-then we let 
+then
 \(
     g(\mL_n)
     =
-    \diag \left(
+    \diag \big(
         g(l_{n,1}), g(l_{n,2}), \ldots, g(l_{n,p})
-    \right)
+    \big)
 \)
-and define
+and
 \(
     g(\mS_n)
     =

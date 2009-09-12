@@ -72,7 +72,7 @@ this distribution by
 \subsection{Generating random elements}
 
 The easiest way to generate a random element of $\stiefel_k(\reals^p)$ is
-to let $\mZ$ to be a $p \times k$ matrix of \iid $\Normal( 0, \, 1)$
+to let $\mZ$ to be a $p \times k$ matrix of iid $\Normal( 0, \, 1)$
 random variables, take the $QR$ decomposition $\mZ = \mQ \mR$, and let
 $\mV$ be equal to the first $k$ columns of $\mQ$.  In practice, there is
 a bias in the way standard $QR$ implementations choose the signs of the
@@ -83,13 +83,13 @@ Algorithm~\ref{A:random-steifel}, below.
     \caption{\label{A:random-steifel}Generate a random orthonormal $k$-frame}
     \begin{enumerate}
         \item Draw $\mZ$, a random $p \times k$ matrix whose elements are 
-              \iid $\Normal( 0, \, 1 )$ random variables.
+              iid $\Normal( 0, \, 1 )$ random variables.
               
         \item Compute $\mZ = \mQ \mR$, the $QR$-decomposition of $\mZ$.
               Set $\mQ_1$ to be the $p \times k$ matrix containing the
               first $k$ columns of $\mQ$.
 
-        \item Draw $\mS$, a random $k \times k$ diagonal matrix with \iid 
+        \item Draw $\mS$, a random $k \times k$ diagonal matrix with iid 
               diagonal entries such that 
               \(
                   \Prob\left\{ S_{11} = -1 \right\}

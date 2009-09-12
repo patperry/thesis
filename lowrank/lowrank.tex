@@ -23,7 +23,7 @@ behaves.  Unfortunately, his results do not apply when the sample size is
 comparable to the dimensionality.
 
 A further complication with many modern data sets is that it is no longer
-appropriate to assume the observations are \iid. Also, sometimes it is
+appropriate to assume the observations are iid. Also, sometimes it is
 difficult to distinguish between ``observation'' and ``variable''. We call such
 data ``transposable''. A microarray study involving measurements of $p$ genes
 for $n$ different patients can be considered transposable: we can either treat
@@ -31,7 +31,7 @@ each gene as a measurement of the patient, or we can treat each patient as a
 measurement of the gene. There are correlations both between the genes
 \emph{and} between the patients, so in fact both interpretations are relevant~\cite{efron2008smi}.
 
-One can study latent factor models in a transpose-agnostic way be considering
+One can study latent factor models in a transpose-agnostic way by considering
 generative models of the form $\mX = \mU \mD \mV^\trans + \mE$. Here, $\mX$ is
 the $n \times p$ observed data matrix. The unobserved row and column factors
 are given by $\mU$ and $\mV$, respectively, matrices with $k$ orthonormal
@@ -44,7 +44,7 @@ of the SVD when $n$ and $p$ both tend to infinity, with their ratio tending to
 a nonzero constant.
 
 In an upcoming paper, Onatski~\cite{onatski2009} gives a thorough
-treatment of latent factor models. He assumes that the elements of $\mE$ are \iid
+treatment of latent factor models. He assumes that the elements of $\mE$ are iid
 Gaussians, that $\sqrt{n} ( \mU^\trans \mU - \mI_k) $ tends to a multivariate
 Gaussian distribution, and that $\mV$ and $\mD$ are both nonrandom. The
 contributions of this chapter are twofold. First, we work under a
@@ -242,7 +242,7 @@ Assumptions~\ref{A:factors}~and~\ref{A:sizes} are simpler than the assumptions g
 \[
     \mX = \mZ \mXi^\trans + \mE,
 \]
-where $\mXi$ is an $p \times k$ matrix of factors and $\mZ$ is an $n\times k$ matrix of factor loadings whose rows are \iid multivariate $\Normal(0,\, \mC)$ random variables for covariance matrx $\mC$ having eigen-decomposition $\mC = \mQ \mLambda \mQ^\trans$.  Letting $\mZ = \sqrt{n} \mhP \mhLambda^{1/2} \mhQ^\trans$ be the SVD of $\mZ$, Anderson's results \cite{anderson1963atp} give us that $\mhLambda$ and $\mhQ$ converge almost surely to $\mLambda$ and $\mQ$, respectively, and that the diagonal elements of $\sqrt{n} (\mhLambda - \mLambda)$ converge to a mean-zero multivariate normal whenever $\mC$ has no repeated eigenvalues.  If we define $\mU = \mhP$, $\mD = \mhLambda^{1/2}$, and $\mV = \mXi \mhQ$, then $\mX = \sqrt{n} \mU \mD \mV^\trans + \mE$, where the factors satisfy Assumptions~\ref{A:factors}~and~\ref{A:sizes}.  Dropping the normality assumption on the rows of $\mZ$ poses no problem.  Moreover, we can suppose instead of \iid that the rows of $\mZ$ are a martingale difference array with well-behaved low-order moments and still perform a transformation of the variables to get factors of the form we need for Theorems~\ref{T:spiked-eigenvalue-limits}~and~\ref{T:spiked-eigenvector-limits}.
+where $\mXi$ is an $p \times k$ matrix of factors and $\mZ$ is an $n\times k$ matrix of factor loadings whose rows are iid multivariate $\Normal(0,\, \mC)$ random variables for covariance matrx $\mC$ having eigen-decomposition $\mC = \mQ \mLambda \mQ^\trans$.  Letting $\mZ = \sqrt{n} \mhP \mhLambda^{1/2} \mhQ^\trans$ be the SVD of $\mZ$, Anderson's results \cite{anderson1963atp} give us that $\mhLambda$ and $\mhQ$ converge almost surely to $\mLambda$ and $\mQ$, respectively, and that the diagonal elements of $\sqrt{n} (\mhLambda - \mLambda)$ converge to a mean-zero multivariate normal whenever $\mC$ has no repeated eigenvalues.  If we define $\mU = \mhP$, $\mD = \mhLambda^{1/2}$, and $\mV = \mXi \mhQ$, then $\mX = \sqrt{n} \mU \mD \mV^\trans + \mE$, where the factors satisfy Assumptions~\ref{A:factors}~and~\ref{A:sizes}.  Dropping the normality assumption on the rows of $\mZ$ poses no problem.  Moreover, we can suppose instead of iid that the rows of $\mZ$ are a martingale difference array with well-behaved low-order moments and still perform a transformation of the variables to get factors of the form we need for Theorems~\ref{T:spiked-eigenvalue-limits}~and~\ref{T:spiked-eigenvector-limits}.
 
 \item
 There is a sign-indeterminancy in the sample and population singular vectors. We choose them arbitrarily.
@@ -337,7 +337,7 @@ then in block form,
     \right).
 \]
 Because Gaussian white noise is orthogonally invariant, the
-matrices $\mtE_{n,ij}$ are all independent with \iid $\Normal(0, \, 1)$ elements.  Let
+matrices $\mtE_{n,ij}$ are all independent with iid $\Normal(0, \, 1)$ elements.  Let
 \begin{equation}
     \mtE_{n,22}
     =
@@ -443,7 +443,7 @@ We have gotten to $\mtX_n$ via an orthogonal change of basis applied to $\mX_n$.
 \begin{enumerate}
     \item The blocks of $\mtX_n$ are all independent.
     \item The elements of the matrices $\mE_{n,ij}$ are 
-        \iid $\Normal\left( 0, 1 \right)$.
+        iid $\Normal\left( 0, 1 \right)$.
     \item The elements 
         $\{ n \lambda_{n,1}, n \lambda_{n,2}, \ldots, 
             n \lambda_{n,p-k} \}$ are eigenvalues from
@@ -1154,7 +1154,7 @@ is bounded and continuous.  Moreover, since $\lambda_{n,1} \toas b_\gamma$, with
 \]
 Since $| W_{N,\alpha} | \leq W_{N,1} \overset{\text{a.s.}}{\leq} b_\gamma$, the fourth moments of the weights are uniformly bounded in $N$.  
 
-The $Y_{N,\alpha}$ are all \iid with $\E Y_{N,\alpha} = \delta_{ij}$ and $\E Y_{N,\alpha}^4 < \infty$.  The weighed SLLN (Proposition~\ref{P:weighted-slln}) gives us that
+The $Y_{N,\alpha}$ are all iid with $\E Y_{N,\alpha} = \delta_{ij}$ and $\E Y_{N,\alpha}^4 < \infty$.  The weighed SLLN (Proposition~\ref{P:weighted-slln}) gives us that
 \[
     \frac{1}{N}
     \sum_{\alpha=1}^N
@@ -1551,7 +1551,7 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
         \vone.
     \)
     We have that for $\alpha = 1, 2, \ldots, N$, the $\vY_{N,\alpha}$ are
-    \iid with
+    iid with
     \[
         \E \left[ \vY_{N,1} \right]
         =

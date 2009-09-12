@@ -159,7 +159,7 @@ $\frac{n}{p} \to \gamma \in (0,\infty)$.  Even though the dimensions of $\mX_n$ 
 
 \begin{assumption}\label{A:optimal-leave-out-noise}
     The noise matrix $\mE_n$ is independent of $\mU_n$, $\mD_n$, and $\mV_n$.
-    Its elements are \iid with 
+    Its elements are iid with 
     \(
         E_{n,11} \sim \Normal( 0, \, \sigma^2 ).
     \)
@@ -419,7 +419,7 @@ where
 $\mTheta_{n,1} = \mV_{n,1}^\trans \mhV_{n,1}$,
 $\mPhi_{n,1}   = \mU_{n,1}^\trans \mhU_{n,1}$,
 $\mtE_{n,12} = \mhU_{n,1}^\trans \mE_{n,12}$, and
-$\mtE_{n,21} = \mE_{n,21} \mhV_{n,1}$.  Note that $\mtE_{n,12}$ and $\mtE_{n,21}$ have \iid $\Normal( 0 ,\, \sigma^2 )$ entries, also independent of the other terms that make up $\mhX_{n,22}(k)$ and $\mX_{n,22}$.  By conditioning on $\mtE_{n,12}$ and $\mtE_{n,21}$, we can see that $\mhX_{22}(k)$ is in general a biased estimate of $\sqrt{n} \, \mU_{n,2} \mD_n \mV_{n,2}^\trans$.
+$\mtE_{n,21} = \mE_{n,21} \mhV_{n,1}$.  Note that $\mtE_{n,12}$ and $\mtE_{n,21}$ have iid $\Normal( 0 ,\, \sigma^2 )$ entries, also independent of the other terms that make up $\mhX_{n,22}(k)$ and $\mX_{n,22}$.  By conditioning on $\mtE_{n,12}$ and $\mtE_{n,21}$, we can see that $\mhX_{22}(k)$ is in general a biased estimate of $\sqrt{n} \, \mU_{n,2} \mD_n \mV_{n,2}^\trans$.
 
 To analyze $\mhX_{22}(k)$, we need to impose some additional assumptions.
 The first assumption is fairly banal and involves the leave-out sizes.
@@ -1365,7 +1365,7 @@ cross-terms cancel and we get
 				\mtE_{n,12}
 			\big\|_\Frob^2.
 \end{multline*}
-Since $\mtE_{n,12}$ and $\mtE_{n,21}$ are made of \iid $\Normal( 0, \, \sigma^2)$ random variables, the last three terms are fairly easy to analyze.
+Since $\mtE_{n,12}$ and $\mtE_{n,21}$ are made of iid $\Normal( 0, \, \sigma^2)$ random variables, the last three terms are fairly easy to analyze.
 We can use the following lemma:
 
 \begin{lemma}\label{L:frob-random-product}
@@ -1517,7 +1517,7 @@ expectations are finite.
 				\frac{1}{n} 
 				\mO_{n,2}^\trans \mE_{n,11} \mE_{n,11}^\trans \mO_{n,2}
 	\)
-	is an $(n-k) \times (n-k)$ matrix with \iid $\Normal( 0, \, \sigma^2)$
+	is an $(n-k) \times (n-k)$ matrix with iid $\Normal( 0, \, \sigma^2)$
 	entries.
 	
 	Define $G_n = \lambda_k ( \mA_{n,22} )$

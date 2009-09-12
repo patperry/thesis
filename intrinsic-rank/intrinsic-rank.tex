@@ -71,7 +71,7 @@ can explain a substantial portion of the value.
 
 \subsection{The spiked model}
 
-One way to model latent effects is to assume that the $\vx_i$ are \iid and
+One way to model latent effects is to assume that the $\vx_i$ are iid and
 that their covariance is ``spiked''. We think that $\vx_i$ is a weighted
 combination of $k$ latent factors corrupted by additive white noise. In this
 case, $\vx_i$ can be decomposed as
@@ -212,7 +212,7 @@ we think of $\sqrt{n} \, \mU \mD \mV^\trans$ as ``signal'' and $\mE$ as ``noise'
     where $\mU^\trans \mU = \mV^\trans \mV = \mI_{k_0}$, $\mD$ is a
     $k_0 \times k_0$ diagonal matrix with positive diagonal entries, and $\mE$
     is a noise matrix independent of the signal term whose elements are
-    \iid $\Normal( 0, \, \sigma^2 )$, then
+    iid $\Normal( 0, \, \sigma^2 )$, then
     we denote by $k_0$ the \emph{generative rank} of $\mX$.
 \end{definition}
 
@@ -374,7 +374,7 @@ will need three assumptions.
 \end{assumption}
 
 \begin{assumption}
-    The noise matrix $\mE_n$ has \iid elements independent of $\mU_n$, 
+    The noise matrix $\mE_n$ has iid elements independent of $\mU_n$, 
     $\mD_n$, and $\mV_n$, with $E_{n,11} \sim \Normal( 0, \, \sigma^2)$.
 \end{assumption}
 
@@ -893,7 +893,7 @@ We confirm the theory of the previous section with a Monte Carlo simulation.  We
         $n = \sqrt{ s \, \gamma }$ and $p = \sqrt{s / \gamma}$, respectively.
         This ensures that $\gamma = \frac{n}{p}$ and $s = n \, p$.
     \item The noise level is set at $\sigma^2 = 1$.  The noise matrix $\mE$
-        is an $n \times p$ matrix with \iid $\Normal\left( 0, \, 1\right)$
+        is an $n \times p$ matrix with iid $\Normal\left( 0, \, 1\right)$
         elements.
     \item The generative rank, $k_0$, is fixed at $5$.  The normalized
         factor strengths are set at
@@ -1007,7 +1007,7 @@ generate a matrix
 \(
     \mX = \sqrt{n} \, \mU \mD \mV^\trans + \mE \in \reals^{n \times p},
 \)
-with $n = p = 100$, such that elements of $\mE$ are \iid $\Normal( 0, \, 1)$. 
+with $n = p = 100$, such that elements of $\mE$ are iid $\Normal( 0, \, 1)$. 
 In the first column, we set
 \(
     \mD^2 = \diag( 5.0, \, 4.75, \, 4.5, \, \ldots, \, 0.5, \, 0.25 ).
