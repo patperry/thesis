@@ -37,10 +37,10 @@
     \secondreader{Jonathan E. Taylor}
 
 \includeonly{
-    acknowledgment,
-    {\thesischapter{introduction}},
-    {\thesischapter{multivariate}},
-%    {\thesischapter{lowrank}},
+    %acknowledgment,
+    %{\thesischapter{introduction}},
+    %{\thesischapter{multivariate}},
+    {\thesischapter{lowrank}},
 %    {\thesischapter{intrinsic-rank}},
 %    {\thesischapter{cv-unsupervised}},
 %    {\thesischapter{bcv-theory}},
@@ -52,20 +52,16 @@
 
 \begin{document}
 
- 
+%\beforepreface
 
-% first the preface sections.  
+%\prefacesection{Abstract}
+%\input{abstract}
 
-\beforepreface
-
-\prefacesection{Abstract}
-\input{abstract}
-
-\include{acknowledgment}
+%\include{acknowledgment}
 
 \figurespagefalse
 \tablespagefalse
-\afterpreface
+%\afterpreface
 
 \includechapter{introduction}
 \includechapter{multivariate}
@@ -74,15 +70,11 @@
 \includechapter{cv-unsupervised}
 \includechapter{bcv-theory}
 
-% and the end material
-
 \appendix
 
 \includechapter{projections}
 \includechapter{weighted-sums}
 
-
 \include{bibliography}
 
 \end{document}
-

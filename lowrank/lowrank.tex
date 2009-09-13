@@ -38,7 +38,7 @@ are given by $\mU$ and $\mV$, respectively, matrices with $k$ orthonormal
 columns each, and $k \ll \min(n,p)$. The strengths of the factors are given
 in the $k\times k$ diagonal matrix $\mD$, and $\mE$ is a matrix of noise. A
 natural estimator for the latent factor term $\mU \mD \mV^\trans$ can be
-gotten from truncating the singular value decomposition (SVD)
+constructed by truncating the singular value decomposition (SVD)
 \cite{golub1996mc} of $\mX$. The goal of this paper is to study the behavior
 of the SVD when $n$ and $p$ both tend to infinity, with their ratio tending to
 a nonzero constant.
@@ -115,7 +115,8 @@ The next assumption concerns the noise part:
 
 We need to introduce some more notation. We denote the columns of $\mU_n$ and
 $\mV_n$ by $\vu_{n,1}, \vu_{n,2}, \ldots, \vu_{n,k}$ and $\vv_{n,1},
-\vv_{n,2}, \ldots, \vv_{n,k}$, respectively. We let 
+\vv_{n,2}, \ldots, \vv_{n,k}$, respectively. With respect to the rank, $k$,
+we let 
 \[
     \mX_n \approx \sqrt{n} \, \mhU_n \mhD_n \mhV_n^\trans
 \]
@@ -197,7 +198,7 @@ values.
 
 Next, we give the result for the singular vectors:
 \begin{theorem}\label{T:spiked-eigenvector-limits}
-    Say Assumptions~\ref{A:factors}~--~\ref{A:noise} hold.  Then the
+    Suppose Assumptions~\ref{A:factors}~--~\ref{A:noise} hold.  Then the
     $k\times k$ matrix $\mTheta_n \equiv \mV_n^\trans \mhV_n$ converges almost 
     surely to a matrix 
     $\mTheta = \diag(\theta_1, \theta_2, \ldots, \theta_k)$, where
@@ -226,7 +227,7 @@ Next, we give the result for the singular vectors:
             &\text{otherwise.}
         \end{cases}
     \end{equation}
-    Moreover, $\theta_i$ and $\varphi_i$ almost-surely have the same
+    Moreover, $\theta_i$ and $\varphi_i$ almost surely have the same
     sign.
 \end{theorem}
 
@@ -619,7 +620,9 @@ and $\vv_1 \neq 0$, then
     \end{matrix}
     \right)
 \end{equation}
-is an eigenvector of $\mS_n$ with eigenvalue $\mu$.  We define
+is an eigenvector of $\mS_n$ with eigenvalue $\mu$.  
+
+We define
 \begin{gather}
     \mT_n(z)
         =
@@ -643,7 +646,7 @@ is an eigenvector of $\mS_n$ with eigenvalue $\mu$.  We define
             \vx, \label{E:secular-f}
 \end{gather}
 and refer to the equation $f_n(z, \vx) = 0$ as the \emph{secular equation}.  This
-is a slight abuse of terminology.  A more standard use of the term ``secular equation'' would be analogous to a characteristic equation and involve a determinant, i.e. $\det \mT_n(z) = 0$.  However, for our purposes it will be more convenient to work with $f_n$.
+is a slight abuse of terminology.  A more standard use of the term ``secular equation'' would be analogous to a characteristic equation; it is an equation whose solutions are eigenvalues of a matrix, i.e. $\det \mT_n(z) = 0$.  However, for our purposes it will be more convenient to work with $f_n$.
 
 \subsection{Outline of the proof}
 
@@ -1102,7 +1105,7 @@ To put it mildly, this is a formidable expression.  Notice, however, that severa
     \end{subequations}
 \end{lemma}
 \begin{proof}
-We prove the result for the first quantity and the other derivations are analogous.  We have that
+We prove the result for the first quantity and the other derivations are analogous.  For each $1 \leq i, j \leq k$, we have that
 \begin{align*}
     \left(
         \frac{1}{n}
@@ -1189,7 +1192,7 @@ is the Stieltjes transform of $\FMP_\gamma$, where
     b_\gamma &= \left( 1 + \gamma^{-1/2} \right)^2.
 \end{align}
 \end{subequations}
-When restricted to the complement of the support of $\FMP_\gamma$, it has a well-defined inverse
+When restricted to the complement of the support of $\FMP_\gamma$, $m$ has a well-defined inverse
 \begin{equation}\label{E:stieltjes-inverse}
     z(m)
         = 
@@ -1325,8 +1328,9 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
             \gamma^{-1}
             m(z)
             \mI_k
-        \right)
-            &\tod \mF(z), \\
+        \right) 
+            &\define \mF_n(z)
+            \tod \mF(z), \\
         \sqrt{n}
         \left(
             \frac{1}{n}
@@ -1339,8 +1343,9 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
             \right)^{-1}
             \mLambda_{n}^{1/2}
             \mE_{n,21}
-        \right)
-            &\tod \mG(z), \\
+        \right) 
+            &\define \mG_n(z)
+            \tod \mG(z), \\
         \sqrt{n}
         \left(
             \frac{1}{n}
@@ -1356,8 +1361,9 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
             \gamma^{-1}
             m(z)
             \mI_k
-        \right)
-            &\tod \mH(z), \\
+        \right) 
+            &\define \mH_n(z)
+            \tod \mH(z), \\
         \sqrt{n}
         \left(
             \frac{1}{n}
@@ -1365,8 +1371,9 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
             -
             \gamma^{-1}
             \mI_k
-        \right)
-            &\tod \mK, \\
+        \right) 
+            &\define \mK_n
+            \tod \mK, \\
         \sqrt{n}
         \left(
             \frac{1}{n}
@@ -1374,8 +1381,9 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
             -
             \gamma^{-1}
             \mI_k
-        \right)
-            &\tod \mL_1, \\
+        \right) 
+            &\define \mL_{n,1}
+            \tod \mL_1, \\
         \sqrt{n}
         \left(
             \frac{1}{n}
@@ -1383,8 +1391,9 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
             -
             \left( 1 - \gamma^{-1} \right)
             \mI_k
-        \right)
-            &\tod \mL_2,
+        \right) 
+            &\define \mL_{n,2}
+            \tod \mL_2,
     \end{align}
     \end{subequations}
     where the elements of $\mF(z)$, $\mG(z)$, $\mH(z)$, $\mK$, $\mL_1$ and 
@@ -1410,12 +1419,12 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
         0.
     \]
     The sets
-    \[
+    \(
         \Big\{ \mK, \mF( z ) \Big\},
         \Big\{ \mG( z) \Big\},
         \Big\{ \mL_1, \mH( z )\Big\},
         \Big\{ \mL_2 \Big\}
-    \]
+    \)
     are mutually independent of each other.
     
     The other covariances are defined by
@@ -1452,7 +1461,7 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
                \left( 1 + \delta_{ij} \right),
     \end{align}
     \end{subequations}
-    with the interpretation that
+    with the interpretation when $z_1 = z_2$ that
     \begin{align*}
         \frac{ m(z_1) - m(z_2) }
              { z_1 - z_2 }
@@ -1461,9 +1470,8 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
     \intertext{and}
         \frac{ z_1 \, m(z_1) - z_2 \, m(z_2) }
              { z_1 - z_2 }
-            &= m( z_1 ) + z_1 \, m'(z_1)
+            &= m( z_1 ) + z_1 \, m'(z_1).
     \end{align*}
-    when $z_1 = z_2$.
 \end{lemma}
 \begin{proof}
     The distributions of $\mK$, $\mL_1$, and $\mL_2$ follow from the 
@@ -1662,8 +1670,7 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
         \sum_{\alpha=1}^N
             \vW_{N,\alpha}
             &\toas
-                \vmu^W \\
-            &=
+                \vmu^W =
                 \left(
                 \begin{matrix}
                     \mu^W_1 \vone \\
@@ -1763,28 +1770,7 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
 \end{remark}
 
 With Lemmas~\ref{L:eij-product-limits}~and~\ref{L:eij-product-scaled-limits},
-we can simplify $\mT_n(z)$.  For convenience, we define
-$\mF_n (z)$ such that
-\begin{equation}
-    \frac{1}{n}
-    \mE_{n,12}
-    \left(
-        \mLambda_n
-        -
-        z
-        \mI_{p-k}
-    \right)^{-1}
-    \mE_{n,12}^\trans
-        =
-            \gamma^{-1}
-            m(\mu)
-            \mI_k
-            +
-            \frac{1}{\sqrt{n}}
-            \mF_n(z)
-\end{equation}
-and $\mF_n(z) \tod \mF(z)$ pointwise in $z$,
-with $\mG_n(z), \mH_n(z), \mK_n, \mL_{n,1},$ and $\mL_{n,2}$ defined similarly.  We can now get at the first and second-order behavior of $\mT_n(z)$.
+we can simplify $\mT_n(z)$.  We can now get at the first and second-order behavior of $\mT_n(z)$.
 
 \begin{lemma}
     If $[u,v] \subset \big( b_\gamma, \, \infty \big)$, then
@@ -1886,15 +1872,15 @@ with $\mG_n(z), \mH_n(z), \mK_n, \mL_{n,1},$ and $\mL_{n,2}$ defined similarly. 
                     \mF_n(z)
                 \right)^{-1} 
         \end{split} \\
-            &=
-                \big(1 + \gamma^{-1} m(z)\big)^{-1}
-                \left(
-                    \mI_k
-                    +
-                    \frac{1}{\sqrt{n}}
-                    \big( 1 + \gamma^{-1} m(z) \big)^{-1}
-                    \mF_{n}(z)
-                \right)^{-1} \\
+%            &=
+%                \big(1 + \gamma^{-1} m(z)\big)^{-1}
+%                \left(
+%                    \mI_k
+%                    +
+%                    \frac{1}{\sqrt{n}}
+%                    \big( 1 + \gamma^{-1} m(z) \big)^{-1}
+%                    \mF_{n}(z)
+%                \right)^{-1} \\
             &=
                 \big( 1 + \gamma^{-1} m(z) \big)^{-1} \mI_k
                 -
@@ -1908,7 +1894,7 @@ with $\mG_n(z), \mH_n(z), \mK_n, \mL_{n,1},$ and $\mL_{n,2}$ defined similarly. 
     \[
         \begin{split}
             \mS_{n,12} 
-            \Big( \mS_{n,22} &- z \mI_{p-k} \Big)^{-1} 
+            &\Big( \mS_{n,22} - z \mI_{p-k} \Big)^{-1} 
             \mS_{n,21} \\
                 &=
                 \gamma^{-1}
@@ -1934,8 +1920,9 @@ with $\mG_n(z), \mH_n(z), \mK_n, \mL_{n,1},$ and $\mL_{n,2}$ defined similarly. 
                     +
                     \mL_{n,1}
                     +
-                    z \, \mH_n( z ) \Bigg\} \\
-                &\quad+
+                    z \, \mH_n( z ) \Bigg\} %\\
+                %&\quad
+                +
                 \ohP\left( \frac{1}{\sqrt{n}} \right).
         \end{split}
     \]
@@ -1959,7 +1946,8 @@ with $\mG_n(z), \mH_n(z), \mK_n, \mL_{n,1},$ and $\mL_{n,2}$ defined similarly. 
 
 \section{Solutions to the secular equation}\label{S:solutions-to-secular-eq}
 
-We will now study the solutions to $f_{n}(z, \vx) = 0$.  If $(z, \vx)$
+We will now study the solutions to $f_{n}(z, \vx) = 0$, defined in 
+equation~\eqref{E:secular-f}.  If $(z, \vx)$
 is a solution, then so is $(z, \alpha \, \vx)$ for any scalar $\alpha$.  We restrict our attention to solutions with $\|\vx \|_2 = 1$.  We also impose a restriction on the sign of $\vx$, namely we require that the component with the largest magnitude is positive, i.e.
 \begin{equation}\label{E:x-identifiability}
     \max_i x_i = \max_i | x_i |.
@@ -1967,7 +1955,7 @@ is a solution, then so is $(z, \alpha \, \vx)$ for any scalar $\alpha$.  We rest
 
 \subsection{Almost sure limits}
 
-First we look at the solutions of $f_0(z, \vx)$.  
+First we look at the solutions of $f_0(z, \vx) \define \mT_0(z) \vx$, the limit of $f_n(z, \vx)$ for $z > b_\gamma$.  
 
 \begin{lemma}
     Letting $\bar k = \max \{ i : \mu_i > \gamma^{-1/2} \}$, if $\mu_1, \mu_2, 
@@ -1993,7 +1981,7 @@ First we look at the solutions of $f_0(z, \vx)$.
         \frac{1}{m(z)} \mI_k.
     \]
     Since this is diagonal, the equation $f_0(z, \vx) = 0$ holds iff the 
-    $i$the diagonal element of $\mT_0(z)$ is zero and $\vx = \ve_i$.  The 
+    $i$th diagonal element of $\mT_0(z)$ is zero and $\vx = \ve_i$.  The 
     $i$th diagonal is zero when 
     \[
         \frac{\mu_i}{1 + \gamma^{-1} m(z)} + \frac{1}{m(z)} = 0,
@@ -2011,7 +1999,7 @@ Given a solution of $f_0(z, \vx) = 0$, it is not hard to believe that there is a
 
 \begin{lemma}\label{L:zn-sequence-exists}
     If $\mu > \gamma^{-1/2}$ occurs $l$ times on the diagonal of $\mD^2$, then
-    with probability one for $n$ large enough there exist sequences $z_{n,1}, 
+    with probability one there exist sequences $z_{n,1}, 
     \ldots, z_{n,l}$ such that for $n$ large enough:
     \begin{enumerate}
         \item $z_{n,i} \neq z_{n,j}$ for $i \neq j$
@@ -2033,9 +2021,8 @@ The proof involves a technical lemma, which we state and prove now.
 \end{lemma}
 \begin{proof}
     Since $|g_0(z)|$ is bounded away from zero outside the neighborhoods
-    of its zeros, it suffices to show that if $g_0(z)$ has a zero 
-    $z_0 \in (u,v)$ of multiplicity $l$, then for $n$ large enough, 
-    $g_n(z)$ has $l$ zeros in $(u,v)$.  Define
+    of its zeros, we can assume without loss of generality that $g_0(z)$ has
+    a single zero $z_0 \in (u,v)$ of multiplicity $l$.  Define
     \(
         \tg_n(z) = \frac{g_n(z)}{|z - z_0|^{l-1}}.
     \)
@@ -2047,7 +2034,7 @@ The proof involves a technical lemma, which we state and prove now.
     The sequence $\tg_n(z)$ converges uniformly to $\tg_0(z)$ outside of
     a neighborhood of $z_0$.  Thus, for $n$ large enough, $\tg_n(z-r) < 0$
     and $\tg_n(z+r) > 0$.  Also, either $g_n(z)$ has a zero at $z_0$, or else 
-    for a small enough neighborhood abound $z_0$, $\sgn \tg_n(z)$ is constant.
+    for a small enough neighborhood around $z_0$, $\sgn \tg_n(z)$ is constant.
     Since $\tg_n(z)$ is continuous outside of a neighborhood of $z_0$, 
     $\tg_n(z)$ and $g_n(z)$ must have a zero
     in $(z_0-r,z_0+r) \subset (u,v)$.  Call this zero $z_{n,1}$.  Since
@@ -2074,7 +2061,7 @@ of vectors $\vx_{n,i}$ with $f_n(z_{n,i}, \vx_{n,i}) = 0$.  Since $\det \mT_n (z
 $\mT_{n} (z_{n,i}) \, \vx_{n,i} = 0$.  We need to show that the sequence of vectors has a limit.
 
 Every solution pair $(z_{n,i}, \vx_{n,i})$ determines a unique
-eigenvalue-eigenvector pair through equation~\eqref{E:v-from-v1}.  Since the eigenvalues of $\mS_n$ are almost-surely unique, with
+eigenvalue-eigenvector pair through equation~\eqref{E:v-from-v1}.  Since the eigenvalues of $\mS_n$ are almost surely unique, with
 the identifiability restriction of \eqref{E:x-identifiability} we must have that $z_{n,i}$ uniquely determines $\vx_{n,i}$.  Suppose that $z_{n,i}$ is the $i$th largest solution of $\det \mT_n(z) = 0$, and that $f_n( z_{n,i}, \vx_{n,i}) = 0$.  We will now show that $\vx_{n,i} \toas \ve_i$.
 
 \begin{lemma}\label{L:xn-converges}
@@ -2095,7 +2082,7 @@ We will use a perturbation lemma, which follows from the $\sin \Theta$ theorem (
     \[
         \delta = \min_{l \in \mathcal{L}} | l - z | > 0.
     \]
-    Then there is an eigenpiar $(z_0, \vx_0)$ of $\mA$ with 
+    Then there is an eigenpair $(z_0, \vx_0)$ of $\mA$ with 
     $\| \vx_0 \|_2 = 1$ satisfying
     \[
         \vx^\trans \vx_0
@@ -2171,7 +2158,7 @@ zeros.
             &\toas
                 \left( \sqrt{\mu_1} + \sqrt{b_\gamma} \right)^2.
     \end{align*}
-    Thus, the solutions of $\det \mT_n(z) = 0$ are almost-surely bounded.
+    Thus, the solutions of $\det \mT_n(z) = 0$ are almost surely bounded.
 \end{proof}
 
 
@@ -2273,12 +2260,12 @@ so that $\vx_0^\trans ( \vx_n - \vx_0 ) = \OhP\left( \frac{1}{n} \right)$.  With
                   \frac{\big(\mT_{n,1}(\bmu_i) \big)_{ii}}
                        {\big(\mT_0'(\bmu_i) \big)_{ii}}
                   +
-                  \ohP(1).
+                  \ohP(1),
               \end{equation}
         \item \begin{equation}
                    \sqrt{n} \left( x_{n,i} - 1 \right)
                    =
-                   \ohP\left( 1 \right).
+                   \ohP\left( 1 \right), \quad \text{and}
               \end{equation}
         \item \begin{equation}
                   \sqrt{n} \, x_{n,j}
@@ -2541,7 +2528,7 @@ $\frac{1}{\sqrt{n}} \mtX_n$.
 
 \subsection{Singular values}
 
-Every value $z$ with $f_n(z, \vx)$ for some $\vx$ is the square of a
+Every value $z$ with $f_n(z, \vx) = 0$ for some $\vx$ is the square of a
 singular value of $\frac{1}{\sqrt{n}} \mtX_n$.  Therefore,  Section~\ref{S:solutions-to-secular-eq} describes the behavior of the top $\bar k$ singular values.  To complete the proof of Theorem~\ref{T:spiked-eigenvalue-limits} for $\gamma \geq 1$, we only need to describe what happens to the singular values corresponding to the indices $i$ with $\mu_i \leq \gamma^{-1/2}$.
 
 \begin{lemma}\label{L:eigenvalue-below-threshold-limit}
@@ -2556,7 +2543,7 @@ in $\big( b_\gamma + \epsilon, \infty)$.  From the eigenvalue interleaving
 inequalities, we know that the $i$th eigenvalue of $\mS_n$ is at least as
 big as the $i$th eigenvalue of $\mS_{n,22}$.  
 
-Denote by $\hmu_{n,i}$ the $i$th-largest eigenvalue of $\mS_n$, with
+Denote by $\hmu_{n,i}$ the $i$th eigenvalue of $\mS_n$, with
 $\bar k < i \leq k$.  Then almost surely,
 \[
     \lim_{n\to\infty} \lambda_{n,i} 
@@ -2697,7 +2684,7 @@ is parallel to
     \end{matrix}
     \right).
 \]
-We just need to normalize this vector to have unit length.  The lengh
+We just need to normalize this vector to have unit length.  The length
 of $\vtx_n$ is given by
 \[
     \| \vtx_n \|_2^2
@@ -2753,7 +2740,7 @@ $(z_{n,i}, \vx_{n,i}) \toas (\bmu_i, \ve_i)$, then
 
 The behavior of the right singular vectors when $\mu_i \leq \gamma^{1/2}$ is
 a little more difficult to get at.  We will use a variant of an argument from Paul~\cite{paul2007ase} to show that $\| \vtx \|_2 \toas \infty$, which implies that $\frac{ \vx_{n,i} }{ \| \vtx_{n,i} \|_2 } \toas 0$.  We can
-do this by showing the the smallest eigenvalue of 
+do this by showing the smallest eigenvalue of 
 \(
     \mS_{n,12}
     ( \mS_{n,22} - z_{n,i} \mI_{p-k} )^{-2} 
@@ -2962,9 +2949,9 @@ When Johnstone~\cite{johnstone2001dle} worked out the distribution of the larges
     \Sigma = \diag( \mu_1, \mu_2, \ldots, \mu_k, 1, \ldots, 1 ).
 \]
 Work on the spiked model started with Baik et al.~\cite{baik2005ptl}, 
-Baik \& Silverstein~\cite{baik2006els}, and Paul~\cite{paul2007ase}.  Baik et al. showed that for complex gaussian data, a phase transition phenomenon exists, depending on the relative magnitude of the spike.  Baik \& Silverstein gave the almost-sure limits of the eigenvalues from the sample covariance matrix without assuming gaussianity.  Paul worked with real gaussian data and gave the limiting distributions when $\gamma > 1$.  Paul also gives some results about the eigenvectors.
+Baik \& Silverstein~\cite{baik2006els}, and Paul~\cite{paul2007ase}.  Baik et al. showed that for complex Gaussian data, a phase transition phenomenon exists, depending on the relative magnitude of the spike.  Baik \& Silverstein gave the almost-sure limits of the eigenvalues from the sample covariance matrix without assuming Gaussianity.  Paul worked with real Gaussian data and gave the limiting distributions when $\gamma > 1$.  Paul also gives some results about the eigenvectors.
 
-After this initial work, Bai \& Yao~\cite{bai2008clt}~\cite{bai2008lts} derived the almost-sure limits and prove a central limit theorem for eigenvalues for a general class of data that includes colored noise and non-gaussianity.  Chen et al~\cite{chen2009ppc} consider another type of spiked model with correlation.  Nadler~\cite{nadler2008fsa} derived the behavior of the first eigenvector in a spiked model with one spike.
+After this initial work, Bai \& Yao~\cite{bai2008clt}~\cite{bai2008lts} derived the almost-sure limits and prove a central limit theorem for eigenvalues for a general class of data that includes colored noise and non-Gaussianity.  Chen et al~\cite{chen2009ppc} consider another type of spiked model with correlation.  Nadler~\cite{nadler2008fsa} derived the behavior of the first eigenvector in a spiked model with one spike.
 
 The above authors all consider data of the form $\mX = \mZ \mSigma^{1/2}$.
 Onatski~\cite{onatski2009}, like us, examines data of the form 
@@ -2978,7 +2965,7 @@ $\| \vtx_{n,i} \|_2$, $\vx_{n,i}$, and $\vy_{n,i}$.  This in turn will give the 
 Most of the proof remains unchanged for complex Gaussian noise, provided
 transpose ($^\trans$) is replaced by conjugate-transpose ($^\herm$).  The
 variance formulas need a small modification, since the fourth-moment of
-a real Gaussian is $2$ and that of a complex Gaussian is $1$.
+a real Gaussian is $3$ and that of a complex Gaussian is $2$.
 
-For colored or non-Gaussian noise, we no longer have orthogonal invariance, so the change of basis in Section~\ref{S:lowrank-preliminaries} is a little trickier.  It is likely that comparable results can still be gotten, perhaps using results on the eigenvectors of general sample covariance matrices from Bai et al. \cite{bai2007ael}.
+For colored or non-Gaussian noise, we no longer have orthogonal invariance, so the change of basis in Section~\ref{S:lowrank-preliminaries} is a little trickier.  It is likely that comparable results can still be found, perhaps using results on the eigenvectors of general sample covariance matrices from Bai et al. \cite{bai2007ael}.
 
