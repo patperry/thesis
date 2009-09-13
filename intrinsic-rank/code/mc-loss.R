@@ -87,7 +87,7 @@ plot_sim <- function( sim, type=c("frob2", "spec2") ) {
     ylab <- switch(t, frob2="Squared Frobenius Loss",
                       spec2="Squared Spectral Loss" )
 
-    p <- ( ggplot( sim, aes( k, loss, colour=np ) ) 
+    p <- ( ggplot( sim, aes( k, loss, colour=I("red") ) ) 
            + theme_bw()
            + xlab( "Rank" )
            + ylab( ylab )
