@@ -55,7 +55,7 @@ The problem we consider is how to estimate $\ME(k)$ or $k^\ast$.
 
 Closely related to model error is the \emph{prediction error}.  For prediction error, we conjure up a noise matrix $\mE'$ with the same distribution as $\mE$ and let $\mX' = \sqrt{n} \mU \mD \mV^\trans + \mE'$.  The prediction error is defined as
 \[
-    \PE(k) \equiv \frac{1}{n \, p} \E[ \mX' - \mhX(k) ],
+    \PE(k) \equiv \frac{1}{n \, p} \E\| \mX' - \mhX(k) \|_\Frob^2,
 \]
 which can be expressed as
 \[
@@ -86,7 +86,7 @@ by
     \widehat{\PE}\big(k ; i, j \big)
         =
             \frac{1}{n_2 \, p_2}
-            \| \mX_{22} - \mX_{21} \mhX_{11}(k)^+ \mX_{12} \|_\Frob^2,
+            \| \mX_{22} - \mX_{21} \mhX_{11}(k)^+ \mX_{12} \|_\Frob^2.
 \]
 Here, $^+$ denotes pseudo-inverse and $\mX_{22}$ has dimensions $n_2 \times p_2$.  For $(K,L)$-fold BCV, the final estimate is the average over all folds:
 \[
@@ -112,9 +112,9 @@ Section~\ref{S:bcv-theory-results} gives our main results.  Then, Sections~\ref{
 
 The theory becomes easier if we work in an asymptotic framework.  For that,
 we introduce a sequence of data matrices indexed by $n$:
-\[
+\begin{equation}
     \mX_{n} = \sqrt{n} \, \mU_n \mD_n \mV_n^\trans + \mE_n.
-\]
+\end{equation}
 Here, $\mX_n \in \reals^{n \times p}$ with $p = p(n)$ and 
 $\frac{n}{p} \to \gamma \in (0,\infty)$.  Even though the dimensions of $\mX_n$ grow, we assume that the number of factors is fixed at $k_0$.  The first set of assumptions is as follows:
 
@@ -145,9 +145,9 @@ $\frac{n}{p} \to \gamma \in (0,\infty)$.  Even though the dimensions of $\mX_n$ 
 
 \begin{assumption}
     The matrix of factor strengths is diagonal:
-    \[
+    \begin{equation}
         \mD_n = \diag( d_{n,1}, d_{n,2}, \ldots, d_{n,k_0}).  
-    \]
+    \end{equation}
     The strengths
     converge as $d_{n,i}^2 \toas \mu_i$ and 
     $d_{n,i}^2 - \mu_i = \OhP\left( \frac{1}{\sqrt{n}} \right)$, strictly
@@ -172,7 +172,7 @@ We can apply the work of
 Chapter~\ref{C:intrinsic-rank} to get the behavior of the model error.
     We
 let $\mX_n = \sqrt{n} \, \mhU_n \mhD_n \mhV_n^\trans$ be the SVD of $\mX_n$ and let $\mhX_n(k) = \sqrt{n} \, \mhU_n \mhD_n(k) \mhV_n^\trans$ be its truncation to $k$ terms.  Then the model error is
-\[
+\begin{equation}
     {\ME}_n (k)
         = 
             \frac{1}{n \, p} 
@@ -181,10 +181,10 @@ let $\mX_n = \sqrt{n} \, \mhU_n \mhD_n \mhV_n^\trans$ be the SVD of $\mX_n$ and 
                 - 
                 \mhX_n(k)
             \big\|_\Frob^2.
-\]
+\end{equation}
 With Assumtions~\ref{A:optimal-leave-out-shapes}--\ref{A:optimal-leave-out-noise}, we can apply Proposition~\ref{P:frob-loss-behavior} to get that for fixed
 $k$ as $n \to \infty$,
-\[
+\begin{equation}
     p \cdot {\ME}_n (k)
         \toas
         \sum_{i=1}^{k}
@@ -199,9 +199,9 @@ $k$ as $n \to \infty$,
         \right)^2
         \cdot
         (k - k_0)_+,
-\]
+\end{equation}
 where
-\[
+\begin{equation}\label{E:bcv-theory-alpha}
     \alpha_i 
     =
     \begin{cases}
@@ -220,15 +220,15 @@ where
         \right)^2
             &\text{otherwise.}
     \end{cases}
-\]
+\end{equation}
 Defining $k_n^\ast$ as the minimizer of ${\ME}_n(k)$, we also get that
-\[
+\begin{equation}
     k_n^\ast
         \toas
             \max \left\{ i : \mu_i > \mu_\text{crit} \right\},
-\]
+\end{equation}
 where
-\[
+\begin{equation}
     \mu_\text{crit}
     \equiv
     \sigma^2
@@ -241,7 +241,7 @@ where
         \frac{3}{\gamma}
     }
     \right),
-\]
+\end{equation}
 provided no $\mu_i$ is exactly eqaul to $\mu_\text{crit}$.  We therefore know
 how ${\ME}_n(k)$ and its minimizer behave.
 
@@ -274,7 +274,7 @@ $\mX_{n,ij} = \mP_{n,i}^\trans \mX \mQ_{n,j}$,
 $\mE_{n,ij} = \mP_{n,i}^\trans \mE \mQ_{n,j}$,
 $\mU_{n,i} = \mP_{n,i}^\trans \mU_n$, and
 $\mV_{n,j} = \mQ_{n,j}^\trans \mV_n$.  Then in block form,
-\begin{align*}
+\begin{align}
     \mP_n^\trans \mX_n \mQ_n
         &=
             \left(
@@ -282,7 +282,7 @@ $\mV_{n,j} = \mQ_{n,j}^\trans \mV_n$.  Then in block form,
                 \mX_{n,11} & \mX_{n,12} \\
                 \mX_{n,21} & \mX_{n,22}
             \end{matrix}
-            \right) \\
+            \right) \notag \\
         &=
             \sqrt{n}
             \left(
@@ -300,13 +300,14 @@ $\mV_{n,j} = \mQ_{n,j}^\trans \mV_n$.  Then in block form,
                 \mE_{n,21} & \mE_{n,22}
             \end{matrix}
             \right)
-\end{align*}
+\end{align}
 This is the starting point of our analysis.
 
 Now we look at the estimate of prediction error.  We let
 $\mX_{n,11} = \sqrt{n} \, \mhU_{n,1} \mhD_{n,1} \mhV_{n,1}^\trans$ be the
 SVD of $\mX_{n,11}$.  Here,
-\begin{align*}
+\begin{subequations}
+\begin{align}
     \mhU_{n,1}
         &=
             \left(
@@ -336,10 +337,11 @@ SVD of $\mX_{n,11}$.  Here,
                 \ldots,
                 \hd_{n,n_1 \wedge p_1}^{(1)}
             \right).
-\end{align*}
+\end{align}
+\end{subequations}
 For convenience, we define $\hmu_{n,i}^{(1)} = \big(\hd_{n,i}^{(1)}\big)^2$.
 For $0 \leq k \leq n_1 \wedge p_1$, we let
-\[
+\begin{equation}
     \mhD_{n,1}(k)
         =
             \diag \left(
@@ -352,7 +354,7 @@ For $0 \leq k \leq n_1 \wedge p_1$, we let
                 \ldots,
                 0
             \right)
-\]
+\end{equation}
 so that 
 \(
     \mhX_{n,11} (k)
@@ -366,10 +368,10 @@ is the SVD of $\mX_{n,11}$ truncated to $k$ terms.  This matrix has pseudo-inver
             \mhV_{n,1} \mhD_{n,1}(k)^+ \mhU_{n,1}^\trans.
 \)
 Therefore, the BCV rank-$k$ prediction of $\mX_{22}$ is
-\begin{align*}
+\begin{align}
     \mhX_{n,22}(k)
         &=
-            \mX_{n,21} \mhX_{n,11}^{+}(k) \mX_{n,12} \\
+            \mX_{n,21} \mhX_{n,11}^{+}(k) \mX_{n,12} \notag \\
         &=
             \big(
                 \sqrt{n} \, \mU_{n,2} \mD_n \mV_{n,1}^\trans 
@@ -381,7 +383,7 @@ Therefore, the BCV rank-$k$ prediction of $\mX_{22}$ is
             \big(
                 \sqrt{n} \, \mU_{n,1} \mD_n \mV_{n,2}^\trans 
                 + \mE_{n,12}
-            \big) \\
+            \big) \notag \\
     \begin{split}
         &= 
             \sqrt{n} \, \mU_{n,2} \mD_n \mV_{n,1}^\trans
@@ -399,7 +401,7 @@ Therefore, the BCV rank-$k$ prediction of $\mX_{22}$ is
             \frac{1}{\sqrt{n}} \, \mE_{n,21}
                 \mhV_{n,1} \mhD_{n,1}(k)^+ \mhU_{n,1}^\trans
                 \mE_{n,12}
-    \end{split} \\
+    \end{split} \notag \\
     \begin{split}
         &=
             \sqrt{n} \, 
@@ -414,7 +416,7 @@ Therefore, the BCV rank-$k$ prediction of $\mX_{22}$ is
         &\quad+
             \frac{1}{\sqrt{n}} \, \mtE_{n,21} \mhD_{n,1}(k)^+ \mtE_{n,12},
     \end{split}
-\end{align*}
+\end{align}
 where 
 $\mTheta_{n,1} = \mV_{n,1}^\trans \mhV_{n,1}$,
 $\mPhi_{n,1}   = \mU_{n,1}^\trans \mhU_{n,1}$,
@@ -471,12 +473,12 @@ This assumption is there so that we can apply the theory in Chapter~\ref{C:svd-b
 
 The BCV estimate of prediction error from a single replicate is given
 by
-\[
+\begin{equation}
 	\widehat{\PE}_n(k)
 		=
 			\frac{1}{n_2 \, p_2}
 			\| \mX_{n,22} - \mhX_{n,22}(k) \|_\Frob^2.
-\]
+\end{equation}
 It turns out that
 \(
 	\E\left[
@@ -484,11 +486,11 @@ It turns out that
 	\right]
 \)
 is dominated by the irreducible error.  However, if we have a $\sqrt{n p}$-consistent estimate of $\sigma^2$, then we can get an expression for
-the scaled limit of the estimated model error.  This expression is the main result of the paper.
+the scaled limit of the estimated model error.  This expression is the main result of the chapter.
 
 \begin{theorem}\label{T:bcv-expected-me}
-	Suppose that $\hat \sigma_n^2$ is a sequence of 
-	$\sqrt{n p}$-consistent estimators of $\sigma^2$ statisfying
+	Suppose that $\hat \sigma_n^2$ is a sequence of
+	$\sqrt{n p}$-consistent estimators of $\sigma^2$ satisfying
 	\(
 		\E\left[
 			\sqrt{n p}
@@ -502,15 +504,15 @@ the scaled limit of the estimated model error.  This expression is the main resu
 		0.
 	\)
 	Define the BCV estimate of model error from a single replicate as
-	\[
+	\begin{equation}
 		\widehat{\ME}_n(k)
 			=
 				\widehat{\PE}_n(k)
 				-
 				\hat \sigma_n^2.
-	\]
+	\end{equation}
 	Then, for fixed $k$ as $n\to\infty$,
-	\[
+	\begin{equation}
 		\E \left[ p \cdot \widehat{\ME}_n(k) \right]
 			\to
 				\sum_{i=1}^{k \wedge k_0}
@@ -522,9 +524,10 @@ the scaled limit of the estimated model error.  This expression is the main resu
 				\eta
 				\cdot
 				(k - k_0)_+,
-	\]
+	\end{equation}
 	where
-	\begin{align*}
+	\begin{subequations}
+	\begin{align}
 		\beta_i
 			&=
 				\begin{cases}
@@ -558,14 +561,14 @@ the scaled limit of the estimated model error.  This expression is the main resu
 								  \frac{\sigma^2}{\sqrt{\rho \, \gamma}}$,} \\
 					1 + \frac{\eta}{\mu_i}&\text{otherwise,}
 				\end{cases}
-	\end{align*}
-	and
-	\begin{gather*}
+	\end{align}
+	\begin{gather}
 		\rho
 			=
 				\frac{K-1}{K}
 				\cdot
 				\frac{L-1}{L}, \\
+    \intertext{and}
 		\eta
 			=
 				\frac{\sigma^2}
@@ -577,22 +580,22 @@ the scaled limit of the estimated model error.  This expression is the main resu
 						  \sqrt{\frac{L-1}{L}}
 					  \right)^{2}
 					 }.
-	\end{gather*}
+	\end{gather}
+    \end{subequations}
 \end{theorem}
 
-It is interesting to compare $\beta_i$ with the expression for $\alpha_i$
-in the limit of $p \cdot \ME_n(k)$, the true model error.  Although the BCV 
+It is interesting to compare $\beta_i$ with the expression for $\alpha_i$ in equation~\eqref{E:bcv-theory-alpha}, which appears in the scaled limit of the true model error, $p \cdot \ME_n(k)$.  Although the BCV 
 estimator of model error is biased, this bias is small for large 
 $\mu_i$, $K$, and $L$.
 
 A corollary gives the behavior of the minimizer of the expected model 
 error estimate. We let $\hat k_n$ be the rank that minimizes 
-$\E\left[ \widehat{\ME}_n(k) \right]$.  The next two results follow from
+$\E\left[ \widehat{\ME}_n(k) \right]$.  Note that $\hat k_n$ is a deterministic quantity.  The next two results follow from
 Theorem~\ref{T:bcv-expected-me}.
 
 \begin{corollary}\label{C:bcv-expected-me-cutoff}
 	As $n \to \infty$,
-	\[
+	\begin{equation}
 		\hat k_n
 			\to
 				\max\left\{
@@ -603,7 +606,7 @@ Theorem~\ref{T:bcv-expected-me}.
 						\cdot
 						\sqrt{\frac{2}{\rho}}
 				\right\},
-	\]
+	\end{equation}
 	(provided no $\mu_i$ is exactly equal to
 	\(
 		\frac{\sigma^2}{\sqrt{\gamma}}
@@ -619,20 +622,20 @@ $k^\ast_n$ will converge to the same value.
 
 \begin{corollary}
 	If
-	\[
+	\begin{equation}
 		\sqrt{\rho}
 			=
 				\frac{\sqrt{2}}
 					 {\sqrt{\bar \gamma} + \sqrt{\bar \gamma + 3}},
-	\]
+	\end{equation}
 	where
-	\[
+	\begin{equation}
 		\bar \gamma
 			=
 				\left(
 					\frac{\gamma^{1/2} + \gamma^{-1/2}}{2}
 				\right)^2,
-	\]
+	\end{equation}
 	then $\hat k_n$ and $k^\ast_n$ converge to the same value
 	(provided no $\mu_i$ is exactly equal to
 		\(
@@ -691,7 +694,7 @@ The first step in analyzing the BCV estimate of prediction error is to see how t
 
 We show that we can apply Theorem~\ref{T:spiked-eigenvector-limits} to 
 $\sqrt{n} \, \mU_{n,1} \mD_n \mV_{n,1}^\trans + \mE_{n,11}$ even though $\mU_{n,1}$ and $\mV_{n,1}$ do not have orthogonal columns.  First we set
-\[
+\begin{equation}
 	\gamma_1
 		= 
 		\frac{K-1}{K}
@@ -699,7 +702,7 @@ $\sqrt{n} \, \mU_{n,1} \mD_n \mV_{n,1}^\trans + \mE_{n,11}$ even though $\mU_{n,
 		\frac{L}{L-1}
 		\cdot
 		\gamma
-\]
+\end{equation}
 and note that 
 \(
 	\frac{n_1}{p_1} 
@@ -709,7 +712,8 @@ and note that
 		\gamma_1 + \oh\left( \frac{1}{\sqrt{n_1}} \right).
 \)
 Next, for $1 \leq i \leq k_0$, we define
-\begin{gather*}
+\begin{subequations}
+\begin{gather}
 	\mu_{1,i}
 		= 
 			\frac{L-1}{L} \cdot \mu_{i}, \\
@@ -775,7 +779,8 @@ Next, for $1 \leq i \leq k_0$, we define
                 0
                 &\text{otherwise.}
             \end{cases}
-\end{gather*}
+\end{gather}
+\end{subequations}
 For $i > k_0$, we put 
 \(
     \bmu_{1,i} 
@@ -790,7 +795,7 @@ For $i > k_0$, we put
             \right)^2.
 \)
 Now, for $k \geq 1$ we let $\mTheta_{1}(k)$ and $\mPhi_1(k)$ be $k_0 \times k$ matrices with entries
-\[
+\begin{equation}
     \theta_{1,ij}^{(k)}
         =
             \begin{cases}
@@ -806,7 +811,7 @@ Now, for $k \geq 1$ we let $\mTheta_{1}(k)$ and $\mPhi_1(k)$ be $k_0 \times k$ m
                 \varphi_{1,i}&\text{if $i = j$,} \\
                 0&\text{otherwise,}
             \end{cases}
-\]
+\end{equation}
 respectively.  In this section, we prove the following:
 
 \begin{proposition}\label{P:holdin-svd}
@@ -822,7 +827,7 @@ Chapter~\ref{C:svd-behavior}.  We have that
     \mX_{n,11} = \sqrt{n} \, \mU_{n,1} \mD_n \mV_{n,1}^\trans + \mE_{n,11}.
 \)
 The first term does not satisfy the conditions of Theorems~\ref{T:spiked-eigenvalue-limits}~and~\ref{T:spiked-eigenvector-limits} since $\mU_{n,1}$ and $\mV_{n,1}$ do not have orthonormal columns.  Moreover, the scaling is $\sqrt{n}$ instead of $\sqrt{n_1}$.  We introduce scaling constants and group the terms as
-\[
+\begin{equation}
     \mX_{n,11}
         =
             \sqrt{n_1}
@@ -838,7 +843,7 @@ The first term does not satisfy the conditions of Theorems~\ref{T:spiked-eigenva
             \Big)^\trans
             +
             \mE_{n,11}.
-\]
+\end{equation}
 With this scaling,
 \[
     \mE \bigg[
@@ -1184,7 +1189,7 @@ In this section, we study the estimate of prediction error
 			\| \mX_{n,22} - \mhX_{n,22}(k) \|_\Frob^2
 \]
 We can expand this as
-\begin{align*}
+\begin{align}
 	\widehat{\PE}_n(k)
 		&=
 			\frac{1}{n_2 \, p_2}
@@ -1195,7 +1200,7 @@ We can expand this as
 				\big(
 					\mX_{n,22} - \mhX_{n,22}(k)
 				\big)^\trans
-			\Big) \\
+			\Big) \notag \\
 	\begin{split}
 		&=
 			\frac{1}{n_2 \, p_2}
@@ -1216,7 +1221,7 @@ We can expand this as
 					\mhX_{n,22}(k)
 				\big)^\trans
 			\Big)
-	\end{split} \\
+	\end{split} \notag \\
 	\begin{split}
 		&=
 			\frac{1}{n_2 \, p_2}
@@ -1242,9 +1247,9 @@ We can expand this as
 				\|_\Frob^2
 			\bigg).
 	\end{split}
-\end{align*}
+\end{align}
 It has expectation
-\[
+\begin{equation}
 	\E \left[ \widehat{\PE}_n(k) \right]
 		=
 			\E \left[
@@ -1257,11 +1262,11 @@ It has expectation
 			\right]
 			+
 			\sigma^2.
-\]
+\end{equation}
 The first term is the expected model approximation error and the second term is the irreducible error.
 
 The expected model approximation error expands into four terms.  We have
-\begin{multline*}
+\begin{multline}
 	\E \big\|
 		\sqrt{n} \, \mU_{n,2} \mD_n \mV_{n,2}^\trans
 		-
@@ -1323,10 +1328,10 @@ The expected model approximation error expands into four terms.  We have
 					\big)^\trans
 				\Big)
 			\Big].
-\end{multline*}
+\end{multline}
 By first conditioning on everything but $\mtE_{n,12}$ and $\mtE_{n,21}$, the
 cross-terms cancel and we get
-\begin{multline*}
+\begin{multline}
 	\E \big\|
 		\sqrt{n} \, \mU_{n,2} \mD_n \mV_{n,2}^\trans
 		-
@@ -1364,13 +1369,13 @@ cross-terms cancel and we get
 				\mhD_{n,1}(k)^+
 				\mtE_{n,12}
 			\big\|_\Frob^2.
-\end{multline*}
+\end{multline}
 Since $\mtE_{n,12}$ and $\mtE_{n,21}$ are made of iid $\Normal( 0, \, \sigma^2)$ random variables, the last three terms are fairly easy to analyze.
 We can use the following lemma:
 
 \begin{lemma}\label{L:frob-random-product}
 	Let $\mZ \in \reals^{m \times n}$ be a random matrix with uncorrelated
-	elements, all having having mean $0$ and variance $1$ (but not necessarily 
+	elements, all having mean $0$ and variance $1$ (but not necessarily 
 	from the same distribution).  If $\mA \in \reals^{n \times p}$ is 
 	independent of $\mZ$, then
 	\[
@@ -1546,7 +1551,8 @@ With these lemmas, we can prove the following:
 
 \begin{lemma}
 	The terms in the expected model approximation error converge as:
-	\begin{gather*}
+	\begin{subequations}
+	\begin{gather}
 		\begin{split}
 		\E\bigg[ 
 			\frac{p}{n_2 \, p_2} 
@@ -1622,7 +1628,8 @@ With these lemmas, we can prove the following:
 				\cdot
 				\sum_{i=1}^k
 					\frac{\sigma^2}{\bmu_{1,i}}.
-	\end{gather*}
+	\end{gather}
+    \end{subequations}
 \end{lemma}
 \begin{proof}
 	The squared Frobenius norm in the first term is equal to
@@ -1729,7 +1736,8 @@ With these lemmas, we can prove the following:
 				0          &\text{otherwise.}
 			\end{cases}
 	\]
-	We can apply the Bounded Convergence to get the result for the first
+	We can apply the Bounded Convergence Theorem to get the result for the 
+	first
 	term since the elements of $\mU_{n,2}$, $\mV_{n,2}$, $\mTheta_{n,1}$ 
 	and $\mPhi_{n,1}$ are bounded by $1$ and since
 	Lemma~\ref{L:d1-bounded-away-from-0} ensures that the elements of
@@ -1741,7 +1749,7 @@ With these lemmas, we can prove the following:
 
 We can now get an expression for the limit of the estimated model
 approximation error.  Specifically,
-\begin{align*}
+\begin{align}
 	\begin{split}
 	\E \bigg[  
 		\frac{p}{n_2 \, p_2}
@@ -1781,7 +1789,7 @@ approximation error.  Specifically,
 			\cdot\!\!\!
 			\sum_{i=k_0+1}^k
 				\frac{\sigma^2}{\bmu_{1,i}}
-	\end{split} \\
+	\end{split} \notag \\
 		&=
 			\sum_{i=1}^{k \wedge k_0}
 				\beta_i \, \mu_i
@@ -1797,9 +1805,9 @@ approximation error.  Specifically,
 			\right)^{-2}\!\!\!\!\!
 			\cdot
 			(k - k_0)_+,
-\end{align*}
+\end{align}
 where
-\begin{align*}
+\begin{align}
 	\beta_i
 		&=
 			\left( 
@@ -1818,7 +1826,7 @@ where
 			\right)
 			+
 			\frac{1}{\mu_i}
-			\frac{\sigma^4}{\gamma \bmu_{1,i}} \\
+			\frac{\sigma^4}{\gamma \bmu_{1,i}} \notag \\
 		&=
 			1
 			-
@@ -1840,8 +1848,8 @@ where
 			+
 			\frac{1}{\mu_i}
 			\frac{\sigma^4}{\gamma \bmu_{1,i}}.
-\end{align*}
-When $\mu_{1,i} \leq \frac{\sigma^2}{\sqrt{\gamma_1}}$,
+\end{align}
+If $\mu_{1,i} \leq \frac{\sigma^2}{\sqrt{\gamma_1}}$, then
 $\theta_{1,i} = \varphi_{1,i} = 0$ and
 \(
 	\bmu_{1,i} 
@@ -1978,7 +1986,7 @@ and
             \right).
 \]
 Putting it all together, we get
-\begin{align*}
+\begin{align}
     \begin{split}
     \beta_i
         &=
@@ -2017,7 +2025,7 @@ Putting it all together, we get
                     \frac{\sigma^4}{\gamma_1 \mu_{1,i}^2}
                 \right)
             \bigg\}
-    \end{split} \\
+    \end{split} \notag \\
     &=
         1
         +
@@ -2038,7 +2046,7 @@ Putting it all together, we get
             \frac{\sigma^2}{\mu_{1,i}}
             +
             \frac{\sigma^4}{\gamma_1 \mu_{1,i}^2}
-        \right) \\
+        \right) \notag \\
     &=
         1
         +
@@ -2050,7 +2058,7 @@ Putting it all together, we get
                 \frac{\sigma^2}{\mu_{1,i}}
                 +
                 \frac{\sigma^4}{\gamma_1 \mu_{1,i}^2}
-             } \\
+             } \notag \\
     &=
         \frac{ 3 \frac{\sigma^4}{\gamma_1 \mu_{1,i}^2} 
                +
@@ -2064,7 +2072,7 @@ Putting it all together, we get
                 \frac{\sigma^2}{\mu_{1,i}}
                 +
                 \frac{\sigma^4}{\gamma_1 \mu_{1,i}^2}
-             } \\
+             } \notag \\
     &=
         \frac{
             \frac{\sigma^2}{\gamma_1 \mu_{1,i}^2}
@@ -2083,7 +2091,7 @@ Putting it all together, we get
             +
             \frac{\sigma^4}{\gamma_1 \mu_{1,i}^2}
         }.
-\end{align*}
+\end{align}
 In particular, note that $\beta_i < 1$ when
 \(
     2 \frac{\sigma^4}{\gamma_1 \mu_{1,i}^2} - 1 < 0,
@@ -2097,6 +2105,6 @@ Theorem~\ref{T:bcv-expected-me} is a matter of routine algebra.
 
 \section{Summary and future work}\label{S:bcv-theory-summary}
 
-We have provided an analysis of the first-order behavior of bi-cross-validation.  This analysis has shown that BCV gives a biased estimate of prediction error, with an explicit expression for the bias.  Fortunately, the bias is not too bad when the signal strength is large and the leave-out sizes are small.  Importantly, our analysis gives guidance as to how the leave-out sizes should be chosen.  Our theoretical analysis agrees with the simulations done by Owen \& Perry~\cite{owen2009bi}, who observed that larger hold-out sizes tend to perform better.
+We have provided an analysis of the first-order behavior of bi-cross-validation.  This analysis has shown that BCV gives a biased estimate of prediction error, with an explicit expression for the bias.  Fortunately, the bias is not too bad when the signal strength is large and the leave-out sizes are small.  Importantly, our analysis gives guidance as to how the leave-out sizes should be chosen.  Our theoretical analysis agrees with the simulations done by Owen \& Perry~\cite{owen2009bi}, who observed that despite bias in prediction error estimates, larger hold-out sizes tend to perform better at estimating $k_\Frob^\ast$.
 
-The form of consistency we give is rather weak since we did not analyze the variance of the BCV prediction error estimate.  We will address this limitation in future work.  For now, we can get some comfort from empirical observations in \cite{owen2009bi} that the variance of the estimator is not too large.  Indeed, based on these simulations, it is entirely possible that the variance becomes negligible for large $n$ and $p$.
+The form of consistency we give is rather weak since we did not analyze the variance of the BCV prediction error estimate.  As a follow-up, it would be worthwhile to address this limitation.  For now, though, we can get some comfort from empirical observations in \cite{owen2009bi} that the variance of the estimator is not too large.  Indeed, based on these simulations, it is entirely possible that the variance becomes negligible for large $n$ and $p$.
