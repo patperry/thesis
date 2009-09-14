@@ -1,10 +1,9 @@
 
 \chapter{Cross-validation for unsupervised learning}\label{C:cvul}
 
-The problem unsupervised learning (UL) tries to to address is this: given some
+The problem unsupervised learning (UL) tries to address is this: given some
 data, describe its distribution. Many estimation problems can be cast as
-unsupervised learning, including mean estimation, density estimation, and
-linear regression. However, more commonly unsupervised learning refers to
+unsupervised learning, including mean and density estimation. However, more commonly unsupervised learning refers to
 either clustering or manifold learning. A canonical example is principal
 component analysis (PCA). In PCA, we are given some high-dimensional data,
 and we look for a lower-dimensional subspace that explains most of the
@@ -17,11 +16,11 @@ generated the data.
 Many UL problems involve model selection. For example, in principal component
 analysis we need to choose how many components to keep. For clustering, we
 need to choose the number of clusters in the data. Many manifold learning
-techniques require choosing bandwidth or a kernel. Often in these contexts,
+techniques require choosing a bandwidth or a kernel. Often in these contexts,
 model-selection is done in an ad-hoc manner. Rules of thumb and manual
 inspection guide most choices for how many components to keep, how many
 clusters are present, and what is an appropriate kernel. Such informal
-selection rules can be problematic when different researches come to different
+selection rules can be problematic when different researchers come to different
 conclusions about what the right model is. Moreover, even when there is an
 obvious ``natural'' model to human eyes, it may be hard to pick out in
 computer-automated analysis. For objectivity and efficiency, it is desirable to have a well-specified automatic model selection procedure.
@@ -29,7 +28,7 @@ computer-automated analysis. For objectivity and efficiency, it is desirable to 
 For concreteness, in this chapter we focus on principal components, though
 many of the ideas generalize to other methods. We suppose that the data,
 $\mX$, is an $n \times p$ matrix generated according to the signal-plus-noise
-model $\mX = \sqrt{n} \mU \mD \mV^\trans + \mE$. We consider the first term to
+model $\mX = \sqrt{n} \, \mU \mD \mV^\trans + \mE$. We consider the first term to
 be the ``signal'' matrix, and the second term to be ``noise''. Often the
 signal term is a low-rank product. Our goal is to estimate this term as
 best as possible by truncating the singular value decomposition (SVD) of
@@ -125,9 +124,9 @@ Gabriel, randomly partitions the columns of $\mX$ into ``predictor'' and
 
 We will generally assume we have data $\mX \in \reals^{n \times p}$
 generated according to the latent factor model 
-\[
+\begin{equation}
     \mX = \sqrt{n} \, \mU \mD \mV^\trans + \mE.
-\]
+\end{equation}
 Here, $\mU \in \reals^{n \times k_0}$, $\mV \in \reals^{n \times k_0}$, and
 $\mD = \diag( d_1, d_2, \ldots, d_{k_0} )$, with $\mU^\trans \mU = \mI_{k_0}$
 $\mV^\trans \mV = \mI_{k_0}$, and $d_1 \geq d_2 \geq \cdots \geq d_{k_0} > 0$. We call $\sqrt{n} \, \mU \mD \mV^\trans$ the
@@ -137,9 +136,9 @@ This makes the terms unidentifiable.  While this indeterminacy can (and
 should!) bother some readers, for now we will plod on.
 
 We denote the SVD of $\mX$ by
-\[
+\begin{equation}
     \mX = \sqrt{n} \, \mhU \mhD \mhV^\trans, 
-\]
+\end{equation}
 with $\mhU \in \reals^{n \times n \wedge p}$, $\mhV \in \reals^{p \times n
 \wedge p}$, and $\mhD = \diag( \hd_1, \hd_2, \ldots, \hd_{n \wedge p})$. Here,
 $\mhU^\trans \mhU = \mhV^\trans \mhV = \mI_{n \wedge p}$ and the singular
@@ -148,39 +147,40 @@ values are ordered
     \hd_1 \geq \hd_2 \geq \cdots \geq \hd_{n \wedge p} \geq 0.
 \)
 We set $\mhD(k) = \diag( \hd_1, \hd_2, \ldots, \hd_k, 0, \ldots, 0) \in \reals^{n \wedge p \times n \wedge p}$ so that
-\[
+\begin{equation}
     \mhX(k) = \sqrt{n} \, \mhU \mhD(k) \mhV^\trans
-\]
+\end{equation}
 is the SVD of $\mX$ truncated to $k$ terms.  Similarly, we define $\mhU(k) \in 
 \reals^{n \times k}$ and $\mhV(k) \in \reals^{p \times k}$ to be the first $k$ 
 rows of $\mhU$ and $\mhV$, respectively.
 
 We focus on estimating the squared Frobenius model error
-\[
+\begin{equation}
     \ME(k) = \| \sqrt{n} \, \mU \mD \mV^\trans - \mhX(k) \|_\Frob^2
-\]
-or its minimum,
-\[
+\end{equation}
+or its minimizer,
+\begin{equation}
     k^\ast_{\ME} = \argmin_k \ME(k).
-\]  
+\end{equation}
 Here, $\| \cdot \|_\Frob^2$ is the sum of squares of the elements.
 
 Another kind of error relevant to cross-validation is \emph{prediction error}.  We let $\mE'$ be a matrix independent of $\mE$ but having the same distribution conditionally on $\mU$, $\mD$, and $\mV^\trans$.  We set 
-\[
+\(
     \mX' = \sqrt{n} \, \mU \mD \mV^\trans + \mE'
-\]
+\)
 and define the prediction error
-\[
+\begin{equation}
     \PE(k) = \E \| \mX' - \mhX(k) \|_\Frob^2.
-\]
+\end{equation}
 Likewise, we set
-\[
+\begin{equation}
     k^\ast_{\PE} = \argmin_k \PE(k).
-\]
+\end{equation}
 If $\mE$ is independent of $\mU$, $\mD$, and $\mV$, then
-\begin{align*}
+\begin{align}
     \PE(k) 
-        &= \E\| \sqrt{n} \, \mU \mD \mV^\trans - \mhX(k) + \mE' \|_\Frob^2 \\
+        &= \E\| \sqrt{n} \, \mU \mD \mV^\trans - \mhX(k) + \mE' \|_\Frob^2 
+        \notag \\
     \begin{split}
         &= \E\| \sqrt{n} \, \mU \mD \mV^\trans - \mhX(k) \| \\
            &\qquad\qquad+ 
@@ -193,9 +193,9 @@ If $\mE$ is independent of $\mU$, $\mD$, and $\mV$, then
            \right]
            +
            \E\| \mE' \|_\Frob^2 
-    \end{split} \\
+    \end{split} \notag \\
         &= \E\big[\ME(k)\big] + \E \| \mE \|_\Frob^2.
-\end{align*}
+\end{align}
 The prediction error is thus equal to the sum of the expected model error
 and an irreducible error term.
 
@@ -219,7 +219,7 @@ the left-in set, and evaluate its performance on the left-out set. We thus
 need to describe the hold-out set, how to fit an SVD to the left-in data, and
 how to make a prediction of the left-out data. After a brief discussion of why
 the usual (naive) way of doing hold-outs won't work, we survey both speckled
-hold-outs (Wold-style), as well as block hold-outs (Gabriel-style).
+hold-outs (Wold-style), as well as blocked hold-outs (Gabriel-style).
 
 \subsection{Naive hold-outs}
 
@@ -292,7 +292,7 @@ necessary to consider more-general hold-out sets.
 
 \subsection{Wold hold-outs}
 
-A Wold-style speckled leave-out is perhaps the most obvious attempt at a a
+A Wold-style speckled leave-out is perhaps the most obvious attempt at a
 more general hold-out. We leave out a subset of the elements of the $\mX$, then
 use the left-in elements to predict the rest.
 
@@ -306,32 +306,32 @@ $\missing$ to denote a missing value, and let
 \)
 For $I \subset \mathcal{I}$, we define the matrix $\mX_I \in
 \reals_\missing^{n \times p}$ with elements
-\[
+\begin{equation}
     X_{I,ij}
     =
     \begin{cases}
         X_{ij}     &\text{if $(i,j) \in I$,} \\
         \missing   &\text{otherwise.}
     \end{cases}
-\]
+\end{equation}
 Similarly $\mX_{\bar I}$, has elements
-\[
+\begin{equation}
     X_{\bar I,ij}
     =
     \begin{cases}
         X_{ij}     &\text{if $(i,j) \notin I$,} \\
         \missing   &\text{otherwise.}
     \end{cases}
-\]
+\end{equation}
 Finally, for $\mA \in \reals_\missing^{n \times p}$, we define
-\[
+\begin{equation}
     \| \mA \|_{\Frob,I}^2
         =
         \sum_{(i,j) \in I} A_{ij}^2.
-\]
+\end{equation}
 This notation allows us to describe matrices with missing entries.
 
-A Wold-style speckled hold-out is a random subset $I \subset \mathcal{I}$.  The 
+A Wold-style speckled hold-out is an unstructured random subset $I \subset \mathcal{I}$.  The 
 held-in data is the matrix $\mX_{\bar I}$ and the held-out data is the matrix 
 $\mX_I$.  We use a missing value SVD algorithm to fit a $k$-term SVD to 
 $\mX_{\bar I}$.  This gives us an approximation $\mU_k \mD_k \mV_k^\trans$, 
@@ -364,7 +364,7 @@ denote them as the \emph{response} columns; the rest are denoted
 as \emph{test} rows; the rest are \emph{train} rows. This partitions the
 elements of $\mX$ into four blocks. With permutation matrices $\mP$ and $\mQ$,
 we can write
-\[
+\begin{equation}
     \mP^\trans \mX \mQ
         =
         \left(
@@ -373,7 +373,7 @@ we can write
            \mX_{21} & \mX_{22}
         \end{matrix}
         \right).
-\]
+\end{equation}
 Here, $\mX_{11}$ consists of the train-predictor block, $\mX_{12}$ is the train-response block, $\mX_{21}$ is the test-predictor block, and $\mX_{22}$ is the test-response block.  It is beneficial to think of the blocks as
 \[
     \left(
@@ -410,35 +410,35 @@ $\mX_{21}$ to get a prediction $\mhX_{22}$.
 
 In precise terms, suppose that there are $p_1$ predictor columns, $p_2$ response columns, $n_1$ train rows, and $n_2$ test rows.  Then $\mX_{11} \in \reals^{n_1 \times p_1}$ and $\mX_{22} \in \reals^{n_2 \times p_2}$ with
 $p_1 + p_2 = p$ and $n_1 + n_2 = n$.  First we fit an SVD to the train-predictor block 
-\[
+\begin{equation*}
     \mX_{11} = \sqrt{n} \, \mhU_1 \mhD_1 \mhV_1^\trans.  
-\]    
+\end{equation*}
 Then, we truncate the SVD to $k$ terms as 
 $\sqrt{n} \, \mhU_1(k) \mhD_1(k) \mhV_1^\trans(k)$ in the same way as is discussed 
 in Section~\ref{S:ucv-assumptions-notation}.  This defines a projection 
 $\mhV_1(k)$ and principal component scores 
-\[
+\begin{equation*}
     \mhZ_1(k) = \mX_{11} \mhV_1(k) = \sqrt{n} \, \mhU_1(k) \mhD_1(k).
-\]
+\end{equation*}
 Similarly, we can get the principal components scores for the test-predictor block as
-\[
+\begin{equation*}
     \mhZ_2(k) = \mX_{21} \mhV_1(k).
-\]
+\end{equation*}
 Next, we model the response columns as linear functions of the principal component scores.  We fit the model
 \(
-    \mX_{12} = \mhZ_1(k) \mB
+    \mX_{12} \approx \mhZ_1(k) \mB
 \)
 with
-\[
+\begin{equation*}
     \mhB 
         =
         \big( \mhZ_1(k)^\trans \mhZ_1(k) \big)^{+} \mhZ_1(k)^\trans \mX_{12}
         =
         \frac{1}{\sqrt{n}} \,
         \mhD_1(k)^{+} \, \mhU_1(k)^\trans \mX_{12}.
-\]
+\end{equation*}
 Finally, we apply the model the test rows to get a prediction for the test-response block
-\[
+\begin{equation}
     \mhX_{22}
         =
         \mhZ_2(k) \mhB
@@ -449,8 +449,16 @@ Finally, we apply the model the test rows to get a prediction for the test-respo
             \mhV_1(k) \mhD_1(k)^{+} \, \mhU_1(k)^\trans 
         \right)
         \mX_{12}.
-\]
+\end{equation}
 This gives a complete description of the CV replicate.
+
+\begin{remark}
+Typically for Gabriel-style CV, we have two partitions, one for the rows
+and one for the columns.  If the rows are partitioned into $K$ sets and
+the columns are partitioned into $L$ sets, then we average the estimated
+prediction error over all $K L$ possible hold-out sets.  This corresponds
+to $\frac{n}{n_2} \approx K$ and $\frac{p}{p_2} \approx L$.  In this situation, we say that we are performing $(K,L)$-fold Gabriel-style cross-validation.
+\end{remark}
 
 We can get some intuition for why Gabriel-style replicates work by expressing 
 the latent factor decomposition $\mX = \sqrt{n} \,\mU \mD \mV^\trans + \mE$ in 
@@ -662,7 +670,7 @@ The first option has rank $1$ and Frobenius norm $2$.  The second option
 has higher rank, $2$, but lower Frobenius norm, $\sqrt{2}$.  Which criterion 
 is more important?  It it not clear what the ``right'' SVD of $\mA$ is.
 
-We can ameliorate the problem by considering a sequence of SVDs rather than a 
+We can alleviate the problem by considering a sequence of SVDs rather than a 
 single one.  For each $k = 0, 1, 2, \ldots$, define $\mA_k'$ to the 
 rank-$k$ matrix of minimum Frobenius norm that agrees with $\mA$ on its 
 non-missing elements.  If no such matrix exists, let $I \subset \mathcal{I}$ 
@@ -691,14 +699,14 @@ There are still some problems with these SVDs. First of all, in general there
 may be no relationship between $\mA_k'$ and $\mA_{k+1}'$; the two matrices may
 be completely different and have completely different SVDs. We lose the
 nesting property of ordinary SVDs, where the rank-$k$ SVD is contained in the
-rank $k+1$ SVD. Secondly, although it seems plausible, we do not have any
+rank-$(k+1)$ SVD. Secondly, although it seems plausible, we do not have any
 guarantees that $\mA_k'$ is unique. Situations may arise where two different
 rank-$k$ matrices have the same norms and the same residual norms on the
 non-missing elements of $\mA$. Finally, finding $\mA'_k$ is a non-convex
 problem. The function $\| \mA - \mA_k \|_{\Frob,I}$ can have more than one
 local maximum.  We need to be aware of these deficiencies.
 
-Rather than get too deep into the $\reals_\ast$-SVD rabbit hole, we choose
+Rather than get too deep into the missing-value SVD rabbit-hole, we choose
 instead to live with an approximation. We acknowledge that computing the best
 rank-$k$ approximation as defined above is computationally infeasible for
 large $n$ and $p$. Instead of proving theorems about the global optimum, we
@@ -711,7 +719,7 @@ of $\mA$. The algorithm proceeds by iteratively estimating the missing values
 of $\mA$ by the values from the first $k$ terms of the SVD of the completed
 matrix. We give detailed pseudocode for the procedure as
 Algorithm~\ref{A:em-svd}. This is essentially the same algorithm as the
-SVDimpute algroithm given in Troyanksaya et al.~\cite{troyanskaya2001missing},
+SVDimpute algorithm given in Troyanksaya et al.~\cite{troyanskaya2001missing},
 except that we use a different convergence criterion. SVDimpute stops when
 successive estimates of the missing values of $\mA$ differ by less than ``the
 empirically determined threshold of $0.01$.'' We instead stop when relative
@@ -784,7 +792,7 @@ We performed two sets of simulations to gauge the performance of Gabriel- and Wo
 
 Each simulation generates a data matrix $\mX$ as 
 \(
-    \mX = \sqrt{n} \mU \mD \mV^\trans + \mE.
+    \mX = \sqrt{n} \, \mU \mD \mV^\trans + \mE.
 \)
 We fix the dimensions and number of generating signals as $n = 100$, $p = 50$,
 and $k_0 = 6$.  For ``weak'' factors we set 
@@ -855,6 +863,8 @@ Again, $c_{\nu_1, \nu_2}$ is chosen so that $\E [E_{ij}^2] = 1$.  Colored
 noise simulates heteroscedasticity.  All three types of noise are plausible 
 for real-world data.
 
+Obviously, this set of simulations comes with a number of caveats.  We are
+only looking at two choices for the signal strengths, one choice of $n$ and $p$, and a single hold-out size.  Moreover, this example uses relatively small $n$ and $p$, potentially too small for consistency asymptotics to kick in.  Despite these deficiencies, the simulations still convey substantial information about the behavior of the procedures under consideration.
 
 \subsection{Prediction error estimation}
 
@@ -864,7 +874,7 @@ generated random data of the form $\mX = \sqrt{n} \mU \mD \mV^\trans + \mE$,
 described above. With $\mhX(k)$ being the SVD of $\mX$ truncated to $k$ terms,
 the (normalized) true prediction error is given by
 \[ 
-    \PE(k) = \| \sqrt{n} \mU \mD \mV^\trans - \mhX(k) \|_\Frob^2 + 1. 
+    \PE(k) = \| \sqrt{n} \, \mU \mD \mV^\trans - \mhX(k) \|_\Frob^2 + 1. 
 \] 
 Cross-validation gives us an estimate $\widehat{\PE}(k)$ of the prediction 
 error curve.  We wanted to see how $\widehat{\PE}(k)$ compares to $\PE(k)$.
@@ -882,7 +892,8 @@ and what constitutes ``noise'' in this simulation. This global upward bias
 agrees with previous studies of cross-validation 
 (e.g.~\cite{breiman1992little} and \cite{breiman1992submodel}).  The RCV versions of the methods generally brought down the bias.  Some authors have observed a downward bias at the minimizer of $\widehat{\PE}(k)$ for ordinary cross-validation (\cite{breiman1984cart}, \cite{tibshirani2009}).  This bias does not appear to be present here.
 
-A striking difference between Wold- and Gabriel-style CV is their behavior for $k$ greater than $k^\ast_{\PE}$.  Gabriel-style CV does a better job at estimating the true $\PE(k)$, which is relatively flat.  Wold-style CV, on the other hand, increases steeply for $k$ past the minimizer.  Since estimating $\PE(k)$ past its minimizer is generally of very little interest, the Wold-style CV behavior is more desirable.
+A striking difference between Wold- and Gabriel-style CV is their behavior for $k$ greater than $k^\ast_{\PE}$.  Gabriel-style CV does a better job at estimating the true $\PE(k)$, which is relatively flat.  Wold-style CV, on the other hand, increases steeply for $k$ past the minimizer.  In some situations,
+the Wold-style behavior is more desirable, but as the heavy-noise examples in Figure~\ref{F:cvsvd-pe-weak} illustrate, the steep increase is not always in the right place.  Gabriel-style cross-validation is better at conveying ambiguity when the underlying dimensionality of the data is unclear.
 
 \begin{figure}[ht]
     \centering
@@ -902,12 +913,11 @@ A striking difference between Wold- and Gabriel-style CV is their behavior for $
         cross-validation, both original and rotated (RCV) versions, with
         strong factors in the data.  
         The true prediction error is shown in black, the CV curves are red, 
-        and the RCV curves are blue.  Error bars give are computed from the 
+        and the RCV curves are blue.  Error bars are computed from the 
         CV replicates.  Despite their upward bias, the methods do
         well at estimating $\PE(k)$ for $k \leq k^\ast_{\PE}$.
     }\label{F:cvsvd-pe-strong}
 \end{figure}
-
 
 \begin{figure}[ht]
     \centering
@@ -963,7 +973,8 @@ methods.  They are as follows:
 Kritchman and Nadler \cite{kritchman2008determining} give concise descriptions 
 of four of the estimators.  The other estimators, Bai and Ng's BICs, are 
 defined as the minimizers of
-\begin{align*}
+\begin{subequations}
+\begin{align}
     \text{BIC}_1(k)
         &= \log \| \mX - \mhX(k) \|_\Frob^2
            + k \, \frac{n + p}{n \, p} \log \frac{n \, p}{n + p}, \\
@@ -973,12 +984,15 @@ defined as the minimizers of
     \text{BIC}_3(k)
         &= \log \| \mX - \mhX(k) \|_\Frob^2
            + k \, \frac{\log C_{n,p}^2}{C_{n,p}},
-\end{align*}
+\end{align}
+\end{subequations}
 where $C_{n,p} = \min( \sqrt{n}, \sqrt{p})$.
 
 Tables~\ref{T:rank-est-strong-gauss}--\ref{T:rank-est-weak-sparse} summarize
 the results of 100 replicates.  For the strong factors in white noise, almost
-all of the methods correctly estimate the true $\PE$-minimizing rank.  When the noise is non-white, Wold-style CV is the clear winner.  For the weak factors in white noise, the AIC, $F$ and UIP methods fare well, and the performance of the cross-validation-based methods is mediocre.  For non-white noise and weak factors, none of the methods perform very well.
+all of the methods correctly estimate the true $\PE$-minimizing rank.  When the noise is non-white, Wold-style CV seems to be the clear winner.  However, as Figure~\ref{F:cvsvd-pe-strong} demonstrates, there is not much Frobenius loss penalty for slightly overestimating the rank.  Therefore, Tables~\ref{T:rank-est-strong-gauss}~and~\ref{T:rank-est-strong-sparse} may be exaggerating the advantage of Wold-style CV.
+
+For the weak factors in white noise, the AIC, $F$ and UIP methods fare well, and the performance of the cross-validation-based methods is mediocre.  For non-white noise and weak factors, none of the methods perform very well.  This is probably due to the inherent ambiguity between what constitutes ``signal'' and what constitutes ``noise'' in these simulations.
 
 \begin{table}
     \tiny
@@ -1229,7 +1243,7 @@ CV-Gabriel &  &  &  &  &  &  2 &  4 &  22 &  25 &  24 &  20 &  3 &  &  &  & \\
 
 \section{Real data example}
 
-We conclude this chapter with a Neuroscience application . The Neural
+We conclude this chapter with a neuroscience application. The Neural
 Prosthetic Systems Laboratory at Stanford University (NPSL) is interested in
 studying the motor cortex region of the brain. Essentially, they want to know
 what the correspondence is between neural activity in that part of the brain
@@ -1286,7 +1300,7 @@ preprocessed responses for each neuron and condition.
     }\label{F:motor-cortex-data}
 \end{figure}
 
-The data from the NSPL motor cortex experiment can be put into a matrix where
+The data from the NPSL motor cortex experiment can be put into a matrix where
 each neuron is thought of as a variable, and the timepoints of each condition
 are thought of as observations. This gives us a matrix $\mX$ with $p = 49$
 variables and $n = 27 \cdot 422 = 11394$ observations. Of course, the rows of
@@ -1295,7 +1309,7 @@ methods are not likely to give very reliable estimates of the dimensionality
 of $\mX$, but cross-validation stands a reasonable chance.
 
 After centering the columns of $\mX$, we performed Wold- and Gabriel-style cross-validation to estimate the dimensionality of the signal part of $\mX$.  
-For Gabriel-style CV, we first tried both $(2,2)$-fold and $(2,49)$-fold; both resulting $\widehat{PE}(k)$ curves had their minima at the maximum $k$.  For $5$-fold Wold-style CV, there is a minimum at $k=13$.  The BIC, $F$, MDL, and UIP estimators all chose $k=48$ as the dimensionality, while the AIC estimator chose $k=47$.  We show the cross-validation estimated prediction curves in Figure~\ref{F:motor-cv-est}
+For Gabriel-style CV, we first tried both $(2,2)$-fold and $(2,49)$-fold; both resulting $\widehat{PE}(k)$ curves had their minima at the maximum $k$.  For $5$-fold Wold-style CV, there is a minimum at $k=13$.  The BIC, $F$, MDL, and UIP estimators all chose $k=48$ as the dimensionality, while the AIC estimator chose $k=47$.  We show the cross-validation estimated prediction curves in Figure~\ref{F:motor-cv-est}.  It is likely that the true dimensionality of $\mX$ is high.
 
 \begin{figure}
     \centering
@@ -1307,7 +1321,8 @@ For Gabriel-style CV, we first tried both $(2,2)$-fold and $(2,49)$-fold; both r
         maximum prediction error is $1.0$.  Error bars show one standard    
         error, estimated from the folds. The prediction error estimate from
         Wold-style CV shows a minimum at $k=13$, but the Gabriel-style
-        CV estimates always decrease with $k$.  
+        CV estimates always decrease with $k$.  It is likely that the true 
+        dimensionality of the data is high.
     }\label{F:motor-cv-est}
 \end{figure}
 
@@ -1316,13 +1331,13 @@ For Gabriel-style CV, we first tried both $(2,2)$-fold and $(2,49)$-fold; both r
 
 We have described two different forms of cross-validation appropriate for
 model selection in unsupervised learning. Wold-style CV uses a ``speckled''
-leav-out, and Gabriel-style CV uses a ``blocked'' leave-out. We have defined
+leave-out, and Gabriel-style CV uses a ``blocked'' leave-out. We have defined
 two forms of error associated with SVD/PCA-like models, the prediction error
-and the model error. Through simulaitons, we have shown that both forms of CV
+and the model error. Through simulations, we have shown that both forms of CV
 can be considered to give estimates of prediction error. Both methods perform
 well, but Wold-style CV seems to be more robust to badly-behaved noise. We
 have applied these cross-validation methods to a data analysis problem from a
-Neuroscience experiment.
+neuroscience experiment.
 
 We have focused on latent factor models and the singular value decomposition.
 However, it is relatively easy to translate the two styles of cross-validation
