@@ -6,7 +6,7 @@ matrices.  We call a symmetric $p \times p$ matrix $\mP$ a projection
 if its eigenvalues are in the set $\{ 0, 1 \}$.  Any projection matrix of rank
 $k \leq p$ can be decomposed as $\mP = \mV \mV^\trans$ for some $\mV$
 satisfying $\mV^\trans \mV = \mI_k$.  We call the set 
-\[
+\begin{equation}
     \stiefel_{k}\left( \reals^p \right)
         =
         \left\{
@@ -16,11 +16,11 @@ satisfying $\mV^\trans \mV = \mI_k$.  We call the set
         \right\}
         \subseteq
         \reals^{p \times k}
-\]
+\end{equation}
 the \emph{rank-$k$ Stiefel manifold of $\reals^p$}.  It is the set
 of orthonormal $k$-frames in $\reals^p$.  Similarly, we call 
 the set
-\[
+\begin{equation}
     \grassmann_k\left( \reals^p \right)
         =
         \left\{
@@ -30,7 +30,7 @@ the set
         \right\}
         \subseteq
         \reals^{p \times p}
-\]
+\end{equation}
 the \emph{rank-$k$ Grassmannian of $\reals^p$}; this is the set of
 rank $k$ projection matrices.  If
 \(
@@ -72,7 +72,7 @@ this distribution by
 \subsection{Generating random elements}
 
 The easiest way to generate a random element of $\stiefel_k(\reals^p)$ is
-to let $\mZ$ to be a $p \times k$ matrix of iid $\Normal( 0, \, 1)$
+to let $\mZ$ be a $p \times k$ matrix of iid $\Normal( 0, \, 1)$
 random variables, take the $QR$ decomposition $\mZ = \mQ \mR$, and let
 $\mV$ be equal to the first $k$ columns of $\mQ$.  In practice, there is
 a bias in the way standard $QR$ implementations choose the signs of the
@@ -143,7 +143,7 @@ $a_i$ and scale $s$, then with $S = \sum_{i=1}^p Y_i$, the vector
     \left(
         \frac{Y_1}{S},
         \frac{Y_2}{S},
-        \ldots
+        \ldots,
         \frac{Y_p}{S}
     \right)
 \)
@@ -155,7 +155,7 @@ lemma.
 \begin{lemma}\label{L:stiefel-1-moments}
     If $\mV \sim \Unif\big( \stiefel_1(\reals^p) \big)$, then
     \begin{subequations}
-    \begin{align*}
+    \begin{align}
         \E \left[ V_{11}^2 \right] 
             &= \frac{1}{p}, \\
         \E \left[ V_{11} V_{21} \right] 
@@ -164,7 +164,7 @@ lemma.
             &= \frac{3}{p \, (p + 2)}, \\
         \E \left[ V_{11}^2 V_{21}^2 \right] 
             &= \frac{1}{p \, (p + 2)}.
-    \end{align*}
+    \end{align}
     \end{subequations}
     The odd mixed moments are all equal to zero.
 \end{lemma}
@@ -180,7 +180,7 @@ results.
     nonzero mixed moments of the elements $\mV$ up to fourth order
     are defined by
     \begin{subequations}
-    \begin{align*}
+    \begin{align}
         \E \left[ V_{11}^2 \right] 
             &= 
                 \frac{1}{ p }, \\
@@ -196,7 +196,7 @@ results.
         \E \left[ V_{11} V_{12} V_{22} V_{21} \right] 
             &= 
                 \frac{ -1 }{ p \, (p-1) (p+2) }.
-    \end{align*}
+    \end{align}
     \end{subequations}
 \end{lemma}
 \begin{proof}
@@ -359,9 +359,9 @@ random projection matrices.
 
 \begin{lemma}\label{L:grassman-moments-1}
     If $\mP \sim \Unif \big( \grassmann_k(\reals^p) \big)$, then
-    \begin{align*}
+    \begin{align}
         \E \left[ \mP \right] &= \frac{k}{p} \mI_p.
-    \end{align*}
+    \end{align}
 \end{lemma}
 \begin{proof}
     Write $\mP = \mV \mV^\trans$, where 
@@ -389,7 +389,7 @@ random projection matrices.
 \begin{lemma}\label{L:grassman-moments-2}
     Let $\mP \sim \Unif \big( \grassmann_k(\reals^p) \big)$.  If
     $1 \leq i,j,i',j' \leq p$, then
-    \begin{equation*}
+    \begin{equation}
         \begin{split}
             \cov \big[ P_{ij}, P_{i'j'} \big]
                 &=
@@ -407,7 +407,7 @@ random projection matrices.
                         - 2 \, \delta_{(i,i') = (j ,j')}
                     \Big).
         \end{split}
-    \end{equation*}
+    \end{equation}
     This gives us that aside from the obvious symmetry ($P_{ij} = P_{ji}$), 
     the off-diagonal elements of $\mP$ are uncorrelated with each other and 
     with the diagonal elements.
@@ -523,11 +523,7 @@ We now present two applications of the results in this section.
 
 \subsection{Projections of orthonormal $k$-frames}
 
-Suppose we have $\mU \in \reals^{p \times k}$, an orthonormal $k$-frame,
-and we randomly project $\mU$ into $\reals^q$, with $q < p$.  If we denote
-the projection matrix by $\mV^\trans$ and set $\mtU =\mV^\trans \mU$, it is 
-natural to ask how close $\mtU$ is to being an orthonormal $k$-frame.
-We can prove the following:
+Suppose we have $\mU \in \reals^{p \times k}$, an orthonormal $k$-frame, and we randomly project the columns of $\mU$ into $\reals^q$, with $q < p$.  If we denote the projection matrix by $\mV^\trans$ and set $\mtU =\mV^\trans \mU$, it is natural to ask how close $\mtU$ is to being an orthonormal $k$-frame. We can prove the following:
 
 \begin{proposition}\label{P:project-kframe}
     Suppose $\mU \in \reals^{p \times k}$ satisfies $\mU^\trans \mU = \mI_k$.
@@ -538,23 +534,23 @@ We can prove the following:
     \)
     Then there exists a decomposition 
     $\mtU = \mtU_0 + \frac{1}{\sqrt{q}} \mtU_1$ such that
-    \[
+    \(
         \mtU_0^\trans \mtU_0 = \mI_k
-    \]
+    \)
     and
-    \[
+    \begin{equation}
         \E \| \mtU_1 \|_\Frob^2 
             \leq
                 \frac{1}{2} \,
                 k \, (k + 1)
                 \left( \frac{q}{p} \right)^2
                 \left( 1 - \frac{q}{p} \right).
-    \]
+    \end{equation}
     In particular, this implies that
-    \[
+    \(
         \E \| \mtU_1 \|_\Frob^2 
             \leq \frac{2}{27} \, k \, (k+1).
-    \]
+    \)
 \end{proposition}
 
 \noindent
@@ -569,11 +565,12 @@ The main ingredients of the proof are a perturbation lemma and a result about $\
         \mtU = \sqrt{p/q} \mV^\trans \mU.
     \)
     Then 
-    \[
+    \(
         \E \left[ \mtU^\trans \mtU \right] = \mI_k
-    \]
+    \)
     and
-    \[
+    \begin{subequations}
+    \begin{equation}
         \mE \Big\| 
             \sqrt{q} \, \big(  \mtU^\trans \mtU - \mI_k \big) 
         \Big\|_\Frob^2
@@ -581,9 +578,9 @@ The main ingredients of the proof are a perturbation lemma and a result about $\
                 k \, (k+1)
                 \left( \frac{q}{p} \right)^2                
                 \left( 1 - \frac{q}{p} \right),
-    \]
+    \end{equation}
     with a matching lower bound of
-    \[
+    \begin{equation}
         \mE \Big\| 
             \sqrt{q} \, \big(  \mtU^\trans \mtU - \mI_k \big) 
         \Big\|_\Frob^2
@@ -594,7 +591,8 @@ The main ingredients of the proof are a perturbation lemma and a result about $\
             \left(
             \frac{p}{p+2}
             \right).
-    \]
+    \end{equation}
+    \end{subequations}
 \end{lemma}
 \begin{proof}
     Set $\mP = \mV \mV^\trans$ so that
@@ -649,13 +647,13 @@ from Stewart~\cite{stewart1990pts} and state as a lemma.
 
 \begin{lemma}[Mirsky]\label{L:mirsky}
     If $\mA$ and $\mA + \mE$ are in $\reals^{n \times p}$, then
-    \[
+    \begin{equation}
         \sum_{i=1}^{n \wedge p} 
             \big(
                 \sigma_i(\mA + \mE) - \sigma_i( \mA ) 
             \big)^2 
         \leq \| \mE \|_\Frob^2,
-    \]
+    \end{equation}
     where $\sigma_i(\cdot)$ denotes the $i$th singular value.
 \end{lemma}
 
@@ -730,16 +728,16 @@ As another application of the results in this section, we give a probabilistic
 representation of the Frobenius norm of a matrix.  It is commonly known that 
 for any 
 $n \times p$ matrix $\mA$, 
-\[
+\begin{equation}
     \sup_{ \substack{
                 \| \vx \|_2 = 1, \\
                 \| \vy \|_2 = 1 } }
         \big( \vx^\trans \mA \, \vy \big)^2
         =
         \| \mA \|_2^2,
-\]
-where $\| \cdot \|_2$ is the spectral norm, equal largest singular value.  The 
-function
+\end{equation}
+where $\| \cdot \|_2$ is the spectral norm, equal largest singular value
+(see, e.g.~\cite{golub1996mc}).  The function
 \(
     f( \vx, \vy ) = \vx^\trans \mA \, \vy
 \)
@@ -752,7 +750,7 @@ random unit vectors.
 
 \begin{proposition}\label{P:probabilistic-frob}
     If $\mA \in \reals^{n \times p}$, then
-    \[
+    \begin{equation}
         \int\limits_{ \substack{
                           \| \vx \|_2 = 1, \\
                           \| \vy \|_2 = 1 } }
@@ -763,7 +761,7 @@ random unit vectors.
             \, d\vx \, d\vy
         =
         \frac{1}{np} \| \mA \|_F^2.
-    \]
+    \end{equation}
 \end{proposition}
 \begin{proof}
     There are two steps to the proof.  First, we show that if 
