@@ -15,9 +15,9 @@ of iid random variables.  First, we give a weak law of large numbers (WLLN):
     If $\bW_n \toP \bW$ and 
     $\E \left[ \frac{1}{n} \sum_{i=1}^n W_{n,i}^2 \right]$ is uniformly 
     bounded in $n$, then
-    \[
+    \begin{equation}
         \frac{1}{n} \sum_{i=1}^n W_{n,i} \, X_{n,i} \toP \bW \mu.
-    \]
+    \end{equation}
 \end{proposition}
 
 We do not give a proof of Proposition~\ref{P:weighted-wlln}, but instead derive a strong law of large numbers (SLLN) below.  The proof of the weak law is similar.  Here is the strong law:
@@ -35,9 +35,9 @@ We do not give a proof of Proposition~\ref{P:weighted-wlln}, but instead derive 
     If $\bW_n \toas \bW$ and 
     $\E \left[ \frac{1}{n} \sum_{i=1}^n W_{n,i}^4 \right]$ is uniformly 
     bounded in $n$, then
-    \[
+    \begin{equation}
         \frac{1}{n} \sum_{i=1}^n W_{n,i} \, X_{n,i} \toas \bW \mu.
-    \]
+    \end{equation}
 \end{proposition}
 \begin{proof}
     Define $S_n = \sum_{i=1}^n W_{n,i} \, X_{n,i}$ and let
@@ -100,7 +100,7 @@ We do not give a proof of Proposition~\ref{P:weighted-wlln}, but instead derive 
         \right\}
         \leq \frac{C}{n^2 \varepsilon^4}.
     \]
-    Invoking the first Borel-Cantelli Lemma, we ge that the sum converes
+    Invoking the first Borel-Cantelli Lemma, see the sum converges
     almost surely.
 \end{proof}
 
@@ -109,7 +109,7 @@ CLT for dependent variables, which we take from McLeish \cite{mcleish1974dcl}:
 
 \begin{lemma}\label{L:mcleigh}
     Let $X_{n,i}, \F_{n,i}, i = 1, \ldots, n$ be a martingale difference 
-    array.  If the Lindeburg condition 
+    array.  If the Lindeberg condition 
     $\sum_{i=1}^n \E \left[ X_{n,i}^2 ; | X_{n,i} | > \varepsilon \right] \to 0$
     is satisfied and $\sum_{i=1}^n X_{n,i}^2 \toP \sigma^2$ then
     $\sum_{i=1}^n X_{n,i} \tod \Normal (0, \, \sigma^2)$.
@@ -122,14 +122,14 @@ With this Lemma, we can prove a CLT for weighted sums.
     Let $\vX_{n,i}, i = 1, \ldots, n$ be a triangular array of random vectors
     in $\reals^p$ with $\vX_{n,i}$ iid
     such that $\E \vX_{n,1} = \vmu^X$, $\cov[ \vX_{n,1}] = \mSigma^X$, and all 
-    mixed fourth moments of the elements of $\vX_{n,1}$ uniformly bounded in 
+    mixed fourth moments of the elements of $\vX_{n,1}$ are uniformly bounded in 
     $n$.  Let  $\vW_{n,i}$, $i = 1, \ldots, n$ be another triangular array 
     of random 
     vectors in $\reals^p$, independent of the $\vX_{n,i}$ but not necessarily 
     of each other.  Assume that 
     $\frac{1}{n} \sum_{i=1}^n \vW_{n,i} \vW_{n,i}^\trans \toP \mSigma^W$, and 
     that for
-    all sets of indices $j_1, \ldots, j_4$, with each index between $1$ and
+    all sets of indices $j_1, j_2, j_3, j_4$, with each index between $1$ and
     $p$, we have that
     \(
         \E \left[ 
@@ -141,7 +141,7 @@ With this Lemma, we can prove a CLT for weighted sums.
                 W_{n,ij_4} 
         \right]
     \) is uniformly bounded in $n$.  Then
-    \[
+    \begin{equation}
         \sqrt{n}
         \left[
             \frac{1}{n}
@@ -154,7 +154,7 @@ With this Lemma, we can prove a CLT for weighted sums.
         \right]
         \tod
         \Normal\left( 0, \, \mSigma^W \bullet \mSigma^X \right),
-    \]
+    \end{equation}
     where $\bullet$ denotes Hadamard (elementwise) product.
 \end{proposition}
 \begin{proof}
@@ -207,7 +207,7 @@ With this Lemma, we can prove a CLT for weighted sums.
     \end{align*}
     where we have used  the fourth moment assumptions and
     Proposition~\ref{P:weighted-wlln} to get the convergence.  Lastly we check 
-    the Lindeburg condition.  We have that
+    the Lindeberg condition.  We have that
     \begin{align*}
         \sum_{i=1}^n
             &\E \left[ 
@@ -271,7 +271,7 @@ For some classes of weights, we can get a stronger result.
         0,
     \)
     then
-    \[
+    \begin{equation}
         \sqrt{n}
         \left[
             \frac{1}{n}
@@ -282,5 +282,5 @@ For some classes of weights, we can get a stronger result.
         \right]
         \tod
         \Normal\left( 0, \, \mSigma^W \bullet \mSigma^X \right).
-    \]
+    \end{equation}
 \end{corollary}
