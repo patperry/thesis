@@ -1251,7 +1251,7 @@ and
 \]
 Bai and Silverstein show how to compute the limiting means and variances
 for $g(x) = \log x$ and $g(x) = x^r$.  They also derive a similar CLT when
-the elements of $\mX_n$ are correlated.
+the elements of $\mX_n$ are correlated.  Pastur and Lytova~\cite{pastur2008clt} have recently relaxed some of the assumptions made by Bai and Silverstein.
 
 
 \subsection{The edges of the spectrum}
@@ -1478,14 +1478,14 @@ Theorem~\ref{T:tw-limit-smallest} does not apply when $\frac{n}{p} \to 1$.  Edel
 In addition to the extreme eigenvalues, it is possible to study the joint distribution of top or bottom $k$ sample eigenvalues for fixed $k$ as
 $n \to \infty$.  In light of Theorem~\ref{T:mp-limit}, for fixed $k$ we must have that the top (respectively, bottom) sample eigenvalues converge almost surely to the same limit.  Furthermore, Soshnikov~\cite{soshnikov2002nud} showed that applying the centering and scaling from Theorem~\ref{T:tw-limit-largest} to the top $k$ sample eigenvalues gives a specific limiting distribution.
 
-It is natural to ask if the limiting eigenvalue distributions are specific to Wishart matrices, or if they apply to non-Gaussian data as well.  There is compelling evidence that the Tracy-Widom law is universal.   Soshnikov~\cite{soshnikov2002nud} extended Theorem~\ref{T:tw-limit-largest} to more general $\mX_n$ under the assumption that $X_{n,11}$ is sub-Gaussian and $n-p = \Oh(p^{1/3})$.  Tao and Vu~\cite{tao2009rmd} showed that Theorem~\ref{T:edelman-limit-smallest} applies for general $X_{n,11}$ with $\E X_{n,11} = 0$ and $\E X_{n,11}^2 = 1$.
+It is natural to ask if the limiting eigenvalue distributions are specific to Wishart matrices, or if they apply to non-Gaussian data as well.  There is compelling evidence that the Tracy-Widom law is universal.   Soshnikov~\cite{soshnikov2002nud} extended Theorem~\ref{T:tw-limit-largest} to more general $\mX_n$ under the assumption that $X_{n,11}$ is sub-Gaussian and $n-p = \Oh(p^{1/3})$.  P\'ech\'e~\cite{peche2008url} later removed the restriction on $n-p$.  Tao and Vu~\cite{tao2009rmd} showed that Theorem~\ref{T:edelman-limit-smallest} applies for general $X_{n,11}$ with $\E X_{n,11} = 0$ and $\E X_{n,11}^2 = 1$.
 
 
 \subsection{Eigenvectors}
 
-Relatively little attention has been focused on the eigenvectors of sample covariance matrices.  While many results are known, as of yet there is no complete characterization of the eigenvectors from a general sample covariance matrix.  Most of the difficulty in tackling the problem is that it is hard to describe convergence properties of $\mU_n$, the $p\times p$ matrix of eigenvectors, when $n$ and $p$ go to infinity.  The individual $p^2$ elements of $\mU_n$ do converge in any meaningful way, so the challenge is to come up with relevant macroscopic characteristics of $\mU_n$.
+Relatively little attention has been focused on the eigenvectors of sample covariance matrices.  While many results are known, as of yet there is no complete characterization of the eigenvectors from a general sample covariance matrix.  Most of the difficulty in tackling the problem is that it is hard to describe convergence properties of $\mU_n$, the $p\times p$ matrix of eigenvectors, when $n$ and $p$ go to infinity.  The individual $p^2$ elements of $\mU_n$ do not converge in any meaningful way, so the challenge is to come up with relevant macroscopic characteristics of $\mU_n$.
 
-Silverstein~\cite{silverstein1979reg} was perhaps the first to study the eigenvectors of large-dimensional sample covariance matrices.  He hypothesized that for sample covariance matrices of increasing dimension, the eigenvector matrix becomes more and more ``Haar-like''.  A random matrix $\mU \in \reals^{p\times p}$ is said to be Haar-distributed over the orthogonal group if for every fixed $p \times p$ orthogonal matrix $\mO$, the rotated matrix $\mO \mU$ has the same distribution as $\mU$.  That is, $\mO \mU \eqd \mU$.  Silverstein's conjecture was that as $n \to \infty$, $\mU_n$ behaves more and more like a Haar-distributed matrix.  The next theorem displays one aspect Haar-like behavior.
+Silverstein~\cite{silverstein1979reg} was perhaps the first to study the eigenvectors of large-dimensional sample covariance matrices.  He hypothesized that for sample covariance matrices of increasing dimension, the eigenvector matrix becomes more and more ``Haar-like''.  A random matrix $\mU \in \reals^{p\times p}$ is said to be Haar-distributed over the orthogonal group if for every fixed $p \times p$ orthogonal matrix $\mO$, the rotated matrix $\mO \mU$ has the same distribution as $\mU$.  That is, $\mO \mU \eqd \mU$.  Silverstein's conjecture was that as $n \to \infty$, $\mU_n$ behaves more and more like a Haar-distributed matrix.  The next theorem displays one aspect of Haar-like behavior.
 
 To state the theorem, we need to define the extension of a scalar function
 $g : \reals \mapsto \reals$ to symmetric matrix arguments.  If 
