@@ -427,19 +427,51 @@ We can decompose the columns of $\mhV_n$ into sums of two terms, with the first 
 to it.  By setting $\mTheta_n = \mV_n^\trans \mhV_n$ and 
 taking the SVD of $\mhV_n - \mV_n \mTheta_n$, the matrix of right factors can 
 be expanded as
-\begin{equation}
+\begin{equation}\label{E:v-vbar-decomp}
     \mhV_n = \mV_n \mTheta_n + \mbV_n \mbTheta_n,
 \end{equation}
 with $\mbV_n \in \reals^{p \times (p-k_0)}$  satisfying
-$\mbV_n^\trans \mbV_n = \mI_{p-k_0}$ and $\mV_n^\trans \mbV_n = 0$.  
-
-We can apply the same trick to $\mhU_n$ to get a simplified form for
-$\mhX_n(k)$.  We expand
+$\mbV_n^\trans \mbV_n = \mI_{p-k_0}$ and $\mV_n^\trans \mbV_n = 0$.  Note that
 \begin{equation}
+    \mI_k
+    =
+        \mhV_n^\trans \mhV_n
+        =
+        \mTheta_n^\trans \mTheta_n
+        +
+        \mbTheta_n^\trans
+        \mbTheta_n.
+\end{equation}
+In particular, since $\mbTheta_n$ is upper-triangular, if $\mTheta_n$ converges to a diagonal matrix $\mTheta$, then $\mbTheta_n$ must also, converge to a diagonal matrix,
+\(
+    \left(
+        \mI_k
+        -
+        \mTheta^2
+    \right)^{1/2}.
+\)
+This makes the decomposition in equation~\eqref{E:v-vbar-decomp} very
+convenient to work with.
+
+The same trick applies to $\mhU_n$.  We expand
+\begin{equation}\label{E:u-ubar-decomp}
     \mhU_n = \mU_n \mPhi_n + \mbU_n \mbPhi_n,
 \end{equation}
 with $\mbU_n$ and $\mbPhi_n$ defined analogously to $\mbV_n$ and $\mbTheta_n$.
-Then,
+Again, we have that
+\begin{equation}
+    \mI_k
+        =
+        \mPhi_n^\trans \mPhi_n
+        +
+        \mbPhi_n^\trans
+        \mbPhi_n.    
+\end{equation}
+Likewise, if $\mPhi_n$ converges to a diagonal matrix, then $\mbPhi_n$ must
+do the same.
+
+We can new get a simplified formula for $\mhX_n(k)$.  With the decompositions
+in equations~\eqref{E:v-vbar-decomp}~and~\eqref{E:u-ubar-decomp}, we get
 \begin{equation}
     \mhX_n(k)
         =
@@ -569,7 +601,7 @@ give us that for fixed $k$ as $n \to \infty$,
     \mPhi_n \mhD_n(k) \mbTheta_n^\trans
         &\toas
             \mPhi \mD(k) \mbTheta^\trans, \\
-    \mbPhi_n \mhD_n(k) \mbTheta_n^\trans
+    \mbPhi_n \mhD_n(k) \mTheta_n^\trans
         &\toas
             \mbPhi \mD(k) \mTheta^\trans, \\
     \mbPhi_n \mhD_n(k) \mbTheta_n^\trans
