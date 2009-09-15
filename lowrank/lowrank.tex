@@ -640,9 +640,9 @@ We define
             \mT_n(z) \,
             \vx, \label{E:secular-f}
 \end{gather}
-and refer to the equation $f_n(z, \vx) = 0$ as the \emph{secular equation}. 
+and refer to $f_n(z, \vx) = 0$ as the \emph{secular equation}. 
 This terminology comes from numerical linear algebra, where a secular equation is analogous to a characteristic equation; it is an equation whose
-roots are eigenvalues of a matrix.   Typically, secular equations arise in eigenvalue perturbation problems.  The name comes from the fact that they originally arose from studying secular perturbations of planetary orbits.  A more standard use of the term ``secular equation'' would involve the equation $\det \mT_n(z) = 0$.  However, for our purposes it is more convenient to work with $f_n$.
+roots are eigenvalues of a matrix.   Typically, secular equations arise in eigenvalue perturbation problems.  The name comes from the fact that they originally appeared studying secular perturbations of planetary orbits.  A more standard use of the term ``secular equation'' would involve the equation $\det \mT_n(z) = 0$.  However, for our purposes it is more convenient to work with $f_n$.
 
 \subsection{Outline of the proof}
 
@@ -658,7 +658,7 @@ It turns out that when $z > (1 + \gamma^{-1/2})^2$, we can find a perturbation e
             \mT_{n,1}(z),
 \]
 where $\mT_0(z)$ is deterministic and $\mT_{n,1}(z)$ converges in distribution
-to a matrix-valued Gaussian process with known covariance.  With this expansion, in Section~\ref{S:solutions-to-secular-eq} we study sequences of solutions to the equation $f_n(z_n, \vx_n) = 0$.  Using a Taylor series expansion for $z_n > (1 + \gamma^{-1/2})^2$, we write
+to a matrix-valued Gaussian process indexed by $z$.  With this expansion, in Section~\ref{S:solutions-to-secular-eq} we study sequences of solutions to the equation $f_n(z_n, \vx_n) = 0$.  Using a Taylor series expansion for $z_n > (1 + \gamma^{-1/2})^2$, we write
 \begin{align*}
     z_n
         &= 
@@ -680,7 +680,8 @@ to a matrix-valued Gaussian process with known covariance.  With this expansion,
 where $(z^0, \vx^0)$ is the limit of $(z_n, \vx_n)$ as $n\to \infty$ and
 $(z_{n,1}, \vx_{n,1})$ is the order-$\frac{1}{\sqrt{n}}$ approximation error.
 
-In Section~\ref{S:singular-values-and-vectors} we get the singular values and singular vectors of $\frac{1}{\sqrt{n}} \mtX_n$.  From every solution pair $(z_n, \vx_n)$, to the equation $f_n(z_n, \vx_n) = 0$, we can construct an eigenvalue and an eigenvector of $\mS_n$ using equation~\eqref{E:v-from-v1}.  Then, we can get the corresponding left singular vectors through multiplying by $\mtX_n$.  For singular values above the critical threshold, we use the perturbation results of the previous two sections.  Below the threshold, we use a more direct approach involving the fluctuations of the top eigenvalues of $\mLambda_n$.
+In Section~\ref{S:singular-values-and-vectors} we get the singular values and singular vectors of $\frac{1}{\sqrt{n}} \mtX_n$.  From every solution pair $(z_n, \vx_n)$ satisfying $f_n(z_n, \vx_n) = 0$, we can construct an eigenvalue and an eigenvector of $\mS_n$ using equation~\eqref{E:v-from-v1}.
+The eigenvalues are squares of singular values of $\frac{1}{\sqrt{n}}\mtX_n$, and the eigenvectors are right singular vectors.  We can get the corresponding left singular vectors by multiplying the right singular vectors by $\mtX_n$ and scaling appropriately.  For $z$ values above the critical threshold, we use the perturbation results of the previous two sections.  Below the threshold, we use a more direct approach involving the fluctuations of the top eigenvalues of $\mLambda_n$.
 
 Finally, in Section~\ref{S:lowrank-gamma-lt-1} we show that the results still hold when $\gamma < 1$.  For parts of the proof, we will need some limit theorems for weighted sums from 
 Appendix~\ref{A:weighted-sums}.
@@ -689,7 +690,7 @@ Appendix~\ref{A:weighted-sums}.
 
 We devote this section to finding a simplified formula for $\mT_n(z)$ for certain values of $z$.  By a bit of algebra and analysis, we find the first- and second-order behavior of the secular equation.
 
-First, we employ the Sherman-Morrison-Woodbury formula~\cite{golub1996mc} to  get an expression for $\left(\mS_{n,22} - z \mI_{p-k}\right)^{-1}$.  As a reminder, the Sherman-Morrison-Woodbury formula states that for matrices $\mA$, $\mB$, and $\mC$ with compatible dimensions, the following formula for the inverse holds:
+First, we employ the Sherman-Morrison-Woodbury formula~\cite{golub1996mc} to  get an expression for $\left(\mS_{n,22} - z \mI_{p-k}\right)^{-1}$.  As a reminder, this identity states that for matrices $\mA$, $\mB$, and $\mC$ with compatible dimensions, the following formula for the inverse holds:
 \[
     \left(
         \mA
@@ -819,7 +820,9 @@ and
     \mLambda_n^{1/2}
     \mE_{n,21}.
 \)
-Each term can we written as a weighted sum of outer products.  There is
+Each term can we written as a weighted sum of outer products.  
+
+There is
 dependence between the weights, but the outer products are iid.  For example,
 with
 \(
@@ -1222,7 +1225,7 @@ Since $\frac{p-k}{n} \to \gamma^{-1}$, this completes the proof.
     where the elements of $\mF(z)$, $\mG(z)$, and $\mH(z)$
     jointly define a multivariate Gaussian process indexed by $z$,
     with each matrix independent of the others. 
-    The other covariances are defined by
+    The nonzero covariances are defined by
     \begin{subequations}
     \begin{align}
         \cov\Big( F_{ij}(z_1), \, F_{ij}(z_2) \Big)
@@ -2194,7 +2197,7 @@ we get
     \end{split}
 \]
 The first term converges in distribution to a mean-zero multivariate normal
-with variance $2$ along the diagonal and variance $1$ otherwise; the elements
+with variance $2 \, (1 - \gamma^{-1})$ along the diagonal and variance $1 - \gamma^{-1}$ otherwise; the elements
 are all uncorrelated except for the obvious symmetry.  Also, we have
 \begin{align*}
     \cov\big( F_{ij} ( \bmu_1 ), F_{ij} ( \bmu_2 ) \big)
@@ -2218,7 +2221,8 @@ are all uncorrelated except for the obvious symmetry.  Also, we have
         \frac{ \mu_1 \mu_2 }{ \mu_1 \mu_2 - \gamma^{-1} }.
 \end{align*}
 Therefore, for $j \neq i$ we have variances
-\begin{align*}
+\begin{subequations}
+\begin{align}
     \begin{split}
     \var \left(
         \big(
@@ -2238,7 +2242,7 @@ Therefore, for $j \neq i$ we have variances
             2 \mu_i + 1 + \gamma^{-1}
         \right)
         \frac{ (\mu_i + \gamma^{-1})^2 }
-             { \mu_i^2 - \gamma^{-1} } + \oh(1) \qquad\text{and}
+             { \mu_i^2 - \gamma^{-1} } + \oh(1), 
     \end{split} \\
     \var \left(
         \big(
@@ -2251,10 +2255,12 @@ Therefore, for $j \neq i$ we have variances
             2 \mu_i + 1 + \gamma^{-1}
         \right)
         \frac{ (\mu_i + \gamma^{-1})^2 }
-             { \mu_i^2 - \gamma^{-1} } + \oh(1).
-\end{align*}
-The nontrivial covariances are given by
-\begin{align*}
+             { \mu_i^2 - \gamma^{-1} } + \oh(1),
+\end{align}
+\end{subequations}
+and nontrivial covariances
+\begin{subequations}
+\begin{align}
     \cov \left( 
         \big(
             \mT_{n,1}( \bmu_i ) \,
@@ -2270,7 +2276,8 @@ The nontrivial covariances are given by
         \cdot
         \frac{\mu_i + \gamma^{-1}}{ \mu_i }
         \cdot
-        \frac{\mu_j + \gamma^{-1}}{ \mu_j } + \oh(1) \quad\text{and} \\
+        \frac{\mu_j + \gamma^{-1}}{ \mu_j } + \oh(1) \\
+\intertext{and}
     \begin{split}
     \cov \left(
         \big(
@@ -2291,7 +2298,8 @@ The nontrivial covariances are given by
                  { \mu_i \mu_j - \gamma^{-1} }
         + \oh(1).
     \end{split}
-\end{align*}
+\end{align}
+\end{subequations}
 All other covariances between the elements of
 $\mT_{n,1}(\bmu_i) \, \ve_i$ and $\mT_{n,1}(\bmu_j) \, \ve_j$ are zero.
 
@@ -2449,7 +2457,7 @@ For $\mu_i > \gamma^{-1/2}$, we can get a right singular vector of $\frac{1}{\sq
 $(z_{n,i}, \vx_{n,i})$ satisfiying 
 $f_n(z_{n,i}, \vx_{n,i}) = 0$ and $z_{n,i} \toas \bmu_i$.  The vector
 is parallel to
-\[
+\begin{equation}
     \vtx_{n,i}
     =
     \left(
@@ -2458,10 +2466,10 @@ is parallel to
         - ( \mS_{n,22} - z_n \mI_{p-k} )^{-1} \mS_{n,21} \, \vx_n
     \end{matrix}
     \right).
-\]
+\end{equation}
 We just need to normalize this vector to have unit length.  The length
 of $\vtx_n$ is given by
-\[
+\begin{equation}
     \| \vtx_n \|_2^2
         =
         \vx_n^\trans
@@ -2473,7 +2481,7 @@ of $\vtx_n$ is given by
             \mS_{n,21}
         \right)
         \vx_n.
-\]
+\end{equation}
 It is straightforward to show that for $z > b_\gamma$,
 \begin{align*}
     \mI_{k}
