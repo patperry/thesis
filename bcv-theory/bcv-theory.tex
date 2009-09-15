@@ -933,11 +933,11 @@ $\mtU_{n,1} \mtD_{n,1} \mtV_{n,1}^\trans$, and demonstrate the following:
 \end{lemma}
 \noindent
 Proposition~\ref{P:holdin-svd} is then a direct consequence of
-Lemma~\ref{L:svd-random-perturb} and
+Lemma~\ref{L:svd-random-perturb} combined with
 Theorems~\ref{T:spiked-eigenvalue-limits}~and~\ref{T:spiked-eigenvector-limits}.
 
 \begin{proof}[Proof of Lemma~\ref{L:svd-random-perturb}]
-    Let $\sqrt{\frac{n}{n_1}} \mU_{n,1} = \mbU_{n,1} \mR_n$ be a 
+    First, let $\sqrt{\frac{n}{n_1}} \mU_{n,1} = \mbU_{n,1} \mR_n$ be a 
     $QR$-decomposition so that $\mbU_{n,1} \in \reals^{n_1 \times k_0}$ has
     orthonormal columns and $\mR_n$ is an upper-triangular matrix.  Define
     $\mR_{n,1} = \sqrt{n} ( \mR_{n,1} - \mI_{k_0})$ so that

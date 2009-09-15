@@ -646,7 +646,7 @@ roots are eigenvalues of a matrix.   Typically, secular equations arise in eigen
 
 \subsection{Outline of the proof}
 
-With probability one, $\mS_n$ and $\mS_{n,22}$ have no eigenvalues in common, so every eigenvalue-eigenvector pair of $\mS_n$ is a solution to the secular equation.  To study these solutions, we first focus on $\mT_n(z)$.  
+Almost surely $\mS_n$ and $\mS_{n,22}$ have no eigenvalues in common, so every eigenvalue-eigenvector pair of $\mS_n$ is a solution to the secular equation.  To study these solutions, we first focus on $\mT_n(z)$.  
 
 It turns out that when $z > (1 + \gamma^{-1/2})^2$, we can find a perturbation expansion for $\mT_n(z)$. In Section~\ref{S:anal-sec-eqn}, we show that for $z$ above this threshold, we can expand
 \[
@@ -1866,7 +1866,7 @@ We will use a perturbation lemma, which follows from the $\sin \Theta$ theorem (
 \end{lemma}
 
 \begin{proof}[Proof of Lemma~\ref{L:xn-converges}]
-    We have that $z_{n,i} \toas \bmu_i$ and 
+    We have that $z_{n,i} \toas \bmu_i$ and that
     $\mT_n(z_{n,i}) \vx_{n,i} = 0$.  Since
     $\mT_n(z_{n,i}) \toas \mT_0(\bmu_i)$, we get
     \begin{align*}
