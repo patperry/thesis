@@ -113,13 +113,12 @@ The next assumption concerns the noise part:
 \end{assumption}
 \noindent
 
-We need to introduce some more notation. We denote the columns of $\mU_n$ and
+For analyzing the SVD of $\mX_n$, we need to introduce some more notation. We denote the columns of $\mU_n$ and
 $\mV_n$ by $\vu_{n,1}, \vu_{n,2}, \ldots, \vu_{n,k}$ and $\vv_{n,1},
-\vv_{n,2}, \ldots, \vv_{n,k}$, respectively. With respect to the rank, $k$,
-we let 
-\[
-    \mX_n \approx \sqrt{n} \, \mhU_n \mhD_n \mhV_n^\trans
-\]
+\vv_{n,2}, \ldots, \vv_{n,k}$, respectively. We let 
+\(
+    \sqrt{n} \, \mhU_n \mhD_n \mhV_n^\trans
+\)
 be the singular value decomposition of
 $\mX_n$ truncated to $k$ terms, where $\mhD_n = \diag( \hat \mu_{n,1}^{1/2},
 \hat \mu_{n,2}^{1/2}, \ldots, \hat \mu_{n,k}^{1/2})$ and the columns of $\mhU$ and $\mhV$ are given
@@ -243,7 +242,7 @@ Assumptions~\ref{A:factors}~and~\ref{A:sizes} are simpler than the assumptions g
 \[
     \mX = \mZ \mXi^\trans + \mE,
 \]
-where $\mXi$ is an $p \times k$ matrix of factors and $\mZ$ is an $n\times k$ matrix of factor loadings whose rows are iid multivariate $\Normal(0,\, \mC)$ random variables for covariance matrx $\mC$ having eigen-decomposition $\mC = \mQ \mLambda \mQ^\trans$.  Letting $\mZ = \sqrt{n} \mhP \mhLambda^{1/2} \mhQ^\trans$ be the SVD of $\mZ$, Anderson's results \cite{anderson1963atp} give us that $\mhLambda$ and $\mhQ$ converge almost surely to $\mLambda$ and $\mQ$, respectively, and that the diagonal elements of $\sqrt{n} (\mhLambda - \mLambda)$ converge to a mean-zero multivariate normal whenever $\mC$ has no repeated eigenvalues.  If we define $\mU = \mhP$, $\mD = \mhLambda^{1/2}$, and $\mV = \mXi \mhQ$, then $\mX = \sqrt{n} \mU \mD \mV^\trans + \mE$, where the factors satisfy Assumptions~\ref{A:factors}~and~\ref{A:sizes}.  Dropping the normality assumption on the rows of $\mZ$ poses no problem.  Moreover, we can suppose instead of iid that the rows of $\mZ$ are a martingale difference array with well-behaved low-order moments and still perform a transformation of the variables to get factors of the form we need for Theorems~\ref{T:spiked-eigenvalue-limits}~and~\ref{T:spiked-eigenvector-limits}.
+where $\mXi$ is an $p \times k$ matrix of factors and $\mZ$ is an $n\times k$ matrix of factor loadings whose rows are iid multivariate $\Normal(0,\, \mC)$ random variables for covariance matrx $\mC$ having eigen-decomposition $\mC = \mQ \mLambda \mQ^\trans$.  Letting $\mZ = \sqrt{n} \mhP \mhLambda^{1/2} \mhQ^\trans$ be the SVD of $\mZ$, Anderson's results \cite{anderson1963atp} give us that $\mhLambda$ and $\mhQ$ converge almost surely to $\mLambda$ and $\mQ$, respectively, and that the diagonal elements of $\sqrt{n} (\mhLambda - \mLambda)$ converge to a mean-zero multivariate normal whenever $\mC$ has no repeated eigenvalues.  If we define $\mU = \mhP$, $\mD = \mhLambda^{1/2}$, and $\mV = \mXi \mhQ$, then $\mX = \sqrt{n} \, \mU \mD \mV^\trans + \mE$, where the factors satisfy Assumptions~\ref{A:factors}~and~\ref{A:sizes}.  Dropping the normality assumption on the rows of $\mZ$ poses no problem.  Moreover, we can suppose instead of iid that the rows of $\mZ$ are a martingale difference array with well-behaved low-order moments and still perform a transformation of the variables to get factors of the form we need for Theorems~\ref{T:spiked-eigenvalue-limits}~and~\ref{T:spiked-eigenvector-limits}.
 
 \item
 There is a sign-indeterminancy in the sample and population singular vectors. We choose them arbitrarily.
@@ -410,7 +409,7 @@ $\mE_{n,11} = \mtE_{n,11}$,
 $\mE_{n,12} = \mtE_{n,12} \mP_n$,
 $\mE_{n,21} = \mO_{n,1}^\trans \mtE_{n,21}$, and
 $\mE_{n,31} = \mO_{n,2}^\trans \mtE_{n,31}$.
-Finally, let
+Let
 \[
     \mtX_n
     \approx
@@ -709,7 +708,7 @@ By making use of the Sherman-Morrison-Woodbury formula~\cite{golub1996mc}, we ca
         \mA^{-1}.
 \]
 Using this, we can write
-\begin{align*}
+\begin{align}\label{E:lowrank-smw-expansion}
     \left(
         \mS_{n,22} - z \mI_{p-k}
     \right)^{-1}
@@ -721,7 +720,7 @@ Using this, we can write
                 +
                 \frac{1}{n}
                 \mE_{n,12}^\trans \mE_{n12}
-            \right)^{-1} \\
+            \right)^{-1} \notag \\
         \begin{split}
         &=
             \left(
@@ -762,9 +761,9 @@ Using this, we can write
                 \mI_{p-k}
             \right)^{-1}.
     \end{split}
-\end{align*}
+\end{align}
 Next, we define $\mtD_n = \mD_n + \frac{1}{\sqrt{n}} \mE_{n,11}$, so that
-\begin{align*}
+\begin{align}\label{E:lowrank-S-schur}
     \begin{split}
     \mS_{n,12} 
     \Big(
@@ -787,264 +786,157 @@ Next, we define $\mtD_n = \mD_n + \frac{1}{\sqrt{n}} \mE_{n,11}$, so that
                 \mE_{n,12}^\trans \mtD_n
                 +
                 \mLambda_n^{1/2} \mE_{n,21}
-            \right)
+            \right).
     \end{split}
-\end{align*}
-The final expression for
-\(
-    \mS_{n,12}
-    \left(
-        \mS_{n,22} - z \mI_{p-k}
-    \right)^{-1}
-    \mS_{n,21}
-\)
-has eight terms, each of which is rather complicated.  For now, we have no choice
-but to write them all down, but rest assured we will spend considerable time
-finding simplifications. 
+\end{align}
 
-We have
-\begin{align}
-    \mT_n(z)
-        &=
-            \mS_{n,11}
-            -
-            z
-            \mI_k
-            -
-            \mS_{n,12}
-            \left(
-                \mS_{n,22} - z \mI_{p-k}
-            \right)^{-1}
-            \mS_{n,21} \notag \\
-        &=
-            \mS_{n,11}
-            -
-            z
-            \mI_k
-            + 
-            \sum_{i=1}^8
-                \mT_n^{(i)}(z),
-\end{align}
-where
-\begin{subequations}
-\begin{align}
-    \mT_n^{(1)}(z)
-        &=
-            -
-            \frac{1}{n}
-            \mtD_n^\trans
-            \mE_{n,12}
-            \left(
-                \mLambda_n
-                -
-                z
-                \mI_{p-k}
-            \right)^{-1}
-            \mE_{n,12}^\trans
-            \mtD_n, \\
-    \mT_n^{(2)}(z)
-        &=
-            -
-            \frac{1}{n}
-            \mtD_n^\trans
-            \mE_{n,12}
-            \left(
-                \mLambda_n
-                -
-                z
-                \mI_{p-k}
-            \right)^{-1}
-            \mLambda_n^{1/2}
-            \mE_{n,21}, \\
-    \mT_n^{(3)}(z)
-        &=
-            -
-            \frac{1}{n}
-            \mE_{n,21}^\trans
-            \mLambda_n^{1/2}
-            \left(
-                \mLambda_n
-                -
-                z
-                \mI_{p-k}
-            \right)^{-1}
-            \mE_{n,12}^\trans
-            \mtD_n, \\
-    \mT_n^{(4)}(z)
-        &=
-            -
-            \frac{1}{n}
-            \mE_{n,21}^\trans
-            \mLambda_n^{1/2}
-            \left(
-                \mLambda_n
-                -
-                z
-                \mI_{p-k}
-            \right)^{-1}
-            \mLambda_n^{1/2}
-            \mE_{n,21}, \\
-    \begin{split}
-    \mT_n^{(5)}(z)
-        &=
-            \frac{1}{n^2}
-            \mtD_n^\trans
-            \mE_{n,12}
-            \left(
-                \mLambda_n
-                -
-                z
-                \mI_{p-k}
-            \right)^{-1}
-            \mE_{n,12}^\trans \\
-            &\qquad\qquad\cdot
-            \left(
-                \mI_k
-                +
-                \frac{1}{n}
-                \mE_{n,12}
-                \left(
-                    \mLambda_n
-                    -
-                    z
-                    \mI_{p-k}
-                \right)^{-1}
-                \mE_{n,12}^\trans
-            \right)^{-1} \\
-            &\qquad\qquad\cdot
-            \mE_{n,12}
-            \left(
-                \mLambda_n
-                -
-                z
-                \mI_{p-k}
-            \right)^{-1}
-            \mE_{n,12}^\trans
-            \mtD_n, 
-    \end{split} \\
-    \begin{split}
-    \mT_n^{(6)}(z)
-        &=    
-            \frac{1}{n^2}
-            \mtD_n^\trans
-            \mE_{n,12}
-            \left(
-                \mLambda_n
-                -
-                z
-                \mI_{p-k}
-            \right)^{-1}
-            \mE_{n,12}^\trans \\
-            &\qquad\qquad\cdot
-            \left(
-                \mI_k
-                +
-                \frac{1}{n}
-                \mE_{n,12}
-                \left(
-                    \mLambda_n
-                    -
-                    z
-                    \mI_{p-k}
-                \right)^{-1}
-                \mE_{n,12}^\trans
-            \right)^{-1} \\
-            &\qquad\qquad\cdot
-            \mE_{n,12}
-            \left(
-                \mLambda_n
-                -
-                z
-                \mI_{p-k}
-            \right)^{-1}
-            \mLambda_n^{1/2}
-            \mE_{n,21},
-    \end{split} \\
-    \begin{split}
-    \mT_n^{(7)}(z)
-        &=
-            \frac{1}{n^2}
-            \mE_{n,21}^\trans
-            \mLambda_{n}^{1/2}
-            \left(
-                \mLambda_n
-                -
-                z
-                \mI_{p-k}
-            \right)^{-1}
-            \mE_{n,12}^\trans \\
-            &\qquad\qquad\cdot
-            \left(
-                \mI_k
-                +
-                \frac{1}{n}
-                \mE_{n,12}
-                \left(
-                    \mLambda_n
-                    -
-                    z
-                    \mI_{p-k}
-                \right)^{-1}
-                \mE_{n,12}^\trans
-            \right)^{-1} \\
-            &\qquad\qquad\cdot
-            \mE_{n,12}
-            \left(
-                \mLambda_n
-                -
-                z
-                \mI_{p-k}
-            \right)^{-1}
-            \mE_{n,12}^\trans
-            \mtD_n,
-    \end{split}
-\end{align}
+There are three important terms that coming out of equations~\eqref{E:lowrank-smw-expansion}~and~\eqref{E:lowrank-S-schur} that involve $\mLambda_n$.  These are
+\(
+    \mE_{n,12}
+    \left(
+        \mLambda_n - z \mI_{p-k}
+    \right)^{-1}
+    \mE_{n,12}^\trans,
+\)
+\(
+    \mE_{n,21}^\trans
+    \left(
+        \mLambda_n - z \mI_{p-k}
+    \right)^{-1}
+    \mE_{n,21},
+\)
 and
+\(
+    \mE_{n,12}
+    \left(
+        \mLambda_n - z \mI_{p-k}
+    \right)^{-1}
+    \mLambda_n^{1/2}
+    \mE_{n,21}.
+\)
+Each term can we written as a weighted sum of outer products.  There is
+dependence between the weights, but the outer products are iid.  For example,
+with
+\(
+    \mE_{n,12}
+    =
+    \left(
+    \begin{matrix}
+        \vE_{n,12,1} &
+        \vE_{n,12,2} &
+        \cdots &
+        \vE_{n,12,p-k}
+    \end{matrix}
+    \right),
+\) 
+we have
+\[
+    \mE_{n,12}
+    \left(
+        \mLambda_n - z \mI_{p-k}
+    \right)^{-1}
+    \mE_{n,12}^\trans,
+        =
+            \sum_{\alpha=1}^{p-k}
+                \frac{1}{\lambda_{n,\alpha} - z}
+                \cdot
+                \vE_{n,12,\alpha} \,
+                \vE_{n,12,\alpha}^\trans.
+\]
+From the Central Limit Theorem and the Strong Law of Large Numbers
+we know that
+\(
+    \frac{1}{p-k}
+    \sum_{\alpha=1}^{p-k}
+        \vE_{n,12,\alpha} \,
+        \vE_{n,12,\alpha}^\trans
+        \toas
+            \mI_{k}
+\)
+and that
+\(
+    \sqrt{p-k}
+    \left(
+        \frac{1}{p-k}
+        \sum_{\alpha=1}^{p-k}
+            \vE_{n,12,\alpha} \,
+            \vE_{n,12,\alpha}^\trans
+        -
+        \mI_{k}
+    \right)
+\)
+converges in distribution to mean-zero symmetric matrix whose elements are jointly multivariate normal.  In the limiting distribution, the elements have variance $2$ along the diagonal and variance $1$ off of it; aside from the matrix being symmetric, the unique elements are all uncorrelated.  The
+difficulty in analyzing these terms comes from the dependence between 
+the weights.
+
+When $z$ is in the support of $\FMP_\gamma$, the weights behave
+erratically, but otherwise they have some nice properties.
+First of all, $\mLambda_n$ is independent of $\mE_{n,12}$ and $\mE_{n,21}$.
+Secondly, the Wishart LLN~(Corollary~\ref{C:wishart-lln}) and
+Theorem~\ref{T:max-wishart-eig-limit} ensure that for
+$z~>~(1+\gamma^{-1/2})^2$,
+\(
+    \frac{1}{p-k}
+    \sum_{\alpha=1}^{p-k}
+        \frac{1}{\lambda_{n,\alpha} - z}
+    \toas
+    \int
+        \frac{1}{t - z}
+        d\FMP_\gamma(t).
+\)
+Moreover, the Wishart CLT~(Theorem~\ref{T:wishart-clt}) guarantees that
+the error is of size $\OhP(\frac{1}{n})$.  These properties in
+combination with the limit theorems for weighted sums in 
+Appendix~\ref{A:weighted-sums} allow us to get the behavior of
+\(
+    \mE_{n,12}
+    \left(
+        \mLambda_n
+        -
+        z
+        \mI_k
+    \right)^{-1}
+    \mE_{n,12}^\trans
+\)
+and its cousins.
+
+The function
 \begin{align}
-    \begin{split}
-    \mT_n^{(8)}(z)
+    m(z)
+        &\define
+            \int
+                \frac{1}{t - z} d\FMP_\gamma(t) \notag \\
         &=
-            \frac{1}{n^2}
-            \mE_{n,21}^\trans
-            \mLambda_{n}^{1/2}
-            \left(
-                \mLambda_n
-                -
-                z
-                \mI_{p-k}
-            \right)^{-1}
-            \mE_{n,12}^\trans \\
-            &\qquad\qquad\cdot
-            \left(
-                \mI_k
-                +
-                \frac{1}{n}
-                \mE_{n,12}
-                \left(
-                    \mLambda_n
-                    -
-                    z
-                    \mI_{p-k}
-                \right)^{-1}
-                \mE_{n,12}^\trans
-            \right)^{-1} \\
-            &\qquad\qquad\cdot
-            \mE_{n,12}
-            \left(
-                \mLambda_n
-                -
-                z
-                \mI_{p-k}
-            \right)^{-1}
-            \mLambda_{n}^{1/2}
-            \mE_{n,21}.
-    \end{split}
+            \gamma
+            \cdot
+            \frac{ -(z - 1 + \gamma^{-1})
+                   +\sqrt{ \big( z - b_\gamma \big) 
+                           \big( z - a_\gamma \big) } }
+                 { 2 z }
 \end{align}
-\end{subequations}
-To put it mildly, this is a formidable expression.  Notice, however, that several common subexpressions appear in the terms of $\mT_n(z)$.  We can simplify the formulas for thes subexpressions when $z > \left(1 + \gamma^{-1/2} \right)^2$.
+is the Stieltjes transform of $\FMP_\gamma$, 
+where
+\(
+    a_\gamma = \left( 1 - \gamma^{-1/2} \right)^2
+\)
+and
+\(
+    b_\gamma = \left( 1 + \gamma^{-1/2} \right)^2.
+\)
+When restricted to the complement of the support of $\FMP_\gamma$, $m$ has a well-defined inverse
+\begin{equation}\label{E:stieltjes-inverse}
+    z(m)
+        = 
+            -
+            \frac{1}{m}
+            +
+            \frac{1}{1 + \gamma^{-1} \, m}.
+\end{equation}
+Also, $m$ is strictly increasing and convex outside the support of
+$\FMP_\gamma$.  This function appears frequently in the remainder of the chapter.
 
 \begin{lemma}\label{L:eij-product-limits}
-    If $z > \left(1 + \gamma^{-1/2} \right)^2$, then
+    If $z > b_\gamma$, then
     \begin{subequations}
     \begin{align}
         \frac{1}{n}
@@ -1057,21 +949,9 @@ To put it mildly, this is a formidable expression.  Notice, however, that severa
         \mE_{n,12}^\trans
             &\toas
                 \gamma^{-1}
-                \int
-                    \frac{1}{t - z} d\FMP_\gamma(t)
+                m(z)
                 \cdot
                 \mI_k, \\
-        \frac{1}{n}
-        \mE_{n,12}
-        \left(
-            \mLambda_n
-            -
-            z \mI_{p-k}
-        \right)^{-1}
-        \mLambda_n^{1/2}
-        \mE_{n,21}
-            &\toas
-                0, \\
         \frac{1}{n}
         \mE_{n,21}^\trans
         \left(
@@ -1082,26 +962,24 @@ To put it mildly, this is a formidable expression.  Notice, however, that severa
         \mE_{n,21}
             &\toas
                 \gamma^{-1}
-                \int
-                    \frac{1}{t - z} d\FMP_\gamma(t)
+                m(z)
                 \cdot
-                \mI_k, \\
-        \frac{1}{n}
-        \mE_{n,12} \mE_{n,12}^\trans
-            &\toas
-            \gamma^{-1}
-            \mI_k, \\
-        \frac{1}{n}
-        \mE_{n,21}^\trans \mE_{n,21}
-            &\toas
-                \gamma^{-1}
-                \mI_k, \\
-        \frac{1}{n}
-        \mE_{n,31}^\trans \mE_{n,31}
-            &\toas
-                \left( 1 - \gamma^{-1} \right)
-                \mI_k.
+                \mI_k,
     \end{align}
+    and
+    \begin{equation}
+        \frac{1}{n}
+        \mE_{n,12}
+        \left(
+            \mLambda_n
+            -
+            z \mI_{p-k}
+        \right)^{-1}
+        \mLambda_n^{1/2}
+        \mE_{n,21}
+            \toas
+                0.
+    \end{equation}
     \end{subequations}
 \end{lemma}
 \begin{proof}
@@ -1136,7 +1014,7 @@ and let
     Y_{N,\alpha} = \left( \mE_{n,12} \right)_{i\alpha}
                    \left( \mE_{n,12} \right)_{j\alpha}.
 \)
-Letting $b_\gamma = \left( 1 + \gamma^{-1/2} \right)^2$, the function
+The function
 \[
     g(t) 
     = 
@@ -1148,59 +1026,28 @@ Letting $b_\gamma = \left( 1 + \gamma^{-1/2} \right)^2$, the function
     \end{cases}
 \]
 is bounded and continuous.  Moreover, since $\lambda_{n,1} \toas b_\gamma$, with probability one $g(\lambda_{n,\alpha})$ is eventually equal to $W_{N,\alpha}$ for all $\alpha$.  The Wishart LLN (Corollary~\ref{C:wishart-lln}) gives us that
-\[
+\(
     \frac{1}{N}
     \sum_{\alpha=1}^N W_{N,\alpha}
         \toas
             \int
-                \frac{1}{t - z} d\FMP_\gamma(t).
-\]
+                \frac{1}{t - z} d\FMP_\gamma(t) = m(z).
+\)
 Since $| W_{N,\alpha} | \leq W_{N,1} \overset{\text{a.s.}}{\leq} b_\gamma$, the fourth moments of the weights are uniformly bounded in $N$.  
-
-The $Y_{N,\alpha}$ are all iid with $\E Y_{N,\alpha} = \delta_{ij}$ and $\E Y_{N,\alpha}^4 < \infty$.  The weighed SLLN (Proposition~\ref{P:weighted-slln}) gives us that
-\[
+The $Y_{N,\alpha}$ are all iid with $\E Y_{N,\alpha} = \delta_{ij}$ and $\E Y_{N,\alpha}^4 < \infty$.  
+Applying these results, the weighed SLLN (Proposition~\ref{P:weighted-slln}) gives us that
+\(
     \frac{1}{N}
     \sum_{\alpha=1}^N
         W_{N,\alpha}
         Y_{N,\alpha}
     \toas
-        \delta_{ij}
-        \int
-            \frac{1}{t - z} d\FMP_\gamma(t).
-\]
+        m(z)
+        \delta_{ij}.
+\)
 Since $\frac{p-k}{n} \to \gamma^{-1}$, this completes the proof.
 \end{proof}
 
-The function
-\begin{align}
-    m(z)
-        &\define
-            \int
-                \frac{1}{t - z} d\FMP_\gamma(t) \notag \\
-        &=
-            \gamma
-            \cdot
-            \frac{ -(z - 1 + \gamma^{-1})
-                   +\sqrt{ \big( z - b_\gamma \big) 
-                           \big( z - a_\gamma \big) } }
-                 { 2 z },
-\end{align}
-is the Stieltjes transform of $\FMP_\gamma$, where
-\begin{subequations}
-\begin{align}
-    a_\gamma &= \left( 1 - \gamma^{-1/2} \right)^2, \\
-    b_\gamma &= \left( 1 + \gamma^{-1/2} \right)^2.
-\end{align}
-\end{subequations}
-When restricted to the complement of the support of $\FMP_\gamma$, $m$ has a well-defined inverse
-\begin{equation}\label{E:stieltjes-inverse}
-    z(m)
-        = 
-            -
-            \frac{1}{m}
-            +
-            \frac{1}{1 + \gamma^{-1} \, m}.
-\end{equation}
 
 \begin{lemma}\label{L:eij-product-limits-uniform}
     Considered as functions of $z$, the quantities in 
@@ -1224,7 +1071,7 @@ When restricted to the complement of the support of $\FMP_\gamma$, $m$ has a wel
         \right)_{ij},
     \]
     we will show that for all $ij$ with $1 \leq i,j \leq k$, 
-    \[
+    \(
         \sup_{z \in [u,v]} 
             \left|
                 e_{n,ij}(z)
@@ -1234,19 +1081,20 @@ When restricted to the complement of the support of $\FMP_\gamma$, $m$ has a wel
                     \delta_{ij}
             \right|
             \toas 0.
-    \]
+    \)
+    
     Let $\epsilon > 0$ be arbitrary.  Note that for 
     $z > b_\gamma$, $m'(z) > 0$ and $m''(z) < 0$.  We let $d = m'(u)$ and
     choose a grid
-    \[
+    \(
         u = z_1 < z_2 < \cdots < z_{M-1} < z_M = v,
-    \]
+    \)
     with $|z_l - z_{l+1}| = \frac{\gamma \epsilon}{2 d}$.  
     Then $|\gamma^{-1} m(z_l) - \gamma^{-1} m(z_{l+1})| < \frac{\epsilon}{2}$.  
     From 
     Lemma~\ref{L:eij-product-limits}, we can find $N$ large enough such
     that for $n > N$, 
-    \[
+    \(
         \max_{l\in\{1, \ldots, M\}}
             \left|
                 e_{n,ij}(z_l)
@@ -1257,59 +1105,59 @@ When restricted to the complement of the support of $\FMP_\gamma$, $m$ has a wel
             \right|
             <
             \frac{\epsilon}{2}.
-    \]
+    \)
     Also guarantee that $N$ is large enough so that $\lambda_{n,1} < u$ 
     (this is possible since $\lambda_{n,1} \toas b_\gamma < u$).
     Let $z \in [u,v]$ be arbitrary and find $l$ such that 
     $z_l \leq z \leq z_{l+1}$.
     Observe that $e_{n,ij}(z)$ is monotone for $z > \lambda_{n,1}$.  Thus,
     either
-    \[
+    \(
         e_{n,ij}(z_l) \leq e_{n,ij}(z) \leq e_{n,ij}(z_{l+1})
-    \]
+    \)
     or
-    \[
+    \(
         e_{n,ij}(z_{l+1}) \leq e_{n,ij}(z) \leq e_{n,ij}(z_{l}).
-    \]
+    \)
+    
     If $i \neq j$, we have for $n > N$,
-    \[
-        -\frac{\epsilon}{2} < e_{n,ij}(z) < \frac{\epsilon}{2},
-    \]
-    For $i = j$, $e_{n,ij}(z)$ is 
+    \(
+        -\frac{\epsilon}{2} < e_{n,ij}(z) < \frac{\epsilon}{2}.
+    \)
+    Otherwise, when $i = j$, $e_{n,ij}(z)$ is 
     monotonically increasing and
-    \[
+    \(
         \gamma^{-1} m(z_l) - \frac{\epsilon}{2}
             <
                 e_{n,ij}(z)
                     <
                         \gamma^{-1} m(z_{l+1}) + \frac{\epsilon}{2},
-    \]
-    so
-    \[
+    \)
+    so that
+    \(
         \gamma^{-1} m(z) - \epsilon
             <
                 e_{n,ij}(z)
                     <
                         \gamma^{-1} m(z) + \epsilon.
-    \]
+    \)
     In either case, 
     $|e_{n,ij}(z) - \gamma^{-1} m(z) \delta_{ij}| < \epsilon$.
     Since 
-    \[
+    \(
         \frac{d}{dz} \left[
             \frac{1}{\lambda - z}
         \right]
             =
             -\frac{1}{(\lambda - z)^{2}},
-    \]
+    \)
     which is monotone for $z > \lambda$, the same argument applies to show
     that the derivatives converge uniformly.
 \end{proof}
 
-In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:eij-product-limits}.
 
 \begin{lemma}\label{L:eij-product-scaled-limits}
-    If $z_1, z_2, \ldots, z_l > \left( 1 + \gamma^{-1/2} \right)^2$, 
+    If $z_1, z_2, \ldots, z_l > b_\gamma$, 
     then jointly for $z \in \{ z_1, z_2, \ldots, z_l \}$
     \begin{subequations}
     \begin{align}
@@ -1363,70 +1211,12 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
             \mI_k
         \right) 
             &\define \mH_n(z)
-            \tod \mH(z), \\
-        \sqrt{n}
-        \left(
-            \frac{1}{n}
-            \mE_{n,12} \mE_{n,12}^\trans
-            -
-            \gamma^{-1}
-            \mI_k
-        \right) 
-            &\define \mK_n
-            \tod \mK, \\
-        \sqrt{n}
-        \left(
-            \frac{1}{n}
-            \mE_{n,21}^\trans \mE_{n,21}
-            -
-            \gamma^{-1}
-            \mI_k
-        \right) 
-            &\define \mL_{n,1}
-            \tod \mL_1, \\
-        \sqrt{n}
-        \left(
-            \frac{1}{n}
-            \mE_{n,31}^\trans \mE_{n,31}
-            -
-            \left( 1 - \gamma^{-1} \right)
-            \mI_k
-        \right) 
-            &\define \mL_{n,2}
-            \tod \mL_2,
+            \tod \mH(z),
     \end{align}
     \end{subequations}
-    where the elements of $\mF(z)$, $\mG(z)$, $\mH(z)$, $\mK$, $\mL_1$ and 
-    $\mL_2$ jointly define a multivariate Gaussian process indexed by $z$. 
-    All but $\mG(z)$ are symmetric.  If we define
-    \[
-        \mathcal{M}
-        =
-        \Big\{ \mK, \mL_1, \mL_2 \Big\}
-        \cup
-        \Bigg(
-        \bigcup_{i=1}^l
-            \Big\{ 
-                \mF(z_i), \mG(z_i), \mH(z_i)
-            \Big\}
-        \Bigg),
-    \] 
-    then for $\mA, \mB \in \mathcal{M}$, $(i,j) \neq (i',j')$, and 
-    $(i,j) \neq (j',i')$,
-    \[
-        \cov\left( \mA_{ij}, \mB_{i'j'} \right)
-        =
-        0.
-    \]
-    The sets
-    \(
-        \Big\{ \mK, \mF( z ) \Big\},
-        \Big\{ \mG( z) \Big\},
-        \Big\{ \mL_1, \mH( z )\Big\},
-        \Big\{ \mL_2 \Big\}
-    \)
-    are mutually independent of each other.
-    
+    where the elements of $\mF(z)$, $\mG(z)$, and $\mH(z)$
+    jointly define a multivariate Gaussian process indexed by $z$,
+    with each matrix independent of the others. 
     The other covariances are defined by
     \begin{subequations}
     \begin{align}
@@ -1435,12 +1225,6 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
                \left( 1 + \delta_{ij} \right)
                \frac{ m(z_1) - m(z_2) }
                     { z_1 - z_2 }, \\
-        \cov\Big( F_{ij}(z_1), \, K_{ij} \Big)
-            &= \gamma^{-1}
-               \left( 1 + \delta_{ij} \right) m(z_1), \\
-        \cov\Big( K_{ij}, \, K_{ij} \Big)
-            &= \gamma^{-1}
-               \left( 1 + \delta_{ij} \right), \\
         \cov\Big( G_{ij}(z_1), \, G_{ij}(z_2) \Big)
             &= \gamma^{-1} \,
                \frac{ z_1 \, m(z_1) - z_2 \, m(z_2) }
@@ -1449,62 +1233,25 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
             &= \gamma^{-1}
                \left( 1 + \delta_{ij} \right)
                \frac{ m(z_1) - m(z_2) }
-                    { z_1 - z_2 }, \\
-        \cov\Big( H_{ij}(z_1), \, L_{1,ij} \Big)
-            &= \gamma^{-1}
-               \left( 1 + \delta_{ij} \right) m(z_1), \\
-        \cov\Big( L_{1,ij}, \, L_{1,ij} \Big)
-            &= \gamma^{-1}
-               \left( 1 + \delta_{ij} \right), \\
-        \cov\Big( L_{2,ij}, \, L_{2,ij} \Big)
-            &= (1 - \gamma^{-1})
-               \left( 1 + \delta_{ij} \right),
+                    { z_1 - z_2 },
     \end{align}
     \end{subequations}
     with the interpretation when $z_1 = z_2$ that
-    \begin{align*}
+    \[
         \frac{ m(z_1) - m(z_2) }
              { z_1 - z_2 }
-            &=
-                m'(z_1) \\
-    \intertext{and}
+            =
+                m'(z_1),
+        \quad\text{and}\quad
         \frac{ z_1 \, m(z_1) - z_2 \, m(z_2) }
              { z_1 - z_2 }
-            &= m( z_1 ) + z_1 \, m'(z_1).
-    \end{align*}
+            = m( z_1 ) + z_1 \, m'(z_1).
+    \]
 \end{lemma}
 \begin{proof}
-    The distributions of $\mK$, $\mL_1$, and $\mL_2$ follow from the 
-    multivariate CLT.  For example, we have
-    \begin{align*}
-        \sqrt{n}
-        \left(
-            \frac{1}{n} \mE_{n,12} \mE_{n,12}^\trans
-            -
-            \gamma^{-1}
-            \mI_k
-        \right)
-            &=
-                \left(
-                    \gamma^{-1}
-                    \sqrt{ \frac{ n }{ p - k } }
-                \right)
-                \cdot
-                \left(
-                    \sqrt{ p - k }
-                    \left[
-                        \frac{1}{p-k}
-                        \mE_{n,12} \mE_{n,12}^\trans
-                        -
-                        \mI_k
-                    \right]
-                \right) \\
-            &\tod
-                \mK.
-    \end{align*}
-    For the other limits, we will need the Wishart CLT 
-    (Theorem~\ref{T:wishart-clt}) and the strong weighted multivariate CLT
-    (Corollary~\ref{C:strong-weighted-clt}).  To save space we only
+    We will need the Wishart CLT~(Theorem~\ref{T:wishart-clt}) and the strong 
+    weighted multivariate CLT~(Corollary~\ref{C:strong-weighted-clt}).  To 
+    save space we only
     give the argument for the joint distribution of $\mF(z_1)$ and 
     $\mF(z_2)$.
     
@@ -1638,32 +1385,35 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
         \mu^W_i
             &=
                 \int \frac{ d\FMP_\gamma(t) }
-                          { t - z_i } \\
-            &=
-                m( z_i ), \\
+                          { t - z_i }
+            =
+                m( z_i ), \qquad\text{and} \\
         \sigma^W_{ij}
             &=
                 \int \frac{ d\FMP_\gamma(t) }
-                          { (t - z_i)(t - z_j) } \\
-            &=
+                          { (t - z_i)(t - z_j) }
+            =
                 \frac{ m( z_i ) - m( z_j ) }
                      { z_i - z_j },
     \end{align*}
     the Wishart LLN combined with the truncation argument of
     Lemma~\ref{L:eij-product-limits} gives us that
-    \begin{align*}
+    \(
         \frac{1}{N}
         \sum_{\alpha=1}^N
             \frac{1}{  \lambda_{n,\alpha} - z_i  }
-            &\toas
-                \mu^W_{i}, \\
+            \toas
+                \mu^W_{i}
+    \)
+    and
+    \(
         \frac{1}{N}
         \sum_{\alpha=1}^N
             \frac{1}{ ( \lambda_{n,\alpha} - z_i )
                       ( \lambda_{n,\alpha} - z_j ) }
-            &\toas
+            \toas
                 \sigma^W_{ij}.
-    \end{align*}
+    \)
     Thus,
     \begin{align*}
         \frac{1}{N}
@@ -1676,15 +1426,14 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
                     \mu^W_1 \vone \\
                     \mu^W_2 \vone
                 \end{matrix}
-                \right), \\
-    \intertext{and}
+                \right), \qquad\text{and} \\
         \frac{1}{N}
         \sum_{\alpha=1}^N
             \vW_{N,\alpha} \,
             \vW_{N,\alpha}^\trans
             &\toas
-                \mSigma^W \\
-            &=
+                \mSigma^W
+            =
                 \left(
                 \begin{matrix}
                     \sigma^W_{11} \vone \, \vone^\trans &
@@ -1700,8 +1449,8 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
     As in Lemma~\ref{L:eij-product-limits}, the fourth moments of
     $\vW_{N,\alpha}$ and $\vY_{N,\alpha}$ are all well-behaved.  Finally,
     we can invoke the strong weighted CLT 
-    (Corollary~\ref{C:strong-weighted-clt}) to get that
-    \[
+    (Corollary~\ref{C:strong-weighted-clt}) to get that the weighted sum
+    \(
         \sqrt{N} \left(
             \frac{1}{N}
             \sum_{\alpha=1}^N
@@ -1709,7 +1458,7 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
             -
                 \vmu^W \bullet \vmu^T
         \right)
-    \]
+    \)
     converges in distribution to a mean-zero multivariate normal with
     covariance
     \[
@@ -1753,7 +1502,7 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
                         \vW_{N,\alpha,i} \bullet \vtY_{N,\alpha}
                     -
                         \vmu_i^W \bullet \vtmu_i^Y
-                \Bigg),
+                \Bigg)
     \end{multline*}
     (with $\vmu_i^W = \mu_i^W \vone$),
     and
@@ -1769,8 +1518,8 @@ In fact we can get the second-order behavior of the quantities of Lemma~\ref{L:e
     It is possible to show that the sequences in Lemma~\ref{L:eij-product-scaled-limits} are tight by an argument similar to the one used in \cite{onatski2009}.  This implies that the convergence is uniform in $z$.  For our purposes, we only need that the finite-dimensional distributions converge.
 \end{remark}
 
-With Lemmas~\ref{L:eij-product-limits}~and~\ref{L:eij-product-scaled-limits},
-we can simplify $\mT_n(z)$.  We can now get at the first and second-order behavior of $\mT_n(z)$.
+With Lemmas~\ref{L:eij-product-limits}--\ref{L:eij-product-scaled-limits},
+we can get a perturbation expansion of $\mT_{n}(z)$ for $z > b_\gamma$.
 
 \begin{lemma}
     If $[u,v] \subset \big( b_\gamma, \, \infty \big)$, then
@@ -1792,7 +1541,7 @@ we can simplify $\mT_n(z)$.  We can now get at the first and second-order behavi
 \end{lemma}
 
 \begin{lemma}
-    If $z > (1 + \gamma^{-1/2})^2$, then
+    If $z > b_\gamma$, then
     \begin{equation}
         \mT_n( z ) 
             = 
@@ -1802,51 +1551,64 @@ we can simplify $\mT_n(z)$.  We can now get at the first and second-order behavi
                 \mT_{n,1}( z ),
     \end{equation}
     where
-    \begin{equation}
-        \begin{split}
-            \mT_{n,1}( z ) 
-                &= \mL_{n,2}
-                -
+    \begin{align}
+            \mT_{n,1}( z )
+                = 
+                &-
                 \big( 1 + \gamma^{-1} m(z) \big)^{-2}
                     \cdot
-                    \mD \mF_n(z) \mD \\
-                &\quad\quad+ 
-                \big( 1 + \gamma^{-1} m(z) \big)^{-1} \\
+                    \mD \mF_n(z) \mD \notag \\
+                &+
+                \big( 1 + \gamma^{-1} m(z) \big)^{-1} \notag \\
                     &\quad\quad\quad\cdot
-                    \Big(
+                    \Big\{
                         \sqrt{n} \left( \mD_n^2 - \mD^2 \right)
-                        +
+                        + 
                         \mD \big( \mE_{n,11} - \mG_n(z) \big)
                         + 
                         \big( \mE_{n,11} - \mG_n(z) \big)^\trans \mD
-                    \Big)  \\
-                &\quad\quad-
+                    \Big\}  \notag \\
+                &-
                 z \, \mH_n(z)
                 +
+                \sqrt{n}
+                \left(
+                    \frac{1}{n} \mE_{n,31}^\trans \mE_{n,31}
+                    -
+                    (1 - \gamma^{-1})
+                    \mI_k
+                \right)
+                +
                 \ohP\left( 1 \right).
-        \end{split}
-    \end{equation}
+    \end{align}
 \end{lemma}
 \begin{proof}
     First, we have
-    \[
-        \mS_{n,11} 
+    \begin{multline*}
+        \mS_{n,11}
             = 
                 \mD_n^2 + \mI_k
-                + 
+                +
                 \frac{1}{\sqrt{n}}
                 \left(
                     \mD \mE_{n,11}
                     +
                     \mE_{n,11}^\trans \mD
-                    +
-                    \mL_{n,1}
-                    +
-                    \mL_{n,2}
-                \right)
+                \right) \\
                 +
-                \ohP\left( \frac{1}{\sqrt{n}} \right).
-    \]
+                \left(
+                    \frac{1}{n}
+                    \big(
+                        \mE_{n,11}^\trans \mE_{n,11}
+                        +
+                        \mE_{n,21}^\trans \mE_{n,21}
+                        +
+                        \mE_{n,31}^\trans \mE_{n,31}
+                    \big)
+                    -
+                    \mI_k
+                \right).
+    \end{multline*}
     Next, we compute
     \begin{align*}
         \begin{split}
@@ -1890,15 +1652,14 @@ we can simplify $\mT_n(z)$.  We can now get at the first and second-order behavi
                 +
                 \ohP\left( \frac{1}{\sqrt{n}} \right).              
     \end{align*}
-    Using this, after some simplification we get
+    Using this, after a substantial amount of algebra we get
     \[
         \begin{split}
             \mS_{n,12} 
             &\Big( \mS_{n,22} - z \mI_{p-k} \Big)^{-1} 
             \mS_{n,21} \\
                 &=
-                \gamma^{-1}
-                \big( 1 + z \, m(z) \big) \mI_k
+                z \, m(z) \, \mI_k
                 +
                 \frac{\gamma^{-1} m(z)}
                      { 1 + \gamma^{-1} m(z)} \mD_n^2 \\
@@ -1918,16 +1679,16 @@ we can simplify $\mT_n(z)$.  We can now get at the first and second-order behavi
                     \right)^2
                     \mD \mF_n(z) \mD
                     +
-                    \mL_{n,1}
-                    +
-                    z \, \mH_n( z ) \Bigg\} %\\
-                %&\quad
+                    z \, \mH_n( z ) \Bigg\} \\
+                &\quad+
+                \frac{1}{n} \mE_{n,21}^\trans \mE_{n,21}
                 +
                 \ohP\left( \frac{1}{\sqrt{n}} \right).
         \end{split}
     \]
-    The equations for $\mT_0$ and $\mT_{n,1}$ follow.  We use the identity
-    \[
+    The equations for $\mT_0$ and $\mT_{n,1}$ follow.  
+    To simplify the form of $\mT_0$, we use the identity
+    \(
         z
         \cdot
         \Big(
@@ -1939,10 +1700,10 @@ we can simplify $\mT_n(z)$.  We can now get at the first and second-order behavi
         -
         \frac{1}{m(z)}
         +
-        (1 - \gamma^{-1})
-    \]
-    to simplify the form of $\mT_0$.
+        (1 - \gamma^{-1}).
+    \)
 \end{proof}
+
 
 \section{Solutions to the secular equation}\label{S:solutions-to-secular-eq}
 
@@ -2051,7 +1812,7 @@ The proof involves a technical lemma, which we state and prove now.
     any neighborhood of $z_0$.  Noting that $g_0(z)$ has a zero of 
     multiplicity 
     $l$ at $z_0$, by Lemma~\ref{L:uniform-converge-same-roots} we get that for large enough $n$, $g_n(z)$ has $l$ zeros
-    in a neighborhood of $z_0$.  By a Lemma of Okamoto~\cite{okamoto1973deq}, 
+    in a neighborhood of $z_0$.  By a lemma of Okamoto~\cite{okamoto1973deq}, 
     the zeros of $g_n(z)$ are almost surely simple.
 \end{proof}
 
@@ -2390,8 +2151,15 @@ we get
     \begin{split}
         \mT_{n,1}(\bmu_i)
            &=
-                \mL_{n,2}
-                -
+                \left(
+                    \frac{1}{\sqrt{n}}
+                    \mE_{n,31}^\trans \mE_{n,31}
+                    -
+                    \sqrt{n}
+                    (1 - \gamma^{-1})
+                    \mI_k
+                \right) \\
+            &\quad-
                 \left(
                     \frac{\mu_i + \gamma^{-1}}{\mu_i}
                 \right)^2
@@ -2420,7 +2188,9 @@ we get
                 \mH_n(\bmu_i).
     \end{split}
 \]
-We have
+The first term converges in distribution to a mean-zero multivariate normal
+with variance $2$ along the diagonal and variance $1$ otherwise; the elements
+are all uncorrelated except for the obvious symmetry.  Also, we have
 \begin{align*}
     \cov\big( F_{ij} ( \bmu_1 ), F_{ij} ( \bmu_2 ) \big)
         &= 
@@ -2440,10 +2210,7 @@ We have
         \cdot
         \frac{1}{ ( \mu_1 + \gamma^{-1} ) ( \mu_2 + \gamma^{-1} ) }
         \cdot
-        \frac{ \mu_1 \mu_2 }{ \mu_1 \mu_2 - \gamma^{-1} }, \\
-    \cov\big( L_{2,ij}, L_{2,ij} \big)
-        &=
-        (1 - \gamma^{-1}) (1 + \delta_{ij}).
+        \frac{ \mu_1 \mu_2 }{ \mu_1 \mu_2 - \gamma^{-1} }.
 \end{align*}
 Therefore, for $j \neq i$ we have
 \begin{align*}
