@@ -410,11 +410,9 @@ $\mE_{n,12} = \mtE_{n,12} \mP_n$,
 $\mE_{n,21} = \mO_{n,1}^\trans \mtE_{n,21}$, and
 $\mE_{n,31} = \mO_{n,2}^\trans \mtE_{n,31}$.
 Let
-\[
-    \mtX_n
-    \approx
+\(
     \mtU_n \mtD_n \mtV_n
-\]
+\)
 be the SVD of $\mtX_n$, truncated to $k$ terms.  Lastly, put the left and right singular vectors in block form as
 \begin{equation}
     \mtU_n
@@ -564,7 +562,7 @@ is an eigenvector of $\mS_n$ with eigenvalue $\mu$, then
 \]
 If $\mu$ is not an eigenvalue of $\mS_{n,22}$, then we get
 \begin{subequations}
-\begin{equation}\label{E:v2-from-v1}
+\begin{gather}\label{E:v2-from-v1}
     \vv_2
     =
     -
@@ -575,10 +573,8 @@ If $\mu$ is not an eigenvalue of $\mS_{n,22}$, then we get
         \mI_{p-k}
     \right)^{-1}
     \mS_{n,21} \,
-    \vv_1
-\end{equation}
-and
-\begin{equation}\label{E:secular-nof}
+    \vv_1, \qquad\text{and} \\
+    \label{E:secular-nof}
     \left(
         \mS_{n,11}
         -
@@ -597,7 +593,7 @@ and
     \vv_1
     =
     0.
-\end{equation}
+\end{gather}
 \end{subequations}
 Conversely, if $(\mu, \vv_1)$ is a pair that solves~\eqref{E:secular-nof}
 and $\vv_1 \neq 0$, then
@@ -644,47 +640,56 @@ We define
             \mT_n(z) \,
             \vx, \label{E:secular-f}
 \end{gather}
-and refer to the equation $f_n(z, \vx) = 0$ as the \emph{secular equation}.  This
-is a slight abuse of terminology.  A more standard use of the term ``secular equation'' would be analogous to a characteristic equation; it is an equation whose solutions are eigenvalues of a matrix, i.e. $\det \mT_n(z) = 0$.  However, for our purposes it will be more convenient to work with $f_n$.
+and refer to the equation $f_n(z, \vx) = 0$ as the \emph{secular equation}. 
+This terminology comes from numerical linear algebra, where a secular equation is analogous to a characteristic equation; it is an equation whose
+roots are eigenvalues of a matrix.   Typically, secular equations arise in eigenvalue perturbation problems.  The name comes from the fact that they originally arose from studying secular perturbations of planetary orbits.  A more standard use of the term ``secular equation'' would involve the equation $\det \mT_n(z) = 0$.  However, for our purposes it is more convenient to work with $f_n$.
 
 \subsection{Outline of the proof}
 
-With probability one, $\mS_n$ and $\mS_{n,22}$ have no eigenvalues in common.  This implies that all of the eigenvalues of $\mS_n$ are solutions to the secular equation.  First, we give a perturbation expansion for $f_n(z, \vx)$ in Section~\ref{S:anal-sec-eqn}.  Then, in Section~\ref{S:solutions-to-secular-eq} we study the solutions of  $f_n(z, \vx) = 0$.  It turns out that these solutions are dramatically different depending on the size of $z$.  If $z > (1 + \gamma^{-1/2})^2$, then we can find a perturbation expansion
-\begin{align*}
-    z 
-        &= 
-            z^0 
-            + 
-            \frac{1}{\sqrt{n}}
-            z^1 
-            + 
-            \ohP\left( \frac{1}{\sqrt{n}} \right), \\
-    \vx
-        &=
-            \vx^0
+With probability one, $\mS_n$ and $\mS_{n,22}$ have no eigenvalues in common, so every eigenvalue-eigenvector pair of $\mS_n$ is a solution to the secular equation.  To study these solutions, we first focus on $\mT_n(z)$.  
+
+It turns out that when $z > (1 + \gamma^{-1/2})^2$, we can find a perturbation expansion for $\mT_n(z)$. In Section~\ref{S:anal-sec-eqn}, we show that for $z$ above this threshold, we can expand
+\[
+    \mT_n(z)
+        =
+            \mT_0(z)
             +
             \frac{1}{\sqrt{n}}
-            \vx^1
+            \mT_{n,1}(z),
+\]
+where $\mT_0(z)$ is deterministic and $\mT_{n,1}(z)$ converges in distribution
+to a matrix-valued Gaussian process with known covariance.  With this expansion, in Section~\ref{S:solutions-to-secular-eq} we study sequences of solutions to the equation $f_n(z_n, \vx_n) = 0$.  Using a Taylor series expansion for $z_n > (1 + \gamma^{-1/2})^2$, we write
+\begin{align*}
+    z_n
+        &= 
+            z_0 
+            + 
+            \frac{1}{\sqrt{n}}
+            z_{n,1} 
+            + 
+            \ohP\left( \frac{1}{\sqrt{n}} \right), \\
+    \vx_n
+        &=
+            \vx_0
+            +
+            \frac{1}{\sqrt{n}}
+            \vx_{n,1}
             + 
             \ohP\left( \frac{1}{\sqrt{n}} \right),
 \end{align*}
-where $(z^0, \vx^0)$ is the limit of $(z, \vx)$ as $n\to \infty$ and
-$(z^1, \vx^1)$ is the order-$\frac{1}{\sqrt{n}}$ approximation error.
-Otherwise, $\vx$ does not have a limit and the $z$ part of the solution 
-satisfies
-\[
-    z
-        =
-            z^0
-            + 
-            \ohP\left( \frac{1}{\sqrt{n}} \right).
-\]
-In Section~\ref{S:singular-values-and-vectors} we get the singular values and singular vectors of $\frac{1}{\sqrt{n}} \mtX_n$ from the solutions of the secular equation.  From a solution pair $(z, \vx)$, we can construct an eigenvalue and an eigenvector of $\mS_n$ using equation~\eqref{E:v-from-v1}.  Then, we can get the corresponding left singular vectors through multiplying by $\mtX_n$.  Finally, in Section~\ref{S:lowrank-gamma-lt-1} we show that the results still hold when $\gamma < 1$.  For parts of the proof, we will need some limit theorems for weighted sums from Appendix~\ref{A:weighted-sums}.
+where $(z^0, \vx^0)$ is the limit of $(z_n, \vx_n)$ as $n\to \infty$ and
+$(z_{n,1}, \vx_{n,1})$ is the order-$\frac{1}{\sqrt{n}}$ approximation error.
+
+In Section~\ref{S:singular-values-and-vectors} we get the singular values and singular vectors of $\frac{1}{\sqrt{n}} \mtX_n$.  From every solution pair $(z_n, \vx_n)$, to the equation $f_n(z_n, \vx_n) = 0$, we can construct an eigenvalue and an eigenvector of $\mS_n$ using equation~\eqref{E:v-from-v1}.  Then, we can get the corresponding left singular vectors through multiplying by $\mtX_n$.  For singular values above the critical threshold, we use the perturbation results of the previous two sections.  Below the threshold, we use a more direct approach involving the fluctuations of the top eigenvalues of $\mLambda_n$.
+
+Finally, in Section~\ref{S:lowrank-gamma-lt-1} we show that the results still hold when $\gamma < 1$.  For parts of the proof, we will need some limit theorems for weighted sums from 
+Appendix~\ref{A:weighted-sums}.
 
 \section{Analysis of the secular equation}\label{S:anal-sec-eqn}
 
-We can simplify the equation for $\mT_n(z)$.  
-By making use of the Sherman-Morrison-Woodbury formula~\cite{golub1996mc}, we can get an expression for $\left(\mS_{n,22} - z \mI_{p-k}\right)^{-1}$.  As a reminder, the Sherman-Morrison-Woodbury formula states that for matrices $\mA$, $\mB$, and $\mC$ with compatible dimensions, the following formula for the inverse holds:
+We devote this section to finding a simplified formula for $\mT_n(z)$ for certain values of $z$.  By a bit of algebra and analysis, we find the first- and second-order behavior of the secular equation.
+
+First, we employ the Sherman-Morrison-Woodbury formula~\cite{golub1996mc} to  get an expression for $\left(\mS_{n,22} - z \mI_{p-k}\right)^{-1}$.  As a reminder, the Sherman-Morrison-Woodbury formula states that for matrices $\mA$, $\mB$, and $\mC$ with compatible dimensions, the following formula for the inverse holds:
 \[
     \left(
         \mA
@@ -790,7 +795,7 @@ Next, we define $\mtD_n = \mD_n + \frac{1}{\sqrt{n}} \mE_{n,11}$, so that
     \end{split}
 \end{align}
 
-There are three important terms that coming out of equations~\eqref{E:lowrank-smw-expansion}~and~\eqref{E:lowrank-S-schur} that involve $\mLambda_n$.  These are
+There are three important terms coming out of equations~\eqref{E:lowrank-smw-expansion}~and~\eqref{E:lowrank-S-schur} that involve $\mLambda_n$.  These are
 \(
     \mE_{n,12}
     \left(
@@ -1003,7 +1008,7 @@ We prove the result for the first quantity and the other derivations are analogo
         \frac{ \left( \mE_{n,12} \right)_{i\alpha}
                \left( \mE_{n,12} \right)_{j\alpha}
              }
-             { \lambda_{n,\alpha} - z }
+             { \lambda_{n,\alpha} - z }.
 \end{align*}
 Let $N = p-k$, define weights 
 \(
@@ -1070,7 +1075,7 @@ Since $\frac{p-k}{n} \to \gamma^{-1}$, this completes the proof.
             \mE_{n,12}^\trans
         \right)_{ij},
     \]
-    we will show that for all $ij$ with $1 \leq i,j \leq k$, 
+    we will show that for all $(i,j)$ with $1 \leq i,j \leq k$, 
     \(
         \sup_{z \in [u,v]} 
             \left|
@@ -2212,7 +2217,7 @@ are all uncorrelated except for the obvious symmetry.  Also, we have
         \cdot
         \frac{ \mu_1 \mu_2 }{ \mu_1 \mu_2 - \gamma^{-1} }.
 \end{align*}
-Therefore, for $j \neq i$ we have
+Therefore, for $j \neq i$ we have variances
 \begin{align*}
     \begin{split}
     \var \left(
@@ -2233,7 +2238,7 @@ Therefore, for $j \neq i$ we have
             2 \mu_i + 1 + \gamma^{-1}
         \right)
         \frac{ (\mu_i + \gamma^{-1})^2 }
-             { \mu_i^2 - \gamma^{-1} } + \oh(1)
+             { \mu_i^2 - \gamma^{-1} } + \oh(1) \qquad\text{and}
     \end{split} \\
     \var \left(
         \big(
@@ -2246,7 +2251,10 @@ Therefore, for $j \neq i$ we have
             2 \mu_i + 1 + \gamma^{-1}
         \right)
         \frac{ (\mu_i + \gamma^{-1})^2 }
-             { \mu_i^2 - \gamma^{-1} } + \oh(1), \\
+             { \mu_i^2 - \gamma^{-1} } + \oh(1).
+\end{align*}
+The nontrivial covariances are given by
+\begin{align*}
     \cov \left( 
         \big(
             \mT_{n,1}( \bmu_i ) \,
@@ -2262,7 +2270,7 @@ Therefore, for $j \neq i$ we have
         \cdot
         \frac{\mu_i + \gamma^{-1}}{ \mu_i }
         \cdot
-        \frac{\mu_j + \gamma^{-1}}{ \mu_j } + \oh(1), \\
+        \frac{\mu_j + \gamma^{-1}}{ \mu_j } + \oh(1) \quad\text{and} \\
     \begin{split}
     \cov \left(
         \big(
@@ -2281,10 +2289,10 @@ Therefore, for $j \neq i$ we have
         &\qquad \cdot
             \frac{ ( \mu_i + \gamma^{-1} )( \mu_j + \gamma^{-1} ) }
                  { \mu_i \mu_j - \gamma^{-1} }
-        + \oh(1),
+        + \oh(1).
     \end{split}
 \end{align*}
-and all other covariances between the elements of
+All other covariances between the elements of
 $\mT_{n,1}(\bmu_i) \, \ve_i$ and $\mT_{n,1}(\bmu_j) \, \ve_j$ are zero.
 
 \section{Singular values and singular vectors}\label{S:singular-values-and-vectors}
