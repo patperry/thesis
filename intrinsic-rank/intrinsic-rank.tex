@@ -425,13 +425,12 @@ is the SVD of $\mX_n$ truncated to $k$ terms.
 
 We can decompose the columns of $\mhV_n$ into sums of two terms, with the first term in the subspace spanned by $\mV_n$, and the second term orthogonal
 to it.  By setting $\mTheta_n = \mV_n^\trans \mhV_n$ and 
-taking the SVD of $\mhV_n - \mV_n \mTheta_n$, the matrix of right factors can 
-be expanded as
+taking the $QR$ decomposition of $\mhV_n - \mV_n \mTheta_n$, the matrix of right factors can be expanded as
 \begin{equation}\label{E:v-vbar-decomp}
     \mhV_n = \mV_n \mTheta_n + \mbV_n \mbTheta_n,
 \end{equation}
 with $\mbV_n \in \reals^{p \times (p-k_0)}$  satisfying
-$\mbV_n^\trans \mbV_n = \mI_{p-k_0}$ and $\mV_n^\trans \mbV_n = 0$.  Note that
+$\mbV_n^\trans \mbV_n = \mI_{p-k_0}$ and $\mV_n^\trans \mbV_n = 0$.  We choose the signs so that $\mbTheta_n$ has non-negative diagonal entries.  Note that
 \begin{equation}
     \mI_k
     =
@@ -542,9 +541,9 @@ define
 \end{subequations}
 With
 \begin{subequations}
-\begin{align}
+\begin{equation}
     \mD(k) 
-        &= 
+        = 
             \diag\left( 
                 \bmu_1^{1/2}, 
                 \bmu_2^{1/2}, 
@@ -554,7 +553,10 @@ With
                 0,
                 \ldots,
                 0
-            \right) \in \reals^{n \times p}, \\
+            \right) \in \reals^{n \times p}
+\end{equation}
+and
+\begin{align}
     \mTheta
         &=
             \diag\left(
@@ -570,10 +572,7 @@ With
                 \varphi_2,
                 \ldots,
                 \varphi_n
-            \right),
-\end{align}
-and
-\begin{align}
+            \right), \\
     \mbTheta
         &=
             \diag\left(
@@ -632,7 +631,7 @@ fixed $k$ as $n\to \infty$,
             \diag \big(
                 \mF_1(k),
                 \mF_2(k),
-                \ldots
+                \ldots,
                 \mF_{k \vee k_0}(k)
             \big) \big\|.
 \]
@@ -782,7 +781,6 @@ The expression for the limit of
 is fairly complicated.  In the Frobenius case, we have
 \begin{proposition}\label{P:frob-loss-behavior}
     For fixed $k$ as $n \to \infty$, we have
-    \begin{subequations}
     \begin{multline}
         \frac{1}{n}
         \| \sqrt{n} \, \mU_n \mD_n \mV_n^\trans - \mhX_n(k) \|_\Frob^2 \\
@@ -821,7 +819,6 @@ is fairly complicated.  In the Frobenius case, we have
                 &\text{otherwise.}
         \end{cases}
     \end{equation}
-    \end{subequations}
 \end{proposition}
 
 Figure~\ref{F:frobenius-loss-penalty} shows $\alpha_i$ as a function of
