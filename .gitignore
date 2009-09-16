@@ -10,7 +10,6 @@ cv-unsupervised/plots/neurons.pdf
 .DS_Store
 *.aux
 *.bak
-*.bbl
 *.blg
 *.log
 *.lof
