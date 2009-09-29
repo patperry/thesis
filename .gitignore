@@ -2,6 +2,7 @@ arXiv
 perry-thesis.dvi
 perry-thesis.fdb_latexmk
 perry-thesis.pdf
+perry-thesis-talk.pdf
 perry-thesis.ps
 perry-thesis.synctex.gz
 perry-thesis-abstract.pdf
@@ -15,6 +16,9 @@ cv-unsupervised/plots/neurons.pdf
 *.log
 *.lof
 *.lot
+*.nav
+*.out
+*.snm
 *.swp
 *.toc
 *.tmproj
