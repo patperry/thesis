@@ -1,0 +1,7 @@
+- should have an "extensions" slide with discussion of other unsupervised method
+
+- it may help to have another slide about the SVD, or an example of PCA
+
+- repeat the expression for true model error before the BCV estimate
+
+- put in the explicit expression for beta_i
