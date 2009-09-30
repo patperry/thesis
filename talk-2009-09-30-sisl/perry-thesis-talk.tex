@@ -41,7 +41,8 @@
 \end{frame}
 
 \section*{Outline}
-\begin{frame}{Outline}
+\begin{frame}
+  \frametitle{Outline}
   \tableofcontents
 \end{frame}
 
@@ -95,16 +96,6 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}
-\frametitle{The SVD minimizes Frobenius norm}
-  $\mhX(k) = \sqrt{n} \, \mhU \mhD(k) \mhV^\trans$ is the best rank-$k$ approximation of $\mX$ \\
-  {\small \textit{(with respect to Frobenius norm)}}
-
-  \begin{itemize}
-  \item $\| \mA \|_\Frob^2 = \sum_{i,j} A_{ij}^2$ is the squared Frobenius norm of $\mA$
-  \item $\| \mX - \mhX(k) \|_\Frob^2$ is minimized
-  \end{itemize}
-\end{frame}
 
 \subsection{the latent factor model}
 
@@ -132,7 +123,7 @@
   \[
     \mSigma = \mQ \mLambda \mQ^\trans + \sigma^2 \mI,
   \]
-  where $\mQ$ has orthonormal columns and $\mLambda = \diag( \lambda_1, \lambda_2, \ldots, \lambda_k)$ has $\lambda_1 > \lambda_2 > \cdots > \lambda_k$
+  where $\mQ$ has orthonormal columns and $\mLambda = \diag( \lambda_1, \lambda_2, \ldots, \lambda_{k_0})$ has $\lambda_1 > \lambda_2 > \cdots > \lambda_{k_0}$
 \end{frame}
 
 \begin{frame}
