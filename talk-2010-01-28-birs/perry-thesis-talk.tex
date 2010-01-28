@@ -55,6 +55,12 @@
 \end{frame}
 
 \begin{frame}
+  \frametitle{Rank-estimation procedures}
+ 
+  Kritchman \& Nadler survey recently-developed methods
+\end{frame}
+
+\begin{frame}
   \frametitle{The data matrix}
   \begin{columns}[c]
   \column{.5\textwidth}
@@ -107,7 +113,7 @@
   \vskip2em
   \begin{itemize}
     \item $\mhU^\trans \mhU = \mhV^\trans \mhV = \mI_{k_0}$ \\
-    \item $\mD = \diag(d_1, d_2, \ldots, d_{k_0})$, \quad $d_i^2 \toas \mu_i$ \\
+    \item $\mD = \diag(d_1, d_2, \ldots, d_{k_0})$, \, $d_i^2 = \mu_i + \OhP(\frac{1}{\sqrt{n}})$ \\
     \item $\mE_{ij} \sim \Normal(0, \sigma^2)$
   \end{itemize}
 \end{frame}
@@ -149,6 +155,13 @@
   \]
 \end{frame}
 
+\begin{frame}
+  \frametitle{Agenda}
+  \begin{enumerate}
+    \item Analyze behavior of $\ME(k)$, $\PE(k)$
+    \item Get estimates $\widehat{\ME}(k)$, $\widehat{\PE}(k)$ via cross-validation
+  \end{enumerate}
+\end{frame}
 
 \section{Behavior of the SVD}
 
@@ -156,12 +169,8 @@
 
 \begin{frame}
   \frametitle{Asymptotic behavior of singular values}
-  \begin{itemize}
-  \item assume $n$ and $p$ are both large
-  \item $\gamma = \frac{n}{p}$ is the aspect ratio
-  \item assume $d_i^2 \toas \mu_i$
-  \end{itemize} 
-  \begin{theorem}[Onatski, POP]
+  Let $n, p \to \infty$.
+  \begin{theorem}[Onatski]
     \[
       \hat d_i^2
       \toas
@@ -178,11 +187,6 @@
 
 \begin{frame}
   \frametitle{Right singular vectors}
-  \begin{itemize}
-  \item assume $n$ and $p$ are both large
-  \item $\gamma = \frac{n}{p}$ is the aspect ratio
-  \item assume $d_i^2 \toas \mu_i$
-  \end{itemize}
   \begin{theorem}[Onatski, POP]
     \[
       \mV^\trans \mhV(k)
@@ -205,11 +209,6 @@
 
 \begin{frame} 
   \frametitle{Left singular vectors}
-  \begin{itemize}
-  \item assume $n$ and $p$ are both large
-  \item $\gamma = \frac{n}{p}$ is the aspect ratio
-  \item assume $d_i^2 \toas \mu_i$
-  \end{itemize}
   \begin{theorem}[Onatski, POP]
     \[
       \mU^\trans \mhU(k)
@@ -349,13 +348,18 @@ where
 \end{frame}
 
 \begin{frame}
+  \frametitle{Rotated versions}
+  Replace $X$ with $\mO_L^\trans \mX \mO_R$, for random orthogonal $\mO_\cdot$. 
+\end{frame}
+
+\begin{frame}
   \frametitle{Simulations}
   \begin{itemize}
     \item factors $\mU$ and $\mV$ are either ``Gaussian'' or ``sparse''
     \item signal strength $\mD$ is either ``strong'' or ``weak''
     \item black is true model error
     \item red is CV estimate
-    \item blue is CV applied to $\mO_L^\trans \mX \mO_R$ (i.e. randomly rotated version of $\mX$) 
+    \item blue is rotated-CV estimate
   \end{itemize}
 \end{frame}
 
@@ -430,17 +434,45 @@ where
     \),
     $\mX_{11}$ is $n_1 \times p_1$
   \end{theorem}
-  (1.89 $\times$ 1.89 is optimal strategy for square matrices)
 \end{frame}
 
 \begin{frame}
-  \frametitle{Summary}
+  \frametitle{What else?}
   \begin{itemize}
-    \item model for low-rank plus noise data
-    \item asymptotic performance of SVD; sometimes makes sense to include a term, other times not
-    \item Wold- and Gabriel-style CV for estimation performance of SVD
-    \item theory (optimal holdout) for Gabriel-style CV 
+    \item scree plot
+    \item benchmark with other rank-selection algorithms
+    \item intuition behind Gabriel-style (blocked) leave-outs
+    \item proofs of results
+    \item applications to real data
   \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Open problems}
+  \begin{itemize}
+    \item theory for Wold-style leave-outs
+    \item which is better: Wold-style or Gabriel-style?
+    \item theory for other low-rank decompositions
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{References}
+  \begin{itemize}
+    \item Owen \& Perry. Annals of Applied Statistics. 2009
+    \item Perry. PhD Thesis, ``Cross-Validation for Unsupervised Learning.''
+      2009.
+    \item both at \texttt{ptrckprry.com/reports}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{R package}
+  \texttt{bcv} (``Bi-cross-validation'') available on CRAN
+\end{frame}
+
+\begin{frame}
+  \centerline{Thank you!}
 \end{frame}
 
 \end{document}
